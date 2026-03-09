@@ -2658,23 +2658,27 @@ const translations = {
   컨비니언스: "Convenience",
 }
 
+// Pre-computed at module load (runs once):
+const sortedEntries = Object.entries(translations as Record<string, string>)
+  .sort(([a], [b]) => b.length - a.length)
+  .map(([key, value]) => ({
+    regex: new RegExp(key.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "g"),
+    value,
+  }));
+
 export function translateSmartly(text: string): string {
-  const dict = translations as Record<string, string>
-  if (!text || typeof text !== "string") return text
-  let translated = text
-  const sortedKeys = Object.keys(dict).sort((a, b) => b.length - a.length)
-  for (const key of sortedKeys) {
-    const value = dict[key]
-    const regex = new RegExp(key.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "g")
-    translated = translated.replace(regex, value)
+  if (!text || typeof text !== "string") return text;
+  let translated = text;
+  for (const { regex, value } of sortedEntries) {
+    translated = translated.replace(regex, value);
   }
 
   // Add spaces between different character types for better readability
-  translated = translated.replace(/([A-Za-z0-9])([А-Яа-яЁё])/g, "$1 $2")
-  translated = translated.replace(/([А-Яа-яЁё])([A-Za-z])/g, "$1 $2")
-  translated = translated.replace(/([0-9])([А-Яа-яЁё])/g, "$1 $2")
+  translated = translated.replace(/([A-Za-z0-9])([А-Яа-яЁё])/g, "$1 $2");
+  translated = translated.replace(/([А-Яа-яЁё])([A-Za-z])/g, "$1 $2");
+  translated = translated.replace(/([0-9])([А-Яа-яЁё])/g, "$1 $2");
 
-  return translated
+  return translated;
 }
 
 export { translations }

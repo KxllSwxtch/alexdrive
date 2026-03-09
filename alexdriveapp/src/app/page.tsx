@@ -107,7 +107,7 @@ export default function CatalogPage() {
       />
 
       {/* Results */}
-      <div className="mt-6">
+      <div className={`mt-6 ${loading && cars.length > 0 ? "opacity-50 pointer-events-none" : ""}`}>
         {loading && cars.length === 0 ? (
           <LoadingSkeleton />
         ) : (
@@ -123,7 +123,6 @@ export default function CatalogPage() {
           onPageChange={(page) => {
             if (page === (params.PageNow || 1)) return;
             window.scrollTo({ top: 0, behavior: "instant" });
-            setCars([]);
             setLoading(true);
             setParams((prev) => ({ ...prev, PageNow: page }));
           }}

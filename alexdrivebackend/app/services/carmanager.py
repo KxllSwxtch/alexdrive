@@ -1,4 +1,6 @@
 import asyncio
+import hashlib
+import json
 import time
 
 from app.parsers.detail_parser import parse_car_detail
@@ -12,6 +14,16 @@ from app.services.client import fetch_page, post_form
 
 _filter_cache: dict | None = None
 _filter_lock = asyncio.Lock()
+
+_listing_cache: dict[str, dict] = {}
+_listing_lock = asyncio.Lock()
+LISTING_TTL = 120  # 2 minutes
+MAX_LISTING_CACHE_ENTRIES = 50
+
+_detail_cache: dict[str, dict] = {}
+_detail_lock = asyncio.Lock()
+DETAIL_TTL = 600  # 10 minutes
+MAX_DETAIL_CACHE_ENTRIES = 200
 
 DEFAULT_SIDO = "102"
 DEFAULT_AREA = "1013"
@@ -91,6 +103,14 @@ async def get_filter_data() -> dict:
         return await _fetch_filter_data_internal()
 
 
+def _evict_oldest(cache: dict[str, dict], max_entries: int) -> None:
+    """Evict the entry with the earliest expiry when cache exceeds max size."""
+    if len(cache) <= max_entries:
+        return
+    oldest_key = min(cache, key=lambda k: cache[k]["expiry"])
+    del cache[oldest_key]
+
+
 async def get_car_listings(params: dict) -> dict:
     form_fields: dict[str, str] = {
         "cbxSearchSiDo": params.get("CarSiDoNo") or DEFAULT_SIDO,
@@ -137,18 +157,50 @@ async def get_car_listings(params: dict) -> dict:
         "isAscDesc": "0" if params.get("PageAscDesc") == "ASC" else "1",
     }
 
-    html = await post_form("/Car/Data", form_fields)
-    listings = parse_car_listings(html)
-    total = parse_total_count(html)
+    cache_key = hashlib.md5(json.dumps(form_fields, sort_keys=True).encode()).hexdigest()
 
-    print(f"[carmanager] Listings: {len(listings)}/{total}, HTML length: {len(html)}")
+    # Check cache (fast path, no lock)
+    cached = _listing_cache.get(cache_key)
+    if cached and time.time() < cached["expiry"]:
+        print(f"[carmanager] Listing cache hit ({cache_key[:8]})")
+        return cached["data"]
 
-    if len(listings) == 0 and len(html) > 1000:
-        print("[carmanager] WARNING: 0 listings parsed from non-empty HTML — selectors may be outdated")
+    # Double-check under lock
+    async with _listing_lock:
+        cached = _listing_cache.get(cache_key)
+        if cached and time.time() < cached["expiry"]:
+            return cached["data"]
 
-    return {"listings": listings, "total": total}
+        html = await post_form("/Car/Data", form_fields)
+        listings = parse_car_listings(html)
+        total = parse_total_count(html)
+
+        print(f"[carmanager] Listings: {len(listings)}/{total}, HTML length: {len(html)}")
+
+        if len(listings) == 0 and len(html) > 1000:
+            print("[carmanager] WARNING: 0 listings parsed from non-empty HTML — selectors may be outdated")
+
+        result = {"listings": listings, "total": total}
+        _listing_cache[cache_key] = {"data": result, "expiry": time.time() + LISTING_TTL}
+        _evict_oldest(_listing_cache, MAX_LISTING_CACHE_ENTRIES)
+        return result
 
 
 async def get_car_detail(encrypted_id: str) -> dict:
-    html = await post_form("/PopupFrame/CarDetailEnc", {"encarno": encrypted_id})
-    return parse_car_detail(html, encrypted_id)
+    # Check cache (fast path, no lock)
+    cached = _detail_cache.get(encrypted_id)
+    if cached and time.time() < cached["expiry"]:
+        print(f"[carmanager] Detail cache hit ({encrypted_id[:16]}...)")
+        return cached["data"]
+
+    # Double-check under lock
+    async with _detail_lock:
+        cached = _detail_cache.get(encrypted_id)
+        if cached and time.time() < cached["expiry"]:
+            return cached["data"]
+
+        html = await post_form("/PopupFrame/CarDetailEnc", {"encarno": encrypted_id})
+        result = parse_car_detail(html, encrypted_id)
+        _detail_cache[encrypted_id] = {"data": result, "expiry": time.time() + DETAIL_TTL}
+        _evict_oldest(_detail_cache, MAX_DETAIL_CACHE_ENTRIES)
+        return result

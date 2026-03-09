@@ -69,7 +69,11 @@ async def get_cars(
         "PageSort": PageSort,
         "PageAscDesc": PageAscDesc,
     }
-    return await get_car_listings(params)
+    data = await get_car_listings(params)
+    return JSONResponse(
+        content=data,
+        headers={"Cache-Control": "public, max-age=120"},
+    )
 
 
 @router.get("/cars/detail")
@@ -79,4 +83,8 @@ async def get_detail(id: str | None = Query(None)):
             status_code=400,
             content={"error": "Missing id query parameter"},
         )
-    return await get_car_detail(id)
+    data = await get_car_detail(id)
+    return JSONResponse(
+        content=data,
+        headers={"Cache-Control": "public, max-age=300"},
+    )

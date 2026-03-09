@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup
 
 
 def parse_car_listings(html: str) -> list[dict]:
-    soup = BeautifulSoup(html, "html.parser")
+    soup = BeautifulSoup(html, "lxml")
     listings: list[dict] = []
 
     for row in soup.find_all("tr", class_="uc_carcss"):

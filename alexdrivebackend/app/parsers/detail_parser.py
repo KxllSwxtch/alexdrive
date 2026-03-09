@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup
 
 
 def parse_car_detail(html: str, encrypted_id: str) -> dict:
-    soup = BeautifulSoup(html, "html.parser")
+    soup = BeautifulSoup(html, "lxml")
 
     name_el = soup.find(id="ui_ViewCarName")
     if name_el:

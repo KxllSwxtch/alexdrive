@@ -6,9 +6,11 @@ import uvicorn
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
+from starlette.middleware.gzip import GZipMiddleware
 
 from app.config import settings
 from app.routes import cars, filters, health
+from app.services.carmanager import get_car_listings
 from app.services.session import set_http_client, get_session
 
 
@@ -28,11 +30,24 @@ async def lifespan(app: FastAPI):
             print("[server] Session pre-warmed successfully")
         except Exception as e:
             print(f"[server] Session pre-warm failed (will retry on first request): {e}")
+
+        # Pre-warm default listing cache
+        try:
+            await get_car_listings({
+                "PageNow": 1, "PageSize": 20,
+                "PageSort": "ModDt", "PageAscDesc": "DESC",
+            })
+            print("[server] Default listing cache pre-warmed")
+        except Exception as e:
+            print(f"[server] Listing pre-warm failed: {e}")
+
         print(f"[server] AlexDrive backend running on port {settings.port}")
         yield
 
 
 app = FastAPI(lifespan=lifespan)
+
+app.add_middleware(GZipMiddleware, minimum_size=500, compresslevel=6)
 
 app.add_middleware(
     CORSMiddleware,

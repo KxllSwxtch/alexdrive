@@ -1,6 +1,9 @@
 # ── Builder ──────────────────────────────────────────────
 FROM python:3.13-slim AS builder
 
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    gcc libxml2-dev libxslt1-dev && rm -rf /var/lib/apt/lists/*
+
 WORKDIR /build
 
 COPY pyproject.toml .
@@ -8,6 +11,9 @@ RUN pip install --no-cache-dir --prefix=/install .
 
 # ── Runtime ──────────────────────────────────────────────
 FROM python:3.13-slim
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    libxml2 libxslt1.1 && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 

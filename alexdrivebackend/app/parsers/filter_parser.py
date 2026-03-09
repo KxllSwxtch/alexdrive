@@ -133,7 +133,7 @@ def parse_danjis_from_js(js_content: str, area_code: str) -> list[dict]:
 
 
 def parse_select_options(html: str, select_id: str) -> list[dict[str, str]]:
-    soup = BeautifulSoup(html, "html.parser")
+    soup = BeautifulSoup(html, "lxml")
     select = soup.find("select", id=select_id)
     if not select:
         return []

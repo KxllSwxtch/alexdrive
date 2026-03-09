@@ -17,6 +17,7 @@ export function CarCard({ car }: CarCardProps) {
   return (
     <Link
       href={buildCarDetailPath(translatedName, car.year, car.encryptedId)}
+      prefetch={false}
       className="group flex flex-col overflow-hidden rounded-xl border border-border bg-bg-surface transition-all duration-300 hover:border-gold/30 hover:shadow-[0_0_30px_rgba(212,175,55,0.06)]"
     >
       {/* Image */}
