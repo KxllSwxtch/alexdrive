@@ -25,6 +25,5 @@ services:
     envVars:
       - key: BACKEND_URL
         generateValue: false
-    buildArgs:
       - key: NEXT_PUBLIC_BACKEND_URL
         generateValue: false
