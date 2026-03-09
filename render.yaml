@@ -1,5 +1,6 @@
 services:
   - type: web
+    region: singapore
     name: alexdrive-backend
     runtime: docker
     dockerfilePath: ./alexdrivebackend/Dockerfile
@@ -17,6 +18,7 @@ services:
         sync: false
 
   - type: web
+    region: singapore
     name: alexdrive-frontend
     runtime: docker
     dockerfilePath: ./alexdriveapp/Dockerfile
