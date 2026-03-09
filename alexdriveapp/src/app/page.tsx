@@ -120,9 +120,14 @@ export default function CatalogPage() {
         <Pagination
           currentPage={params.PageNow || 1}
           totalPages={totalPages}
-          onPageChange={(page) =>
-            setParams((prev) => ({ ...prev, PageNow: page }))
-          }
+          onPageChange={(page) => {
+            if (page === (params.PageNow || 1)) return;
+            setCars([]);
+            setLoading(true);
+            setParams((prev) => ({ ...prev, PageNow: page }));
+            window.scrollTo({ top: 0, behavior: "smooth" });
+          }}
+          disabled={loading}
         />
       )}
     </div>

@@ -4,12 +4,14 @@ interface PaginationProps {
   currentPage: number;
   totalPages: number;
   onPageChange: (page: number) => void;
+  disabled?: boolean;
 }
 
 export function Pagination({
   currentPage,
   totalPages,
   onPageChange,
+  disabled,
 }: PaginationProps) {
   if (totalPages <= 1) return null;
 
@@ -20,7 +22,7 @@ export function Pagination({
       {/* Prev */}
       <button
         onClick={() => onPageChange(currentPage - 1)}
-        disabled={currentPage <= 1}
+        disabled={disabled || currentPage <= 1}
         className="flex h-9 w-9 items-center justify-center rounded-lg border border-border text-text-secondary transition-colors hover:border-gold/30 hover:text-gold disabled:opacity-30 disabled:hover:border-border disabled:hover:text-text-secondary"
         aria-label="Предыдущая"
       >
@@ -41,7 +43,8 @@ export function Pagination({
           <button
             key={page}
             onClick={() => onPageChange(page as number)}
-            className={`flex h-9 min-w-9 items-center justify-center rounded-lg px-2 text-sm font-medium transition-colors ${
+            disabled={disabled}
+            className={`flex h-9 min-w-9 items-center justify-center rounded-lg px-2 text-sm font-medium transition-colors disabled:opacity-30 ${
               page === currentPage
                 ? "bg-gold text-bg-primary"
                 : "border border-border text-text-secondary hover:border-gold/30 hover:text-gold"
@@ -55,7 +58,7 @@ export function Pagination({
       {/* Next */}
       <button
         onClick={() => onPageChange(currentPage + 1)}
-        disabled={currentPage >= totalPages}
+        disabled={disabled || currentPage >= totalPages}
         className="flex h-9 w-9 items-center justify-center rounded-lg border border-border text-text-secondary transition-colors hover:border-gold/30 hover:text-gold disabled:opacity-30 disabled:hover:border-border disabled:hover:text-text-secondary"
         aria-label="Следующая"
       >
