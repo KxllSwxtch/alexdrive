@@ -35,6 +35,9 @@ COPY --from=builder /app/.next/standalone ./
 COPY --from=builder /app/.next/static ./.next/static
 COPY --from=builder /app/public ./public
 
+# Ensure Next.js can write to the cache directory
+RUN mkdir -p .next/cache && chown -R appuser:appgroup .next
+
 USER appuser
 
 EXPOSE 3000
