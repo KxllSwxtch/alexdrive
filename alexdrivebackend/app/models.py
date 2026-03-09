@@ -74,6 +74,7 @@ class CarListing(BaseModel):
     location: str
     dealer: str
     phone: str
+    blurDataUrl: str = ""
 
 
 class OptionGroup(BaseModel):

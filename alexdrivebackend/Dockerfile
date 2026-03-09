@@ -13,7 +13,7 @@ RUN pip install --no-cache-dir --prefix=/install .
 FROM python:3.13-slim
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    libxml2 libxslt1.1 && rm -rf /var/lib/apt/lists/*
+    libxml2 libxslt1.1 libjpeg62-turbo zlib1g && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 

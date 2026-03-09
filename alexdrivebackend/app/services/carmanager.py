@@ -10,6 +10,7 @@ from app.parsers.filter_parser import (
     parse_select_options,
 )
 from app.parsers.listing_parser import parse_car_listings, parse_total_count
+from app.services.blur import enrich_listings_with_blur
 from app.services.client import NetworkError, fetch_page, post_form
 
 _filter_cache: dict | None = None
@@ -118,6 +119,11 @@ def _evict_oldest(cache: dict[str, dict], max_entries: int) -> None:
 
 
 async def get_car_listings(params: dict) -> dict:
+    result = await _get_car_listings_raw(params)
+    return await enrich_listings_with_blur(result)
+
+
+async def _get_car_listings_raw(params: dict) -> dict:
     form_fields: dict[str, str] = {
         "cbxSearchSiDo": params.get("CarSiDoNo") or DEFAULT_SIDO,
         "cbxSearchSiDoArea": params.get("CarSiDoAreaNo") or DEFAULT_AREA,

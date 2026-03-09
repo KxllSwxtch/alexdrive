@@ -24,8 +24,8 @@ export function CarGrid({ cars }: CarGridProps) {
 
   return (
     <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-      {cars.map((car) => (
-        <CarCard key={car.encryptedId} car={car} />
+      {cars.map((car, i) => (
+        <CarCard key={car.encryptedId} car={car} index={i} />
       ))}
     </div>
   );

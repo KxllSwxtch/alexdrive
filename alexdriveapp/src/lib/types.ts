@@ -109,6 +109,7 @@ export interface CarListing {
   location: string;
   dealer: string;
   phone: string;
+  blurDataUrl?: string;
 }
 
 export interface CarDetail {

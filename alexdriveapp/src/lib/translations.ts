@@ -1,5 +1,6 @@
 // Korean to Russian/English translations dictionary
 const translations = {
+  이그젝큐티브: "Executive",
   일반형: "Стандарт",
   워크스루밴: "Фургон",
   포터: "Porter",
@@ -959,7 +960,7 @@ const translations = {
   혜택구분: "Benefit Type",
   오토: "Автомат",
   세미오토: "Полуавтомат",
-  "무단변속기": "Вариатор",
+  무단변속기: "Вариатор",
   변속기: "Коробка передач",
   가격: "Price",
   경기: "Gyeonggi",
@@ -1144,7 +1145,7 @@ const translations = {
   쯔더우: "ZiDou",
   토요타: "Toyota",
   "KG모빌리티(쌍용)": "KG Mobility (SsangYong)",
-  "기타제조사": "Прочие",
+  기타제조사: "Прочие",
   제조사: "Производитель",
   갤로퍼: "Galloper",
   그라나다: "Granada",
@@ -1765,15 +1766,15 @@ const translations = {
   냉장탑: "Refrigerated Box",
   보냉탑: "Insulated Box",
   다용도탑: "Multi-use Box",
-  "저상냉동탑": "Low Floor Reefer",
+  저상냉동탑: "Low Floor Reefer",
   하이탑: "Hi-Top",
   소프트탑: "Soft Top",
   하드탑: "Hardtop",
   윙바: "Wing Body",
-  "내장탑": "Interior Box",
-  "내장탑파워게이트": "Interior Box w/ Power Gate",
-  "냉동탑파워게이트": "Reefer Box w/ Power Gate",
-  "냉장탑파워게이트": "Refrigerated Box w/ Power Gate",
+  내장탑: "Interior Box",
+  내장탑파워게이트: "Interior Box w/ Power Gate",
+  냉동탑파워게이트: "Reefer Box w/ Power Gate",
+  냉장탑파워게이트: "Refrigerated Box w/ Power Gate",
   냉온장탑: "Heated/Cooled Box",
   게이트: "Gate",
   캡: "Cab",
@@ -1782,23 +1783,23 @@ const translations = {
   크레인: "Crane",
   렉카: "Wrecker",
   트레일러: "Trailer",
-  "캠핑트레일러": "Camping Trailer",
+  캠핑트레일러: "Camping Trailer",
   로리: "Lorry",
   홈로리: "Home Lorry",
-  "버큠로리": "Vacuum Lorry",
+  버큠로리: "Vacuum Lorry",
   트럭: "Truck",
   메가트럭: "Mega Truck",
   버스: "Bus",
   마을버스: "Village Bus",
   활어차: "Live Fish Truck",
-  "고소작업차": "Aerial Work Platform",
+  고소작업차: "Aerial Work Platform",
   사다리차: "Ladder Truck",
   유조차: "Tanker",
   진개차: "Garbage Truck",
   바가지차: "Bucket Truck",
-  "가축운반차": "Livestock Carrier",
+  가축운반차: "Livestock Carrier",
   미닫이탑차: "Sliding Door Box",
-  "이동판매": "Mobile Sales",
+  이동판매: "Mobile Sales",
   윙: "Wing",
   점보: "Jumbo",
   표준형: "Standard",
@@ -1810,8 +1811,8 @@ const translations = {
   싱글컴프: "Single Comp",
   전동식: "Electric",
   수동식: "Manual",
-  "수직형": "Vertical",
-  "턴인형": "Turn-in",
+  수직형: "Vertical",
+  턴인형: "Turn-in",
   형: "Type",
 
   // === MODEL NAMES (missing/self-referencing) ===
@@ -2020,11 +2021,11 @@ const translations = {
   마이티: "Mighty",
   리베로: "Libero",
   트라고: "Trago",
-  "야무진": "Yamujin",
-  "와이드": "Wide",
+  야무진: "Yamujin",
+  와이드: "Wide",
   프런티어: "Frontier",
   뉴포터: "New Porter",
-  "더뉴봉고3": "The New Bongo 3",
+  더뉴봉고3: "The New Bongo 3",
   모젠: "Mozen",
   마사다: "Masada",
   솔라티: "Solati",
@@ -2059,9 +2060,9 @@ const translations = {
   스넥카: "Snaker",
   레스타: "Resta",
   센토디에치: "Centodieci",
-  "AD모터스": "AD Motors",
-  "FJ크루져": "FJ Cruiser",
-  "JJ모터스": "JJ Motors",
+  AD모터스: "AD Motors",
+  FJ크루져: "FJ Cruiser",
+  JJ모터스: "JJ Motors",
   모터스: "Motors",
   크루져: "Cruiser",
   마이브: "Myve",
@@ -2117,20 +2118,20 @@ const translations = {
   데일리: "Daily",
   셀프로더: "Self Loader",
   스터: "ster",
-  "웨건R": "Wagon R",
+  웨건R: "Wagon R",
 
   // === BUS MODELS ===
-  "소형기아버스": "Compact Kia Bus",
-  "소형선롱버스": "Compact Sunlong Bus",
-  "소형현대버스": "Compact Hyundai Bus",
-  "중형기아버스": "Mid-size Kia Bus",
-  "중형대우버스": "Mid-size Daewoo Bus",
-  "중형쌍용버스": "Mid-size SsangYong Bus",
-  "중형현대버스": "Mid-size Hyundai Bus",
-  "대형기아버스": "Large Kia Bus",
-  "대형대우버스": "Large Daewoo Bus",
-  "대형쌍용버스": "Large SsangYong Bus",
-  "대형현대버스": "Large Hyundai Bus",
+  소형기아버스: "Compact Kia Bus",
+  소형선롱버스: "Compact Sunlong Bus",
+  소형현대버스: "Compact Hyundai Bus",
+  중형기아버스: "Mid-size Kia Bus",
+  중형대우버스: "Mid-size Daewoo Bus",
+  중형쌍용버스: "Mid-size SsangYong Bus",
+  중형현대버스: "Mid-size Hyundai Bus",
+  대형기아버스: "Large Kia Bus",
+  대형대우버스: "Large Daewoo Bus",
+  대형쌍용버스: "Large SsangYong Bus",
+  대형현대버스: "Large Hyundai Bus",
 
   // === GRADE / TRIM TERMS ===
   해치백: "Hatchback",
@@ -2153,7 +2154,7 @@ const translations = {
   비주얼: "Visual",
   익스테리어: "Exterior",
   글라스: "Glass",
-  "포트폴리오": "Portfolio",
+  포트폴리오: "Portfolio",
   캠핑: "Camping",
   캠퍼: "Camper",
   캠핑카: "Camper Van",
@@ -2170,7 +2171,7 @@ const translations = {
   매틱: "Matic",
   콤비: "Combi",
   엔트리: "Entry",
-  "퍼포만테": "Performante",
+  퍼포만테: "Performante",
   프렌드: "Friend",
   래티튜드: "Latitude",
   라레도: "Laredo",
@@ -2181,7 +2182,7 @@ const translations = {
   인텐스: "Intense",
   프리미에르: "Premiere",
   밀리언: "Million",
-  "다이아몬드": "Diamond",
+  다이아몬드: "Diamond",
   유니크: "Unique",
   엑시드: "Exceed",
   센스: "Sense",
@@ -2207,11 +2208,11 @@ const translations = {
   크로스백: "Crossback",
   카브리오: "Cabrio",
   오픈에어: "Open Air",
-  "트랜스폼": "Transform",
+  트랜스폼: "Transform",
   임프레션: "Impression",
   택시: "Taxi",
   자가용: "Private",
-  "운전교습용": "Driving School",
+  운전교습용: "Driving School",
   장애인: "Disabled Access",
   장애: "Disabled",
   어린이: "Children",
@@ -2273,7 +2274,7 @@ const translations = {
   패신저: "Passenger",
   마스타: "Masta",
   전기차: "Electric Car",
-  "일레븐": "Eleven",
+  일레븐: "Eleven",
   크로스: "Cross",
   컨트리: "Country",
   교습: "Training",
@@ -2664,21 +2665,21 @@ const sortedEntries = Object.entries(translations as Record<string, string>)
   .map(([key, value]) => ({
     regex: new RegExp(key.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "g"),
     value,
-  }));
+  }))
 
 export function translateSmartly(text: string): string {
-  if (!text || typeof text !== "string") return text;
-  let translated = text;
+  if (!text || typeof text !== "string") return text
+  let translated = text
   for (const { regex, value } of sortedEntries) {
-    translated = translated.replace(regex, value);
+    translated = translated.replace(regex, value)
   }
 
   // Add spaces between different character types for better readability
-  translated = translated.replace(/([A-Za-z0-9])([А-Яа-яЁё])/g, "$1 $2");
-  translated = translated.replace(/([А-Яа-яЁё])([A-Za-z])/g, "$1 $2");
-  translated = translated.replace(/([0-9])([А-Яа-яЁё])/g, "$1 $2");
+  translated = translated.replace(/([A-Za-z0-9])([А-Яа-яЁё])/g, "$1 $2")
+  translated = translated.replace(/([А-Яа-яЁё])([A-Za-z])/g, "$1 $2")
+  translated = translated.replace(/([0-9])([А-Яа-яЁё])/g, "$1 $2")
 
-  return translated;
+  return translated
 }
 
 export { translations }

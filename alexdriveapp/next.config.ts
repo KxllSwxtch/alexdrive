@@ -13,6 +13,8 @@ const nextConfig: NextConfig = {
         hostname: "img.carmanager.co.kr",
       },
     ],
+    minimumCacheTTL: 86400,
+    formats: ["image/avif", "image/webp"],
   },
 };
 

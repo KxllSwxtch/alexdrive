@@ -7,9 +7,10 @@ import { buildCarDetailPath } from "@/lib/url";
 
 interface CarCardProps {
   car: CarListing;
+  index?: number;
 }
 
-export function CarCard({ car }: CarCardProps) {
+export function CarCard({ car, index }: CarCardProps) {
   const translatedName = translateSmartly(car.name);
   const translatedFuel = car.fuel ? translateSmartly(car.fuel) : "";
   const translatedTransmission = car.transmission ? translateSmartly(car.transmission) : "";
@@ -29,6 +30,9 @@ export function CarCard({ car }: CarCardProps) {
             fill
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
             className="object-cover transition-transform duration-500 group-hover:scale-105"
+            priority={index !== undefined && index < 3}
+            placeholder={car.blurDataUrl ? "blur" : "empty"}
+            blurDataURL={car.blurDataUrl || undefined}
           />
         ) : (
           <div className="flex h-full items-center justify-center text-text-secondary">
