@@ -1,0 +1,30 @@
+services:
+  - type: web
+    name: alexdrive-backend
+    runtime: docker
+    dockerfilePath: ./alexdrivebackend/Dockerfile
+    dockerContext: ./alexdrivebackend
+    plan: starter
+    healthCheckPath: /api/health
+    envVars:
+      - key: CARMANAGER_USERNAME
+        sync: false
+      - key: CARMANAGER_PASSWORD
+        sync: false
+      - key: PROXY_URL
+        sync: false
+      - key: CORS_ORIGINS
+        generateValue: false
+
+  - type: web
+    name: alexdrive-frontend
+    runtime: docker
+    dockerfilePath: ./alexdriveapp/Dockerfile
+    dockerContext: ./alexdriveapp
+    plan: starter
+    envVars:
+      - key: BACKEND_URL
+        generateValue: false
+    buildArgs:
+      - key: NEXT_PUBLIC_BACKEND_URL
+        generateValue: false

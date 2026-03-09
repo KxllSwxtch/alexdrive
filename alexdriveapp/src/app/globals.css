@@ -1,0 +1,135 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  /* === Existing AlexDrive theme (PRESERVED) === */
+  --color-gold: #D4AF37;
+  --color-gold-light: #E8C84A;
+  --color-gold-dark: #B8960F;
+  --color-bg-primary: #101010;
+  --color-bg-surface: #161616;
+  --color-bg-elevated: #262626;
+  --color-border: var(--border);
+  --color-text-primary: #FFFFFF;
+  --color-text-secondary: #878787;
+  --font-heading: var(--font-jost);
+  --font-body: var(--font-inter);
+  --sidebar-width: 268px;
+
+  /* === shadcn-ui theme mappings === */
+  --font-sans: var(--font-inter);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+/* Dark-only site: AlexDrive palette mapped to shadcn variables */
+:root {
+  --radius: 0.5rem;
+  --background: #101010;
+  --foreground: #FFFFFF;
+  --card: #161616;
+  --card-foreground: #FFFFFF;
+  --popover: #262626;
+  --popover-foreground: #FFFFFF;
+  --primary: #D4AF37;
+  --primary-foreground: #101010;
+  --secondary: #262626;
+  --secondary-foreground: #FFFFFF;
+  --muted: #1a1a1a;
+  --muted-foreground: #878787;
+  --accent: #262626;
+  --accent-foreground: #FFFFFF;
+  --destructive: #ef4444;
+  --border: #383838;
+  --input: #383838;
+  --ring: #D4AF37;
+}
+
+body {
+  background-color: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  font-family: var(--font-body), sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading), sans-serif;
+}
+
+/* Custom scrollbar for dark theme */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-bg-primary);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-secondary);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+}
+
+/* Accordion panel height animation */
+[data-accordion-panel] {
+  overflow: hidden;
+  transition: height 200ms ease-out;
+}
+
+[data-accordion-panel][data-open] {
+  height: var(--accordion-panel-height);
+}
+
+[data-accordion-panel][data-starting-style],
+[data-accordion-panel]:not([data-open]) {
+  height: 0;
+}
+
+[data-accordion-panel][data-ending-style] {
+  height: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-accordion-panel] {
+    transition: none;
+  }
+}
+
+/* Logo hover glow */
+.logo-glow {
+  transition: text-shadow 0.3s ease;
+}
+.group:hover .logo-glow {
+  text-shadow: 0 0 20px rgba(212, 175, 55, 0.15), 0 0 40px rgba(212, 175, 55, 0.08);
+}

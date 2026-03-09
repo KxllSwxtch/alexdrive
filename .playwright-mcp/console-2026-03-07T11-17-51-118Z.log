@@ -1,0 +1,2 @@
+[    4500ms] [WARNING] Image with src "https://img.carmanager.co.kr/temp/photo/20260307/64688AE0E8B72EA561263AA1F4ACAF8EF8D7F12D80402DD63FE949220410413F.jpg" was detected as the Largest Contentful Paint (LCP). Please add the `loading="eager"` property if this image is above the fold.
+Read more: https://nextjs.org/docs/app/api-reference/components/image#loading @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297

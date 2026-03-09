@@ -1,0 +1,12 @@
+{
+  "name": "alexdrive",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently -n backend,frontend -c blue,green \"cd alexdrivebackend && .venv/bin/python -m uvicorn app.main:app --host 0.0.0.0 --port 3001 --reload\" \"cd alexdriveapp && npm run dev\"",
+    "install:all": "cd alexdriveapp && npm install"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.0"
+  }
+}

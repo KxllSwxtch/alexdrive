@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "brightdata": {
+      "type": "sse",
+      "url": "https://mcp.brightdata.com/sse?token=a7a4d22f-8166-42d8-8351-d8272e2ffa50&groups=advanced_scraping,browser"
+    },
+    "figma": {
+      "type": "sse",
+      "url": "http://127.0.0.1:3845/sse"
+    }
+  }
+}
