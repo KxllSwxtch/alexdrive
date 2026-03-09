@@ -6,10 +6,9 @@ import Image from "next/image";
 interface ImageGalleryProps {
   images: string[];
   alt: string;
-  blurDataUrl?: string;
 }
 
-export function ImageGallery({ images, alt, blurDataUrl }: ImageGalleryProps) {
+export function ImageGallery({ images, alt }: ImageGalleryProps) {
   const [current, setCurrent] = useState(0);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const triggerRef = useRef<HTMLDivElement>(null);
@@ -91,9 +90,6 @@ export function ImageGallery({ images, alt, blurDataUrl }: ImageGalleryProps) {
           sizes="(max-width: 1024px) 100vw, 60vw"
           className="object-cover"
           priority
-          {...(blurDataUrl && current === 0
-            ? { placeholder: "blur" as const, blurDataURL: blurDataUrl }
-            : {})}
         />
 
         {images.length > 1 && (
@@ -147,6 +143,7 @@ export function ImageGallery({ images, alt, blurDataUrl }: ImageGalleryProps) {
                 fill
                 sizes="96px"
                 className="object-cover"
+                loading="lazy"
               />
             </button>
           ))}
@@ -202,7 +199,7 @@ export function ImageGallery({ images, alt, blurDataUrl }: ImageGalleryProps) {
                 fill
                 sizes="90vw"
                 className="object-contain"
-                priority
+                loading="eager"
               />
             </div>
 
@@ -230,26 +227,33 @@ export function ImageGallery({ images, alt, blurDataUrl }: ImageGalleryProps) {
           {/* Fullscreen thumbnails */}
           {images.length > 1 && (
             <div className="flex max-w-[90vw] gap-2 overflow-x-auto px-4 pb-4">
-              {images.map((src, i) => (
-                <button
-                  key={i}
-                  ref={(el) => { fullscreenThumbnailRefs.current[i] = el; }}
-                  onClick={() => setCurrent(i)}
-                  className={`relative h-14 w-20 flex-shrink-0 overflow-hidden rounded-lg border-2 transition-all ${
-                    i === current
-                      ? "border-gold"
-                      : "border-transparent opacity-50 hover:opacity-80"
-                  }`}
-                >
-                  <Image
-                    src={src}
-                    alt={`${alt} - миниатюра ${i + 1}`}
-                    fill
-                    sizes="80px"
-                    className="object-cover"
-                  />
-                </button>
-              ))}
+              {images.map((src, i) => {
+                const inWindow = Math.abs(i - current) <= 5;
+                return (
+                  <button
+                    key={i}
+                    ref={(el) => { fullscreenThumbnailRefs.current[i] = el; }}
+                    onClick={() => setCurrent(i)}
+                    className={`relative h-14 w-20 flex-shrink-0 overflow-hidden rounded-lg border-2 transition-all ${
+                      i === current
+                        ? "border-gold"
+                        : "border-transparent opacity-50 hover:opacity-80"
+                    }`}
+                  >
+                    {inWindow ? (
+                      <Image
+                        src={src}
+                        alt={`${alt} - миниатюра ${i + 1}`}
+                        fill
+                        sizes="80px"
+                        className="object-cover"
+                      />
+                    ) : (
+                      <div className="absolute inset-0 bg-bg-elevated" />
+                    )}
+                  </button>
+                );
+              })}
             </div>
           )}
         </div>

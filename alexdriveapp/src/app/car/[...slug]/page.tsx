@@ -132,7 +132,7 @@ export default async function CarDetailPage({ params }: PageProps) {
         {/* Left column */}
         <div className="min-w-0 space-y-6">
           {/* Gallery */}
-          <ImageGallery images={car.images} alt={translatedName} blurDataUrl={car.blurDataUrl} />
+          <ImageGallery images={car.images} alt={translatedName} />
 
           {/* Title & Price + Share */}
           <div className="flex items-start justify-between gap-3">

@@ -10,7 +10,6 @@ from starlette.middleware.gzip import GZipMiddleware
 
 from app.config import settings
 from app.routes import cars, filters, health
-from app.services.blur import close_client as close_blur_client
 from app.services.carmanager import get_car_listings
 from app.services.client import NetworkError
 from app.services.session import set_http_client, get_session
@@ -45,7 +44,6 @@ async def lifespan(app: FastAPI):
 
         print(f"[server] AlexDrive backend running on port {settings.port}")
         yield
-        await close_blur_client()
 
 
 app = FastAPI(lifespan=lifespan)
