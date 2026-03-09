@@ -10,7 +10,7 @@ from app.parsers.filter_parser import (
     parse_select_options,
 )
 from app.parsers.listing_parser import parse_car_listings, parse_total_count
-from app.services.client import fetch_page, post_form
+from app.services.client import NetworkError, fetch_page, post_form
 
 _filter_cache: dict | None = None
 _filter_lock = asyncio.Lock()
@@ -100,7 +100,13 @@ async def get_filter_data() -> dict:
     async with _filter_lock:
         if _filter_cache and time.time() < _filter_cache["expiry"]:
             return _filter_cache["data"]
-        return await _fetch_filter_data_internal()
+        try:
+            return await _fetch_filter_data_internal()
+        except NetworkError:
+            if _filter_cache:
+                print("[carmanager] Serving stale filter cache due to network error")
+                return _filter_cache["data"]
+            raise
 
 
 def _evict_oldest(cache: dict[str, dict], max_entries: int) -> None:
@@ -171,7 +177,15 @@ async def get_car_listings(params: dict) -> dict:
         if cached and time.time() < cached["expiry"]:
             return cached["data"]
 
-        html = await post_form("/Car/Data", form_fields)
+        try:
+            html = await post_form("/Car/Data", form_fields)
+        except NetworkError:
+            cached = _listing_cache.get(cache_key)
+            if cached:
+                print(f"[carmanager] Serving stale listing cache due to network error ({cache_key[:8]})")
+                return cached["data"]
+            raise
+
         listings = parse_car_listings(html)
         total = parse_total_count(html)
 
@@ -199,7 +213,15 @@ async def get_car_detail(encrypted_id: str) -> dict:
         if cached and time.time() < cached["expiry"]:
             return cached["data"]
 
-        html = await post_form("/PopupFrame/CarDetailEnc", {"encarno": encrypted_id})
+        try:
+            html = await post_form("/PopupFrame/CarDetailEnc", {"encarno": encrypted_id})
+        except NetworkError:
+            cached = _detail_cache.get(encrypted_id)
+            if cached:
+                print(f"[carmanager] Serving stale detail cache due to network error ({encrypted_id[:16]}...)")
+                return cached["data"]
+            raise
+
         result = parse_car_detail(html, encrypted_id)
         _detail_cache[encrypted_id] = {"data": result, "expiry": time.time() + DETAIL_TTL}
         _evict_oldest(_detail_cache, MAX_DETAIL_CACHE_ENTRIES)

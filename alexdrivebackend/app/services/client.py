@@ -1,7 +1,18 @@
+import asyncio
 from urllib.parse import urlencode
+
+import httpx
 
 from app.config import settings
 from app.services.session import get_http_client, get_session, invalidate_session
+
+MAX_NETWORK_RETRIES = 3
+NETWORK_RETRY_ERRORS = (httpx.ConnectError, httpx.ConnectTimeout, httpx.ReadTimeout)
+
+
+class NetworkError(Exception):
+    """Raised when all network retry attempts are exhausted."""
+    pass
 
 
 async def fetch_with_auth(
@@ -21,12 +32,23 @@ async def fetch_with_auth(
     if headers:
         req_headers.update(headers)
 
-    response = await client.request(
-        method,
-        f"{settings.carmanager_base_url}{path}",
-        headers=req_headers,
-        content=body,
-    )
+    last_exc = None
+    for attempt in range(1, MAX_NETWORK_RETRIES + 1):
+        try:
+            response = await client.request(
+                method,
+                f"{settings.carmanager_base_url}{path}",
+                headers=req_headers,
+                content=body,
+            )
+            break
+        except NETWORK_RETRY_ERRORS as exc:
+            last_exc = exc
+            print(f"[client] Network error on attempt {attempt}/{MAX_NETWORK_RETRIES}: {exc}")
+            if attempt < MAX_NETWORK_RETRIES:
+                await asyncio.sleep(1.0 * attempt)
+    else:
+        raise NetworkError(f"Failed after {MAX_NETWORK_RETRIES} attempts: {last_exc}") from last_exc
 
     location = response.headers.get("location", "")
     if (response.status_code == 302 and "Login" in location) or response.status_code == 401:

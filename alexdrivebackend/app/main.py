@@ -11,6 +11,7 @@ from starlette.middleware.gzip import GZipMiddleware
 from app.config import settings
 from app.routes import cars, filters, health
 from app.services.carmanager import get_car_listings
+from app.services.client import NetworkError
 from app.services.session import set_http_client, get_session
 
 
@@ -72,11 +73,14 @@ async def log_requests(request: Request, call_next):
 
 @app.exception_handler(Exception)
 async def global_exception_handler(request: Request, exc: Exception):
-    print(f"[error] {exc}")
-    return JSONResponse(
-        status_code=500,
-        content={"error": str(exc) or "Internal server error"},
-    )
+    if isinstance(exc, NetworkError):
+        print(f"[error] Network failure: {exc}")
+        return JSONResponse(status_code=503, content={"error": "Service temporarily unavailable"})
+    if isinstance(exc, (httpx.ConnectError, httpx.TimeoutException)):
+        print(f"[error] Connection error: {exc}")
+        return JSONResponse(status_code=503, content={"error": "Service temporarily unavailable"})
+    print(f"[error] {type(exc).__name__}: {exc}")
+    return JSONResponse(status_code=500, content={"error": "Internal server error"})
 
 
 if __name__ == "__main__":
