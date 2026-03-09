@@ -85,7 +85,18 @@ def parse_model_details(js: str) -> dict[str, list[dict]]:
     data = safe_parse_json(raw)
     if not isinstance(data, dict):
         return {}
-    return data
+    # Normalize: MDetailNo → ModelDetailNo, MDetailName → ModelDetailName
+    return {
+        key: [
+            {
+                "ModelDetailNo": item.get("MDetailNo"),
+                "ModelDetailName": item.get("MDetailName"),
+                "ModelNo": item.get("ModelNo"),
+            }
+            for item in items
+        ]
+        for key, items in data.items()
+    }
 
 
 def parse_grades(js: str) -> dict[str, list[dict]]:
@@ -95,7 +106,18 @@ def parse_grades(js: str) -> dict[str, list[dict]]:
     data = safe_parse_json(raw)
     if not isinstance(data, dict):
         return {}
-    return data
+    # Normalize: MDetailNo → ModelDetailNo
+    return {
+        key: [
+            {
+                "GradeNo": item.get("GradeNo"),
+                "GradeName": item.get("GradeName"),
+                "ModelDetailNo": item.get("MDetailNo"),
+            }
+            for item in items
+        ]
+        for key, items in data.items()
+    }
 
 
 def parse_grade_details(js: str) -> dict[str, list[dict]]:
@@ -105,7 +127,18 @@ def parse_grade_details(js: str) -> dict[str, list[dict]]:
     data = safe_parse_json(raw)
     if not isinstance(data, dict):
         return {}
-    return data
+    # Normalize: GDetailNo → GradeDetailNo, GDetailName → GradeDetailName
+    return {
+        key: [
+            {
+                "GradeDetailNo": item.get("GDetailNo"),
+                "GradeDetailName": item.get("GDetailName"),
+                "GradeNo": item.get("GradeNo"),
+            }
+            for item in items
+        ]
+        for key, items in data.items()
+    }
 
 
 def parse_filter_data_from_js(js_content: str) -> dict:

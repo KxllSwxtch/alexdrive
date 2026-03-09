@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo, useCallback } from "react";
+import { useState, useEffect, useMemo, useCallback } from "react";
 import type { FilterData, CarListingParams } from "@/lib/types";
 import { translateSmartly } from "@/lib/translations";
 import { cn } from "@/lib/utils";
@@ -27,12 +27,12 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command";
-import { ChevronsUpDown, ChevronDown, RotateCcw } from "lucide-react";
+import { ChevronsUpDown, ChevronDown, RotateCcw, Search } from "lucide-react";
 
 interface FilterBarProps {
   filters: FilterData | null;
-  params: CarListingParams;
-  onParamsChange: (params: CarListingParams) => void;
+  appliedParams: CarListingParams;
+  onApplyFilters: (params: CarListingParams) => void;
   loading?: boolean;
 }
 
@@ -43,65 +43,146 @@ interface SelectOption {
 
 const ALL_VALUE = "__all__";
 
+const FILTER_KEYS = [
+  "CarMakerNo",
+  "CarModelNo",
+  "CarModelDetailNo",
+  "CarGradeNo",
+  "CarGradeDetailNo",
+  "CarYearFrom",
+  "CarYearTo",
+  "CarMileageFrom",
+  "CarMileageTo",
+  "CarPriceFrom",
+  "CarPriceTo",
+  "CarFuelNo",
+  "CarColorNo",
+  "CarPhoto",
+  "CarInsurance",
+  "CarInspection",
+  "CarLease",
+] as const;
+
 export function FilterBar({
   filters,
-  params,
-  onParamsChange,
+  appliedParams,
+  onApplyFilters,
   loading,
 }: FilterBarProps) {
   const [expanded, setExpanded] = useState(false);
 
-  // Cascading state
-  const [selectedMaker, setSelectedMaker] = useState(params.CarMakerNo || "");
-  const [selectedModel, setSelectedModel] = useState(params.CarModelNo || "");
-  const [selectedModelDetail, setSelectedModelDetail] = useState(
-    params.CarModelDetailNo || ""
-  );
+  // Draft state — local, uncommitted filter values
+  const [draftParams, setDraftParams] = useState<CarListingParams>(appliedParams);
 
-  const updateParam = useCallback(
+  // Cascading state
+  const [selectedMaker, setSelectedMaker] = useState(appliedParams.CarMakerNo || "");
+  const [selectedModel, setSelectedModel] = useState(appliedParams.CarModelNo || "");
+  const [selectedModelDetail, setSelectedModelDetail] = useState(
+    appliedParams.CarModelDetailNo || ""
+  );
+  const [selectedGrade, setSelectedGrade] = useState(appliedParams.CarGradeNo || "");
+  const [selectedGradeDetail, setSelectedGradeDetail] = useState(appliedParams.CarGradeDetailNo || "");
+
+  // Sync draft from parent when appliedParams change (e.g. pagination)
+  useEffect(() => {
+    setDraftParams(appliedParams);
+    setSelectedMaker(appliedParams.CarMakerNo || "");
+    setSelectedModel(appliedParams.CarModelNo || "");
+    setSelectedModelDetail(appliedParams.CarModelDetailNo || "");
+    setSelectedGrade(appliedParams.CarGradeNo || "");
+    setSelectedGradeDetail(appliedParams.CarGradeDetailNo || "");
+  }, [appliedParams]);
+
+  // Dirty detection — are there unapplied filter changes?
+  const hasUnappliedChanges = useMemo(() => {
+    return FILTER_KEYS.some(
+      (k) => (draftParams[k] || "") !== (appliedParams[k] || "")
+    );
+  }, [draftParams, appliedParams]);
+
+  const updateDraft = useCallback(
     (key: keyof CarListingParams, value: string) => {
-      onParamsChange({ ...params, [key]: value || undefined, PageNow: 1 });
+      setDraftParams((prev) => ({ ...prev, [key]: value || undefined, PageNow: 1 }));
     },
-    [params, onParamsChange]
+    []
   );
 
   const handleMakerChange = (value: string) => {
     setSelectedMaker(value);
     setSelectedModel("");
     setSelectedModelDetail("");
-    onParamsChange({
-      ...params,
+    setSelectedGrade("");
+    setSelectedGradeDetail("");
+    setDraftParams((prev) => ({
+      ...prev,
       CarMakerNo: value || undefined,
       CarModelNo: undefined,
       CarModelDetailNo: undefined,
       CarGradeNo: undefined,
       CarGradeDetailNo: undefined,
       PageNow: 1,
-    });
+    }));
   };
 
   const handleModelChange = (value: string) => {
     setSelectedModel(value);
     setSelectedModelDetail("");
-    onParamsChange({
-      ...params,
+    setSelectedGrade("");
+    setSelectedGradeDetail("");
+    setDraftParams((prev) => ({
+      ...prev,
       CarModelNo: value || undefined,
       CarModelDetailNo: undefined,
       CarGradeNo: undefined,
       CarGradeDetailNo: undefined,
       PageNow: 1,
-    });
+    }));
   };
 
   const handleModelDetailChange = (value: string) => {
     setSelectedModelDetail(value);
-    onParamsChange({
-      ...params,
+    setSelectedGrade("");
+    setSelectedGradeDetail("");
+    setDraftParams((prev) => ({
+      ...prev,
       CarModelDetailNo: value || undefined,
       CarGradeNo: undefined,
       CarGradeDetailNo: undefined,
       PageNow: 1,
-    });
+    }));
+  };
+
+  const handleGradeChange = (value: string) => {
+    setSelectedGrade(value);
+    setSelectedGradeDetail("");
+    setDraftParams((prev) => ({
+      ...prev,
+      CarGradeNo: value || undefined,
+      CarGradeDetailNo: undefined,
+      PageNow: 1,
+    }));
+  };
+
+  const handleGradeDetailChange = (value: string) => {
+    setSelectedGradeDetail(value);
+    setDraftParams((prev) => ({
+      ...prev,
+      CarGradeDetailNo: value || undefined,
+      PageNow: 1,
+    }));
+  };
+
+  // Sort — instant-apply (merges draft + new sort value)
+  const handleSortChange = (value: string) => {
+    const merged = { ...draftParams, PageSort: value || undefined, PageNow: 1 };
+    setDraftParams(merged);
+    onApplyFilters(merged);
+  };
+
+  const handleSortDirectionChange = (value: string) => {
+    const merged = { ...draftParams, PageAscDesc: value, PageNow: 1 };
+    setDraftParams(merged);
+    onApplyFilters(merged);
   };
 
   // Get cascading options
@@ -112,6 +193,14 @@ export function FilterBar({
   const modelDetails =
     selectedModel && filters?.modelDetails
       ? filters.modelDetails[Number(selectedModel)] || []
+      : [];
+  const grades =
+    selectedModelDetail && filters?.grades
+      ? filters.grades[Number(selectedModelDetail)] || []
+      : [];
+  const gradeDetails =
+    selectedGrade && filters?.gradeDetails
+      ? filters.gradeDetails[Number(selectedGrade)] || []
       : [];
 
   // Translated options
@@ -142,6 +231,24 @@ export function FilterBar({
     [modelDetails]
   );
 
+  const translatedGrades = useMemo(
+    () =>
+      grades.map((g) => ({
+        value: String(g.GradeNo),
+        label: translateSmartly(g.GradeName),
+      })),
+    [grades]
+  );
+
+  const translatedGradeDetails = useMemo(
+    () =>
+      gradeDetails.map((g) => ({
+        value: String(g.GradeDetailNo),
+        label: translateSmartly(g.GradeDetailName),
+      })),
+    [gradeDetails]
+  );
+
   const translatedFuels = useMemo(
     () =>
       (filters?.fuels || []).map((f) => ({
@@ -161,22 +268,30 @@ export function FilterBar({
   );
 
   const handleReset = () => {
+    const resetParams: CarListingParams = {
+      PageNow: 1,
+      PageSize: appliedParams.PageSize || 20,
+      PageSort: "ModDt",
+      PageAscDesc: "DESC",
+    };
     setSelectedMaker("");
     setSelectedModel("");
     setSelectedModelDetail("");
-    onParamsChange({
-      PageNow: 1,
-      PageSize: params.PageSize || 20,
-      PageSort: "ModDt",
-      PageAscDesc: "DESC",
-    });
+    setSelectedGrade("");
+    setSelectedGradeDetail("");
+    setDraftParams(resetParams);
+    onApplyFilters(resetParams);
+  };
+
+  const handleApply = () => {
+    onApplyFilters({ ...draftParams, PageNow: 1 });
   };
 
   return (
     <div className="rounded-xl border border-border bg-bg-surface">
       {/* Main filters row */}
       <div className="p-4">
-        <div className="grid gap-3 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-3 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
           <FilterField label="Марка">
             <FilterCombobox
               options={translatedMakers}
@@ -208,6 +323,26 @@ export function FilterBar({
             />
           </FilterField>
 
+          <FilterField label="Комплектация">
+            <FilterDropdown
+              options={translatedGrades}
+              value={selectedGrade}
+              onChange={handleGradeChange}
+              placeholder="Все"
+              disabled={!selectedModelDetail}
+            />
+          </FilterField>
+
+          <FilterField label="Детали компл.">
+            <FilterDropdown
+              options={translatedGradeDetails}
+              value={selectedGradeDetail}
+              onChange={handleGradeDetailChange}
+              placeholder="Все"
+              disabled={!selectedGrade}
+            />
+          </FilterField>
+
           <FilterField label="Сортировка">
             <FilterDropdown
               options={[
@@ -217,15 +352,15 @@ export function FilterBar({
                 { value: "CarMileage", label: "По пробегу" },
                 { value: "CarYear", label: "По году" },
               ]}
-              value={params.PageSort || "ModDt"}
-              onChange={(v) => updateParam("PageSort", v)}
+              value={draftParams.PageSort || "ModDt"}
+              onChange={handleSortChange}
               placeholder="По обновлению"
               allowClear={false}
             />
           </FilterField>
         </div>
 
-        {/* Toggle expand & reset */}
+        {/* Toggle expand, Apply & Reset */}
         <div className="mt-3 flex flex-wrap items-center gap-2">
           <Button
             variant="ghost"
@@ -242,15 +377,32 @@ export function FilterBar({
             {expanded ? "Скрыть фильтры" : "Все фильтры"}
           </Button>
 
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={handleReset}
-            className="ml-auto text-text-secondary hover:text-gold"
-          >
-            <RotateCcw className="size-3.5" />
-            Сбросить
-          </Button>
+          <div className="ml-auto flex items-center gap-2">
+            <Button
+              size="sm"
+              onClick={handleApply}
+              disabled={loading}
+              className={cn(
+                "transition-all",
+                hasUnappliedChanges
+                  ? "bg-gold text-bg-base hover:bg-gold/90 shadow-[0_0_12px_rgba(212,175,55,0.3)]"
+                  : "bg-bg-elevated text-text-secondary hover:bg-bg-elevated/80"
+              )}
+            >
+              <Search className="size-3.5" />
+              Найти
+            </Button>
+
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={handleReset}
+              className="text-text-secondary hover:text-gold"
+            >
+              <RotateCcw className="size-3.5" />
+              Сбросить
+            </Button>
+          </div>
         </div>
       </div>
 
@@ -261,8 +413,8 @@ export function FilterBar({
             <FilterField label="Топливо">
               <FilterDropdown
                 options={translatedFuels}
-                value={params.CarFuelNo || ""}
-                onChange={(v) => updateParam("CarFuelNo", v)}
+                value={draftParams.CarFuelNo || ""}
+                onChange={(v) => updateDraft("CarFuelNo", v)}
                 placeholder="Все"
               />
             </FilterField>
@@ -270,8 +422,8 @@ export function FilterBar({
             <FilterField label="Цвет">
               <FilterDropdown
                 options={translatedColors}
-                value={params.CarColorNo || ""}
-                onChange={(v) => updateParam("CarColorNo", v)}
+                value={draftParams.CarColorNo || ""}
+                onChange={(v) => updateDraft("CarColorNo", v)}
                 placeholder="Все"
               />
             </FilterField>
@@ -281,28 +433,28 @@ export function FilterBar({
           <div className="mt-3 grid gap-3 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
             <RangeInput
               label="Год выпуска"
-              fromValue={params.CarYearFrom || ""}
-              toValue={params.CarYearTo || ""}
-              onFromChange={(v) => updateParam("CarYearFrom", v)}
-              onToChange={(v) => updateParam("CarYearTo", v)}
+              fromValue={draftParams.CarYearFrom || ""}
+              toValue={draftParams.CarYearTo || ""}
+              onFromChange={(v) => updateDraft("CarYearFrom", v)}
+              onToChange={(v) => updateDraft("CarYearTo", v)}
               placeholderFrom="От (2015)"
               placeholderTo="До (2024)"
             />
             <RangeInput
               label="Пробег (км)"
-              fromValue={params.CarMileageFrom || ""}
-              toValue={params.CarMileageTo || ""}
-              onFromChange={(v) => updateParam("CarMileageFrom", v)}
-              onToChange={(v) => updateParam("CarMileageTo", v)}
+              fromValue={draftParams.CarMileageFrom || ""}
+              toValue={draftParams.CarMileageTo || ""}
+              onFromChange={(v) => updateDraft("CarMileageFrom", v)}
+              onToChange={(v) => updateDraft("CarMileageTo", v)}
               placeholderFrom="От"
               placeholderTo="До"
             />
             <RangeInput
               label="Цена (₩)"
-              fromValue={params.CarPriceFrom || ""}
-              toValue={params.CarPriceTo || ""}
-              onFromChange={(v) => updateParam("CarPriceFrom", v)}
-              onToChange={(v) => updateParam("CarPriceTo", v)}
+              fromValue={draftParams.CarPriceFrom || ""}
+              toValue={draftParams.CarPriceTo || ""}
+              onFromChange={(v) => updateDraft("CarPriceFrom", v)}
+              onToChange={(v) => updateDraft("CarPriceTo", v)}
               placeholderFrom="От"
               placeholderTo="До"
             />
@@ -312,34 +464,34 @@ export function FilterBar({
           <div className="mt-3 flex flex-wrap gap-3">
             <CheckboxFilter
               label="С фото"
-              checked={params.CarPhoto === "Y"}
-              onChange={(v) => updateParam("CarPhoto", v ? "Y" : "")}
+              checked={draftParams.CarPhoto === "Y"}
+              onChange={(v) => updateDraft("CarPhoto", v ? "Y" : "")}
             />
             <CheckboxFilter
               label="Страховая история"
-              checked={params.CarInsurance === "Y"}
-              onChange={(v) => updateParam("CarInsurance", v ? "Y" : "")}
+              checked={draftParams.CarInsurance === "Y"}
+              onChange={(v) => updateDraft("CarInsurance", v ? "Y" : "")}
             />
             <CheckboxFilter
               label="Проверка авто"
-              checked={params.CarInspection === "Y"}
-              onChange={(v) => updateParam("CarInspection", v ? "Y" : "")}
+              checked={draftParams.CarInspection === "Y"}
+              onChange={(v) => updateDraft("CarInspection", v ? "Y" : "")}
             />
             <CheckboxFilter
               label="Лизинг"
-              checked={params.CarLease === "Y"}
-              onChange={(v) => updateParam("CarLease", v ? "Y" : "")}
+              checked={draftParams.CarLease === "Y"}
+              onChange={(v) => updateDraft("CarLease", v ? "Y" : "")}
             />
 
-            {/* Sort direction */}
+            {/* Sort direction — instant-apply */}
             <div className="ml-auto flex items-center gap-0.5 rounded-lg border border-border">
               <Button
                 variant="ghost"
                 size="sm"
-                onClick={() => updateParam("PageAscDesc", "ASC")}
+                onClick={() => handleSortDirectionChange("ASC")}
                 className={cn(
                   "rounded-r-none border-0",
-                  params.PageAscDesc === "ASC"
+                  draftParams.PageAscDesc === "ASC"
                     ? "bg-gold/10 text-gold"
                     : "text-text-secondary hover:text-text-primary"
                 )}
@@ -349,10 +501,10 @@ export function FilterBar({
               <Button
                 variant="ghost"
                 size="sm"
-                onClick={() => updateParam("PageAscDesc", "DESC")}
+                onClick={() => handleSortDirectionChange("DESC")}
                 className={cn(
                   "rounded-l-none border-0",
-                  params.PageAscDesc !== "ASC"
+                  draftParams.PageAscDesc !== "ASC"
                     ? "bg-gold/10 text-gold"
                     : "text-text-secondary hover:text-text-primary"
                 )}

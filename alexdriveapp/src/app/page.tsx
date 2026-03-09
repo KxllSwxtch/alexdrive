@@ -21,13 +21,6 @@ export default function CatalogPage() {
     PageAscDesc: "DESC",
   });
 
-  // Debounce params changes before fetching
-  const [debouncedParams, setDebouncedParams] = useState(params);
-  useEffect(() => {
-    const timer = setTimeout(() => setDebouncedParams(params), 500);
-    return () => clearTimeout(timer);
-  }, [params]);
-
   // Load filter data once
   useEffect(() => {
     let ignore = false;
@@ -40,13 +33,13 @@ export default function CatalogPage() {
     return () => { ignore = true; };
   }, []);
 
-  // Load cars when debounced params change
+  // Load cars when params change (no debounce — explicit Apply)
   useEffect(() => {
     let ignore = false;
     setLoading(true);
 
     const searchParams = new URLSearchParams();
-    for (const [key, value] of Object.entries(debouncedParams)) {
+    for (const [key, value] of Object.entries(params)) {
       if (value !== undefined && value !== "") {
         if (key === "CarPriceFrom" || key === "CarPriceTo") {
           const num = parseInt(String(value), 10);
@@ -82,7 +75,7 @@ export default function CatalogPage() {
       });
 
     return () => { ignore = true; };
-  }, [debouncedParams]);
+  }, [params]);
 
   const totalPages = Math.ceil(total / PAGE_SIZE);
 
@@ -101,8 +94,11 @@ export default function CatalogPage() {
       {/* Filters */}
       <FilterBar
         filters={filters}
-        params={params}
-        onParamsChange={setParams}
+        appliedParams={params}
+        onApplyFilters={(newParams) => {
+          window.scrollTo({ top: 0, behavior: "instant" });
+          setParams(newParams);
+        }}
         loading={loading}
       />
 
