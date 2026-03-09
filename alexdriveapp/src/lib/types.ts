@@ -130,4 +130,5 @@ export interface CarDetail {
   phone: string;
   registrationDate: string;
   modelYear: string;
+  blurDataUrl?: string;
 }

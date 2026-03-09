@@ -10,7 +10,7 @@ from app.parsers.filter_parser import (
     parse_select_options,
 )
 from app.parsers.listing_parser import parse_car_listings, parse_total_count
-from app.services.blur import enrich_listings_with_blur
+from app.services.blur import enrich_listings_with_blur, generate_blur_for_url
 from app.services.client import NetworkError, fetch_page, post_form
 
 _filter_cache: dict | None = None
@@ -229,6 +229,12 @@ async def get_car_detail(encrypted_id: str) -> dict:
             raise
 
         result = parse_car_detail(html, encrypted_id)
+
+        # Generate blur placeholder for hero image
+        if result.get("images"):
+            blur = await generate_blur_for_url(result["images"][0])
+            result["blurDataUrl"] = blur
+
         _detail_cache[encrypted_id] = {"data": result, "expiry": time.time() + DETAIL_TTL}
         _evict_oldest(_detail_cache, MAX_DETAIL_CACHE_ENTRIES)
         return result

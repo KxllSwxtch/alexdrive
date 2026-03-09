@@ -29,6 +29,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ru">
+      <head>
+        <link rel="preconnect" href="https://img.carmanager.co.kr" />
+        <link rel="dns-prefetch" href="https://img.carmanager.co.kr" />
+      </head>
       <body className={`${jost.variable} ${inter.variable} font-sans antialiased`}>
         <Header />
         <div className="flex">

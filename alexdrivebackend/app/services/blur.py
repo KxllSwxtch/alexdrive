@@ -85,6 +85,35 @@ async def _process_pending() -> None:
     print(f"[blur] Cache size: {count} entries")
 
 
+async def generate_blur_for_url(url: str) -> str:
+    """Generate blur data URL for a single image. Returns empty string on failure."""
+    if not url:
+        return ""
+
+    cached = _blur_cache.get(url)
+    if cached:
+        return cached
+
+    try:
+        client = _get_client()
+        response = await client.get(url)
+        response.raise_for_status()
+
+        img = Image.open(BytesIO(response.content))
+        aspect = img.height / img.width
+        thumb = img.resize((10, max(1, int(10 * aspect))), Image.LANCZOS)
+
+        buf = BytesIO()
+        thumb.save(buf, format="JPEG", quality=20)
+        b64 = base64.b64encode(buf.getvalue()).decode()
+        data_url = f"data:image/jpeg;base64,{b64}"
+        _blur_cache[url] = data_url
+        return data_url
+    except Exception as e:
+        print(f"[blur] Failed to generate blur for {url[:60]}...: {e}")
+        return ""
+
+
 async def close_client() -> None:
     """Cleanup for lifespan shutdown."""
     global _client

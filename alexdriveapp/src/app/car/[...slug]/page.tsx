@@ -1,3 +1,4 @@
+import { cache } from "react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { permanentRedirect } from "next/navigation";
@@ -9,7 +10,7 @@ import { fromUrlSafeId, buildCarDetailPath } from "@/lib/url";
 import { ImageGallery } from "@/components/ImageGallery";
 import { ContactCard } from "@/components/ContactCard";
 import { CarOptions } from "@/components/CarOptions";
-import { CreditCalculatorCompact } from "@/components/CreditCalculatorCompact";
+import { CreditCalculatorLazy } from "@/components/CreditCalculatorLazy";
 import { ShareButton } from "@/components/ShareButton";
 import { priceStringToKrw } from "@/lib/format";
 
@@ -19,13 +20,13 @@ interface PageProps {
   params: Promise<{ slug: string[] }>;
 }
 
-/** Fetch car detail by raw base64 ID */
-async function fetchCar(id: string): Promise<CarDetail> {
+/** Fetch car detail by raw base64 ID (deduplicated across generateMetadata + page) */
+const fetchCar = cache(async (id: string): Promise<CarDetail> => {
   return backendFetch<CarDetail>(
     "/cars/detail",
     new URLSearchParams({ id }),
   );
-}
+});
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   try {
@@ -131,7 +132,7 @@ export default async function CarDetailPage({ params }: PageProps) {
         {/* Left column */}
         <div className="min-w-0 space-y-6">
           {/* Gallery */}
-          <ImageGallery images={car.images} alt={translatedName} />
+          <ImageGallery images={car.images} alt={translatedName} blurDataUrl={car.blurDataUrl} />
 
           {/* Title & Price + Share */}
           <div className="flex items-start justify-between gap-3">
@@ -170,19 +171,26 @@ export default async function CarDetailPage({ params }: PageProps) {
           {/* Compact calculator - mobile only */}
           {carPriceKrw > 0 && (
             <div className="md:hidden">
-              <CreditCalculatorCompact initialPrice={carPriceKrw} />
+              <CreditCalculatorLazy initialPrice={carPriceKrw} />
             </div>
           )}
 
-          {/* Options */}
-          {car.options.length > 0 && <CarOptions options={car.options} />}
+          {/* Options (pre-translated on server to keep translations.ts out of client bundle) */}
+          {car.options.length > 0 && (
+            <CarOptions
+              options={car.options.map((group) => ({
+                group: translateSmartly(group.group) || "Опции",
+                items: group.items.map((item) => translateSmartly(item)),
+              }))}
+            />
+          )}
         </div>
 
         {/* Right column - sticky contact card (hidden on mobile) */}
         <div className="hidden md:block md:sticky md:top-20 md:self-start space-y-4">
           <ContactCard />
           {carPriceKrw > 0 && (
-            <CreditCalculatorCompact initialPrice={carPriceKrw} />
+            <CreditCalculatorLazy initialPrice={carPriceKrw} />
           )}
         </div>
       </div>

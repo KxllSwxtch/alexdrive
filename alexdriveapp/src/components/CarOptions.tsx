@@ -2,7 +2,6 @@
 
 import { Accordion } from "@base-ui/react/accordion";
 import { ChevronDown } from "lucide-react";
-import { translateSmartly } from "@/lib/translations";
 
 interface CarOptionsProps {
   options: { group: string; items: string[] }[];
@@ -19,7 +18,7 @@ export function CarOptions({ options }: CarOptionsProps) {
           <Accordion.Item key={i} value={i}>
             <Accordion.Header>
               <Accordion.Trigger className="group flex w-full cursor-pointer items-center justify-between py-3 text-xs font-semibold text-gold transition-colors hover:text-gold-light">
-                {translateSmartly(group.group) || "Опции"}
+                {group.group}
                 <ChevronDown className="size-4 text-text-secondary transition-transform duration-200 group-data-[panel-open]:rotate-180" />
               </Accordion.Trigger>
             </Accordion.Header>
@@ -30,7 +29,7 @@ export function CarOptions({ options }: CarOptionsProps) {
                     key={j}
                     className="inline-flex rounded-lg border border-border bg-bg-elevated px-3 py-1.5 text-xs text-text-secondary"
                   >
-                    {translateSmartly(item)}
+                    {item}
                   </span>
                 ))}
               </div>
