@@ -122,10 +122,10 @@ export default function CatalogPage() {
           totalPages={totalPages}
           onPageChange={(page) => {
             if (page === (params.PageNow || 1)) return;
+            window.scrollTo({ top: 0, behavior: "instant" });
             setCars([]);
             setLoading(true);
             setParams((prev) => ({ ...prev, PageNow: page }));
-            window.scrollTo({ top: 0, behavior: "smooth" });
           }}
           disabled={loading}
         />
