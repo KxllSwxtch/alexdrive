@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 import { FilterBar } from "@/components/FilterBar";
 import { CarGrid } from "@/components/CarGrid";
 import { Pagination } from "@/components/Pagination";
@@ -9,17 +10,63 @@ import type { FilterData, CarListing, CarListingParams } from "@/lib/types";
 const PAGE_SIZE = 20;
 const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:3001";
 
-export default function CatalogPage() {
+const VALID_PARAM_KEYS = new Set([
+  "CarMakerNo", "CarModelNo", "CarModelDetailNo", "CarGradeNo", "CarGradeDetailNo",
+  "CarYearFrom", "CarYearTo", "CarMileageFrom", "CarMileageTo", "CarPriceFrom", "CarPriceTo",
+  "CarFuelNo", "CarColorNo", "CarPhoto", "CarInsurance", "CarInspection", "CarLease",
+  "CarMissionNo", "DanjiNo", "CarSiDoNo", "CarSiDoAreaNo", "SearchName", "SearchCarNo",
+  "CarLpg", "CarSalePrice",
+  "PageNow", "PageSize", "PageSort", "PageAscDesc",
+]);
+
+const NUMBER_KEYS = new Set(["PageNow", "PageSize"]);
+
+const DEFAULT_PARAMS: CarListingParams = {
+  PageNow: 1,
+  PageSize: PAGE_SIZE,
+  PageSort: "ModDt",
+  PageAscDesc: "DESC",
+};
+
+function parseParamsFromURL(searchParams: URLSearchParams): CarListingParams {
+  const parsed: CarListingParams = { ...DEFAULT_PARAMS };
+  searchParams.forEach((value, key) => {
+    if (!VALID_PARAM_KEYS.has(key) || !value) return;
+    if (NUMBER_KEYS.has(key)) {
+      const num = parseInt(value, 10);
+      if (!isNaN(num)) (parsed as Record<string, unknown>)[key] = num;
+    } else {
+      (parsed as Record<string, unknown>)[key] = value;
+    }
+  });
+  return parsed;
+}
+
+function syncParamsToURL(params: CarListingParams) {
+  const urlParams = new URLSearchParams();
+  for (const [key, value] of Object.entries(params)) {
+    if (value === undefined || value === "") continue;
+    // Omit default values to keep URL clean
+    if (key === "PageNow" && value === 1) continue;
+    if (key === "PageSize" && value === PAGE_SIZE) continue;
+    if (key === "PageSort" && value === "ModDt") continue;
+    if (key === "PageAscDesc" && value === "DESC") continue;
+    urlParams.set(key, String(value));
+  }
+  const qs = urlParams.toString();
+  const newUrl = qs ? `${window.location.pathname}?${qs}` : window.location.pathname;
+  window.history.replaceState(null, "", newUrl);
+}
+
+function CatalogContent() {
+  const searchParams = useSearchParams();
   const [filters, setFilters] = useState<FilterData | null>(null);
   const [cars, setCars] = useState<CarListing[]>([]);
   const [total, setTotal] = useState(0);
   const [loading, setLoading] = useState(true);
-  const [params, setParams] = useState<CarListingParams>({
-    PageNow: 1,
-    PageSize: PAGE_SIZE,
-    PageSort: "ModDt",
-    PageAscDesc: "DESC",
-  });
+  const [params, setParams] = useState<CarListingParams>(() =>
+    parseParamsFromURL(searchParams)
+  );
 
   // Load filter data once
   useEffect(() => {
@@ -77,6 +124,11 @@ export default function CatalogPage() {
     return () => { ignore = true; };
   }, [params]);
 
+  // Sync params to URL
+  useEffect(() => {
+    syncParamsToURL(params);
+  }, [params]);
+
   const totalPages = Math.ceil(total / PAGE_SIZE);
 
   return (
@@ -129,25 +181,39 @@ export default function CatalogPage() {
   );
 }
 
+export default function CatalogPage() {
+  return (
+    <Suspense fallback={<LoadingSkeleton />}>
+      <CatalogContent />
+    </Suspense>
+  );
+}
+
 function LoadingSkeleton() {
   return (
-    <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-      {Array.from({ length: 6 }).map((_, i) => (
-        <div
-          key={i}
-          className="animate-pulse overflow-hidden rounded-xl border border-border bg-bg-surface"
-        >
-          <div className="aspect-[16/10] bg-bg-elevated" />
-          <div className="p-4 space-y-3">
-            <div className="h-5 w-24 rounded bg-bg-elevated" />
-            <div className="h-4 w-full rounded bg-bg-elevated" />
-            <div className="flex gap-3">
-              <div className="h-3 w-16 rounded bg-bg-elevated" />
-              <div className="h-3 w-16 rounded bg-bg-elevated" />
+    <div className="px-4 py-6 sm:px-6 lg:px-8">
+      <div className="mb-6">
+        <div className="h-8 w-64 rounded bg-bg-elevated animate-pulse" />
+        <div className="mt-2 h-4 w-40 rounded bg-bg-elevated animate-pulse" />
+      </div>
+      <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+        {Array.from({ length: 6 }).map((_, i) => (
+          <div
+            key={i}
+            className="animate-pulse overflow-hidden rounded-xl border border-border bg-bg-surface"
+          >
+            <div className="aspect-[16/10] bg-bg-elevated" />
+            <div className="p-4 space-y-3">
+              <div className="h-5 w-24 rounded bg-bg-elevated" />
+              <div className="h-4 w-full rounded bg-bg-elevated" />
+              <div className="flex gap-3">
+                <div className="h-3 w-16 rounded bg-bg-elevated" />
+                <div className="h-3 w-16 rounded bg-bg-elevated" />
+              </div>
             </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   );
 }
