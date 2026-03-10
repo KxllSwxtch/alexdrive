@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Image from "next/image";
+
 import type { CarListing } from "@/lib/types";
 import { translateSmartly } from "@/lib/translations";
 import { formatPrice, formatMileage } from "@/lib/format";
@@ -24,13 +24,13 @@ export function CarCard({ car, index }: CarCardProps) {
       {/* Image */}
       <div className="relative aspect-[16/10] overflow-hidden bg-bg-elevated">
         {car.imageUrl ? (
-          <Image
+          <img
             src={car.imageUrl}
             alt={translatedName}
-            fill
-            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-            className="object-cover transition-transform duration-500 group-hover:scale-105"
-            priority={index !== undefined && index < 3}
+            loading={index !== undefined && index < 3 ? "eager" : "lazy"}
+            decoding="async"
+            fetchPriority={index !== undefined && index < 3 ? "high" : "auto"}
+            className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
           />
         ) : (
           <div className="flex h-full items-center justify-center text-text-secondary">

@@ -35,6 +35,8 @@ def parse_car_detail(html: str, encrypted_id: str) -> dict:
     m = re.search(r"var\s+carcheckoutUrl\s*=\s*'([^']*)'", html)
     if m and m.group(1).strip():
         inspection_url = m.group(1).strip()
+        # Open report in view mode, not print mode
+        inspection_url = re.sub(r"([?&])print=\d+", r"\1print=0", inspection_url)
 
     return {
         "encryptedId": encrypted_id,
