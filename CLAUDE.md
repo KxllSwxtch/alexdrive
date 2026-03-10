@@ -45,7 +45,7 @@ npm start      # next start
 npm run lint   # eslint (no auto-fix)
 ```
 
-No test suite exists in either package.
+Backend tests: `cd alexdrivebackend && pytest -v` (57 tests, pytest + pytest-asyncio + respx).
 
 ## Environment Variables
 
@@ -65,7 +65,7 @@ No test suite exists in either package.
 
 - **Car IDs contain `/` and `=`** (base64-encoded). The detail endpoint uses query params (`GET /api/cars/detail?id=xxx`), not path params, to avoid routing issues.
 - **Filter JS files are fetched sequentially** in the backend to avoid proxy connection limits. Do not parallelize them.
-- **Session cookies have 50-min TTL** with 3-retry login logic. The session module caches cookies at module level.
+- **Session cookies have ~10-min TTL** (server EndDate). Smart validation before re-login, 4-min keepalive, disk persistence, 3-retry login logic. Auto re-login is transparent — no user-visible errors.
 - **Filter cache has 24h TTL** with thundering-herd protection (shared in-flight Promise).
 - **Translations** live in `alexdriveapp/src/lib/translations.ts` (~1830 lines). The `translateSmartly()` function converts Korean text to Russian with brand/model name awareness.
 - **Dark theme** with Classic Gold (#D4AF37) accent. Colors defined as CSS custom properties in `globals.css`.

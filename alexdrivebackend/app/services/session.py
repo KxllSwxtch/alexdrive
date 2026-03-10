@@ -18,7 +18,7 @@ _disk_loaded: bool = False
 
 SESSION_TTL = 24 * 60 * 60  # 24h safety-net TTL
 VALIDATION_TIMEOUT = 5.0
-KEEPALIVE_INTERVAL = 20 * 60  # 20 minutes
+KEEPALIVE_INTERVAL = 4 * 60  # 4 minutes (server session TTL is ~10min)
 SESSION_FILE = Path("/tmp/alexdrive_session.json")
 
 # KST timezone (UTC+9) — carmanager.co.kr is Korean
