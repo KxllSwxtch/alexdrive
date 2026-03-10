@@ -111,6 +111,29 @@ export interface CarListing {
   phone: string;
 }
 
+export interface InspectionReport {
+  available: boolean;
+  documentNumber: string;
+  inspectionDate: string;
+  inspector: string;
+  mileage: { value: string; gaugeStatus: string; trend: string };
+  vinStatus: string;
+  emissions: { status: string; co: string; hc: string; smoke: string };
+  tuning: { exists: boolean };
+  specialHistory: { flood: boolean; fire: boolean };
+  accidentHistory: { exists: boolean; simpleRepair: boolean };
+  warranty: { type: string; company: string; premium: number };
+  recallStatus: { applicable: boolean };
+  bodyDamage: {
+    exterior: Record<string, string>;
+    structural: Record<string, string>;
+    diagram: Record<string, string>;
+  };
+  detailedCondition: Record<string, Record<string, string>>;
+  photos: string[];
+  originalReportUrl: string;
+}
+
 export interface CarDetail {
   encryptedId: string;
   name: string;
@@ -129,4 +152,5 @@ export interface CarDetail {
   phone: string;
   registrationDate: string;
   modelYear: string;
+  inspection: InspectionReport | null;
 }

@@ -10,6 +10,7 @@ import { fromUrlSafeId, buildCarDetailPath } from "@/lib/url";
 import { ImageGallery } from "@/components/ImageGallery";
 import { ContactCard } from "@/components/ContactCard";
 import { CarOptions } from "@/components/CarOptions";
+import { InspectionReport } from "@/components/InspectionReport";
 import { CreditCalculatorLazy } from "@/components/CreditCalculatorLazy";
 import { ShareButton } from "@/components/ShareButton";
 import { priceStringToKrw } from "@/lib/format";
@@ -166,6 +167,11 @@ export default async function CarDetailPage({ params }: PageProps) {
                 ))}
               </div>
             </div>
+          )}
+
+          {/* Inspection report */}
+          {car.inspection && (
+            <InspectionReport inspection={car.inspection} />
           )}
 
           {/* Compact calculator - mobile only */}

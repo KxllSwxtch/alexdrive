@@ -9,8 +9,9 @@ from app.parsers.filter_parser import (
     parse_filter_data_from_js,
     parse_select_options,
 )
+from app.parsers.inspection_parser import parse_inspection_report
 from app.parsers.listing_parser import parse_car_listings, parse_total_count
-from app.services.client import NetworkError, fetch_page, post_form
+from app.services.client import NetworkError, fetch_external_page, fetch_page, post_form
 
 _filter_cache: dict | None = None
 _filter_lock = asyncio.Lock()
@@ -251,6 +252,20 @@ async def get_car_detail(encrypted_id: str) -> dict:
             raise
 
         result = parse_car_detail(html, encrypted_id)
+
+        # Fetch inspection report if URL available
+        inspection_url = result.pop("inspectionUrl", None)
+        if inspection_url:
+            try:
+                inspection_html = await fetch_external_page(inspection_url)
+                inspection = parse_inspection_report(inspection_html)
+                inspection["originalReportUrl"] = inspection_url
+                result["inspection"] = inspection
+            except Exception as e:
+                print(f"[carmanager] Inspection fetch failed: {e}")
+                result["inspection"] = None
+        else:
+            result["inspection"] = None
 
         _detail_cache[encrypted_id] = {"data": result, "expiry": time.time() + DETAIL_TTL}
         _evict_oldest(_detail_cache, MAX_DETAIL_CACHE_ENTRIES)

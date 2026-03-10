@@ -61,6 +61,30 @@ async def fetch_with_auth(
     return response.status_code, text
 
 
+async def fetch_external_page(url: str) -> str:
+    """Fetch an external page (no carmanager auth needed)."""
+    client = get_http_client()
+
+    last_exc = None
+    for attempt in range(1, MAX_NETWORK_RETRIES + 1):
+        try:
+            response = await client.request(
+                "GET",
+                url,
+                headers={
+                    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+                },
+                follow_redirects=True,
+            )
+            return response.text
+        except NETWORK_RETRY_ERRORS as exc:
+            last_exc = exc
+            print(f"[client] External fetch error on attempt {attempt}/{MAX_NETWORK_RETRIES}: {exc}")
+            if attempt < MAX_NETWORK_RETRIES:
+                await asyncio.sleep(1.0 * attempt)
+    raise NetworkError(f"External fetch failed after {MAX_NETWORK_RETRIES} attempts: {last_exc}") from last_exc
+
+
 async def fetch_page(path: str) -> str:
     _, text = await fetch_with_auth(path)
     return text

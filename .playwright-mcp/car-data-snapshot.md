@@ -1,0 +1,1215 @@
+- generic [active] [ref=e1]:
+  - list [ref=e3]:
+    - listitem [ref=e4]:
+      - img [ref=e5]
+    - listitem [ref=e6]:
+      - link [ref=e7] [cursor=pointer]:
+        - /url: javascript:BizBannerJs.windowOpen('https://www.jetcar.kr/')
+        - img [ref=e8]
+    - listitem [ref=e9]:
+      - img [ref=e10]
+    - listitem [ref=e11]:
+      - img [ref=e12]
+  - list [ref=e16]:
+    - listitem [ref=e17]:
+      - img [ref=e18]
+    - listitem
+  - generic [ref=e19]:
+    - generic [ref=e20]:
+      - list [ref=e22]:
+        - listitem [ref=e23]:
+          - paragraph [ref=e24]: "[ 전체매물 ]"
+          - paragraph [ref=e25]: 259,198
+        - listitem [ref=e26]:
+          - paragraph [ref=e27]: "[ 국산차 ]"
+          - paragraph [ref=e28]: 206,156
+        - listitem [ref=e29]:
+          - paragraph [ref=e30]: "[ 수입차 ]"
+          - paragraph [ref=e31]: 53,042
+        - listitem
+        - listitem [ref=e32]:
+          - paragraph [ref=e33]: "[ 수출대상 ]"
+          - paragraph [ref=e34]: "0"
+        - listitem [ref=e35]:
+          - checkbox [ref=e36]
+          - text: 1일간 열지 않음
+          - generic [ref=e37] [cursor=pointer]: X
+      - generic [ref=e39]:
+        - generic [ref=e40]:
+          - list:
+            - listitem [ref=e41]:
+              - link "KANALEXEY 님" [ref=e42] [cursor=pointer]:
+                - /url: /MyPage
+            - listitem [ref=e43]:
+              - link "로그아웃" [ref=e44] [cursor=pointer]:
+                - /url: /User/Logout
+            - listitem [ref=e45]:
+              - link "바로가기 추가" [ref=e46] [cursor=pointer]:
+                - /url: https://carmanager.co.kr/Content/carmanager.url?v=2
+            - listitem [ref=e47]:
+              - link "즐겨찾기 추가" [ref=e48] [cursor=pointer]:
+                - /url: javascript:bookmarksiteAdd();
+        - heading "로고" [level=1] [ref=e49]:
+          - link "로고" [ref=e50] [cursor=pointer]:
+            - /url: /Home/Index
+            - img "로고" [ref=e51]
+        - list [ref=e52]:
+          - listitem [ref=e53]:
+            - link "매물조회" [ref=e54] [cursor=pointer]:
+              - /url: /Car/Data
+              - generic [ref=e55]: 매물조회
+          - listitem [ref=e56]:
+            - link "가격조회" [ref=e57] [cursor=pointer]:
+              - /url: /CarPrice/Market
+          - listitem [ref=e58]:
+            - link "확인서비스" [ref=e59] [cursor=pointer]:
+              - /url: /Service/Shop
+          - listitem [ref=e60]:
+            - link "상사매물관리" [ref=e61] [cursor=pointer]:
+              - /url: /MyShop
+          - listitem [ref=e62]:
+            - link "마이페이지" [ref=e63] [cursor=pointer]:
+              - /url: /MyPageCar/index
+          - listitem [ref=e64]:
+            - link "수출조회" [ref=e65] [cursor=pointer]:
+              - /url: javascript:goPageExCar();
+    - generic [ref=e71]:
+      - generic [ref=e73]:
+        - generic [ref=e74]:
+          - list:
+            - listitem [ref=e75]: 시도
+            - listitem [ref=e76]:
+              - listbox [ref=e77]:
+                - option "서울" [ref=e78]
+                - option "경기" [selected] [ref=e79]
+                - option "인천" [ref=e80]
+                - option "강원" [ref=e81]
+                - option "대전" [ref=e82]
+                - option "충남" [ref=e83]
+                - option "충북" [ref=e84]
+                - option "대구" [ref=e85]
+                - option "경북" [ref=e86]
+                - option "부산" [ref=e87]
+                - option "경남" [ref=e88]
+                - option "울산" [ref=e89]
+                - option "광주" [ref=e90]
+                - option "전남" [ref=e91]
+                - option "전북" [ref=e92]
+                - option "제주" [ref=e93]
+              - button "경기" [ref=e95] [cursor=pointer]:
+                - generic [ref=e96]: 경기
+            - listitem [ref=e98]: 지역
+            - listitem [ref=e99]:
+              - listbox [ref=e100]:
+                - option "고양" [ref=e101]
+                - option "광명" [ref=e102]
+                - option "광주" [ref=e103]
+                - option "구리" [ref=e104]
+                - option "김포" [ref=e105]
+                - option "남양주" [ref=e106]
+                - option "동두천" [ref=e107]
+                - option "부천" [ref=e108]
+                - option "성남" [ref=e109]
+                - option "수원" [selected] [ref=e110]
+                - option "시흥" [ref=e111]
+                - option "안산" [ref=e112]
+                - option "안양" [ref=e113]
+                - option "양주" [ref=e114]
+                - option "양평" [ref=e115]
+                - option "여주" [ref=e116]
+                - option "연천" [ref=e117]
+                - option "오산" [ref=e118]
+                - option "용인" [ref=e119]
+                - option "의정부" [ref=e120]
+                - option "이천" [ref=e121]
+                - option "파주" [ref=e122]
+                - option "평택" [ref=e123]
+                - option "포천" [ref=e124]
+                - option "화성" [ref=e125]
+              - button "수원" [ref=e127] [cursor=pointer]:
+                - generic [ref=e128]: 수원
+            - listitem [ref=e130]: 단지
+            - listitem:
+              - generic [ref=e132]: SK V1 Motors
+            - listitem [ref=e133]:
+              - button "검색" [ref=e134] [cursor=pointer]
+        - generic [ref=e136]:
+          - table [ref=e138]:
+            - rowgroup [ref=e145]:
+              - row "제조사 더보기 모델 더보기 세부모델 더보기 등급 더보기 세부등급 더보기" [ref=e146]:
+                - columnheader "제조사 더보기" [ref=e147]:
+                  - text: 제조사
+                  - generic [ref=e148] [cursor=pointer]: 더보기
+                - columnheader "모델 더보기" [ref=e149]:
+                  - text: 모델
+                  - generic [ref=e150] [cursor=pointer]: 더보기
+                - columnheader "세부모델 더보기" [ref=e151]:
+                  - text: 세부모델
+                  - generic [ref=e152] [cursor=pointer]: 더보기
+                - columnheader "등급 더보기" [ref=e153]:
+                  - text: 등급
+                  - generic [ref=e154] [cursor=pointer]: 더보기
+                - columnheader "세부등급 더보기" [ref=e155]:
+                  - text: 세부등급
+                  - generic [ref=e156] [cursor=pointer]: 더보기
+              - row "현대 제네시스 기아 소형화물 르노코리아(삼성) KG모빌리티(쌍용) 쉐보레 대우 중대형화물 중대형버스 기타제조사 벤츠 BMW 아우디 폭스바겐 미니 볼보 랜드로버 닛산 다이하쓰 다찌 동풍소콘 람보르기니 렉서스 로버 로터스 롤스로이스 르노 링컨 마세라티 마이바흐 마쯔다 맥라렌 미쯔비시 미쯔오카 벤틀리 부가티 북기은상 뷰익 사브 사이언 선롱버스 스마트 스바루 스즈키 시보레 시트로엥 알파로메오 애스턴마틴 어큐라 오펠 올즈모빌 이네오스 이베코 이스즈 인피니티 재규어 지리 지프 쯔더우 캐딜락 크라이슬러 테슬라 토요타 페라리 포드 포르쉐 포톤 폰티악 폴스타 푸조 피아트 허머 혼다 BYD GMC LEVC 제조사를 선택하세요. 모델을 선택하세요. 세부모델을 선택하세요! 등급을 선택하세요!" [ref=e157]:
+                - cell "현대 제네시스 기아 소형화물 르노코리아(삼성) KG모빌리티(쌍용) 쉐보레 대우 중대형화물 중대형버스 기타제조사 벤츠 BMW 아우디 폭스바겐 미니 볼보 랜드로버 닛산 다이하쓰 다찌 동풍소콘 람보르기니 렉서스 로버 로터스 롤스로이스 르노 링컨 마세라티 마이바흐 마쯔다 맥라렌 미쯔비시 미쯔오카 벤틀리 부가티 북기은상 뷰익 사브 사이언 선롱버스 스마트 스바루 스즈키 시보레 시트로엥 알파로메오 애스턴마틴 어큐라 오펠 올즈모빌 이네오스 이베코 이스즈 인피니티 재규어 지리 지프 쯔더우 캐딜락 크라이슬러 테슬라 토요타 페라리 포드 포르쉐 포톤 폰티악 폴스타 푸조 피아트 허머 혼다 BYD GMC LEVC" [ref=e158]:
+                  - list [ref=e161]:
+                    - listitem [ref=e162] [cursor=pointer]: 현대
+                    - listitem [ref=e163] [cursor=pointer]: 제네시스
+                    - listitem [ref=e164] [cursor=pointer]: 기아
+                    - listitem [ref=e165] [cursor=pointer]: 소형화물
+                    - listitem [ref=e166] [cursor=pointer]: 르노코리아(삼성)
+                    - listitem [ref=e167] [cursor=pointer]: KG모빌리티(쌍용)
+                    - listitem [ref=e168] [cursor=pointer]: 쉐보레
+                    - listitem [ref=e169] [cursor=pointer]: 대우
+                    - listitem [ref=e170] [cursor=pointer]: 중대형화물
+                    - listitem [ref=e171] [cursor=pointer]: 중대형버스
+                    - listitem [ref=e172] [cursor=pointer]: 기타제조사
+                    - listitem [ref=e173] [cursor=pointer]: 벤츠
+                    - listitem [ref=e174] [cursor=pointer]: BMW
+                    - listitem [ref=e175] [cursor=pointer]: 아우디
+                    - listitem [ref=e176] [cursor=pointer]: 폭스바겐
+                    - listitem [ref=e177] [cursor=pointer]: 미니
+                    - listitem [ref=e178] [cursor=pointer]: 볼보
+                    - listitem [ref=e179] [cursor=pointer]: 랜드로버
+                    - listitem [ref=e180] [cursor=pointer]: 닛산
+                    - listitem [ref=e181] [cursor=pointer]: 다이하쓰
+                    - listitem [ref=e182] [cursor=pointer]: 다찌
+                    - listitem [ref=e183] [cursor=pointer]: 동풍소콘
+                    - listitem [ref=e184] [cursor=pointer]: 람보르기니
+                    - listitem [ref=e185] [cursor=pointer]: 렉서스
+                    - listitem [ref=e186] [cursor=pointer]: 로버
+                    - listitem [ref=e187] [cursor=pointer]: 로터스
+                    - listitem [ref=e188] [cursor=pointer]: 롤스로이스
+                    - listitem [ref=e189] [cursor=pointer]: 르노
+                    - listitem [ref=e190] [cursor=pointer]: 링컨
+                    - listitem [ref=e191] [cursor=pointer]: 마세라티
+                    - listitem [ref=e192] [cursor=pointer]: 마이바흐
+                    - listitem [ref=e193] [cursor=pointer]: 마쯔다
+                    - listitem [ref=e194] [cursor=pointer]: 맥라렌
+                    - listitem [ref=e195] [cursor=pointer]: 미쯔비시
+                    - listitem [ref=e196] [cursor=pointer]: 미쯔오카
+                    - listitem [ref=e197] [cursor=pointer]: 벤틀리
+                    - listitem [ref=e198] [cursor=pointer]: 부가티
+                    - listitem [ref=e199] [cursor=pointer]: 북기은상
+                    - listitem [ref=e200] [cursor=pointer]: 뷰익
+                    - listitem [ref=e201] [cursor=pointer]: 사브
+                    - listitem [ref=e202] [cursor=pointer]: 사이언
+                    - listitem [ref=e203] [cursor=pointer]: 선롱버스
+                    - listitem [ref=e204] [cursor=pointer]: 스마트
+                    - listitem [ref=e205] [cursor=pointer]: 스바루
+                    - listitem [ref=e206] [cursor=pointer]: 스즈키
+                    - listitem [ref=e207] [cursor=pointer]: 시보레
+                    - listitem [ref=e208] [cursor=pointer]: 시트로엥
+                    - listitem [ref=e209] [cursor=pointer]: 알파로메오
+                    - listitem [ref=e210] [cursor=pointer]: 애스턴마틴
+                    - listitem [ref=e211] [cursor=pointer]: 어큐라
+                    - listitem [ref=e212] [cursor=pointer]: 오펠
+                    - listitem [ref=e213] [cursor=pointer]: 올즈모빌
+                    - listitem [ref=e214] [cursor=pointer]: 이네오스
+                    - listitem [ref=e215] [cursor=pointer]: 이베코
+                    - listitem [ref=e216] [cursor=pointer]: 이스즈
+                    - listitem [ref=e217] [cursor=pointer]: 인피니티
+                    - listitem [ref=e218] [cursor=pointer]: 재규어
+                    - listitem [ref=e219] [cursor=pointer]: 지리
+                    - listitem [ref=e220] [cursor=pointer]: 지프
+                    - listitem [ref=e221] [cursor=pointer]: 쯔더우
+                    - listitem [ref=e222] [cursor=pointer]: 캐딜락
+                    - listitem [ref=e223] [cursor=pointer]: 크라이슬러
+                    - listitem [ref=e224] [cursor=pointer]: 테슬라
+                    - listitem [ref=e225] [cursor=pointer]: 토요타
+                    - listitem [ref=e226] [cursor=pointer]: 페라리
+                    - listitem [ref=e227] [cursor=pointer]: 포드
+                    - listitem [ref=e228] [cursor=pointer]: 포르쉐
+                    - listitem [ref=e229] [cursor=pointer]: 포톤
+                    - listitem [ref=e230] [cursor=pointer]: 폰티악
+                    - listitem [ref=e231] [cursor=pointer]: 폴스타
+                    - listitem [ref=e232] [cursor=pointer]: 푸조
+                    - listitem [ref=e233] [cursor=pointer]: 피아트
+                    - listitem [ref=e234] [cursor=pointer]: 허머
+                    - listitem [ref=e235] [cursor=pointer]: 혼다
+                    - listitem [ref=e236] [cursor=pointer]: BYD
+                    - listitem [ref=e237] [cursor=pointer]: GMC
+                    - listitem [ref=e238] [cursor=pointer]: LEVC
+                - cell "제조사를 선택하세요." [ref=e239]:
+                  - list [ref=e242]:
+                    - listitem: 제조사를 선택하세요.
+                - cell "모델을 선택하세요." [ref=e243]:
+                  - list [ref=e246]:
+                    - listitem: 모델을 선택하세요.
+                - cell "세부모델을 선택하세요!" [ref=e247]:
+                  - list [ref=e250]:
+                    - listitem: 세부모델을 선택하세요!
+                - cell "등급을 선택하세요!" [ref=e251]:
+                  - list [ref=e254]:
+                    - listitem: 등급을 선택하세요!
+          - table [ref=e257]:
+            - rowgroup [ref=e258]:
+              - row "연식 년 월 ~ 년 월 주행거리 직접입력 선택 Km ~ 선택 Km 무사고 사진 가격 성능" [ref=e259]:
+                - rowheader "연식" [ref=e260]
+                - cell "년 월 ~ 년 월" [ref=e261]:
+                  - list:
+                    - listitem [ref=e262]:
+                      - generic [ref=e263]:
+                        - link [ref=e264] [cursor=pointer]:
+                          - /url: "#"
+                        - link "년" [ref=e265] [cursor=pointer]:
+                          - /url: "#"
+                    - listitem [ref=e266]:
+                      - generic [ref=e267]:
+                        - link [ref=e268] [cursor=pointer]:
+                          - /url: "#"
+                        - link "월" [ref=e269] [cursor=pointer]:
+                          - /url: "#"
+                    - listitem [ref=e270]: ~
+                    - listitem [ref=e271]:
+                      - generic [ref=e272]:
+                        - link [ref=e273] [cursor=pointer]:
+                          - /url: "#"
+                        - link "년" [ref=e274] [cursor=pointer]:
+                          - /url: "#"
+                    - listitem [ref=e275]:
+                      - generic [ref=e276]:
+                        - link [ref=e277] [cursor=pointer]:
+                          - /url: "#"
+                        - link "월" [ref=e278] [cursor=pointer]:
+                          - /url: "#"
+                - rowheader "주행거리 직접입력" [ref=e279]:
+                  - text: 주행거리
+                  - generic [ref=e280]:
+                    - checkbox "직접입력" [ref=e281]
+                    - text: 직접입력
+                - cell "선택 Km ~ 선택 Km" [ref=e282]:
+                  - list:
+                    - listitem [ref=e283]:
+                      - generic [ref=e284]:
+                        - link [ref=e285] [cursor=pointer]:
+                          - /url: "#"
+                        - link "선택" [ref=e286] [cursor=pointer]:
+                          - /url: "#"
+                    - listitem [ref=e287]: Km
+                    - listitem [ref=e288]: ~
+                    - listitem [ref=e289]:
+                      - generic [ref=e290]:
+                        - link [ref=e291] [cursor=pointer]:
+                          - /url: "#"
+                        - link "선택" [ref=e292] [cursor=pointer]:
+                          - /url: "#"
+                    - listitem [ref=e293]: Km
+                - cell "무사고 사진 가격 성능" [ref=e294]:
+                  - list:
+                    - listitem [ref=e295]:
+                      - checkbox [ref=e296]
+                    - listitem [ref=e297]: 무사고
+                    - listitem [ref=e298]:
+                      - checkbox [ref=e299]
+                    - listitem [ref=e300]: 사진
+                    - listitem [ref=e301]:
+                      - checkbox [ref=e302]
+                    - listitem [ref=e303]: 가격
+                    - listitem [ref=e304]:
+                      - checkbox [ref=e305]
+                    - listitem [ref=e306]: 성능
+              - 'row "세부정보 ::미션:: ::연료:: ::색상:: 가격 직접입력 선택 만원 ~ 선택 만원 옵션? 썬루프 선택" [ref=e307]':
+                - rowheader "세부정보" [ref=e308]
+                - 'cell "::미션:: ::연료:: ::색상::" [ref=e309]':
+                  - list:
+                    - listitem [ref=e310]:
+                      - generic [ref=e311]:
+                        - link [ref=e312] [cursor=pointer]:
+                          - /url: "#"
+                        - link "::미션::" [ref=e313] [cursor=pointer]:
+                          - /url: "#"
+                    - listitem [ref=e314]:
+                      - generic [ref=e315]:
+                        - link [ref=e316] [cursor=pointer]:
+                          - /url: "#"
+                        - link "::연료::" [ref=e317] [cursor=pointer]:
+                          - /url: "#"
+                    - listitem [ref=e318]:
+                      - generic [ref=e319]:
+                        - link [ref=e320] [cursor=pointer]:
+                          - /url: "#"
+                        - link "::색상::" [ref=e321] [cursor=pointer]:
+                          - /url: "#"
+                - rowheader "가격 직접입력" [ref=e322]:
+                  - text: 가격
+                  - generic [ref=e323]:
+                    - checkbox "직접입력" [ref=e324]
+                    - text: 직접입력
+                - cell "선택 만원 ~ 선택 만원" [ref=e325]:
+                  - list:
+                    - listitem [ref=e326]:
+                      - generic [ref=e327]:
+                        - link [ref=e328] [cursor=pointer]:
+                          - /url: "#"
+                        - link "선택" [ref=e329] [cursor=pointer]:
+                          - /url: "#"
+                    - listitem [ref=e330]: 만원
+                    - listitem [ref=e331]: ~
+                    - listitem [ref=e332]:
+                      - generic [ref=e333]:
+                        - link [ref=e334] [cursor=pointer]:
+                          - /url: "#"
+                        - link "선택" [ref=e335] [cursor=pointer]:
+                          - /url: "#"
+                    - listitem [ref=e336]: 만원
+                - rowheader "옵션?" [ref=e337]:
+                  - generic [ref=e338]: 옵션?
+                - cell "썬루프 선택" [ref=e339]:
+                  - listbox [ref=e340]:
+                    - option "썬루프" [ref=e341]
+                    - option "네비게이션" [ref=e342]
+                    - option "스마트키" [ref=e343]
+                    - option "감지센서 후방" [ref=e344]
+                    - option "카메라 후방" [ref=e345]
+                    - option "LDWS 차선이탈경보장치" [ref=e346]
+                    - option "에어백 사이드" [ref=e347]
+                    - option "에어백 조수석" [ref=e348]
+                    - option "열선시트 뒷자석" [ref=e349]
+                    - option "열선시트 앞자석" [ref=e350]
+                    - option "가죽시트" [ref=e351]
+                    - option "통풍시트 앞좌석" [ref=e352]
+                    - option "HID램프" [ref=e353]
+                  - button "선택" [ref=e355] [cursor=pointer]:
+                    - generic [ref=e356]: 선택
+          - table [ref=e360]:
+            - rowgroup [ref=e361]:
+              - row "빠른검색 등록차명? 딜러명? 상사명? 휴대폰? 차량번호?" [ref=e362]:
+                - columnheader "빠른검색" [ref=e363]
+                - rowheader "등록차명?" [ref=e364]:
+                  - generic [ref=e365]: 등록차명?
+                - cell [ref=e366]:
+                  - textbox [ref=e367]
+                - rowheader "딜러명?" [ref=e368]:
+                  - generic [ref=e369]: 딜러명?
+                - cell [ref=e370]:
+                  - textbox [ref=e371]
+                - rowheader "상사명?" [ref=e372]:
+                  - generic [ref=e373]: 상사명?
+                - cell [ref=e374]:
+                  - textbox [ref=e375]
+                - rowheader "휴대폰?" [ref=e376]:
+                  - generic [ref=e377]: 휴대폰?
+                - cell [ref=e378]:
+                  - textbox [ref=e379]
+                - rowheader "차량번호?" [ref=e380]:
+                  - generic [ref=e381]: 차량번호?
+                - cell [ref=e382]:
+                  - textbox [ref=e383]
+        - table [ref=e385]:
+          - rowgroup [ref=e386]:
+            - row "검색닫기 검색초기화 검색 화면형태변경" [ref=e387]:
+              - cell "검색닫기 검색초기화" [ref=e388]:
+                - button "검색닫기" [ref=e389] [cursor=pointer]
+                - button "검색초기화" [ref=e390] [cursor=pointer]
+              - cell "검색" [ref=e391]:
+                - button "검색" [ref=e392] [cursor=pointer]
+              - cell "화면형태변경" [ref=e393]:
+                - list [ref=e394]:
+                  - listitem [ref=e395]:
+                    - button "화면형태변경" [ref=e396] [cursor=pointer]
+      - generic [ref=e397]:
+        - generic [ref=e398]: "총 검색결과 : 15,931 대"
+        - generic:
+          - generic [ref=e399]:
+            - list:
+              - listitem [ref=e400]:
+                - button "선택비교하기" [ref=e401] [cursor=pointer]:
+                  - img [ref=e402]
+                  - text: 선택비교하기
+              - listitem [ref=e403]:
+                - button "선택매물설정" [ref=e404] [cursor=pointer]:
+                  - img [ref=e405]
+                  - text: 선택매물설정
+              - listitem [ref=e406]:
+                - button "선택매물해제" [ref=e407] [cursor=pointer]:
+                  - img [ref=e408]
+                  - text: 선택매물해제
+              - listitem [ref=e409]: ※ 제목을 클릭하면 정렬이 됩니다.
+          - generic [ref=e410]:
+            - list:
+              - listitem [ref=e411]:
+                - link "인쇄" [ref=e412] [cursor=pointer]:
+                  - /url: javascript:goPrint();
+                  - img [ref=e413]
+                  - text: 인쇄
+              - listitem [ref=e414]:
+                - link "사진숨김" [ref=e415] [cursor=pointer]:
+                  - /url: javascript:reSetIsPhotoCol();
+              - listitem [ref=e416]:
+                - link "매물수정순↕" [ref=e417] [cursor=pointer]:
+                  - /url: "#"
+              - listitem [ref=e418]:
+                - link "광고등록순↕" [ref=e419] [cursor=pointer]:
+                  - /url: "#"
+              - listitem [ref=e420]:
+                - generic [ref=e421]:
+                  - link [ref=e422] [cursor=pointer]:
+                    - /url: "#"
+                  - link "20" [ref=e423] [cursor=pointer]:
+                    - /url: "#"
+              - listitem [ref=e424]: 개씩보기
+      - table [ref=e426]:
+        - rowgroup [ref=e427]:
+          - row "선택 사진 성능 차량 / 세부모델 미션 연식↕ 연료 주행↕ 색상 가격↕ 지역(단지) 담당/연락처 옵션" [ref=e428]:
+            - columnheader "선택" [ref=e429]
+            - columnheader "사진" [ref=e430]
+            - columnheader "성능" [ref=e431]
+            - columnheader "차량 / 세부모델" [ref=e432]
+            - columnheader "미션" [ref=e433]
+            - columnheader "연식↕" [ref=e434] [cursor=pointer]
+            - columnheader "연료" [ref=e435]
+            - columnheader "주행↕" [ref=e436] [cursor=pointer]
+            - columnheader "색상" [ref=e437]
+            - columnheader "가격↕" [ref=e438] [cursor=pointer]
+            - columnheader "지역(단지)" [ref=e439]
+            - columnheader "담당/연락처" [ref=e440]
+            - columnheader "옵션" [ref=e441]
+          - row "[기아] 더 K9 3.8 GDI AWD 플래티넘Ⅱ 👉무사고.1인소유.비흡연.차키 2 1인소유 상태양호 특옵션 오토 6657 2019.07 휘발유 7만 검정색 2,770 수원/SK V1 한결모터스 김경수 010-4697-1883 옵션" [ref=e442]:
+            - cell [ref=e443]
+            - cell [ref=e445]:
+              - link [ref=e446] [cursor=pointer]:
+                - /url: javascript:carmangerDetailWindowPopUp_CHECK('KzBap1UfFV1Q/n5igeHO0g==')
+                - img [ref=e447]
+            - cell [ref=e448]:
+              - img [ref=e449]
+            - cell "[기아] 더 K9 3.8 GDI AWD 플래티넘Ⅱ 👉무사고.1인소유.비흡연.차키 2 1인소유 상태양호 특옵션" [ref=e450]:
+              - generic [ref=e451]:
+                - text: "[기아]"
+                - link "더 K9 3.8 GDI AWD 플래티넘Ⅱ" [ref=e452] [cursor=pointer]:
+                  - /url: javascript:carmangerDetailWindowPopUp_CHECK('KzBap1UfFV1Q/n5igeHO0g==')
+              - generic [ref=e453]: 👉무사고.1인소유.비흡연.차키 2
+              - generic [ref=e454] [cursor=pointer]:
+                - img "1인소유" [ref=e455]
+                - img "상태양호" [ref=e456]
+                - img "특옵션" [ref=e457]
+            - cell "오토 6657" [ref=e458]:
+              - paragraph [ref=e459]: 오토
+              - paragraph [ref=e460]: "6657"
+            - cell "2019.07" [ref=e461]: "2019.07"
+            - cell "휘발유" [ref=e462]
+            - cell "7만" [ref=e463]
+            - cell "검정색" [ref=e464]
+            - cell "2,770" [ref=e465]
+            - cell "수원/SK V1 한결모터스" [ref=e466]:
+              - text: 수원/SK V1
+              - text: 한결모터스
+            - cell "김경수 010-4697-1883" [ref=e467]:
+              - text: 김경수
+              - text: 010-4697-1883
+            - cell "옵션" [ref=e468]:
+              - generic [ref=e469]: 옵션
+          - row "[르노코리아(삼성)] XM3 1.6 GTe RE 👉1인소유.무사고.비흡연.차키 2 여성 1인소유 특옵션 오토 7512 2022.03 [2023] 휘발유 5.2만 흰색 1,670 수원/SK V1 한결모터스 김경수 010-4697-1883 옵션" [ref=e470]:
+            - cell [ref=e471]
+            - cell [ref=e473]:
+              - link [ref=e474] [cursor=pointer]:
+                - /url: javascript:carmangerDetailWindowPopUp_CHECK('fW58P0nCjPLZfWxaxBGxDA==')
+                - img [ref=e475]
+            - cell [ref=e476]:
+              - img [ref=e477]
+            - cell "[르노코리아(삼성)] XM3 1.6 GTe RE 👉1인소유.무사고.비흡연.차키 2 여성 1인소유 특옵션" [ref=e478]:
+              - generic [ref=e479]:
+                - text: "[르노코리아(삼성)]"
+                - link "XM3 1.6 GTe RE" [ref=e480] [cursor=pointer]:
+                  - /url: javascript:carmangerDetailWindowPopUp_CHECK('fW58P0nCjPLZfWxaxBGxDA==')
+              - generic [ref=e481]: 👉1인소유.무사고.비흡연.차키 2
+              - generic [ref=e482] [cursor=pointer]:
+                - img "여성" [ref=e483]
+                - img "1인소유" [ref=e484]
+                - img "특옵션" [ref=e485]
+            - cell "오토 7512" [ref=e486]:
+              - paragraph [ref=e487]: 오토
+              - paragraph [ref=e488]: "7512"
+            - cell "2022.03 [2023]" [ref=e489]:
+              - text: "2022.03"
+              - text: "[2023]"
+            - cell "휘발유" [ref=e490]
+            - cell "5.2만" [ref=e491]
+            - cell "흰색" [ref=e492]
+            - cell "1,670" [ref=e493]
+            - cell "수원/SK V1 한결모터스" [ref=e494]:
+              - text: 수원/SK V1
+              - text: 한결모터스
+            - cell "김경수 010-4697-1883" [ref=e495]:
+              - text: 김경수
+              - text: 010-4697-1883
+            - cell "옵션" [ref=e496]:
+              - generic [ref=e497]: 옵션
+          - row "[폭스바겐] 골프 7세대 2.0 TDI 프리미엄 👉무사고.비흡연.차키 2 비흡연 상태양호 특옵션 오토 5417 2014.07 경유 5.1만 회색 1,420 수원/SK V1 한결모터스 김경수 010-4697-1883 옵션" [ref=e498]:
+            - cell [ref=e499]
+            - cell [ref=e501]:
+              - link [ref=e502] [cursor=pointer]:
+                - /url: javascript:carmangerDetailWindowPopUp_CHECK('uyZr3GpfelMuv6xeZmqjZw==')
+                - img [ref=e503]
+            - cell [ref=e504]:
+              - img [ref=e505]
+            - cell "[폭스바겐] 골프 7세대 2.0 TDI 프리미엄 👉무사고.비흡연.차키 2 비흡연 상태양호 특옵션" [ref=e506]:
+              - generic [ref=e507]:
+                - text: "[폭스바겐]"
+                - link "골프 7세대 2.0 TDI 프리미엄" [ref=e508] [cursor=pointer]:
+                  - /url: javascript:carmangerDetailWindowPopUp_CHECK('uyZr3GpfelMuv6xeZmqjZw==')
+              - generic [ref=e509]: 👉무사고.비흡연.차키 2
+              - generic [ref=e510] [cursor=pointer]:
+                - img "비흡연" [ref=e511]
+                - img "상태양호" [ref=e512]
+                - img "특옵션" [ref=e513]
+            - cell "오토 5417" [ref=e514]:
+              - paragraph [ref=e515]: 오토
+              - paragraph [ref=e516]: "5417"
+            - cell "2014.07" [ref=e517]: "2014.07"
+            - cell "경유" [ref=e518]
+            - cell "5.1만" [ref=e519]
+            - cell "회색" [ref=e520]
+            - cell "1,420" [ref=e521]
+            - cell "수원/SK V1 한결모터스" [ref=e522]:
+              - text: 수원/SK V1
+              - text: 한결모터스
+            - cell "김경수 010-4697-1883" [ref=e523]:
+              - text: 김경수
+              - text: 010-4697-1883
+            - cell "옵션" [ref=e524]:
+              - generic [ref=e525]: 옵션
+          - row "[제네시스] 더 뉴 G70 가솔린 2.0T 4WD 스포츠 패키지 👉무사고.1인소유(리스만기 후 이전).비흡연.디지털키 포함 차키 3 1인소유 상태양호 특옵션 오토 3901 2021.02 휘발유 6.4만 빨간색 3,420 수원/SK V1 한결모터스 김경수 010-4697-1883 옵션" [ref=e526]:
+            - cell [ref=e527]
+            - cell [ref=e529]:
+              - link [ref=e530] [cursor=pointer]:
+                - /url: javascript:carmangerDetailWindowPopUp_CHECK('x4E4BRj9nWdigzzj/KXZBA==')
+                - img [ref=e531]
+            - cell [ref=e532]:
+              - img [ref=e533]
+            - cell "[제네시스] 더 뉴 G70 가솔린 2.0T 4WD 스포츠 패키지 👉무사고.1인소유(리스만기 후 이전).비흡연.디지털키 포함 차키 3 1인소유 상태양호 특옵션" [ref=e534]:
+              - generic [ref=e535]:
+                - text: "[제네시스]"
+                - link "더 뉴 G70 가솔린 2.0T 4WD 스포츠 패키지" [ref=e536] [cursor=pointer]:
+                  - /url: javascript:carmangerDetailWindowPopUp_CHECK('x4E4BRj9nWdigzzj/KXZBA==')
+              - generic [ref=e537]: 👉무사고.1인소유(리스만기 후 이전).비흡연.디지털키 포함 차키 3
+              - generic [ref=e538] [cursor=pointer]:
+                - img "1인소유" [ref=e539]
+                - img "상태양호" [ref=e540]
+                - img "특옵션" [ref=e541]
+            - cell "오토 3901" [ref=e542]:
+              - paragraph [ref=e543]: 오토
+              - paragraph [ref=e544]: "3901"
+            - cell "2021.02" [ref=e545]: "2021.02"
+            - cell "휘발유" [ref=e546]
+            - cell "6.4만" [ref=e547]
+            - cell "빨간색" [ref=e548]
+            - cell "3,420" [ref=e549]
+            - cell "수원/SK V1 한결모터스" [ref=e550]:
+              - text: 수원/SK V1
+              - text: 한결모터스
+            - cell "김경수 010-4697-1883" [ref=e551]:
+              - text: 김경수
+              - text: 010-4697-1883
+            - cell "옵션" [ref=e552]:
+              - generic [ref=e553]: 옵션
+          - row "[쉐보레] 더뉴스파크 마이핏 프리미어 👉무사고(보험이력 0원).비흡연.차키 2 상태양호 안전정비 특옵션 오토 6905 2021.05 휘발유 4.4만 흰색 1,150 수원/SK V1 한결모터스 김경수 010-4697-1883 옵션" [ref=e554]:
+            - cell [ref=e555]
+            - cell [ref=e557]:
+              - link [ref=e558] [cursor=pointer]:
+                - /url: javascript:carmangerDetailWindowPopUp_CHECK('scSlSkSWbVgRIcqydefTeg==')
+                - img [ref=e559]
+            - cell [ref=e560]:
+              - img [ref=e561]
+            - cell "[쉐보레] 더뉴스파크 마이핏 프리미어 👉무사고(보험이력 0원).비흡연.차키 2 상태양호 안전정비 특옵션" [ref=e562]:
+              - generic [ref=e563]:
+                - text: "[쉐보레]"
+                - link "더뉴스파크 마이핏 프리미어" [ref=e564] [cursor=pointer]:
+                  - /url: javascript:carmangerDetailWindowPopUp_CHECK('scSlSkSWbVgRIcqydefTeg==')
+              - generic [ref=e565]: 👉무사고(보험이력 0원).비흡연.차키 2
+              - generic [ref=e566] [cursor=pointer]:
+                - img "상태양호" [ref=e567]
+                - img "안전정비" [ref=e568]
+                - img "특옵션" [ref=e569]
+            - cell "오토 6905" [ref=e570]:
+              - paragraph [ref=e571]: 오토
+              - paragraph [ref=e572]: "6905"
+            - cell "2021.05" [ref=e573]: "2021.05"
+            - cell "휘발유" [ref=e574]
+            - cell "4.4만" [ref=e575]
+            - cell "흰색" [ref=e576]
+            - cell "1,150" [ref=e577]
+            - cell "수원/SK V1 한결모터스" [ref=e578]:
+              - text: 수원/SK V1
+              - text: 한결모터스
+            - cell "김경수 010-4697-1883" [ref=e579]:
+              - text: 김경수
+              - text: 010-4697-1883
+            - cell "옵션" [ref=e580]:
+              - generic [ref=e581]: 옵션
+          - row "[기아] 올 뉴 K7 하이브리드 노블레스 스페셜 👉트렁크단순교환.비흡연.차키 카드키 포함 3 비흡연 상태양호 특옵션 오토 3456 2018.07 휘발유 하이브리드 4.8만 흰색 2,220 수원/SK V1 한결모터스 김경수 010-4697-1883 옵션" [ref=e582]:
+            - cell [ref=e583]
+            - cell [ref=e585]:
+              - link [ref=e586] [cursor=pointer]:
+                - /url: javascript:carmangerDetailWindowPopUp_CHECK('YsEaYXfAJbL9ZKeRObIKZg==')
+                - img [ref=e587]
+            - cell [ref=e588]:
+              - img [ref=e589]
+            - cell "[기아] 올 뉴 K7 하이브리드 노블레스 스페셜 👉트렁크단순교환.비흡연.차키 카드키 포함 3 비흡연 상태양호 특옵션" [ref=e590]:
+              - generic [ref=e591]:
+                - text: "[기아]"
+                - link "올 뉴 K7 하이브리드 노블레스 스페셜" [ref=e592] [cursor=pointer]:
+                  - /url: javascript:carmangerDetailWindowPopUp_CHECK('YsEaYXfAJbL9ZKeRObIKZg==')
+              - generic [ref=e593]: 👉트렁크단순교환.비흡연.차키 카드키 포함 3
+              - generic [ref=e594] [cursor=pointer]:
+                - img "비흡연" [ref=e595]
+                - img "상태양호" [ref=e596]
+                - img "특옵션" [ref=e597]
+            - cell "오토 3456" [ref=e598]:
+              - paragraph [ref=e599]: 오토
+              - paragraph [ref=e600]: "3456"
+            - cell "2018.07" [ref=e601]: "2018.07"
+            - cell "휘발유 하이브리드" [ref=e602]
+            - cell "4.8만" [ref=e603]
+            - cell "흰색" [ref=e604]
+            - cell "2,220" [ref=e605]
+            - cell "수원/SK V1 한결모터스" [ref=e606]:
+              - text: 수원/SK V1
+              - text: 한결모터스
+            - cell "김경수 010-4697-1883" [ref=e607]:
+              - text: 김경수
+              - text: 010-4697-1883
+            - cell "옵션" [ref=e608]:
+              - generic [ref=e609]: 옵션
+          - row "[기아] 모하비 더 마스터 4WD 마스터즈 7인승 👉무사고(보험이력0원).비흡연.특옵션.차키 2 비흡연 상태양호 4WD 오토 3721 2021.03 경유 4.4만 흰색 4,080 수원/SK V1 한결모터스 김경수 010-4697-1883 옵션" [ref=e610]:
+            - cell [ref=e611]
+            - cell [ref=e613]:
+              - link [ref=e614] [cursor=pointer]:
+                - /url: javascript:carmangerDetailWindowPopUp_CHECK('THdUxJva/xRbJtCDC4OLdg==')
+                - img [ref=e615]
+            - cell [ref=e616]:
+              - img [ref=e617]
+            - cell "[기아] 모하비 더 마스터 4WD 마스터즈 7인승 👉무사고(보험이력0원).비흡연.특옵션.차키 2 비흡연 상태양호 4WD" [ref=e618]:
+              - generic [ref=e619]:
+                - text: "[기아]"
+                - link "모하비 더 마스터 4WD 마스터즈 7인승" [ref=e620] [cursor=pointer]:
+                  - /url: javascript:carmangerDetailWindowPopUp_CHECK('THdUxJva/xRbJtCDC4OLdg==')
+              - generic [ref=e621]: 👉무사고(보험이력0원).비흡연.특옵션.차키 2
+              - generic [ref=e622] [cursor=pointer]:
+                - img "비흡연" [ref=e623]
+                - img "상태양호" [ref=e624]
+                - img "4WD" [ref=e625]
+            - cell "오토 3721" [ref=e626]:
+              - paragraph [ref=e627]: 오토
+              - paragraph [ref=e628]: "3721"
+            - cell "2021.03" [ref=e629]: "2021.03"
+            - cell "경유" [ref=e630]
+            - cell "4.4만" [ref=e631]
+            - cell "흰색" [ref=e632]
+            - cell "4,080" [ref=e633]
+            - cell "수원/SK V1 한결모터스" [ref=e634]:
+              - text: 수원/SK V1
+              - text: 한결모터스
+            - cell "김경수 010-4697-1883" [ref=e635]:
+              - text: 김경수
+              - text: 010-4697-1883
+            - cell "옵션" [ref=e636]:
+              - generic [ref=e637]: 옵션
+          - row "[기아] 더 뉴 K5 3세대 2.0 LPi (렌트카용) 프레스티지 👉무사고.비흡연.차키 2 1인소유 LPG 특옵션 오토 5781 2025.07 LPG 1.1만 회색 2,720 수원/SK V1 한결모터스 김경수 010-4697-1883 옵션" [ref=e638]:
+            - cell [ref=e639]
+            - cell [ref=e641]:
+              - link [ref=e642] [cursor=pointer]:
+                - /url: javascript:carmangerDetailWindowPopUp_CHECK('GeOHNpiYveD5j/jF7ZOW5A==')
+                - img [ref=e643]
+            - cell [ref=e644]:
+              - img [ref=e645]
+            - cell "[기아] 더 뉴 K5 3세대 2.0 LPi (렌트카용) 프레스티지 👉무사고.비흡연.차키 2 1인소유 LPG 특옵션" [ref=e646]:
+              - generic [ref=e647]:
+                - text: "[기아]"
+                - link "더 뉴 K5 3세대 2.0 LPi (렌트카용) 프레스티지" [ref=e648] [cursor=pointer]:
+                  - /url: javascript:carmangerDetailWindowPopUp_CHECK('GeOHNpiYveD5j/jF7ZOW5A==')
+              - generic [ref=e649]: 👉무사고.비흡연.차키 2
+              - generic [ref=e650] [cursor=pointer]:
+                - img "1인소유" [ref=e651]
+                - img "LPG" [ref=e652]
+                - img "특옵션" [ref=e653]
+            - cell "오토 5781" [ref=e654]:
+              - paragraph [ref=e655]: 오토
+              - paragraph [ref=e656]: "5781"
+            - cell "2025.07" [ref=e657]: "2025.07"
+            - cell "LPG" [ref=e658]
+            - cell "1.1만" [ref=e659]
+            - cell "회색" [ref=e660]
+            - cell "2,720" [ref=e661]
+            - cell "수원/SK V1 한결모터스" [ref=e662]:
+              - text: 수원/SK V1
+              - text: 한결모터스
+            - cell "김경수 010-4697-1883" [ref=e663]:
+              - text: 김경수
+              - text: 010-4697-1883
+            - cell "옵션" [ref=e664]:
+              - generic [ref=e665]: 옵션
+          - row "[소형화물] [저상내장탑]봉고3 (LPG2.5터보) 킹캡/초장축/로우형 L라이트 1인소유 특옵션 COOL 오토 1594 2024.12 [2025] LPG 2.6만 흰색 2,490 수원/SK V1 수성자동차 김태윤 010-3797-5589 옵션" [ref=e666]:
+            - cell [ref=e667]
+            - cell [ref=e669]:
+              - link [ref=e670] [cursor=pointer]:
+                - /url: javascript:carmangerDetailWindowPopUp_CHECK('RL8j0GK9dKpsapWtWOhDfQ==')
+                - img [ref=e671]
+            - cell [ref=e672]:
+              - img [ref=e673]
+            - cell "[소형화물] [저상내장탑]봉고3 (LPG2.5터보) 킹캡/초장축/로우형 L라이트 1인소유 특옵션 COOL" [ref=e674]:
+              - generic [ref=e675]:
+                - text: "[소형화물]"
+                - link "[저상내장탑]봉고3 (LPG2.5터보) 킹캡/초장축/로우형 L라이트" [ref=e676] [cursor=pointer]:
+                  - /url: javascript:carmangerDetailWindowPopUp_CHECK('RL8j0GK9dKpsapWtWOhDfQ==')
+              - generic [ref=e677] [cursor=pointer]:
+                - img "1인소유" [ref=e678]
+                - img "특옵션" [ref=e679]
+                - img "COOL" [ref=e680]
+            - cell "오토 1594" [ref=e681]:
+              - paragraph [ref=e682]: 오토
+              - paragraph [ref=e683]: "1594"
+            - cell "2024.12 [2025]" [ref=e684]:
+              - text: "2024.12"
+              - text: "[2025]"
+            - cell "LPG" [ref=e685]
+            - cell "2.6만" [ref=e686]
+            - cell "흰색" [ref=e687]
+            - cell "2,490" [ref=e688]
+            - cell "수원/SK V1 수성자동차" [ref=e689]:
+              - text: 수원/SK V1
+              - text: 수성자동차
+            - cell "김태윤 010-3797-5589" [ref=e690]:
+              - text: 김태윤
+              - text: 010-3797-5589
+            - cell "옵션" [ref=e691]:
+              - generic [ref=e692]: 옵션
+          - row "[소형화물] [카고]봉고3 (LPG2.5터보) 1.2톤/킹캡/초장축/2WD GL 무사고.카셈롱바디특장.적재함3.700파렛트3장가능.비흡연차량.출고가3100만원 비흡연 1인소유 튜닝 오토 1766 2025.02 LPG 6.1만 흰색 2,640 수원/SK V1 수성자동차 김태윤 010-3797-5589 옵션" [ref=e693]:
+            - cell [ref=e694]
+            - cell [ref=e696]:
+              - link [ref=e697] [cursor=pointer]:
+                - /url: javascript:carmangerDetailWindowPopUp_CHECK('el1bdOV5jkJ5LDRJY457ag==')
+                - img [ref=e698]
+            - cell [ref=e699]:
+              - img [ref=e700]
+            - cell "[소형화물] [카고]봉고3 (LPG2.5터보) 1.2톤/킹캡/초장축/2WD GL 무사고.카셈롱바디특장.적재함3.700파렛트3장가능.비흡연차량.출고가3100만원 비흡연 1인소유 튜닝" [ref=e701]:
+              - generic [ref=e702]:
+                - text: "[소형화물]"
+                - link "[카고]봉고3 (LPG2.5터보) 1.2톤/킹캡/초장축/2WD GL" [ref=e703] [cursor=pointer]:
+                  - /url: javascript:carmangerDetailWindowPopUp_CHECK('el1bdOV5jkJ5LDRJY457ag==')
+              - generic [ref=e704]: 무사고.카셈롱바디특장.적재함3.700파렛트3장가능.비흡연차량.출고가3100만원
+              - generic [ref=e705] [cursor=pointer]:
+                - img "비흡연" [ref=e706]
+                - img "1인소유" [ref=e707]
+                - img "튜닝" [ref=e708]
+            - cell "오토 1766" [ref=e709]:
+              - paragraph [ref=e710]: 오토
+              - paragraph [ref=e711]: "1766"
+            - cell "2025.02" [ref=e712]: "2025.02"
+            - cell "LPG" [ref=e713]
+            - cell "6.1만" [ref=e714]
+            - cell "흰색" [ref=e715]
+            - cell "2,640" [ref=e716]
+            - cell "수원/SK V1 수성자동차" [ref=e717]:
+              - text: 수원/SK V1
+              - text: 수성자동차
+            - cell "김태윤 010-3797-5589" [ref=e718]:
+              - text: 김태윤
+              - text: 010-3797-5589
+            - cell "옵션" [ref=e719]:
+              - generic [ref=e720]: 옵션
+          - row "[소형화물] [내장탑파워게이트]더뉴봉고3 1.0톤/킹캡/초장축/플러스형 무사고.신조차량.비흡연차량.실주행거리.정품내장탑파워게이트 비흡연 1인소유 HOT 오토 4920 2023.03 경유 1.9만 흰색 2,490 수원/SK V1 수성자동차 김태윤 010-3797-5589 옵션" [ref=e721]:
+            - cell [ref=e722]
+            - cell [ref=e724]:
+              - link [ref=e725] [cursor=pointer]:
+                - /url: javascript:carmangerDetailWindowPopUp_CHECK('2zaMMm5rHb6I6lr2iG7TjA==')
+                - img [ref=e726]
+            - cell [ref=e727]:
+              - img [ref=e728]
+            - cell "[소형화물] [내장탑파워게이트]더뉴봉고3 1.0톤/킹캡/초장축/플러스형 무사고.신조차량.비흡연차량.실주행거리.정품내장탑파워게이트 비흡연 1인소유 HOT" [ref=e729]:
+              - generic [ref=e730]:
+                - text: "[소형화물]"
+                - link "[내장탑파워게이트]더뉴봉고3 1.0톤/킹캡/초장축/플러스형" [ref=e731] [cursor=pointer]:
+                  - /url: javascript:carmangerDetailWindowPopUp_CHECK('2zaMMm5rHb6I6lr2iG7TjA==')
+              - generic [ref=e732]: 무사고.신조차량.비흡연차량.실주행거리.정품내장탑파워게이트
+              - generic [ref=e733] [cursor=pointer]:
+                - img "비흡연" [ref=e734]
+                - img "1인소유" [ref=e735]
+                - img "HOT" [ref=e736]
+            - cell "오토 4920" [ref=e737]:
+              - paragraph [ref=e738]: 오토
+              - paragraph [ref=e739]: "4920"
+            - cell "2023.03" [ref=e740]: "2023.03"
+            - cell "경유" [ref=e741]
+            - cell "1.9만" [ref=e742]
+            - cell "흰색" [ref=e743]
+            - cell "2,490" [ref=e744]
+            - cell "수원/SK V1 수성자동차" [ref=e745]:
+              - text: 수원/SK V1
+              - text: 수성자동차
+            - cell "김태윤 010-3797-5589" [ref=e746]:
+              - text: 김태윤
+              - text: 010-3797-5589
+            - cell "옵션" [ref=e747]:
+              - generic [ref=e748]: 옵션
+          - row "[소형화물] [카고]봉고3 (LPG2.5터보) 킹캡/장축/4WD GLS 무사고.GLS모델.안드로이드 내비.후방.크루즈컨트롤.하이패스룸미러.브라운시트.비흡연차량 비흡연 특옵션 4WD 수동 7189 2024.01 LPG 1만 진주색 1,920 수원/SK V1 수성자동차 김태윤 010-3797-5589 옵션" [ref=e749]:
+            - cell [ref=e750]
+            - cell [ref=e752]:
+              - link [ref=e753] [cursor=pointer]:
+                - /url: javascript:carmangerDetailWindowPopUp_CHECK('IeWA9LxiSqn5zUaRGEC0Rg==')
+                - img [ref=e754]
+            - cell [ref=e755]:
+              - img [ref=e756]
+            - cell "[소형화물] [카고]봉고3 (LPG2.5터보) 킹캡/장축/4WD GLS 무사고.GLS모델.안드로이드 내비.후방.크루즈컨트롤.하이패스룸미러.브라운시트.비흡연차량 비흡연 특옵션 4WD" [ref=e757]:
+              - generic [ref=e758]:
+                - text: "[소형화물]"
+                - link "[카고]봉고3 (LPG2.5터보) 킹캡/장축/4WD GLS" [ref=e759] [cursor=pointer]:
+                  - /url: javascript:carmangerDetailWindowPopUp_CHECK('IeWA9LxiSqn5zUaRGEC0Rg==')
+              - generic [ref=e760]: 무사고.GLS모델.안드로이드 내비.후방.크루즈컨트롤.하이패스룸미러.브라운시트.비흡연차량
+              - generic [ref=e761] [cursor=pointer]:
+                - img "비흡연" [ref=e762]
+                - img "특옵션" [ref=e763]
+                - img "4WD" [ref=e764]
+            - cell "수동 7189" [ref=e765]:
+              - paragraph [ref=e766]: 수동
+              - paragraph [ref=e767]: "7189"
+            - cell "2024.01" [ref=e768]: "2024.01"
+            - cell "LPG" [ref=e769]
+            - cell "1만" [ref=e770]
+            - cell "진주색" [ref=e771]
+            - cell "1,920" [ref=e772]
+            - cell "수원/SK V1 수성자동차" [ref=e773]:
+              - text: 수원/SK V1
+              - text: 수성자동차
+            - cell "김태윤 010-3797-5589" [ref=e774]:
+              - text: 김태윤
+              - text: 010-3797-5589
+            - cell "옵션" [ref=e775]:
+              - generic [ref=e776]: 옵션
+          - row "[소형화물] [카고]봉고3 4WD/킹캡/장축/1.0톤/CRDi 럭셔리 무사고.신조차량.4WD.비흡연차량.블랙박스.럭셔리등급.언더코팅(부식방지).하이패스 비흡연 1인소유 4WD 수동 5570 2019.04 경유 5.5만 흰색 1,890 수원/SK V1 수성자동차 김태윤 010-3797-5589 옵션" [ref=e777]:
+            - cell [ref=e778]
+            - cell [ref=e780]:
+              - link [ref=e781] [cursor=pointer]:
+                - /url: javascript:carmangerDetailWindowPopUp_CHECK('0kKvDdy0s9uhE2DAshT9CQ==')
+                - img [ref=e782]
+            - cell [ref=e783]:
+              - img [ref=e784]
+            - cell "[소형화물] [카고]봉고3 4WD/킹캡/장축/1.0톤/CRDi 럭셔리 무사고.신조차량.4WD.비흡연차량.블랙박스.럭셔리등급.언더코팅(부식방지).하이패스 비흡연 1인소유 4WD" [ref=e785]:
+              - generic [ref=e786]:
+                - text: "[소형화물]"
+                - link "[카고]봉고3 4WD/킹캡/장축/1.0톤/CRDi 럭셔리" [ref=e787] [cursor=pointer]:
+                  - /url: javascript:carmangerDetailWindowPopUp_CHECK('0kKvDdy0s9uhE2DAshT9CQ==')
+              - generic [ref=e788]: 무사고.신조차량.4WD.비흡연차량.블랙박스.럭셔리등급.언더코팅(부식방지).하이패스
+              - generic [ref=e789] [cursor=pointer]:
+                - img "비흡연" [ref=e790]
+                - img "1인소유" [ref=e791]
+                - img "4WD" [ref=e792]
+            - cell "수동 5570" [ref=e793]:
+              - paragraph [ref=e794]: 수동
+              - paragraph [ref=e795]: "5570"
+            - cell "2019.04" [ref=e796]: "2019.04"
+            - cell "경유" [ref=e797]
+            - cell "5.5만" [ref=e798]
+            - cell "흰색" [ref=e799]
+            - cell "1,890" [ref=e800]
+            - cell "수원/SK V1 수성자동차" [ref=e801]:
+              - text: 수원/SK V1
+              - text: 수성자동차
+            - cell "김태윤 010-3797-5589" [ref=e802]:
+              - text: 김태윤
+              - text: 010-3797-5589
+            - cell "옵션" [ref=e803]:
+              - generic [ref=e804]: 옵션
+          - row "[소형화물] [저상내장탑]포터2 (EV) 1.0톤/슈퍼캡/초장축 1인소유.양문 미닫이 저상탑. 비흡연차량 . 순정내비.프리미엄스페셜.배터리히팅 비흡연 특옵션 COOL 오토 8571 2022.02 전기 10.5만 흰색 1,980 수원/SK V1 수성자동차 김태윤 010-3797-5589 옵션" [ref=e805]:
+            - cell [ref=e806]
+            - cell [ref=e808]:
+              - link [ref=e809] [cursor=pointer]:
+                - /url: javascript:carmangerDetailWindowPopUp_CHECK('QrzrIE4itw+kIC0HV2IS7g==')
+                - img [ref=e810]
+            - cell [ref=e811]:
+              - img [ref=e812]
+            - cell "[소형화물] [저상내장탑]포터2 (EV) 1.0톤/슈퍼캡/초장축 1인소유.양문 미닫이 저상탑. 비흡연차량 . 순정내비.프리미엄스페셜.배터리히팅 비흡연 특옵션 COOL" [ref=e813]:
+              - generic [ref=e814]:
+                - text: "[소형화물]"
+                - link "[저상내장탑]포터2 (EV) 1.0톤/슈퍼캡/초장축" [ref=e815] [cursor=pointer]:
+                  - /url: javascript:carmangerDetailWindowPopUp_CHECK('QrzrIE4itw+kIC0HV2IS7g==')
+              - generic [ref=e816]: 1인소유.양문 미닫이 저상탑. 비흡연차량 . 순정내비.프리미엄스페셜.배터리히팅
+              - generic [ref=e817] [cursor=pointer]:
+                - img "비흡연" [ref=e818]
+                - img "특옵션" [ref=e819]
+                - img "COOL" [ref=e820]
+            - cell "오토 8571" [ref=e821]:
+              - paragraph [ref=e822]: 오토
+              - paragraph [ref=e823]: "8571"
+            - cell "2022.02" [ref=e824]: "2022.02"
+            - cell "전기" [ref=e825]
+            - cell "10.5만" [ref=e826]
+            - cell "흰색" [ref=e827]
+            - cell "1,980" [ref=e828]
+            - cell "수원/SK V1 수성자동차" [ref=e829]:
+              - text: 수원/SK V1
+              - text: 수성자동차
+            - cell "김태윤 010-3797-5589" [ref=e830]:
+              - text: 김태윤
+              - text: 010-3797-5589
+            - cell "옵션" [ref=e831]:
+              - generic [ref=e832]: 옵션
+          - row "[소형화물] [파워게이트]포터2 슈퍼캡/초장축/(CRDi) 스타일 무사고.1인소유.정품파워게이트(무선.유선).사인보드(도로유도장치)구변완료.작업표시등 1인소유 특옵션 HOT 오토 3479 2023.04 경유 4.2만 파란색 2,230 수원/SK V1 수성자동차 김태윤 010-3797-5589 옵션" [ref=e833]:
+            - cell [ref=e834]
+            - cell [ref=e836]:
+              - link [ref=e837] [cursor=pointer]:
+                - /url: javascript:carmangerDetailWindowPopUp_CHECK('uZHFEw1H5r9SjFFQCAGdSg==')
+                - img [ref=e838]
+            - cell [ref=e839]:
+              - img [ref=e840]
+            - cell "[소형화물] [파워게이트]포터2 슈퍼캡/초장축/(CRDi) 스타일 무사고.1인소유.정품파워게이트(무선.유선).사인보드(도로유도장치)구변완료.작업표시등 1인소유 특옵션 HOT" [ref=e841]:
+              - generic [ref=e842]:
+                - text: "[소형화물]"
+                - link "[파워게이트]포터2 슈퍼캡/초장축/(CRDi) 스타일" [ref=e843] [cursor=pointer]:
+                  - /url: javascript:carmangerDetailWindowPopUp_CHECK('uZHFEw1H5r9SjFFQCAGdSg==')
+              - generic [ref=e844]: 무사고.1인소유.정품파워게이트(무선.유선).사인보드(도로유도장치)구변완료.작업표시등
+              - generic [ref=e845] [cursor=pointer]:
+                - img "1인소유" [ref=e846]
+                - img "특옵션" [ref=e847]
+                - img "HOT" [ref=e848]
+            - cell "오토 3479" [ref=e849]:
+              - paragraph [ref=e850]: 오토
+              - paragraph [ref=e851]: "3479"
+            - cell "2023.04" [ref=e852]: "2023.04"
+            - cell "경유" [ref=e853]
+            - cell "4.2만" [ref=e854]
+            - cell "파란색" [ref=e855]
+            - cell "2,230" [ref=e856]
+            - cell "수원/SK V1 수성자동차" [ref=e857]:
+              - text: 수원/SK V1
+              - text: 수성자동차
+            - cell "김태윤 010-3797-5589" [ref=e858]:
+              - text: 김태윤
+              - text: 010-3797-5589
+            - cell "옵션" [ref=e859]:
+              - generic [ref=e860]: 옵션
+          - row "[소형화물] [카고]더뉴봉고3 1.0톤/더블캡/초장축 GLS 무사고.1인소유.비흡연.GLS풀옵션.순정내비.후방.블박 비흡연 1인소유 특옵션 오토 0738 2020.10 경유 2.2만 파란색 1,890 수원/SK V1 수성자동차 김태윤 010-3797-5589 옵션" [ref=e861]:
+            - cell [ref=e862]
+            - cell [ref=e864]:
+              - link [ref=e865] [cursor=pointer]:
+                - /url: javascript:carmangerDetailWindowPopUp_CHECK('a5lDhwDh0At+URrSpVNaEg==')
+                - img [ref=e866]
+            - cell [ref=e867]:
+              - img [ref=e868]
+            - cell "[소형화물] [카고]더뉴봉고3 1.0톤/더블캡/초장축 GLS 무사고.1인소유.비흡연.GLS풀옵션.순정내비.후방.블박 비흡연 1인소유 특옵션" [ref=e869]:
+              - generic [ref=e870]:
+                - text: "[소형화물]"
+                - link "[카고]더뉴봉고3 1.0톤/더블캡/초장축 GLS" [ref=e871] [cursor=pointer]:
+                  - /url: javascript:carmangerDetailWindowPopUp_CHECK('a5lDhwDh0At+URrSpVNaEg==')
+              - generic [ref=e872]: 무사고.1인소유.비흡연.GLS풀옵션.순정내비.후방.블박
+              - generic [ref=e873] [cursor=pointer]:
+                - img "비흡연" [ref=e874]
+                - img "1인소유" [ref=e875]
+                - img "특옵션" [ref=e876]
+            - cell "오토 0738" [ref=e877]:
+              - paragraph [ref=e878]: 오토
+              - paragraph [ref=e879]: "0738"
+            - cell "2020.10" [ref=e880]: "2020.10"
+            - cell "경유" [ref=e881]
+            - cell "2.2만" [ref=e882]
+            - cell "파란색" [ref=e883]
+            - cell "1,890" [ref=e884]
+            - cell "수원/SK V1 수성자동차" [ref=e885]:
+              - text: 수원/SK V1
+              - text: 수성자동차
+            - cell "김태윤 010-3797-5589" [ref=e886]:
+              - text: 김태윤
+              - text: 010-3797-5589
+            - cell "옵션" [ref=e887]:
+              - generic [ref=e888]: 옵션
+          - row "[소형화물] [카고]봉고3 (LPG2.5터보) 킹캡/초장축/2WD GLS 무사고.1인소유.GLS풀옵션.내비.후방.크루즈컨트롤.하이패스룸미러.적재함호루장착 1인소유 튜닝 특옵션 오토 4084 2024.02 LPG 1.5만 흰색 2,260 수원/SK V1 수성자동차 김태윤 010-3797-5589 옵션" [ref=e889]:
+            - cell [ref=e890]
+            - cell [ref=e892]:
+              - link [ref=e893] [cursor=pointer]:
+                - /url: javascript:carmangerDetailWindowPopUp_CHECK('Z73ysIPkgICNcaimoj0qqA==')
+                - img [ref=e894]
+            - cell [ref=e895]:
+              - img [ref=e896]
+            - cell "[소형화물] [카고]봉고3 (LPG2.5터보) 킹캡/초장축/2WD GLS 무사고.1인소유.GLS풀옵션.내비.후방.크루즈컨트롤.하이패스룸미러.적재함호루장착 1인소유 튜닝 특옵션" [ref=e897]:
+              - generic [ref=e898]:
+                - text: "[소형화물]"
+                - link "[카고]봉고3 (LPG2.5터보) 킹캡/초장축/2WD GLS" [ref=e899] [cursor=pointer]:
+                  - /url: javascript:carmangerDetailWindowPopUp_CHECK('Z73ysIPkgICNcaimoj0qqA==')
+              - generic [ref=e900]: 무사고.1인소유.GLS풀옵션.내비.후방.크루즈컨트롤.하이패스룸미러.적재함호루장착
+              - generic [ref=e901] [cursor=pointer]:
+                - img "1인소유" [ref=e902]
+                - img "튜닝" [ref=e903]
+                - img "특옵션" [ref=e904]
+            - cell "오토 4084" [ref=e905]:
+              - paragraph [ref=e906]: 오토
+              - paragraph [ref=e907]: "4084"
+            - cell "2024.02" [ref=e908]: "2024.02"
+            - cell "LPG" [ref=e909]
+            - cell "1.5만" [ref=e910]
+            - cell "흰색" [ref=e911]
+            - cell "2,260" [ref=e912]
+            - cell "수원/SK V1 수성자동차" [ref=e913]:
+              - text: 수원/SK V1
+              - text: 수성자동차
+            - cell "김태윤 010-3797-5589" [ref=e914]:
+              - text: 김태윤
+              - text: 010-3797-5589
+            - cell "옵션" [ref=e915]:
+              - generic [ref=e916]: 옵션
+          - row "[중대형화물] 카고(3.5~4톤) 이스즈 엘프 3.5톤 무사고.부가세포함금액.실주행2천키로.파워게이트장착(600만원).안드로이드오토.차선이탈,전방추돌경보.오토미션 제조사AS 준신차 특옵션 오토 4488 2025.04 경유 2,144 흰색 5,690 수원/SK V1 수성자동차 김태윤 010-3797-5589 옵션" [ref=e917]:
+            - cell [ref=e918]
+            - cell [ref=e920]:
+              - link [ref=e921] [cursor=pointer]:
+                - /url: javascript:carmangerDetailWindowPopUp_CHECK('tjMORMJDiNgV2iF/2Rl/Iw==')
+                - img [ref=e922]
+            - cell [ref=e923]:
+              - img [ref=e924]
+            - cell "[중대형화물] 카고(3.5~4톤) 이스즈 엘프 3.5톤 무사고.부가세포함금액.실주행2천키로.파워게이트장착(600만원).안드로이드오토.차선이탈,전방추돌경보.오토미션 제조사AS 준신차 특옵션" [ref=e925]:
+              - generic [ref=e926]:
+                - text: "[중대형화물]"
+                - link "카고(3.5~4톤) 이스즈 엘프 3.5톤" [ref=e927] [cursor=pointer]:
+                  - /url: javascript:carmangerDetailWindowPopUp_CHECK('tjMORMJDiNgV2iF/2Rl/Iw==')
+              - generic [ref=e928]: 무사고.부가세포함금액.실주행2천키로.파워게이트장착(600만원).안드로이드오토.차선이탈,전방추돌경보.오토미션
+              - generic [ref=e929] [cursor=pointer]:
+                - img "제조사AS" [ref=e930]
+                - img "준신차" [ref=e931]
+                - img "특옵션" [ref=e932]
+            - cell "오토 4488" [ref=e933]:
+              - paragraph [ref=e934]: 오토
+              - paragraph [ref=e935]: "4488"
+            - cell "2025.04" [ref=e936]: "2025.04"
+            - cell "경유" [ref=e937]
+            - cell "2,144" [ref=e938]
+            - cell "흰색" [ref=e939]
+            - cell "5,690" [ref=e940]
+            - cell "수원/SK V1 수성자동차" [ref=e941]:
+              - text: 수원/SK V1
+              - text: 수성자동차
+            - cell "김태윤 010-3797-5589" [ref=e942]:
+              - text: 김태윤
+              - text: 010-3797-5589
+            - cell "옵션" [ref=e943]:
+              - generic [ref=e944]: 옵션
+          - row "[소형화물] [카고]포터2 4WD/더블캡/장축 프리미엄 완무.4WD프리미엄.풀옵션.평탄화작업.포장탑구변.인산철밧데리.고 ... 안전정비 특옵션 4WD 수동 2130 2022.04 경유 7.2만 흰색 2,240 수원/SK V1 수성자동차 김태윤 010-3797-5589 옵션" [ref=e945]:
+            - cell [ref=e946]
+            - cell [ref=e948]:
+              - link [ref=e949] [cursor=pointer]:
+                - /url: javascript:carmangerDetailWindowPopUp_CHECK('WAHQtWRzfjqtUHi73lK0gQ==')
+                - img [ref=e950]
+            - cell [ref=e951]:
+              - img [ref=e952]
+            - cell "[소형화물] [카고]포터2 4WD/더블캡/장축 프리미엄 완무.4WD프리미엄.풀옵션.평탄화작업.포장탑구변.인산철밧데리.고 ... 안전정비 특옵션 4WD" [ref=e953]:
+              - generic [ref=e954]:
+                - text: "[소형화물]"
+                - link "[카고]포터2 4WD/더블캡/장축 프리미엄" [ref=e955] [cursor=pointer]:
+                  - /url: javascript:carmangerDetailWindowPopUp_CHECK('WAHQtWRzfjqtUHi73lK0gQ==')
+              - generic [ref=e956]: 완무.4WD프리미엄.풀옵션.평탄화작업.포장탑구변.인산철밧데리.고 ...
+              - generic [ref=e957] [cursor=pointer]:
+                - img "안전정비" [ref=e958]
+                - img "특옵션" [ref=e959]
+                - img "4WD" [ref=e960]
+            - cell "수동 2130" [ref=e961]:
+              - paragraph [ref=e962]: 수동
+              - paragraph [ref=e963]: "2130"
+            - cell "2022.04" [ref=e964]: "2022.04"
+            - cell "경유" [ref=e965]
+            - cell "7.2만" [ref=e966]
+            - cell "흰색" [ref=e967]
+            - cell "2,240" [ref=e968]
+            - cell "수원/SK V1 수성자동차" [ref=e969]:
+              - text: 수원/SK V1
+              - text: 수성자동차
+            - cell "김태윤 010-3797-5589" [ref=e970]:
+              - text: 김태윤
+              - text: 010-3797-5589
+            - cell "옵션" [ref=e971]:
+              - generic [ref=e972]: 옵션
+          - row "[소형화물] [카고]더뉴봉고3 1.0톤/더블캡/초장축 GLS 무사고.GLS풀옵션.히이패스룸미러.풀오토AC.브라운시트.차선이탈.전방추돌.평탄화시트 비흡연 안전정비 특옵션 오토 1223 2023.04 경유 6만 진주색 2,140 수원/SK V1 수성자동차 김태윤 010-3797-5589 옵션" [ref=e973]:
+            - cell [ref=e974]
+            - cell [ref=e976]:
+              - link [ref=e977] [cursor=pointer]:
+                - /url: javascript:carmangerDetailWindowPopUp_CHECK('Iw21hcJuiRH7yJGtJHTwKg==')
+                - img [ref=e978]
+            - cell [ref=e979]:
+              - img [ref=e980]
+            - cell "[소형화물] [카고]더뉴봉고3 1.0톤/더블캡/초장축 GLS 무사고.GLS풀옵션.히이패스룸미러.풀오토AC.브라운시트.차선이탈.전방추돌.평탄화시트 비흡연 안전정비 특옵션" [ref=e981]:
+              - generic [ref=e982]:
+                - text: "[소형화물]"
+                - link "[카고]더뉴봉고3 1.0톤/더블캡/초장축 GLS" [ref=e983] [cursor=pointer]:
+                  - /url: javascript:carmangerDetailWindowPopUp_CHECK('Iw21hcJuiRH7yJGtJHTwKg==')
+              - generic [ref=e984]: 무사고.GLS풀옵션.히이패스룸미러.풀오토AC.브라운시트.차선이탈.전방추돌.평탄화시트
+              - generic [ref=e985] [cursor=pointer]:
+                - img "비흡연" [ref=e986]
+                - img "안전정비" [ref=e987]
+                - img "특옵션" [ref=e988]
+            - cell "오토 1223" [ref=e989]:
+              - paragraph [ref=e990]: 오토
+              - paragraph [ref=e991]: "1223"
+            - cell "2023.04" [ref=e992]: "2023.04"
+            - cell "경유" [ref=e993]
+            - cell "6만" [ref=e994]
+            - cell "진주색" [ref=e995]
+            - cell "2,140" [ref=e996]
+            - cell "수원/SK V1 수성자동차" [ref=e997]:
+              - text: 수원/SK V1
+              - text: 수성자동차
+            - cell "김태윤 010-3797-5589" [ref=e998]:
+              - text: 김태윤
+              - text: 010-3797-5589
+            - cell "옵션" [ref=e999]:
+              - generic [ref=e1000]: 옵션
+      - generic [ref=e1001]:
+        - generic:
+          - generic [ref=e1002]:
+            - list:
+              - listitem [ref=e1003]:
+                - button "선택비교하기" [ref=e1004] [cursor=pointer]:
+                  - img [ref=e1005]
+                  - text: 선택비교하기
+          - table [ref=e1008]:
+            - rowgroup [ref=e1009]:
+              - row "1 2 3 4 5" [ref=e1010]:
+                - columnheader [ref=e1011]:
+                  - img [ref=e1012]
+                - rowheader [ref=e1013] [cursor=pointer]:
+                  - img [ref=e1014]
+                - cell "1" [ref=e1015]
+                - cell "2" [ref=e1016] [cursor=pointer]
+                - cell "3" [ref=e1017] [cursor=pointer]
+                - cell "4" [ref=e1018] [cursor=pointer]
+                - cell "5" [ref=e1019] [cursor=pointer]
+                - rowheader [ref=e1020] [cursor=pointer]:
+                  - img [ref=e1021]
+    - generic [ref=e1025]:
+      - list [ref=e1026]:
+        - listitem [ref=e1027]: ㈜ 아톤모빌리티
+        - listitem [ref=e1028]: 사업자등록번호:140-81-22581
+        - listitem [ref=e1029]: 통신판매업신고번호:제2021-서울서초-1652호
+        - listitem [ref=e1030]: 서울특별시 서초구 강남대로 273 송남빌딩 10층
+        - listitem [ref=e1031]: 대표자 :신임철
+        - listitem [ref=e1032]: "Tel : 02-3474-3060"
+        - listitem [ref=e1033]: "Fax : 02-3474-3069"
+        - listitem [ref=e1034]: "고객문의 : cs@atonmobility.com"
+        - listitem [ref=e1035]: Copyright ⓒ 2021 ATON mobility Inc. All rights reserved.
+      - list [ref=e1036]:
+        - listitem [ref=e1037]:
+          - link "제휴제안" [ref=e1038] [cursor=pointer]:
+            - /url: javascript:goPopupContect()
+        - listitem [ref=e1039]:
+          - link "이용약관" [ref=e1040] [cursor=pointer]:
+            - /url: javascript:goPopupUseTerms()
+        - listitem [ref=e1041]:
+          - link "개인정보 처리방침" [ref=e1042] [cursor=pointer]:
+            - /url: javascript:goPopupPersonPolicy()
+        - listitem [ref=e1043]:
+          - link "사이트맵" [ref=e1044] [cursor=pointer]:
+            - /url: javascript:goPopupSiteMap()
+        - listitem [ref=e1045]:
+          - link "원격지원요청" [ref=e1046] [cursor=pointer]:
+            - /url: /RemoteSupport.html
+  - generic [ref=e1050]:
+    - generic [ref=e1051]: 즐겨찾기
+    - generic [ref=e1052] [cursor=pointer]: <
+    - list:
+      - listitem [ref=e1053]:
+        - text: 매물조회
+        - generic [ref=e1054] [cursor=pointer]: X
+      - listitem [ref=e1055]:
+        - text: 내정보수정
+        - generic [ref=e1056] [cursor=pointer]: X
+      - listitem [ref=e1057]:
+        - text: 시세조회
+        - generic [ref=e1058] [cursor=pointer]: X
+    - generic [ref=e1059] [cursor=pointer]: ">"

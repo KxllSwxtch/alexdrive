@@ -30,6 +30,12 @@ def parse_car_detail(html: str, encrypted_id: str) -> dict:
 
     options = extract_options(parser)
 
+    # Extract inspection report URL from script tags
+    inspection_url = None
+    m = re.search(r"var\s+carcheckoutUrl\s*=\s*'([^']*)'", html)
+    if m and m.group(1).strip():
+        inspection_url = m.group(1).strip()
+
     return {
         "encryptedId": encrypted_id,
         "name": name,
@@ -48,6 +54,7 @@ def parse_car_detail(html: str, encrypted_id: str) -> dict:
         "phone": specs.get("phone", ""),
         "registrationDate": specs.get("registrationDate", ""),
         "modelYear": specs.get("modelYear", ""),
+        "inspectionUrl": inspection_url,
     }
 
 
