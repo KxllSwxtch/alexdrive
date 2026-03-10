@@ -898,7 +898,7 @@ const translations = {
   엘리트: "Elite",
   캘리그래피: "Calligraphy",
   토레스: "Torres",
-  시리즈: "-er",
+  시리즈: "-Series",
   그란쿠페: "Gran Coupe",
   익스클루시브: "Exclusive",
   카고: "Cargo",
