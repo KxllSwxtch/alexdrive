@@ -10,7 +10,6 @@ import { fromUrlSafeId, buildCarDetailPath } from "@/lib/url";
 import { ImageGallery } from "@/components/ImageGallery";
 import { ContactCard } from "@/components/ContactCard";
 import { CarOptions } from "@/components/CarOptions";
-import { InspectionReport } from "@/components/InspectionReport";
 import { CreditCalculatorLazy } from "@/components/CreditCalculatorLazy";
 import { ShareButton } from "@/components/ShareButton";
 import { priceStringToKrw } from "@/lib/format";
@@ -169,9 +168,21 @@ export default async function CarDetailPage({ params }: PageProps) {
             </div>
           )}
 
-          {/* Inspection report */}
-          {car.inspection && (
-            <InspectionReport inspection={car.inspection} />
+          {/* Inspection report link */}
+          {car.inspectionUrl && (
+            <a
+              href={car.inspectionUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 text-sm text-gold transition-colors hover:text-gold-light"
+            >
+              Посмотреть технический лист авто
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6" strokeLinecap="round" strokeLinejoin="round" />
+                <path d="M15 3h6v6" strokeLinecap="round" strokeLinejoin="round" />
+                <path d="M10 14L21 3" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </a>
           )}
 
           {/* Compact calculator - mobile only */}
