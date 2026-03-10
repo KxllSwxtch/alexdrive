@@ -47,6 +47,18 @@ export function Footer() {
               >
                 Калькулятор
               </Link>
+              <Link
+                href="/privacy"
+                className="text-sm text-text-secondary transition-colors hover:text-gold"
+              >
+                Конфиденциальность
+              </Link>
+              <Link
+                href="/terms"
+                className="text-sm text-text-secondary transition-colors hover:text-gold"
+              >
+                Условия использования
+              </Link>
             </nav>
           </div>
 
