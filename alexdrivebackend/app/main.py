@@ -10,7 +10,7 @@ from starlette.middleware.gzip import GZipMiddleware
 
 from app.config import settings
 from app.routes import cars, filters, health
-from app.services.carmanager import get_car_listings
+from app.services.carmanager import get_car_listings, get_filter_data
 from app.services.client import NetworkError
 from app.services.session import set_http_client, get_session
 
@@ -31,6 +31,13 @@ async def lifespan(app: FastAPI):
             print("[server] Session pre-warmed successfully")
         except Exception as e:
             print(f"[server] Session pre-warm failed (will retry on first request): {e}")
+
+        # Pre-warm filter cache
+        try:
+            await get_filter_data()
+            print("[server] Filter cache pre-warmed")
+        except Exception as e:
+            print(f"[server] Filter pre-warm failed: {e}")
 
         # Pre-warm default listing cache
         try:

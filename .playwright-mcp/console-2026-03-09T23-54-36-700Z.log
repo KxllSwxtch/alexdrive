@@ -1,0 +1,15 @@
+[    2166ms] [ERROR] Failed to load resource: the server responded with a status of 403 () @ https://ga-login.gabiacloud.com/v1/accounts/me:0
+[    2188ms] [ERROR] Failed to load resource: the server responded with a status of 404 () @ https://gabia-service-api.gabiacloud.com/api/v1/userstatus/:0
+[    2189ms] [ERROR] Failed to load resource: the server responded with a status of 400 (Bad Request) @ https://gcloudapi.gabia.com/resource/api/v1/certify?gasess=:0
+[    2407ms] [ERROR] Failed to load resource: the server responded with a status of 401 (Unauthorized) @ https://my.gabia.com/api/client_notification?callback=jQuery33108479571698610101_1773100478884&_=1773100478885:0
+[    5346ms] [ERROR] Failed to load resource: the server responded with a status of 403 () @ https://ga-login.gabiacloud.com/v1/accounts/me:0
+[    5356ms] [ERROR] Failed to load resource: the server responded with a status of 400 (Bad Request) @ https://gcloudapi.gabia.com/resource/api/v1/certify?gasess=:0
+[    5358ms] [ERROR] Failed to load resource: the server responded with a status of 404 () @ https://gabia-service-api.gabiacloud.com/api/v1/userstatus/:0
+[    5404ms] [ERROR] Attestation check for Attribution Reporting on https://www.google-analytics.com failed. @ https://www.gabiacloud.com/quotation/:0
+[    5546ms] [ERROR] Failed to load resource: the server responded with a status of 401 (Unauthorized) @ https://my.gabia.com/api/client_notification?callback=jQuery33104733168480207516_1773100482043&_=1773100482044:0
+[    6360ms] [ERROR] Failed to load resource: the server responded with a status of 403 () @ https://ga-login.gabiacloud.com/v1/accounts/me:0
+[    6363ms] [ERROR] Failed to load resource: the server responded with a status of 400 (Bad Request) @ https://gcloudapi.gabia.com/resource/api/v1/certify?gasess=:0
+[    6363ms] [ERROR] Failed to load resource: the server responded with a status of 404 () @ https://gabia-service-api.gabiacloud.com/api/v1/userstatus/:0
+[    6619ms] [ERROR] Failed to load resource: the server responded with a status of 401 (Unauthorized) @ https://my.gabia.com/api/client_notification?callback=jQuery331042189909003258763_1773100483123&_=1773100483124:0
+[    8202ms] [ERROR] Failed to load resource: the server responded with a status of 401 (Unauthorized) @ https://gabia-user-api.gabia.com/v1/users/me:0
+[    8439ms] [ERROR] Failed to load resource: the server responded with a status of 401 (Unauthorized) @ https://my.gabia.com/api/client_notification?callback=jQuery33109379570131808276_1773100484971&_=1773100484972:0

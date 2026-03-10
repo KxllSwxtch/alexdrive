@@ -2,7 +2,7 @@ import json
 import re
 from typing import Any
 
-from bs4 import BeautifulSoup
+from selectolax.lexbor import LexborHTMLParser
 
 
 def extract_js_var(js_content: str, var_name: str) -> str | None:
@@ -166,14 +166,14 @@ def parse_danjis_from_js(js_content: str, area_code: str) -> list[dict]:
 
 
 def parse_select_options(html: str, select_id: str) -> list[dict[str, str]]:
-    soup = BeautifulSoup(html, "lxml")
-    select = soup.find("select", id=select_id)
+    parser = LexborHTMLParser(html)
+    select = parser.css_first(f"select#{select_id}")
     if not select:
         return []
     options: list[dict[str, str]] = []
-    for el in select.find_all("option"):
-        value = el.get("value", "")
-        label = el.get_text(strip=True)
+    for el in select.css("option"):
+        value = el.attributes.get("value", "")
+        label = el.text(strip=True)
         if value and value != "" and value != "0":
             options.append({"value": value, "label": label})
     return options

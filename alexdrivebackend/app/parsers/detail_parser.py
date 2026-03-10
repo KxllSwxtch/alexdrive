@@ -1,34 +1,34 @@
 import re
 
-from bs4 import BeautifulSoup
+from selectolax.lexbor import LexborHTMLParser
 
 
 def parse_car_detail(html: str, encrypted_id: str) -> dict:
-    soup = BeautifulSoup(html, "lxml")
+    parser = LexborHTMLParser(html)
 
-    name_el = soup.find(id="ui_ViewCarName")
+    name_el = parser.css_first("#ui_ViewCarName")
     if name_el:
-        name = name_el.get_text(strip=True)
+        name = name_el.text(strip=True)
     else:
-        tit_h2 = soup.select_one(".uc_cardetail .tit h2")
-        name = tit_h2.get_text(strip=True) if tit_h2 else ""
+        tit_h2 = parser.css_first(".uc_cardetail .tit h2")
+        name = tit_h2.text(strip=True) if tit_h2 else ""
 
     images: list[str] = []
-    for a in soup.find_all("a", class_="img_box"):
-        imgs = a.find_all("img")
+    for a in parser.css("a.img_box"):
+        imgs = a.css("img")
         full_img = imgs[1] if len(imgs) > 1 else imgs[0] if imgs else None
         if full_img:
-            src = full_img.get("src", "")
+            src = full_img.attributes.get("src", "")
             if src and "noimage" not in src and "sblank" not in src:
                 images.append(normalize_image_url(src))
 
-    spec_table = soup.find("table", class_="car_info_201210")
+    spec_table = parser.css_first("table.car_info_201210")
     specs = extract_specs_from_table(spec_table) if spec_table else {}
 
-    price_el = soup.find(id="ui_ViewCarAmount")
-    price = price_el.get_text(strip=True) if price_el else ""
+    price_el = parser.css_first("#ui_ViewCarAmount")
+    price = price_el.text(strip=True) if price_el else ""
 
-    options = extract_options(soup)
+    options = extract_options(parser)
 
     return {
         "encryptedId": encrypted_id,
@@ -67,20 +67,20 @@ def extract_specs_from_table(table) -> dict:
         "modelYear": "",
     }
 
-    for tr in table.find_all("tr"):
-        ths = tr.find_all("th")
-        tds = tr.find_all("td")
+    for tr in table.css("tr"):
+        ths = tr.css("th")
+        tds = tr.css("td")
 
         for i, th in enumerate(ths):
             if i >= len(tds):
                 break
-            label = th.get_text(strip=True)
+            label = th.text(strip=True)
             td = tds[i]
-            value = re.sub(r"\s+", " ", td.get_text(strip=True))
+            value = re.sub(r"\s+", " ", td.text(strip=True))
 
             if label == "차량번호":
-                plate_input = td.find("input", id="carplatenoCopy")
-                specs["carNumber"] = plate_input.get("value", "") if plate_input else value
+                plate_input = td.css_first("input#carplatenoCopy")
+                specs["carNumber"] = plate_input.attributes.get("value", "") if plate_input else value
             elif label == "주행거리":
                 specs["mileage"] = value
             elif label == "미션":
@@ -102,28 +102,29 @@ def extract_specs_from_table(table) -> dict:
                 phones = re.findall(r"\d{2,4}-\d{3,4}-\d{4}", value)
                 if phones:
                     specs["phone"] = phones[-1]
-                for span in td.find_all("span"):
-                    text = span.get_text(strip=True)
+                for span in td.css("span"):
+                    text = span.text(strip=True)
                     if text and "-" not in text and "(" not in text and "증번호" not in text and len(text) < 10:
                         specs["dealer"] = text
 
     return specs
 
 
-def extract_options(soup) -> list[dict]:
+def extract_options(parser) -> list[dict]:
     option_groups: list[dict] = []
 
-    for group in soup.find_all("div", class_="num01sub"):
-        h4 = group.find("h4")
-        group_name = h4.get_text(strip=True) if h4 else ""
+    for group in parser.css("div.num01sub"):
+        h4 = group.css_first("h4")
+        group_name = h4.text(strip=True) if h4 else ""
         if not group_name:
             continue
 
         items: list[str] = []
-        for el in group.select("input[type='checkbox'][checked]"):
-            label = el.find_next_sibling("label")
-            if label:
-                text = label.get_text(strip=True)
+        for checkbox in group.css("input[type='checkbox'][checked]"):
+            # selectolax doesn't have find_next_sibling — use .next to get adjacent label
+            sibling = checkbox.next
+            if sibling and sibling.tag == "label":
+                text = sibling.text(strip=True)
                 if text:
                     items.append(text)
 

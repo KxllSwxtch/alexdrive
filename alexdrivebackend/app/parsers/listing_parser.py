@@ -1,82 +1,88 @@
 import re
 
-from bs4 import BeautifulSoup
+from selectolax.lexbor import LexborHTMLParser
 
 
 def parse_car_listings(html: str) -> list[dict]:
-    soup = BeautifulSoup(html, "lxml")
+    parser = LexborHTMLParser(html)
     listings: list[dict] = []
 
-    for row in soup.find_all("tr", class_="uc_carcss"):
-        link = row.find("a", href=lambda h: h and "carmangerDetailWindowPopUp_CHECK" in h)
+    for row in parser.css("tr.uc_carcss"):
+        # Find link with encrypted ID
+        link = None
+        for a in row.css("a[href]"):
+            href = a.attributes.get("href", "")
+            if "carmangerDetailWindowPopUp_CHECK" in href:
+                link = a
+                break
         if not link:
             continue
-        href = link.get("href", "")
+        href = link.attributes.get("href", "")
         enc_match = re.search(r"carmangerDetailWindowPopUp_CHECK\('([^']+)'\)", href)
         if not enc_match:
             continue
         encrypted_id = enc_match.group(1)
 
-        img = row.find("img", class_="thumbnail")
-        image_url = img.get("src", "") if img else ""
+        img = row.css_first("img.thumbnail")
+        image_url = img.attributes.get("src", "") if img else ""
 
-        name_cell = row.find("td", class_="uc_textleft")
+        name_cell = row.css_first("td.uc_textleft")
         maker = ""
         model = ""
         if name_cell:
-            maker_label = name_cell.find("label", class_="uc_carmaker")
+            maker_label = name_cell.css_first("label.uc_carmaker")
             if maker_label:
-                maker = maker_label.get_text(strip=True)
-            model_link = name_cell.select_one("span > a")
+                maker = maker_label.text(strip=True)
+            model_link = name_cell.css_first("span > a")
             if model_link:
-                model = model_link.get_text(strip=True)
+                model = model_link.text(strip=True)
         name = f"{maker} {model}".strip()
 
-        cells = row.find_all("td")
+        cells = row.css("td")
         transmission = ""
         year = ""
         model_year = ""
         fuel = ""
 
         for td in cells:
-            first_p = td.find("p")
+            first_p = td.css_first("p")
             if first_p:
-                p_text = first_p.get_text(strip=True)
+                p_text = first_p.text(strip=True)
                 if p_text and re.search(r"오토|수동|세미오토|무단변속", p_text) and not transmission:
                     transmission = p_text
 
-            reg_span = td.find("span", class_="uc_carreg")
+            reg_span = td.css_first("span.uc_carreg")
             if reg_span:
-                reg_text = reg_span.get_text(strip=True)
+                reg_text = reg_span.text(strip=True)
                 if reg_text and not year:
                     year = reg_text
 
-            year_span = td.find("span", class_="uc_carreg_year")
+            year_span = td.css_first("span.uc_carreg_year")
             if year_span:
-                year_text = year_span.get_text(strip=True)
+                year_text = year_span.text(strip=True)
                 if year_text and year_text.startswith("[") and not model_year:
                     model_year = year_text.strip("[]")
 
         for td in cells:
-            text = td.get_text(strip=True)
-            td_class = td.get("class")
+            text = td.text(strip=True)
+            td_class = td.attributes.get("class")
             if not td_class and re.match(r"^(휘발유|경유|LPG|전기|하이브리드|CNG|수소)", text) and not fuel:
                 fuel = text
 
-        mileage_td = row.find("td", class_="uc_carusekm")
-        mileage = mileage_td.get_text(strip=True) if mileage_td else ""
+        mileage_td = row.css_first("td.uc_carusekm")
+        mileage = mileage_td.text(strip=True) if mileage_td else ""
 
-        price_b = row.find("b", class_="uc_caramount")
-        price = price_b.get_text(strip=True) if price_b else ""
+        price_b = row.css_first("b.uc_caramount")
+        price = price_b.text(strip=True) if price_b else ""
 
-        area_td = row.find("td", class_="uc_cararea")
-        location = re.sub(r"\s+", " ", area_td.get_text(strip=True)) if area_td else ""
+        area_td = row.css_first("td.uc_cararea")
+        location = re.sub(r"\s+", " ", area_td.text(strip=True)) if area_td else ""
 
-        dealer_span = row.find("span", class_="uc_cardealer")
-        dealer = dealer_span.get_text(strip=True) if dealer_span else ""
+        dealer_span = row.css_first("span.uc_cardealer")
+        dealer = dealer_span.text(strip=True) if dealer_span else ""
 
-        phone_span = row.find("span", class_="uc_cardealer_phone")
-        phone = phone_span.get_text(strip=True) if phone_span else ""
+        phone_span = row.css_first("span.uc_cardealer_phone")
+        phone = phone_span.text(strip=True) if phone_span else ""
 
         display_year = f"{year} [{model_year}]" if model_year else year
 

@@ -1,0 +1,9 @@
+# FRONTEND  
+BACKEND_URL = https://alexdrive-backend.onrender.com
+NEXT_PUBLIC_BACKEND_URL = https://alexdrive-backend.onrender.com
+
+# BACKEND
+CARMANAGER_USERNAME = lekwood23
+CARMANAGER_PASSWORD = leka230696
+PROXY_URL = http://bp-bfk2u7wtb3gy_area-KR:zwj1SkzW69P1nhUs@proxy.bestproxy.com:2312
+CORS_ORIGINS = http://localhost:3000,https://alexdrive.kr,https://www.alexdrive.kr
