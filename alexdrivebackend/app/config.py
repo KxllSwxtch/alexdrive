@@ -8,6 +8,7 @@ class Settings(BaseSettings):
     carmanager_password: str = ""
     carmanager_base_url: str = "https://www.carmanager.co.kr"
     proxy_url: str = ""
+    admin_secret: str = ""
 
     model_config = {"env_file": ".env", "extra": "ignore"}
 

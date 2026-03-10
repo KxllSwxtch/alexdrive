@@ -54,7 +54,9 @@ async def fetch_with_auth(
     if (response.status_code == 302 and "Login" in location) or response.status_code == 401:
         if _retried:
             raise RuntimeError("Authentication failed after retry")
+        print(f"[client] Auth failure on {path}, re-authenticating...")
         invalidate_session()
+        await asyncio.sleep(1.0)
         return await fetch_with_auth(path, method, headers, body, _retried=True)
 
     text = response.text

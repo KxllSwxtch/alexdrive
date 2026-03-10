@@ -11,6 +11,7 @@ from app.parsers.filter_parser import (
 )
 from app.parsers.listing_parser import parse_car_listings, parse_total_count
 from app.services.client import NetworkError, fetch_page, post_form
+from app.services.session import invalidate_session
 
 _filter_cache: dict | None = None
 _filter_lock = asyncio.Lock()
@@ -167,7 +168,7 @@ def _build_form_fields(params: dict) -> dict[str, str]:
     }
 
 
-async def _fetch_and_cache_listings(cache_key: str, form_fields: dict) -> dict:
+async def _fetch_and_cache_listings(cache_key: str, form_fields: dict, _retried: bool = False) -> dict:
     """Fetch listings from carmanager, parse, cache, and return."""
     html = await post_form("/Car/Data", form_fields)
     listings = parse_car_listings(html)
@@ -175,8 +176,14 @@ async def _fetch_and_cache_listings(cache_key: str, form_fields: dict) -> dict:
 
     print(f"[carmanager] Listings: {len(listings)}/{total}, HTML length: {len(html)}")
 
-    if len(listings) == 0 and len(html) > 1000:
-        print("[carmanager] WARNING: 0 listings parsed from non-empty HTML — selectors may be outdated")
+    # 0 listings from non-empty HTML likely means expired session
+    if len(listings) == 0 and total == 0 and len(html) > 1000 and not _retried:
+        print("[carmanager] 0 listings from non-empty HTML — session likely expired, retrying...")
+        invalidate_session()
+        return await _fetch_and_cache_listings(cache_key, form_fields, _retried=True)
+
+    if len(listings) == 0 and len(html) > 1000 and _retried:
+        print("[carmanager] WARNING: still 0 listings after re-auth — selectors may be outdated")
 
     result = {"listings": listings, "total": total}
     _listing_cache[cache_key] = {"data": result, "expiry": time.time() + LISTING_TTL}

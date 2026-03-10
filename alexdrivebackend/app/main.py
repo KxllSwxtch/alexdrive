@@ -1,3 +1,4 @@
+import asyncio
 import time
 from contextlib import asynccontextmanager
 
@@ -9,10 +10,10 @@ from fastapi.responses import JSONResponse
 from starlette.middleware.gzip import GZipMiddleware
 
 from app.config import settings
-from app.routes import cars, filters, health
+from app.routes import admin, cars, filters, health
 from app.services.carmanager import get_car_listings, get_filter_data
 from app.services.client import NetworkError
-from app.services.session import set_http_client, get_session
+from app.services.session import set_http_client, get_session, session_keepalive_loop
 
 
 @asynccontextmanager
@@ -49,8 +50,17 @@ async def lifespan(app: FastAPI):
         except Exception as e:
             print(f"[server] Listing pre-warm failed: {e}")
 
+        # Start session keepalive background task
+        keepalive_task = asyncio.create_task(session_keepalive_loop())
+
         print(f"[server] AlexDrive backend running on port {settings.port}")
         yield
+
+        keepalive_task.cancel()
+        try:
+            await keepalive_task
+        except asyncio.CancelledError:
+            pass
 
 
 app = FastAPI(lifespan=lifespan)
@@ -67,6 +77,7 @@ app.add_middleware(
 app.include_router(health.router)
 app.include_router(filters.router)
 app.include_router(cars.router)
+app.include_router(admin.router)
 
 
 @app.middleware("http")
