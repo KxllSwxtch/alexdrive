@@ -1,7 +1,9 @@
+import asyncio
+
 from fastapi import APIRouter, Query
 from fastapi.responses import JSONResponse
 
-from app.services.carmanager import get_car_detail, get_car_listings
+from app.services.carmanager import _detail_cache, get_car_detail, get_car_listings
 
 router = APIRouter(prefix="/api")
 
@@ -74,6 +76,16 @@ async def get_cars(
         content=data,
         headers={"Cache-Control": "public, max-age=600"},
     )
+
+
+@router.post("/cars/prefetch")
+async def prefetch_detail(id: str | None = Query(None)):
+    """Fire-and-forget cache warming. Returns 202 immediately."""
+    if not id:
+        return JSONResponse(status_code=400, content={"error": "Missing id"})
+    if id not in _detail_cache:
+        asyncio.ensure_future(get_car_detail(id))
+    return JSONResponse(status_code=202, content={"status": "warming"})
 
 
 @router.get("/cars/detail")

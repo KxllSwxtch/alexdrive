@@ -32,6 +32,7 @@ export default function RootLayout({
       <head>
         <link rel="preconnect" href="https://img.carmanager.co.kr" />
         <link rel="dns-prefetch" href="https://img.carmanager.co.kr" />
+        <link rel="preconnect" href={process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:3001"} />
       </head>
       <body className={`${jost.variable} ${inter.variable} font-sans antialiased`}>
         <Header />

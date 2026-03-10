@@ -1,9 +1,15 @@
+"use client";
+
 import Link from "next/link";
+import Image from "next/image";
+import { useState, useCallback } from "react";
 
 import type { CarListing } from "@/lib/types";
 import { translateSmartly } from "@/lib/translations";
 import { formatPrice, formatMileage } from "@/lib/format";
 import { buildCarDetailPath } from "@/lib/url";
+
+const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:3001";
 
 interface CarCardProps {
   car: CarListing;
@@ -11,26 +17,39 @@ interface CarCardProps {
 }
 
 export function CarCard({ car, index }: CarCardProps) {
+  const [prefetchActive, setPrefetchActive] = useState(false);
   const translatedName = translateSmartly(car.name);
   const translatedFuel = car.fuel ? translateSmartly(car.fuel) : "";
   const translatedTransmission = car.transmission ? translateSmartly(car.transmission) : "";
 
+  const onHover = useCallback(() => {
+    if (!prefetchActive) {
+      setPrefetchActive(true);
+      // Fire-and-forget: warm the backend detail cache
+      fetch(`${BACKEND_URL}/api/cars/prefetch?id=${encodeURIComponent(car.encryptedId)}`, {
+        method: "POST",
+      }).catch(() => {});
+    }
+  }, [prefetchActive, car.encryptedId]);
+
   return (
     <Link
       href={buildCarDetailPath(translatedName, car.year, car.encryptedId)}
-      prefetch={false}
+      prefetch={prefetchActive ? null : false}
+      onMouseEnter={onHover}
       className="group flex flex-col overflow-hidden rounded-xl border border-border bg-bg-surface transition-all duration-300 hover:border-gold/30 hover:shadow-[0_0_30px_rgba(212,175,55,0.06)]"
     >
       {/* Image */}
       <div className="relative aspect-[16/10] overflow-hidden bg-bg-elevated">
         {car.imageUrl ? (
-          <img
+          <Image
             src={car.imageUrl}
             alt={translatedName}
+            fill
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+            className="object-cover transition-transform duration-500 group-hover:scale-105"
             loading={index !== undefined && index < 3 ? "eager" : "lazy"}
-            decoding="async"
-            fetchPriority={index !== undefined && index < 3 ? "high" : "auto"}
-            className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+            priority={index !== undefined && index < 3}
           />
         ) : (
           <div className="flex h-full items-center justify-center text-text-secondary">
