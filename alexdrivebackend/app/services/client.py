@@ -46,7 +46,7 @@ async def fetch_with_auth(
             last_exc = exc
             print(f"[client] Network error on attempt {attempt}/{MAX_NETWORK_RETRIES}: {exc}")
             if attempt < MAX_NETWORK_RETRIES:
-                await asyncio.sleep(1.0 * attempt)
+                await asyncio.sleep(0.5 * attempt)
     else:
         raise NetworkError(f"Failed after {MAX_NETWORK_RETRIES} attempts: {last_exc}") from last_exc
 

@@ -24,9 +24,28 @@ MAX_LISTING_CACHE_ENTRIES = 200
 _listing_refresh_keys: set[str] = set()  # tracks keys currently being refreshed
 
 _detail_cache: dict[str, dict] = {}
-_detail_lock = asyncio.Lock()
+_detail_locks: dict[str, asyncio.Lock] = {}
+_detail_locks_guard = asyncio.Lock()
 DETAIL_TTL = 600  # 10 minutes
 MAX_DETAIL_CACHE_ENTRIES = 200
+DETAIL_REFRESH_AT = 480  # refresh after 80% of TTL (8 minutes)
+_detail_refresh_keys: set[str] = set()
+
+
+async def _get_detail_lock(key: str) -> asyncio.Lock:
+    """Get or create a per-key lock. Guard lock held only for dict access (microseconds)."""
+    async with _detail_locks_guard:
+        if key not in _detail_locks:
+            _detail_locks[key] = asyncio.Lock()
+            # Prune stale locks when dict grows too large
+            if len(_detail_locks) > MAX_DETAIL_CACHE_ENTRIES * 2:
+                stale = [
+                    k for k in _detail_locks
+                    if k not in _detail_cache and not _detail_locks[k].locked()
+                ]
+                for k in stale:
+                    del _detail_locks[k]
+        return _detail_locks[key]
 
 DEFAULT_SIDO = "102"
 DEFAULT_AREA = "1013"
@@ -235,15 +254,36 @@ async def get_car_listings(params: dict) -> dict:
             raise
 
 
+async def _refresh_detail_cache(encrypted_id: str) -> None:
+    """Background refresh — errors caught silently (stale data stays)."""
+    _detail_refresh_keys.add(encrypted_id)
+    try:
+        html = await post_form("/PopupFrame/CarDetailEnc", {"encarno": encrypted_id})
+        result = parse_car_detail(html, encrypted_id)
+        result["inspectionUrl"] = result.pop("inspectionUrl", None)
+        _detail_cache[encrypted_id] = {"data": result, "expiry": time.time() + DETAIL_TTL}
+        _evict_oldest(_detail_cache, MAX_DETAIL_CACHE_ENTRIES)
+        print(f"[carmanager] Detail background refresh OK ({encrypted_id[:16]}...)")
+    except Exception as e:
+        print(f"[carmanager] Detail background refresh failed ({encrypted_id[:16]}...): {e}")
+    finally:
+        _detail_refresh_keys.discard(encrypted_id)
+
+
 async def get_car_detail(encrypted_id: str) -> dict:
     # Check cache (fast path, no lock)
     cached = _detail_cache.get(encrypted_id)
-    if cached and time.time() < cached["expiry"]:
-        print(f"[carmanager] Detail cache hit ({encrypted_id[:16]}...)")
-        return cached["data"]
+    if cached:
+        age = time.time() - (cached["expiry"] - DETAIL_TTL)
+        if age < DETAIL_TTL:  # not expired
+            if age >= DETAIL_REFRESH_AT and encrypted_id not in _detail_refresh_keys:
+                asyncio.create_task(_refresh_detail_cache(encrypted_id))
+            print(f"[carmanager] Detail cache hit ({encrypted_id[:16]}...)")
+            return cached["data"]
 
-    # Double-check under lock
-    async with _detail_lock:
+    # Double-check under per-key lock
+    lock = await _get_detail_lock(encrypted_id)
+    async with lock:
         cached = _detail_cache.get(encrypted_id)
         if cached and time.time() < cached["expiry"]:
             return cached["data"]

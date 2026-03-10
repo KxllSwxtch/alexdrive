@@ -86,5 +86,5 @@ async def get_detail(id: str | None = Query(None)):
     data = await get_car_detail(id)
     return JSONResponse(
         content=data,
-        headers={"Cache-Control": "public, max-age=300"},
+        headers={"Cache-Control": "public, max-age=600, stale-while-revalidate=120"},
     )

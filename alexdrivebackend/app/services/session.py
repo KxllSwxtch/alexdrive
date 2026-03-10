@@ -179,7 +179,7 @@ async def login() -> str:
             print(f"[session] Login attempt {attempt}/3 failed: {msg}")
             if attempt == 3:
                 raise
-            await asyncio.sleep(1.0 * attempt)
+            await asyncio.sleep(0.5 * attempt)
 
     raise RuntimeError("Login failed after all retries")
 

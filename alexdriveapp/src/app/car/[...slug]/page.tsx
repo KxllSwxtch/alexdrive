@@ -25,6 +25,7 @@ const fetchCar = cache(async (id: string): Promise<CarDetail> => {
   return backendFetch<CarDetail>(
     "/cars/detail",
     new URLSearchParams({ id }),
+    { revalidate: 600 },
   );
 });
 
