@@ -18,6 +18,7 @@
   --font-heading: var(--font-jost);
   --font-body: var(--font-inter);
   --sidebar-width: 268px;
+  --sidebar-width-collapsed: 64px;
 
   /* === shadcn-ui theme mappings === */
   --font-sans: var(--font-inter);
