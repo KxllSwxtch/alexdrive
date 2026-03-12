@@ -253,10 +253,16 @@ def get_session_info() -> dict:
 
 
 async def session_keepalive_loop() -> None:
-    """Periodically ping carmanager to keep the session alive."""
+    """Periodically ping carmanager to keep the session alive.
+    Proactively re-login if the session has expired."""
     while True:
         await asyncio.sleep(KEEPALIVE_INTERVAL)
         if not _cached_cookies:
+            try:
+                await get_session()
+                print("[session] Keepalive: proactive login successful")
+            except Exception as e:
+                print(f"[session] Keepalive: proactive login failed: {e}")
             continue
         try:
             valid = await validate_session(_cached_cookies)
@@ -264,7 +270,12 @@ async def session_keepalive_loop() -> None:
                 print("[session] Keepalive: session still alive")
                 _save_session_to_disk()
             else:
-                print("[session] Keepalive: session expired, will re-login on next request")
+                print("[session] Keepalive: session expired, re-logging in...")
                 invalidate_session()
+                try:
+                    await get_session()
+                    print("[session] Keepalive: proactive re-login successful")
+                except Exception as e:
+                    print(f"[session] Keepalive: proactive re-login failed: {e}")
         except Exception as e:
             print(f"[session] Keepalive error: {e}")

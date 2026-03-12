@@ -74,7 +74,7 @@ async def get_cars(
     data = await get_car_listings(params)
     return JSONResponse(
         content=data,
-        headers={"Cache-Control": "public, max-age=600"},
+        headers={"Cache-Control": "public, max-age=300, stale-while-revalidate=300"},
     )
 
 

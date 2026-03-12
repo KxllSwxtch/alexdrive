@@ -11,7 +11,7 @@ from starlette.middleware.gzip import GZipMiddleware
 
 from app.config import settings
 from app.routes import admin, cars, filters, health
-from app.services.carmanager import get_car_listings, get_filter_data
+from app.services.carmanager import get_car_listings, get_filter_data, listing_refresh_loop
 from app.services.client import NetworkError
 from app.services.session import set_http_client, get_session, session_keepalive_loop
 
@@ -33,32 +33,32 @@ async def lifespan(app: FastAPI):
         except Exception as e:
             print(f"[server] Session pre-warm failed (will retry on first request): {e}")
 
-        # Pre-warm filter cache
-        try:
-            await get_filter_data()
-            print("[server] Filter cache pre-warmed")
-        except Exception as e:
-            print(f"[server] Filter pre-warm failed: {e}")
-
-        # Pre-warm default listing cache
-        try:
-            await get_car_listings({
+        # Pre-warm filter + listing caches in parallel (both need session, not each other)
+        warmup_results = await asyncio.gather(
+            get_filter_data(),
+            get_car_listings({
                 "PageNow": 1, "PageSize": 20,
                 "PageSort": "ModDt", "PageAscDesc": "DESC",
-            })
-            print("[server] Default listing cache pre-warmed")
-        except Exception as e:
-            print(f"[server] Listing pre-warm failed: {e}")
+            }),
+            return_exceptions=True,
+        )
+        for label, result in zip(["Filter", "Listing"], warmup_results):
+            if isinstance(result, Exception):
+                print(f"[server] {label} pre-warm failed: {result}")
+            else:
+                print(f"[server] {label} cache pre-warmed")
 
-        # Start session keepalive background task
+        # Start background tasks
         keepalive_task = asyncio.create_task(session_keepalive_loop())
+        listing_refresh_task = asyncio.create_task(listing_refresh_loop())
 
         print(f"[server] AlexDrive backend running on port {settings.port}")
         yield
 
         keepalive_task.cancel()
+        listing_refresh_task.cancel()
         try:
-            await keepalive_task
+            await asyncio.gather(keepalive_task, listing_refresh_task, return_exceptions=True)
         except asyncio.CancelledError:
             pass
 

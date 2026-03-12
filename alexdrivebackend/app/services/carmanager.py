@@ -22,6 +22,7 @@ LISTING_TTL = 600  # 10 minutes
 LISTING_REFRESH_AT = 480  # refresh after 80% of TTL (8 minutes)
 MAX_LISTING_CACHE_ENTRIES = 200
 _listing_refresh_keys: set[str] = set()  # tracks keys currently being refreshed
+LISTING_REFRESH_INTERVAL = 8 * 60  # 8 minutes — proactive refresh before expiry
 
 _detail_cache: dict[str, dict] = {}
 _detail_locks: dict[str, asyncio.Lock] = {}
@@ -227,6 +228,34 @@ async def _refresh_listing_cache(cache_key: str, json_body: dict) -> None:
         print(f"[carmanager] Background refresh failed ({cache_key[:8]}): {e}")
     finally:
         _listing_refresh_keys.discard(cache_key)
+
+
+async def listing_refresh_loop() -> None:
+    """Proactively refresh the default listing cache so page 1 never goes cold."""
+    default_params = {
+        "PageNow": 1, "PageSize": 20,
+        "PageSort": "ModDt", "PageAscDesc": "DESC",
+    }
+    while True:
+        await asyncio.sleep(LISTING_REFRESH_INTERVAL)
+        try:
+            json_body = _build_datapart_params(default_params)
+            cache_key = hashlib.md5(
+                json.dumps(json_body, sort_keys=True).encode()
+            ).hexdigest()
+
+            # Skip if cache is still fresh
+            cached = _listing_cache.get(cache_key)
+            if cached:
+                age = time.time() - (cached["expiry"] - LISTING_TTL)
+                if age < LISTING_REFRESH_AT:
+                    print(f"[carmanager] Proactive refresh skipped (age={int(age)}s)")
+                    continue
+
+            await _fetch_and_cache_listings(cache_key, json_body)
+            print("[carmanager] Proactive default listing refresh OK")
+        except Exception as e:
+            print(f"[carmanager] Proactive listing refresh failed: {e}")
 
 
 async def get_car_listings(params: dict) -> dict:

@@ -49,7 +49,7 @@ export default async function CatalogPage({ searchParams }: PageProps) {
   try {
     const [filtersData, carsData] = await Promise.all([
       backendFetch<FilterData>("/filters", undefined, { revalidate: 3600 }),
-      backendFetch<{ listings: CarListing[]; total: number }>("/cars", backendParams, { revalidate: 600 }),
+      backendFetch<{ listings: CarListing[]; total: number }>("/cars", backendParams, { revalidate: 300 }),
     ]);
     filters = filtersData;
     cars = carsData.listings;
