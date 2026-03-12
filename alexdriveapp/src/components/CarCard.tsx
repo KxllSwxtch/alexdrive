@@ -47,10 +47,10 @@ export function CarCard({ car, index }: CarCardProps) {
             alt={translatedName}
             fill
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-            quality={75}
             className="object-cover transition-transform duration-500 group-hover:scale-105"
             loading={index !== undefined && index < 3 ? "eager" : "lazy"}
             priority={index !== undefined && index < 3}
+            unoptimized
           />
         ) : (
           <div className="flex h-full items-center justify-center text-text-secondary">
