@@ -151,20 +151,6 @@ def parse_filter_data_from_js(js_content: str) -> dict:
     }
 
 
-def parse_danjis_from_js(js_content: str, area_code: str) -> list[dict]:
-    raw = extract_js_var(js_content, "BaseDanji")
-    if not raw:
-        return []
-    data = safe_parse_json(raw)
-    if not isinstance(data, dict):
-        return []
-    area_danjis = data.get(area_code, [])
-    return [
-        {"DanjiNo": int(d["DanjiNo"]), "DanjiName": d["DanjiName"]}
-        for d in area_danjis
-    ]
-
-
 def parse_select_options(html: str, select_id: str) -> list[dict[str, str]]:
     parser = LexborHTMLParser(html)
     select = parser.css_first(f"select#{select_id}")

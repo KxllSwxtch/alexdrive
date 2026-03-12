@@ -1,5 +1,6 @@
 import asyncio
 import json
+from typing import Any
 from urllib.parse import urlencode
 
 import httpx
@@ -89,3 +90,15 @@ async def post_json(path: str, data: dict) -> str:
         body=body,
     )
     return text
+
+
+async def post_json_parsed(path: str, data: dict | None = None) -> Any:
+    """POST JSON and return parsed JSON response."""
+    body = json.dumps(data) if data else ""
+    _, text = await fetch_with_auth(
+        path,
+        method="POST",
+        headers={"Content-Type": "application/json; charset=utf-8"},
+        body=body,
+    )
+    return json.loads(text)

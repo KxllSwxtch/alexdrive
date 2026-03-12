@@ -5,12 +5,11 @@ import time
 
 from app.parsers.detail_parser import parse_car_detail
 from app.parsers.filter_parser import (
-    parse_danjis_from_js,
     parse_filter_data_from_js,
     parse_select_options,
 )
 from app.parsers.listing_parser import parse_car_listings, parse_total_count
-from app.services.client import NetworkError, fetch_page, post_form, post_json
+from app.services.client import NetworkError, fetch_page, post_form, post_json, post_json_parsed
 from app.services.session import invalidate_session
 
 _filter_cache: dict | None = None
@@ -73,20 +72,23 @@ CAR_JS_FILES = [
 async def _fetch_filter_data_internal() -> dict:
     print("[carmanager] Fetching filter data...")
 
-    # Fetch page HTML and all JS files in parallel for speed
-    tasks = [fetch_page("/Car/Data")]
-    tasks.extend(fetch_page(path) for path in CAR_JS_FILES)
-    tasks.append(fetch_page("/Scripts/Common/BaseDanji.js"))
-    results = await asyncio.gather(*tasks)
-    page_html = results[0]
-    car_js_contents = list(results[1:-1])
-    danji_js = results[-1]
+    # 1. Fetch JS files sequentially (safe for limited proxy connections)
+    car_js_contents = []
+    for path in CAR_JS_FILES:
+        car_js_contents.append(await fetch_page(path))
 
     combined_js = "\n".join(car_js_contents)
     page_filters = parse_filter_data_from_js(combined_js)
 
-    danjis = parse_danjis_from_js(danji_js, DEFAULT_AREA)
+    # 2. Fetch danjis via JSON API (no JS parsing needed)
+    danjis_raw = await post_json_parsed(f"/CodeBase/JsonBaseCodeDanji/{DEFAULT_AREA}")
+    danjis = [
+        {"DanjiNo": int(d["DanjiNo"]), "DanjiName": d["DanjiName"]}
+        for d in danjis_raw
+    ]
 
+    # 3. Fetch /Car/Data HTML for color/fuel/mission select options
+    page_html = await fetch_page("/Car/Data")
     color_opts = parse_select_options(page_html, "cbxSearchColor")
     fuel_opts = parse_select_options(page_html, "cbxSearchFuel")
     mission_opts = parse_select_options(page_html, "cbxSearchMission")
