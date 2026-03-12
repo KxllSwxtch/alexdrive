@@ -104,7 +104,16 @@ def parse_car_listings(html: str) -> list[dict]:
 
 
 def parse_total_count(html: str) -> int:
+    # Format 1: hidden input (from /Car/Data full page)
     match = re.search(r'id="hdfCarRowCount"[^>]*value="(\d+)"', html)
+    if match:
+        return int(match.group(1))
+    # Format 2: jQuery .val() call (from /Car/DataPart)
+    match = re.search(r'hdfCarRowCount.*?\.val\([\'"](\d+)[\'"]\)', html)
+    if match:
+        return int(match.group(1))
+    # Format 3: reLoadPage first argument
+    match = re.search(r"reLoadPage\(['\"](\d+)['\"]", html)
     if match:
         return int(match.group(1))
     return 0

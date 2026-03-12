@@ -1,4 +1,5 @@
 import asyncio
+import json
 from urllib.parse import urlencode
 
 import httpx
@@ -74,6 +75,17 @@ async def post_form(path: str, data: dict[str, str]) -> str:
         path,
         method="POST",
         headers={"Content-Type": "application/x-www-form-urlencoded"},
+        body=body,
+    )
+    return text
+
+
+async def post_json(path: str, data: dict) -> str:
+    body = json.dumps(data)
+    _, text = await fetch_with_auth(
+        path,
+        method="POST",
+        headers={"Content-Type": "application/json; charset=utf-8"},
         body=body,
     )
     return text

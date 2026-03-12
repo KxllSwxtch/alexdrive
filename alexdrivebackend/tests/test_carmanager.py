@@ -5,7 +5,7 @@ import pytest
 
 from app.services import carmanager as cm_mod
 from app.services.carmanager import (
-    _build_form_fields,
+    _build_datapart_params,
     _evict_oldest,
     _fetch_and_cache_listings,
     SORT_MAP,
@@ -14,31 +14,30 @@ from app.services.carmanager import (
 )
 
 
-# ── _build_form_fields (pure function) ───────────────────────
+# ── _build_datapart_params (pure function) ───────────────────
 
 
-class TestBuildFormFields:
+class TestBuildDatapartParams:
     def test_defaults(self):
-        fields = _build_form_fields({})
-        assert fields["cbxSearchSiDo"] == DEFAULT_SIDO
-        assert fields["cbxSearchSiDoArea"] == DEFAULT_AREA
-        assert fields["hdfDefaultSido"] == DEFAULT_SIDO
-        assert fields["hdfDefaultCity"] == DEFAULT_AREA
-        assert fields["sbxPageRowCount"] == "20"
+        body = _build_datapart_params({})
+        para = body["para"]
+        assert para["CarSiDoNo"] == DEFAULT_SIDO
+        assert para["CarSiDoAreaNo"] == DEFAULT_AREA
+        assert para["PageSize"] == "20"
+        assert para["PageNow"] == 1
+        assert para["CarMode"] == "0"
 
     def test_sort_mapping(self):
         for name, code in SORT_MAP.items():
-            fields = _build_form_fields({"PageSort": name})
-            assert fields["sbxPageSort"] == code
+            body = _build_datapart_params({"PageSort": name})
+            assert body["para"]["PageSort"] == code
 
     def test_asc_desc(self):
-        asc = _build_form_fields({"PageAscDesc": "ASC"})
-        assert asc["sbxPageAscDesc"] == "0"
-        assert asc["isAscDesc"] == "0"
+        asc = _build_datapart_params({"PageAscDesc": "ASC"})
+        assert asc["para"]["PageAscDesc"] == "0"
 
-        desc = _build_form_fields({"PageAscDesc": "DESC"})
-        assert desc["sbxPageAscDesc"] == "1"
-        assert desc["isAscDesc"] == "1"
+        desc = _build_datapart_params({"PageAscDesc": "DESC"})
+        assert desc["para"]["PageAscDesc"] == "1"
 
 
 # ── _fetch_and_cache_listings — 0-listings retry ─────────────
@@ -51,14 +50,14 @@ class TestFetchAndCacheListings:
         big_html = "x" * 2000
         call_count = 0
 
-        async def mock_post_form(path, data):
+        async def mock_post_json(path, data):
             nonlocal call_count
             call_count += 1
             if call_count == 1:
                 return big_html
             return "<html><small>empty</small></html>"
 
-        with patch("app.services.carmanager.post_form", side_effect=mock_post_form), \
+        with patch("app.services.carmanager.post_json", side_effect=mock_post_json), \
              patch("app.services.carmanager.parse_car_listings", return_value=[]), \
              patch("app.services.carmanager.parse_total_count", return_value=0), \
              patch("app.services.carmanager.invalidate_session") as mock_invalidate:
@@ -72,10 +71,10 @@ class TestFetchAndCacheListings:
         """_retried=True → logs warning, returns empty."""
         big_html = "x" * 2000
 
-        async def mock_post_form(path, data):
+        async def mock_post_json(path, data):
             return big_html
 
-        with patch("app.services.carmanager.post_form", side_effect=mock_post_form), \
+        with patch("app.services.carmanager.post_json", side_effect=mock_post_json), \
              patch("app.services.carmanager.parse_car_listings", return_value=[]), \
              patch("app.services.carmanager.parse_total_count", return_value=0):
             result = await _fetch_and_cache_listings("key2", {}, _retried=True)
@@ -86,10 +85,10 @@ class TestFetchAndCacheListings:
         """HTML <= 1000 → no retry (genuine empty result)."""
         short_html = "x" * 500
 
-        async def mock_post_form(path, data):
+        async def mock_post_json(path, data):
             return short_html
 
-        with patch("app.services.carmanager.post_form", side_effect=mock_post_form), \
+        with patch("app.services.carmanager.post_json", side_effect=mock_post_json), \
              patch("app.services.carmanager.parse_car_listings", return_value=[]), \
              patch("app.services.carmanager.parse_total_count", return_value=0), \
              patch("app.services.carmanager.invalidate_session") as mock_invalidate:
@@ -102,10 +101,10 @@ class TestFetchAndCacheListings:
         """total > 0 → no retry even with 0 listings (partial page)."""
         big_html = "x" * 2000
 
-        async def mock_post_form(path, data):
+        async def mock_post_json(path, data):
             return big_html
 
-        with patch("app.services.carmanager.post_form", side_effect=mock_post_form), \
+        with patch("app.services.carmanager.post_json", side_effect=mock_post_json), \
              patch("app.services.carmanager.parse_car_listings", return_value=[]), \
              patch("app.services.carmanager.parse_total_count", return_value=50), \
              patch("app.services.carmanager.invalidate_session") as mock_invalidate:

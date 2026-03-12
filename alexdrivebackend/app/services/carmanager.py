@@ -10,7 +10,7 @@ from app.parsers.filter_parser import (
     parse_select_options,
 )
 from app.parsers.listing_parser import parse_car_listings, parse_total_count
-from app.services.client import NetworkError, fetch_page, post_form
+from app.services.client import NetworkError, fetch_page, post_form, post_json
 from app.services.session import invalidate_session
 
 _filter_cache: dict | None = None
@@ -72,13 +72,14 @@ CAR_JS_FILES = [
 async def _fetch_filter_data_internal() -> dict:
     print("[carmanager] Fetching filter data...")
 
-    page_html = await fetch_page("/Car/Data")
-
-    # Fetch external JS files sequentially to avoid proxy connection limits
-    car_js_contents: list[str] = []
-    for path in CAR_JS_FILES:
-        car_js_contents.append(await fetch_page(path))
-    danji_js = await fetch_page("/Scripts/Common/BaseDanji.js")
+    # Fetch page HTML and all JS files in parallel for speed
+    tasks = [fetch_page("/Car/Data")]
+    tasks.extend(fetch_page(path) for path in CAR_JS_FILES)
+    tasks.append(fetch_page("/Scripts/Common/BaseDanji.js"))
+    results = await asyncio.gather(*tasks)
+    page_html = results[0]
+    car_js_contents = list(results[1:-1])
+    danji_js = results[-1]
 
     combined_js = "\n".join(car_js_contents)
     page_filters = parse_filter_data_from_js(combined_js)
@@ -139,57 +140,63 @@ def _evict_oldest(cache: dict[str, dict], max_entries: int) -> None:
     del cache[oldest_key]
 
 
-def _build_form_fields(params: dict) -> dict[str, str]:
-    """Build carmanager form fields from query params."""
-    return {
-        "cbxSearchSiDo": params.get("CarSiDoNo") or DEFAULT_SIDO,
-        "cbxSearchSiDoArea": params.get("CarSiDoAreaNo") or DEFAULT_AREA,
-        "cbxSearchDanji": params.get("DanjiNo") or DEFAULT_DANJI,
-        "tbxSearchMaker": params.get("CarMakerNo") or "",
-        "tbxSearchModel": params.get("CarModelNo") or "",
-        "tbxSearchModelDetail": params.get("CarModelDetailNo") or "",
-        "tbxSearchGrade": params.get("CarGradeNo") or "",
-        "tbxSearchGradeDetail": params.get("CarGradeDetailNo") or "",
-        "cbxSearchMission": params.get("CarMissionNo") or "",
-        "cbxSearchFuel": params.get("CarFuelNo") or "",
-        "cbxSearchColor": params.get("CarColorNo") or "",
-        "cbxSearchMakeSYear": params.get("CarYearFrom") or "",
-        "cbxSearchMakeSDay": "",
-        "cbxSearchMakeEYear": params.get("CarYearTo") or "",
-        "cbxSearchMakeEDay": "",
-        "cbxSearchDriveS": params.get("CarMileageFrom") or "",
-        "cbxSearchDriveE": params.get("CarMileageTo") or "",
-        "cbxSearchMoneyS": params.get("CarPriceFrom") or "",
-        "cbxSearchMoneyE": params.get("CarPriceTo") or "",
-        "tbxSearchName": params.get("SearchName") or "",
-        "cbxSearchCarOption": params.get("CarPhoto") or "",
-        "cbxSearchCarInsurance": params.get("CarInsurance") or "",
-        "cbxSearchCarInspection": params.get("CarInspection") or "",
-        "cbxSearchCarLease": params.get("CarLease") or "",
-        "cbxSearchLpg": params.get("CarLpg") or "",
-        "cbxSearchCarSalePrice": params.get("CarSalePrice") or "",
-        "tbxSearchCarNo": params.get("SearchCarNo") or "",
-        "page": str(params["PageNow"]) if params.get("PageNow") is not None else "",
-        "sbxPageSort": SORT_MAP.get(params.get("PageSort") or "", "5"),
-        "sbxPageAscDesc": "0" if params.get("PageAscDesc") == "ASC" else "1",
-        "sbxPageRowCount": str(params.get("PageSize") or 20),
-        "hdfDefaultSido": DEFAULT_SIDO,
-        "hdfDefaultCity": DEFAULT_AREA,
-        "hdfDefaultDanji": DEFAULT_DANJI,
-        "hdfUserGubunNo": "100",
-        "multiSelectType": "1",
-        "tbxOptionArr": "",
-        "cbxSearchOption": "",
-        "fristSetSido": "N",
-        "fristSetCity": "N",
-        "searchOptType": "001",
-        "isAscDesc": "0" if params.get("PageAscDesc") == "ASC" else "1",
-    }
+def _build_datapart_params(params: dict) -> dict:
+    """Build /Car/DataPart JSON request body from query params."""
+    year_from = params.get("CarYearFrom") or ""
+    year_to = params.get("CarYearTo") or ""
+
+    def _int_or_none(key: str) -> int | None:
+        val = params.get(key)
+        if val:
+            try:
+                return int(val)
+            except (ValueError, TypeError):
+                pass
+        return None
+
+    return {"para": {
+        "PageNow": params.get("PageNow") or 1,
+        "PageSize": str(params.get("PageSize") or 20),
+        "PageSort": SORT_MAP.get(params.get("PageSort") or "", "5"),
+        "PageAscDesc": "0" if params.get("PageAscDesc") == "ASC" else "1",
+        "CarMode": "0",
+        "CarSiDoNo": params.get("CarSiDoNo") or DEFAULT_SIDO,
+        "CarSiDoAreaNo": params.get("CarSiDoAreaNo") or DEFAULT_AREA,
+        "CarDanjiNo": params.get("DanjiNo") or DEFAULT_DANJI,
+        "CarMakerNo": _int_or_none("CarMakerNo"),
+        "CarModelNo": _int_or_none("CarModelNo"),
+        "CarModelDetailNo": params.get("CarModelDetailNo") or "",
+        "CarGradeNo": params.get("CarGradeNo") or "",
+        "CarGradeDetailNo": params.get("CarGradeDetailNo") or "",
+        "CarMakeSDate": f"{year_from}-01" if year_from else "",
+        "CarMakeEDate": f"{year_to}-12" if year_to else "",
+        "CarDriveSKm": _int_or_none("CarMileageFrom"),
+        "CarDriveEKm": _int_or_none("CarMileageTo"),
+        "CarMission": params.get("CarMissionNo") or "",
+        "CarFuel": params.get("CarFuelNo") or "",
+        "CarColor": params.get("CarColorNo") or "",
+        "CarSMoney": _int_or_none("CarPriceFrom"),
+        "CarEMoney": _int_or_none("CarPriceTo"),
+        "CarIsLPG": "True" if params.get("CarLpg") else "False",
+        "CarIsSago": "False",
+        "CarIsPhoto": "True" if params.get("CarPhoto") else "False",
+        "CarIsSaleAmount": "True" if params.get("CarSalePrice") else "False",
+        "CarIsCarCheck": "True" if params.get("CarInspection") else "False",
+        "CarIsLeaseCheck": "True" if params.get("CarLease") else "False",
+        "CarName": "",
+        "CarDealerName": "",
+        "CarShopName": "",
+        "CarDealerHP": "",
+        "CarNumber": "",
+        "CarOption": "",
+        "CarTruckTonS": "",
+        "CarTruckTonE": "",
+    }}
 
 
-async def _fetch_and_cache_listings(cache_key: str, form_fields: dict, _retried: bool = False) -> dict:
-    """Fetch listings from carmanager, parse, cache, and return."""
-    html = await post_form("/Car/Data", form_fields)
+async def _fetch_and_cache_listings(cache_key: str, json_body: dict, _retried: bool = False) -> dict:
+    """Fetch listings from carmanager via /Car/DataPart JSON API, parse, cache, and return."""
+    html = await post_json("/Car/DataPart", json_body)
     listings = parse_car_listings(html)
     total = parse_total_count(html)
 
@@ -199,7 +206,7 @@ async def _fetch_and_cache_listings(cache_key: str, form_fields: dict, _retried:
     if len(listings) == 0 and total == 0 and len(html) > 1000 and not _retried:
         print("[carmanager] 0 listings from non-empty HTML — session likely expired, retrying...")
         invalidate_session()
-        return await _fetch_and_cache_listings(cache_key, form_fields, _retried=True)
+        return await _fetch_and_cache_listings(cache_key, json_body, _retried=True)
 
     if len(listings) == 0 and len(html) > 1000 and _retried:
         print("[carmanager] WARNING: still 0 listings after re-auth — selectors may be outdated")
@@ -210,11 +217,11 @@ async def _fetch_and_cache_listings(cache_key: str, form_fields: dict, _retried:
     return result
 
 
-async def _refresh_listing_cache(cache_key: str, form_fields: dict) -> None:
+async def _refresh_listing_cache(cache_key: str, json_body: dict) -> None:
     """Background refresh — errors are silently caught (stale data stays)."""
     _listing_refresh_keys.add(cache_key)
     try:
-        await _fetch_and_cache_listings(cache_key, form_fields)
+        await _fetch_and_cache_listings(cache_key, json_body)
         print(f"[carmanager] Background refresh OK ({cache_key[:8]})")
     except Exception as e:
         print(f"[carmanager] Background refresh failed ({cache_key[:8]}): {e}")
@@ -223,8 +230,8 @@ async def _refresh_listing_cache(cache_key: str, form_fields: dict) -> None:
 
 
 async def get_car_listings(params: dict) -> dict:
-    form_fields = _build_form_fields(params)
-    cache_key = hashlib.md5(json.dumps(form_fields, sort_keys=True).encode()).hexdigest()
+    json_body = _build_datapart_params(params)
+    cache_key = hashlib.md5(json.dumps(json_body, sort_keys=True).encode()).hexdigest()
 
     # Check cache (fast path, no lock)
     cached = _listing_cache.get(cache_key)
@@ -233,7 +240,7 @@ async def get_car_listings(params: dict) -> dict:
         if age < LISTING_TTL:  # not expired
             if age >= LISTING_REFRESH_AT and cache_key not in _listing_refresh_keys:
                 # Stale-while-revalidate: return cached, refresh in background
-                asyncio.create_task(_refresh_listing_cache(cache_key, form_fields))
+                asyncio.create_task(_refresh_listing_cache(cache_key, json_body))
             print(f"[carmanager] Listing cache hit ({cache_key[:8]})")
             return cached["data"]
 
@@ -245,7 +252,7 @@ async def get_car_listings(params: dict) -> dict:
             return cached["data"]
 
         try:
-            return await _fetch_and_cache_listings(cache_key, form_fields)
+            return await _fetch_and_cache_listings(cache_key, json_body)
         except NetworkError:
             cached = _listing_cache.get(cache_key)
             if cached:
