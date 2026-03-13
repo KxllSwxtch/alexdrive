@@ -130,4 +130,5 @@ export interface CarDetail {
   registrationDate: string;
   modelYear: string;
   inspectionUrl: string | null;
+  blurDataUrl?: string;
 }

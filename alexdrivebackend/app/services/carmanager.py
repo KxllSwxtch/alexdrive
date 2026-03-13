@@ -1,6 +1,7 @@
 import asyncio
 import hashlib
 import json
+import os
 import time
 
 from app.parsers.detail_parser import parse_car_detail
@@ -27,7 +28,7 @@ _detail_cache: dict[str, dict] = {}
 _detail_locks: dict[str, asyncio.Lock] = {}
 _detail_locks_guard = asyncio.Lock()
 DETAIL_TTL = 600  # 10 minutes
-MAX_DETAIL_CACHE_ENTRIES = 200
+MAX_DETAIL_CACHE_ENTRIES = 1000
 DETAIL_REFRESH_AT = 480  # refresh after 80% of TTL (8 minutes)
 _detail_refresh_keys: set[str] = set()
 
@@ -254,8 +255,10 @@ async def listing_refresh_loop() -> None:
                     print(f"[carmanager] Proactive refresh skipped (age={int(age)}s)")
                     continue
 
-            await _fetch_and_cache_listings(cache_key, json_body)
+            result = await _fetch_and_cache_listings(cache_key, json_body)
             print("[carmanager] Proactive default listing refresh OK")
+            if result.get("listings"):
+                asyncio.create_task(warm_detail_cache_for_listings(result["listings"]))
         except Exception as e:
             print(f"[carmanager] Proactive listing refresh failed: {e}")
 
@@ -343,3 +346,79 @@ async def get_car_detail(encrypted_id: str) -> dict:
         _detail_cache[encrypted_id] = {"data": result, "expiry": time.time() + DETAIL_TTL}
         _evict_oldest(_detail_cache, MAX_DETAIL_CACHE_ENTRIES)
         return result
+
+
+# --- Disk persistence for detail cache ---
+
+DETAIL_CACHE_PATH = "/tmp/alexdrive_detail_cache.json"
+DETAIL_CACHE_PERSIST_INTERVAL = 5 * 60  # 5 minutes
+
+
+def _save_detail_cache_to_disk() -> None:
+    """Write non-expired detail cache entries to disk."""
+    now = time.time()
+    entries = {
+        k: v for k, v in _detail_cache.items()
+        if v["expiry"] > now
+    }
+    if not entries:
+        return
+    try:
+        tmp_path = DETAIL_CACHE_PATH + ".tmp"
+        with open(tmp_path, "w") as f:
+            json.dump(entries, f)
+        os.replace(tmp_path, DETAIL_CACHE_PATH)
+        print(f"[carmanager] Saved {len(entries)} detail cache entries to disk")
+    except Exception as e:
+        print(f"[carmanager] Failed to save detail cache to disk: {e}")
+
+
+def _load_detail_cache_from_disk() -> int:
+    """Load detail cache entries from disk. Returns count loaded."""
+    try:
+        with open(DETAIL_CACHE_PATH) as f:
+            entries = json.load(f)
+    except (FileNotFoundError, json.JSONDecodeError):
+        return 0
+
+    now = time.time()
+    loaded = 0
+    for k, v in entries.items():
+        if v.get("expiry", 0) > now and k not in _detail_cache:
+            _detail_cache[k] = v
+            loaded += 1
+
+    if loaded:
+        print(f"[carmanager] Loaded {loaded} detail cache entries from disk")
+    return loaded
+
+
+async def detail_cache_persist_loop() -> None:
+    """Periodically save the detail cache to disk."""
+    while True:
+        await asyncio.sleep(DETAIL_CACHE_PERSIST_INTERVAL)
+        _save_detail_cache_to_disk()
+
+
+# --- Proactive detail cache warming ---
+
+
+async def warm_detail_cache_for_listings(listings: list[dict], max_concurrent: int = 3) -> None:
+    """Background: warm detail cache for listing IDs not already cached."""
+    ids_to_warm = [
+        car["encryptedId"] for car in listings
+        if car.get("encryptedId") and car["encryptedId"] not in _detail_cache
+    ]
+    if not ids_to_warm:
+        return
+
+    semaphore = asyncio.Semaphore(max_concurrent)
+
+    async def warm_one(eid: str) -> None:
+        async with semaphore:
+            try:
+                await get_car_detail(eid)
+            except Exception:
+                pass
+
+    await asyncio.gather(*(warm_one(eid) for eid in ids_to_warm), return_exceptions=True)

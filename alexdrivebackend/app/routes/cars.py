@@ -3,7 +3,7 @@ import asyncio
 from fastapi import APIRouter, Query
 from fastapi.responses import JSONResponse
 
-from app.services.carmanager import _detail_cache, get_car_detail, get_car_listings
+from app.services.carmanager import _detail_cache, get_car_detail, get_car_listings, warm_detail_cache_for_listings
 
 router = APIRouter(prefix="/api")
 
@@ -72,6 +72,8 @@ async def get_cars(
         "PageAscDesc": PageAscDesc,
     }
     data = await get_car_listings(params)
+    if data.get("listings"):
+        asyncio.ensure_future(warm_detail_cache_for_listings(data["listings"]))
     return JSONResponse(
         content=data,
         headers={"Cache-Control": "public, max-age=300, stale-while-revalidate=300"},

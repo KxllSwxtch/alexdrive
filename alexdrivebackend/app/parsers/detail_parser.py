@@ -3,6 +3,10 @@ import re
 from selectolax.lexbor import LexborHTMLParser
 
 
+# Dark SVG placeholder matching the site's dark theme — zero-latency, no network fetch
+BLUR_PLACEHOLDER = "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjE2IiBoZWlnaHQ9IjEwIiBmaWxsPSIjMWExYTFhIi8+PC9zdmc+"
+
+
 def parse_car_detail(html: str, encrypted_id: str) -> dict:
     parser = LexborHTMLParser(html)
 
@@ -57,6 +61,7 @@ def parse_car_detail(html: str, encrypted_id: str) -> dict:
         "registrationDate": specs.get("registrationDate", ""),
         "modelYear": specs.get("modelYear", ""),
         "inspectionUrl": inspection_url,
+        "blurDataUrl": BLUR_PLACEHOLDER if images else None,
     }
 
 

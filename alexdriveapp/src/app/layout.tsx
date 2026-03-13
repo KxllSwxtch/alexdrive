@@ -30,7 +30,7 @@ export default function RootLayout({
   return (
     <html lang="ru">
       <head>
-        <link rel="preconnect" href="https://img.carmanager.co.kr" />
+        <link rel="preconnect" href="https://img.carmanager.co.kr" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://img.carmanager.co.kr" />
         <link rel="preconnect" href={process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:3001"} />
       </head>

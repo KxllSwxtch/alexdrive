@@ -6,9 +6,10 @@ import Image from "next/image";
 interface ImageGalleryProps {
   images: string[];
   alt: string;
+  blurDataUrl?: string;
 }
 
-export function ImageGallery({ images, alt }: ImageGalleryProps) {
+export function ImageGallery({ images, alt, blurDataUrl }: ImageGalleryProps) {
   const [current, setCurrent] = useState(0);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const triggerRef = useRef<HTMLDivElement>(null);
@@ -90,6 +91,8 @@ export function ImageGallery({ images, alt }: ImageGalleryProps) {
           sizes="(max-width: 1024px) 100vw, 60vw"
           className="object-cover"
           priority
+          placeholder={blurDataUrl ? "blur" : "empty"}
+          blurDataURL={blurDataUrl}
         />
 
         {images.length > 1 && (

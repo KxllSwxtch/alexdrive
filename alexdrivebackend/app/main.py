@@ -11,7 +11,14 @@ from starlette.middleware.gzip import GZipMiddleware
 
 from app.config import settings
 from app.routes import admin, cars, filters, health
-from app.services.carmanager import get_car_listings, get_filter_data, listing_refresh_loop
+from app.services.carmanager import (
+    get_car_listings,
+    get_filter_data,
+    listing_refresh_loop,
+    _load_detail_cache_from_disk,
+    _save_detail_cache_to_disk,
+    detail_cache_persist_loop,
+)
 from app.services.client import NetworkError
 from app.services.session import set_http_client, get_session, session_keepalive_loop
 
@@ -27,6 +34,12 @@ async def lifespan(app: FastAPI):
 
     async with httpx.AsyncClient(**client_kwargs) as client:
         set_http_client(client)
+
+        # Load detail cache from disk before any warmup
+        loaded = _load_detail_cache_from_disk()
+        if loaded:
+            print(f"[server] Restored {loaded} detail cache entries from disk")
+
         try:
             await get_session()
             print("[server] Session pre-warmed successfully")
@@ -51,16 +64,24 @@ async def lifespan(app: FastAPI):
         # Start background tasks
         keepalive_task = asyncio.create_task(session_keepalive_loop())
         listing_refresh_task = asyncio.create_task(listing_refresh_loop())
+        detail_persist_task = asyncio.create_task(detail_cache_persist_loop())
 
         print(f"[server] AlexDrive backend running on port {settings.port}")
         yield
 
         keepalive_task.cancel()
         listing_refresh_task.cancel()
+        detail_persist_task.cancel()
         try:
-            await asyncio.gather(keepalive_task, listing_refresh_task, return_exceptions=True)
+            await asyncio.gather(
+                keepalive_task, listing_refresh_task, detail_persist_task,
+                return_exceptions=True,
+            )
         except asyncio.CancelledError:
             pass
+
+        # Final save on shutdown
+        _save_detail_cache_to_disk()
 
 
 app = FastAPI(lifespan=lifespan)
