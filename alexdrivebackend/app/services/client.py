@@ -30,6 +30,8 @@ async def fetch_with_auth(
     req_headers = {
         "Cookie": cookies,
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+        "X-Requested-With": "XMLHttpRequest",
+        "Referer": f"{settings.carmanager_base_url}/Car/Data",
     }
     if headers:
         req_headers.update(headers)

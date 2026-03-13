@@ -65,6 +65,7 @@ class TestFetchAndCacheListings:
             assert mock_invalidate.called
             assert call_count == 2
             assert result["total"] == 0
+            assert result["status"] == "empty"  # retry response is 33 bytes (<50)
 
     @pytest.mark.asyncio
     async def test_zero_listings_already_retried(self):
@@ -79,11 +80,12 @@ class TestFetchAndCacheListings:
              patch("app.services.carmanager.parse_total_count", return_value=0):
             result = await _fetch_and_cache_listings("key2", {}, _retried=True)
             assert result["listings"] == []
+            assert result["status"] == "parse_failure"
 
     @pytest.mark.asyncio
     async def test_zero_listings_short_html(self):
-        """HTML <= 1000 → no retry (genuine empty result)."""
-        short_html = "x" * 500
+        """HTML <= 50 bytes → no retry (truly empty result), status=empty."""
+        short_html = "x" * 30
 
         async def mock_post_json(path, data):
             return short_html
@@ -95,6 +97,7 @@ class TestFetchAndCacheListings:
             result = await _fetch_and_cache_listings("key3", {})
             assert not mock_invalidate.called
             assert result["listings"] == []
+            assert result["status"] == "empty"
 
     @pytest.mark.asyncio
     async def test_zero_listings_nonzero_total(self):
@@ -110,6 +113,42 @@ class TestFetchAndCacheListings:
              patch("app.services.carmanager.invalidate_session") as mock_invalidate:
             result = await _fetch_and_cache_listings("key4", {})
             assert not mock_invalidate.called
+
+    @pytest.mark.asyncio
+    async def test_short_error_response_triggers_retry(self):
+        """426-byte error page (>50 bytes, 0 listings) → triggers session invalidation + retry."""
+        error_html = "x" * 426
+        call_count = 0
+
+        async def mock_post_json(path, data):
+            nonlocal call_count
+            call_count += 1
+            return error_html
+
+        with patch("app.services.carmanager.post_json", side_effect=mock_post_json), \
+             patch("app.services.carmanager.parse_car_listings", return_value=[]), \
+             patch("app.services.carmanager.parse_total_count", return_value=0), \
+             patch("app.services.carmanager.invalidate_session") as mock_invalidate:
+            result = await _fetch_and_cache_listings("key5", {})
+            assert mock_invalidate.called
+            assert call_count == 2
+            assert result["status"] == "parse_failure"
+
+    @pytest.mark.asyncio
+    async def test_successful_parse_status_ok(self):
+        """Listings found → status='ok'."""
+        html = "x" * 5000
+        fake_listing = {"encryptedId": "abc", "name": "Test Car"}
+
+        async def mock_post_json(path, data):
+            return html
+
+        with patch("app.services.carmanager.post_json", side_effect=mock_post_json), \
+             patch("app.services.carmanager.parse_car_listings", return_value=[fake_listing]), \
+             patch("app.services.carmanager.parse_total_count", return_value=1):
+            result = await _fetch_and_cache_listings("key6", {})
+            assert result["status"] == "ok"
+            assert len(result["listings"]) == 1
 
 
 # ── Cache eviction ────────────────────────────────────────────

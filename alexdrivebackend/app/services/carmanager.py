@@ -32,6 +32,13 @@ MAX_DETAIL_CACHE_ENTRIES = 1000
 DETAIL_REFRESH_AT = 480  # refresh after 80% of TTL (8 minutes)
 _detail_refresh_keys: set[str] = set()
 
+_last_successful_parse: float = 0.0
+
+
+def get_last_successful_parse() -> float:
+    """Return timestamp of last successful listing parse (0.0 if never)."""
+    return _last_successful_parse
+
 
 async def _get_detail_lock(key: str) -> asyncio.Lock:
     """Get or create a per-key lock. Guard lock held only for dict access (microseconds)."""
@@ -200,22 +207,36 @@ def _build_datapart_params(params: dict) -> dict:
 
 async def _fetch_and_cache_listings(cache_key: str, json_body: dict, _retried: bool = False) -> dict:
     """Fetch listings from carmanager via /Car/DataPart JSON API, parse, cache, and return."""
+    global _last_successful_parse
+
     html = await post_json("/Car/DataPart", json_body)
     listings = parse_car_listings(html)
     total = parse_total_count(html)
 
     print(f"[carmanager] Listings: {len(listings)}/{total}, HTML length: {len(html)}")
 
-    # 0 listings from non-empty HTML likely means expired session
-    if len(listings) == 0 and total == 0 and len(html) > 1000 and not _retried:
-        print("[carmanager] 0 listings from non-empty HTML — session likely expired, retrying...")
+    # 0 listings from any non-trivial HTML likely means expired session or endpoint issue
+    html_suspicious = len(listings) == 0 and total == 0 and len(html) > 50
+
+    if html_suspicious and not _retried:
+        print(f"[carmanager] 0 listings from HTML ({len(html)} bytes) — retrying with fresh session...")
         invalidate_session()
         return await _fetch_and_cache_listings(cache_key, json_body, _retried=True)
 
-    if len(listings) == 0 and len(html) > 1000 and _retried:
-        print("[carmanager] WARNING: still 0 listings after re-auth — selectors may be outdated")
+    if html_suspicious and _retried:
+        print(f"[carmanager] WARNING: still 0 listings after re-auth (HTML={len(html)} bytes)")
+        print(f"[carmanager] HTML sample: {html[:500]}")
 
-    result = {"listings": listings, "total": total}
+    # Determine result status
+    if len(listings) > 0:
+        status = "ok"
+        _last_successful_parse = time.time()
+    elif len(html) <= 50:
+        status = "empty"
+    else:
+        status = "parse_failure"
+
+    result = {"listings": listings, "total": total, "status": status}
     _listing_cache[cache_key] = {"data": result, "expiry": time.time() + LISTING_TTL}
     _evict_oldest(_listing_cache, MAX_LISTING_CACHE_ENTRIES)
     return result
