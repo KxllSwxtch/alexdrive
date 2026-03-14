@@ -8,6 +8,7 @@ from app.services.carmanager import (
     _build_datapart_params,
     _evict_oldest,
     _fetch_and_cache_listings,
+    is_rate_limited,
     SORT_MAP,
     DEFAULT_SIDO,
     DEFAULT_AREA,
@@ -149,6 +150,28 @@ class TestFetchAndCacheListings:
             result = await _fetch_and_cache_listings("key6", {})
             assert result["status"] == "ok"
             assert len(result["listings"]) == 1
+
+    @pytest.mark.asyncio
+    async def test_rate_limited_response(self):
+        """Rate-limited HTML → status='rate_limited', no session invalidation, no retry."""
+        rate_html = '<div class="limits_box"><p>검색량 초과로 사용이 제한된 상태입니다.</p></div>'
+
+        async def mock_post_json(path, data):
+            return rate_html
+
+        with patch("app.services.carmanager.post_json", side_effect=mock_post_json) as mock_post, \
+             patch("app.services.carmanager.invalidate_session") as mock_invalidate:
+            # Reset cooldown state before test
+            cm_mod._rate_limit_until = 0.0
+            result = await _fetch_and_cache_listings("key_rl", {})
+            assert result["status"] == "rate_limited"
+            assert result["listings"] == []
+            assert result["total"] == 0
+            assert not mock_invalidate.called  # session NOT invalidated
+            assert mock_post.call_count == 1  # no retry
+            assert is_rate_limited()  # cooldown set
+            # Clean up
+            cm_mod._rate_limit_until = 0.0
 
 
 # ── Cache eviction ────────────────────────────────────────────

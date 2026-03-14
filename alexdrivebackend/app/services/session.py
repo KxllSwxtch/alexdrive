@@ -18,7 +18,7 @@ _disk_loaded: bool = False
 
 SESSION_TTL = 24 * 60 * 60  # 24h safety-net TTL
 VALIDATION_TIMEOUT = 5.0
-KEEPALIVE_INTERVAL = 4 * 60  # 4 minutes (server session TTL is ~10min)
+KEEPALIVE_INTERVAL = 8 * 60  # 8 minutes (server session TTL is ~10min)
 SESSION_FILE = Path("/tmp/alexdrive_session.json")
 
 # KST timezone (UTC+9) — carmanager.co.kr is Korean
@@ -255,8 +255,13 @@ def get_session_info() -> dict:
 async def session_keepalive_loop() -> None:
     """Periodically ping carmanager to keep the session alive.
     Proactively re-login if the session has expired."""
+    from app.services.carmanager import is_rate_limited
+
     while True:
         await asyncio.sleep(KEEPALIVE_INTERVAL)
+        if is_rate_limited():
+            print("[session] Keepalive skipped (rate-limited cooldown)")
+            continue
         if not _cached_cookies:
             try:
                 await get_session()

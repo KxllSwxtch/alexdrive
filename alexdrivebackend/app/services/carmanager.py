@@ -22,7 +22,7 @@ LISTING_TTL = 600  # 10 minutes
 LISTING_REFRESH_AT = 480  # refresh after 80% of TTL (8 minutes)
 MAX_LISTING_CACHE_ENTRIES = 200
 _listing_refresh_keys: set[str] = set()  # tracks keys currently being refreshed
-LISTING_REFRESH_INTERVAL = 8 * 60  # 8 minutes — proactive refresh before expiry
+LISTING_REFRESH_INTERVAL = 30 * 60  # 30 minutes — proactive refresh
 
 _detail_cache: dict[str, dict] = {}
 _detail_locks: dict[str, asyncio.Lock] = {}
@@ -33,6 +33,19 @@ DETAIL_REFRESH_AT = 480  # refresh after 80% of TTL (8 minutes)
 _detail_refresh_keys: set[str] = set()
 
 _last_successful_parse: float = 0.0
+
+_RATE_LIMIT_MARKER = "limits_box"
+_rate_limit_until: float = 0.0
+RATE_LIMIT_COOLDOWN = 5 * 60  # 5 minutes
+
+
+def _set_rate_limit_cooldown() -> None:
+    global _rate_limit_until
+    _rate_limit_until = time.time() + RATE_LIMIT_COOLDOWN
+
+
+def is_rate_limited() -> bool:
+    return time.time() < _rate_limit_until
 
 
 def get_last_successful_parse() -> float:
@@ -210,6 +223,15 @@ async def _fetch_and_cache_listings(cache_key: str, json_body: dict, _retried: b
     global _last_successful_parse
 
     html = await post_json("/Car/DataPart", json_body)
+
+    # Rate-limit detection — do NOT invalidate session or retry
+    if _RATE_LIMIT_MARKER in html:
+        print(f"[carmanager] RATE LIMITED by carmanager.co.kr — pausing requests")
+        _set_rate_limit_cooldown()
+        result = {"listings": [], "total": 0, "status": "rate_limited"}
+        _listing_cache[cache_key] = {"data": result, "expiry": time.time() + 120}  # 2 min
+        return result
+
     listings = parse_car_listings(html)
     total = parse_total_count(html)
 
@@ -262,6 +284,9 @@ async def listing_refresh_loop() -> None:
     }
     while True:
         await asyncio.sleep(LISTING_REFRESH_INTERVAL)
+        if is_rate_limited():
+            print("[carmanager] Proactive refresh skipped (rate-limited cooldown)")
+            continue
         try:
             json_body = _build_datapart_params(default_params)
             cache_key = hashlib.md5(
@@ -278,8 +303,6 @@ async def listing_refresh_loop() -> None:
 
             result = await _fetch_and_cache_listings(cache_key, json_body)
             print("[carmanager] Proactive default listing refresh OK")
-            if result.get("listings"):
-                asyncio.create_task(warm_detail_cache_for_listings(result["listings"]))
         except Exception as e:
             print(f"[carmanager] Proactive listing refresh failed: {e}")
 
