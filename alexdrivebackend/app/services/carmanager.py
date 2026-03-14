@@ -34,6 +34,8 @@ _detail_refresh_keys: set[str] = set()
 
 _last_successful_parse: float = 0.0
 
+_RATE_LIMIT_MARKER = "limits_box"
+
 
 def get_last_successful_parse() -> float:
     """Return timestamp of last successful listing parse (0.0 if never)."""
@@ -210,6 +212,15 @@ async def _fetch_and_cache_listings(cache_key: str, json_body: dict, _retried: b
     global _last_successful_parse
 
     html = await post_json("/Car/DataPart", json_body)
+
+    # Rate-limit detection — not an auth issue, don't invalidate session or retry
+    if _RATE_LIMIT_MARKER in html:
+        print("[carmanager] Rate-limited by carmanager.co.kr (limits_box detected)")
+        existing = _listing_cache.get(cache_key)
+        if existing and existing["data"].get("listings"):
+            print(f"[carmanager] Serving stale cached listings ({len(existing['data']['listings'])} cars)")
+            return existing["data"]
+        return {"listings": [], "total": 0, "status": "rate_limited"}
 
     listings = parse_car_listings(html)
     total = parse_total_count(html)
