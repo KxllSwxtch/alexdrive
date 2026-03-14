@@ -45,15 +45,17 @@ export default async function CatalogPage({ searchParams }: PageProps) {
   let filters: FilterData | null = null;
   let cars: CarListing[] = [];
   let total = 0;
+  let initialStatus = "ok";
 
   try {
     const [filtersData, carsData] = await Promise.all([
       backendFetch<FilterData>("/filters", undefined, { revalidate: 3600 }),
-      backendFetch<{ listings: CarListing[]; total: number }>("/cars", backendParams, { revalidate: 300 }),
+      backendFetch<{ listings: CarListing[]; total: number; status?: string }>("/cars", backendParams, { revalidate: 300 }),
     ]);
     filters = filtersData;
     cars = carsData.listings;
     total = carsData.total;
+    initialStatus = carsData.status || (carsData.listings.length > 0 ? "ok" : "empty");
   } catch (e) {
     console.error("Failed to fetch initial catalog data:", e);
     // Graceful degradation: client component will fall back to client-side fetch
@@ -64,6 +66,7 @@ export default async function CatalogPage({ searchParams }: PageProps) {
       initialFilters={filters}
       initialCars={cars}
       initialTotal={total}
+      initialStatus={initialStatus}
     />
   );
 }

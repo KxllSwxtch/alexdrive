@@ -4,7 +4,7 @@ from pydantic import BaseModel
 from app.config import settings
 from app.parsers.diagnostics import diagnose_listing_html
 from app.parsers.listing_parser import parse_car_listings, parse_total_count
-from app.services.carmanager import _build_datapart_params
+from app.services.carmanager import _build_datapart_params, clear_listing_cache, clear_rate_limit
 from app.services.client import post_json
 from app.services.session import get_session_info, inject_cookies
 
@@ -39,6 +39,19 @@ async def set_session(payload: CookiePayload):
 @router.get("/session", dependencies=[Depends(verify_admin_secret)])
 async def get_session_status():
     return get_session_info()
+
+
+@router.post("/clear-cache", dependencies=[Depends(verify_admin_secret)])
+async def clear_cache():
+    clear_rate_limit()
+    clear_listing_cache()
+    return {"status": "ok", "message": "Rate-limit reset and listing cache cleared"}
+
+
+@router.post("/reset-rate-limit", dependencies=[Depends(verify_admin_secret)])
+async def reset_rate_limit():
+    info = clear_rate_limit()
+    return {"status": "ok", "previous_state": info}
 
 
 @router.get("/diagnose", dependencies=[Depends(verify_admin_secret)])

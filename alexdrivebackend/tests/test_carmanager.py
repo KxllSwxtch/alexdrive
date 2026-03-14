@@ -6,9 +6,13 @@ import pytest
 from app.services import carmanager as cm_mod
 from app.services.carmanager import (
     _build_datapart_params,
+    _clear_rate_limit_state,
     _evict_oldest,
     _fetch_and_cache_listings,
+    _set_rate_limit_cooldown,
+    get_rate_limit_info,
     is_rate_limited,
+    RATE_LIMIT_BACKOFF_STEPS,
     SORT_MAP,
     DEFAULT_SIDO,
     DEFAULT_AREA,
@@ -199,3 +203,140 @@ class TestCacheEviction:
             cache[f"key_{i}"] = {"data": f"val_{i}", "expiry": time.time() + i}
         _evict_oldest(cache, 200)
         assert len(cache) == 50
+
+
+# ── Exponential backoff ──────────────────────────────────────
+
+
+class TestExponentialBackoff:
+    def setup_method(self):
+        _clear_rate_limit_state()
+
+    def teardown_method(self):
+        _clear_rate_limit_state()
+
+    def test_consecutive_hits_increase_cooldown(self):
+        """Multiple _set_rate_limit_cooldown() calls should increase cooldown."""
+        for i, expected_cooldown in enumerate(RATE_LIMIT_BACKOFF_STEPS):
+            _set_rate_limit_cooldown()
+            info = get_rate_limit_info()
+            assert info["consecutive_hits"] == i + 1
+            # Cooldown remaining should be approximately the expected cooldown
+            assert info["cooldown_remaining"] <= expected_cooldown
+            assert info["cooldown_remaining"] > expected_cooldown - 2  # 2s tolerance
+
+    def test_backoff_caps_at_max(self):
+        """Backoff should cap at the last step (60 min)."""
+        for _ in range(10):
+            _set_rate_limit_cooldown()
+        info = get_rate_limit_info()
+        assert info["consecutive_hits"] == 10
+        max_cooldown = RATE_LIMIT_BACKOFF_STEPS[-1]
+        assert info["cooldown_remaining"] <= max_cooldown
+        assert info["cooldown_remaining"] > max_cooldown - 2
+
+    def test_clear_resets_state(self):
+        """_clear_rate_limit_state() resets consecutive count and cooldown."""
+        _set_rate_limit_cooldown()
+        _set_rate_limit_cooldown()
+        assert get_rate_limit_info()["consecutive_hits"] == 2
+        assert is_rate_limited()
+
+        _clear_rate_limit_state()
+        assert get_rate_limit_info()["consecutive_hits"] == 0
+        assert not is_rate_limited()
+
+
+# ── Stale data preservation ──────────────────────────────────
+
+
+class TestStaleDataPreservation:
+    def setup_method(self):
+        _clear_rate_limit_state()
+        cm_mod._listing_cache.clear()
+
+    def teardown_method(self):
+        _clear_rate_limit_state()
+        cm_mod._listing_cache.clear()
+
+    @pytest.mark.asyncio
+    async def test_rate_limited_with_existing_cache_returns_stale(self):
+        """Rate-limited response with existing cache → returns stale data, not empty."""
+        # Pre-populate cache with good data
+        stale_data = {"listings": [{"encryptedId": "abc"}], "total": 1, "status": "ok"}
+        cm_mod._listing_cache["key_stale"] = {"data": stale_data, "expiry": time.time() + 600}
+
+        rate_html = '<div class="limits_box">blocked</div>'
+
+        async def mock_post_json(path, data):
+            return rate_html
+
+        with patch("app.services.carmanager.post_json", side_effect=mock_post_json), \
+             patch("app.services.carmanager.invalidate_session") as mock_invalidate:
+            result = await _fetch_and_cache_listings("key_stale", {})
+            assert result["listings"] == [{"encryptedId": "abc"}]
+            assert result["total"] == 1
+            assert not mock_invalidate.called
+
+    @pytest.mark.asyncio
+    async def test_rate_limited_without_cache_returns_empty(self):
+        """Rate-limited response without existing cache → returns empty with status."""
+        rate_html = '<div class="limits_box">blocked</div>'
+
+        async def mock_post_json(path, data):
+            return rate_html
+
+        with patch("app.services.carmanager.post_json", side_effect=mock_post_json):
+            result = await _fetch_and_cache_listings("key_no_cache", {})
+            assert result["listings"] == []
+            assert result["status"] == "rate_limited"
+
+
+# ── Request gating ───────────────────────────────────────────
+
+
+class TestRequestGating:
+    def setup_method(self):
+        _clear_rate_limit_state()
+        cm_mod._listing_cache.clear()
+
+    def teardown_method(self):
+        _clear_rate_limit_state()
+        cm_mod._listing_cache.clear()
+
+    @pytest.mark.asyncio
+    async def test_gate_blocks_outbound_requests(self):
+        """When rate-limited, get_car_listings should NOT call post_json."""
+        from app.services.carmanager import get_car_listings
+
+        # Set rate-limited state
+        _set_rate_limit_cooldown()
+
+        with patch("app.services.carmanager.post_json") as mock_post:
+            result = await get_car_listings({"PageNow": 1, "PageSize": 20})
+            assert mock_post.call_count == 0
+            assert result["status"] == "rate_limited"
+
+    @pytest.mark.asyncio
+    async def test_successful_parse_clears_rate_limit(self):
+        """Successful listing parse should clear rate-limit state."""
+        _set_rate_limit_cooldown()
+        _set_rate_limit_cooldown()
+        assert cm_mod._rate_limit_consecutive == 2
+
+        html = "x" * 5000
+        fake_listing = {"encryptedId": "abc", "name": "Test Car"}
+
+        async def mock_post_json(path, data):
+            return html
+
+        # Temporarily clear cooldown so the fetch goes through
+        cm_mod._rate_limit_until = 0.0
+
+        with patch("app.services.carmanager.post_json", side_effect=mock_post_json), \
+             patch("app.services.carmanager.parse_car_listings", return_value=[fake_listing]), \
+             patch("app.services.carmanager.parse_total_count", return_value=1):
+            result = await _fetch_and_cache_listings("key_clear", {})
+            assert result["status"] == "ok"
+            assert cm_mod._rate_limit_consecutive == 0
+            assert not is_rate_limited()
