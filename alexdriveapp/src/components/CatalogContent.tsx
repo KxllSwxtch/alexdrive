@@ -60,16 +60,14 @@ interface CatalogContentProps {
   initialFilters: FilterData | null;
   initialCars: CarListing[];
   initialTotal: number;
-  initialStatus?: string;
 }
 
-export function CatalogContent({ initialFilters, initialCars, initialTotal, initialStatus }: CatalogContentProps) {
+export function CatalogContent({ initialFilters, initialCars, initialTotal }: CatalogContentProps) {
   const isInitialMount = useRef(true);
 
   const [filters, setFilters] = useState<FilterData | null>(initialFilters);
   const [cars, setCars] = useState<CarListing[]>(initialCars);
   const [total, setTotal] = useState(initialTotal);
-  const [status, setStatus] = useState<string>(initialStatus || "ok");
   const [loading, setLoading] = useState(false);
   const [params, setParams] = useState<CarListingParams>(() => {
     if (typeof window !== "undefined") {
@@ -125,7 +123,6 @@ export function CatalogContent({ initialFilters, initialCars, initialTotal, init
         if (!ignore) {
           setCars(data.listings || []);
           setTotal(data.total || 0);
-          setStatus(data.status || "ok");
         }
       })
       .catch((error) => {
@@ -179,7 +176,7 @@ export function CatalogContent({ initialFilters, initialCars, initialTotal, init
         {loading && cars.length === 0 ? (
           <LoadingSkeleton />
         ) : (
-          <CarGrid cars={cars} status={status} />
+          <CarGrid cars={cars} />
         )}
       </div>
 

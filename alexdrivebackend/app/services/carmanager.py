@@ -34,54 +34,6 @@ _detail_refresh_keys: set[str] = set()
 
 _last_successful_parse: float = 0.0
 
-_RATE_LIMIT_MARKER = "limits_box"
-_rate_limit_until: float = 0.0
-_rate_limit_consecutive: int = 0
-RATE_LIMIT_BACKOFF_STEPS = [5*60, 10*60, 20*60, 40*60, 60*60]  # 5m → 10m → 20m → 40m → 60m max
-
-
-def _set_rate_limit_cooldown() -> None:
-    global _rate_limit_until, _rate_limit_consecutive
-    _rate_limit_consecutive += 1
-    idx = min(_rate_limit_consecutive - 1, len(RATE_LIMIT_BACKOFF_STEPS) - 1)
-    cooldown = RATE_LIMIT_BACKOFF_STEPS[idx]
-    _rate_limit_until = time.time() + cooldown
-    print(f"[carmanager] Rate-limit cooldown: {cooldown}s (consecutive hit #{_rate_limit_consecutive})")
-
-
-def _clear_rate_limit_state() -> None:
-    global _rate_limit_until, _rate_limit_consecutive
-    if _rate_limit_consecutive > 0:
-        print(f"[carmanager] Rate-limit cleared (was {_rate_limit_consecutive} consecutive hits)")
-    _rate_limit_until = 0.0
-    _rate_limit_consecutive = 0
-
-
-def is_rate_limited() -> bool:
-    return time.time() < _rate_limit_until
-
-
-def get_rate_limit_info() -> dict:
-    remaining = max(0, int(_rate_limit_until - time.time()))
-    return {
-        "rate_limited": is_rate_limited(),
-        "cooldown_remaining": remaining,
-        "consecutive_hits": _rate_limit_consecutive,
-    }
-
-
-def clear_rate_limit() -> dict:
-    info = get_rate_limit_info()
-    _clear_rate_limit_state()
-    return info
-
-
-def clear_listing_cache() -> int:
-    count = len(_listing_cache)
-    _listing_cache.clear()
-    print(f"[carmanager] Listing cache cleared ({count} entries)")
-    return count
-
 
 def get_last_successful_parse() -> float:
     """Return timestamp of last successful listing parse (0.0 if never)."""
@@ -259,19 +211,6 @@ async def _fetch_and_cache_listings(cache_key: str, json_body: dict, _retried: b
 
     html = await post_json("/Car/DataPart", json_body)
 
-    # Rate-limit detection — do NOT invalidate session or retry
-    if _RATE_LIMIT_MARKER in html:
-        print(f"[carmanager] RATE LIMITED by carmanager.co.kr — pausing requests")
-        _set_rate_limit_cooldown()
-        # Preserve existing cached data (stale > empty)
-        existing = _listing_cache.get(cache_key)
-        if existing and existing["data"].get("listings"):
-            print(f"[carmanager] Serving stale listings ({len(existing['data']['listings'])} cars)")
-            return existing["data"]
-        result = {"listings": [], "total": 0, "status": "rate_limited"}
-        _listing_cache[cache_key] = {"data": result, "expiry": time.time() + 120}  # 2 min
-        return result
-
     listings = parse_car_listings(html)
     total = parse_total_count(html)
 
@@ -293,7 +232,6 @@ async def _fetch_and_cache_listings(cache_key: str, json_body: dict, _retried: b
     if len(listings) > 0:
         status = "ok"
         _last_successful_parse = time.time()
-        _clear_rate_limit_state()
     elif len(html) <= 50:
         status = "empty"
     else:
@@ -307,8 +245,6 @@ async def _fetch_and_cache_listings(cache_key: str, json_body: dict, _retried: b
 
 async def _refresh_listing_cache(cache_key: str, json_body: dict) -> None:
     """Background refresh — errors are silently caught (stale data stays)."""
-    if is_rate_limited():
-        return
     _listing_refresh_keys.add(cache_key)
     try:
         await _fetch_and_cache_listings(cache_key, json_body)
@@ -327,9 +263,6 @@ async def listing_refresh_loop() -> None:
     }
     while True:
         await asyncio.sleep(LISTING_REFRESH_INTERVAL)
-        if is_rate_limited():
-            print("[carmanager] Proactive refresh skipped (rate-limited cooldown)")
-            continue
         try:
             json_body = _build_datapart_params(default_params)
             cache_key = hashlib.md5(
@@ -365,13 +298,6 @@ async def get_car_listings(params: dict) -> dict:
             print(f"[carmanager] Listing cache hit ({cache_key[:8]})")
             return cached["data"]
 
-    # Gate: if rate-limited, serve cached/stale data, don't make outbound requests
-    if is_rate_limited():
-        stale = _listing_cache.get(cache_key)
-        if stale and stale["data"].get("listings"):
-            return stale["data"]
-        return {"listings": [], "total": 0, "status": "rate_limited"}
-
     # Cache miss — blocking fetch
     async with _listing_lock:
         # Double-check under lock
@@ -391,8 +317,6 @@ async def get_car_listings(params: dict) -> dict:
 
 async def _refresh_detail_cache(encrypted_id: str) -> None:
     """Background refresh — errors caught silently (stale data stays)."""
-    if is_rate_limited():
-        return
     _detail_refresh_keys.add(encrypted_id)
     try:
         html = await post_form("/PopupFrame/CarDetailEnc", {"encarno": encrypted_id})
@@ -417,13 +341,6 @@ async def get_car_detail(encrypted_id: str) -> dict:
                 asyncio.create_task(_refresh_detail_cache(encrypted_id))
             print(f"[carmanager] Detail cache hit ({encrypted_id[:16]}...)")
             return cached["data"]
-
-    # Gate: if rate-limited, serve cached/stale or raise
-    if is_rate_limited():
-        stale = _detail_cache.get(encrypted_id)
-        if stale:
-            return stale["data"]
-        raise NetworkError("Rate-limited by carmanager.co.kr, no cached data")
 
     # Double-check under per-key lock
     lock = await _get_detail_lock(encrypted_id)
@@ -508,8 +425,6 @@ async def detail_cache_persist_loop() -> None:
 
 async def warm_detail_cache_for_listings(listings: list[dict], max_concurrent: int = 3) -> None:
     """Background: warm detail cache for listing IDs not already cached."""
-    if is_rate_limited():
-        return
     ids_to_warm = [
         car["encryptedId"] for car in listings
         if car.get("encryptedId") and car["encryptedId"] not in _detail_cache

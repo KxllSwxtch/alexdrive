@@ -255,13 +255,8 @@ def get_session_info() -> dict:
 async def session_keepalive_loop() -> None:
     """Periodically ping carmanager to keep the session alive.
     Proactively re-login if the session has expired."""
-    from app.services.carmanager import is_rate_limited
-
     while True:
         await asyncio.sleep(KEEPALIVE_INTERVAL)
-        if is_rate_limited():
-            print("[session] Keepalive skipped (rate-limited cooldown)")
-            continue
         if not _cached_cookies:
             try:
                 await get_session()
