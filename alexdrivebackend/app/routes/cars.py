@@ -72,6 +72,14 @@ async def get_cars(
         "PageAscDesc": PageAscDesc,
     }
     data = await get_car_listings(params)
+
+    if data.get("status") == "rate_limited" and not data.get("listings"):
+        return JSONResponse(
+            status_code=429,
+            content=data,
+            headers={"Retry-After": "10", "Cache-Control": "no-cache"},
+        )
+
     if data.get("listings"):
         asyncio.ensure_future(warm_detail_cache_for_listings(data["listings"]))
     return JSONResponse(

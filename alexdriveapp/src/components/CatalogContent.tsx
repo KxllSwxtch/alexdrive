@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { FilterBar } from "@/components/FilterBar";
 import { CarGrid } from "@/components/CarGrid";
 import { Pagination } from "@/components/Pagination";
@@ -62,6 +62,9 @@ interface CatalogContentProps {
   initialTotal: number;
 }
 
+const MAX_CLIENT_RETRIES = 3;
+const RETRY_COUNTDOWN_SECS = 10;
+
 export function CatalogContent({ initialFilters, initialCars, initialTotal }: CatalogContentProps) {
   const isInitialMount = useRef(true);
 
@@ -69,12 +72,101 @@ export function CatalogContent({ initialFilters, initialCars, initialTotal }: Ca
   const [cars, setCars] = useState<CarListing[]>(initialCars);
   const [total, setTotal] = useState(initialTotal);
   const [loading, setLoading] = useState(false);
+  const [rateLimited, setRateLimited] = useState(false);
+  const [retryCountdown, setRetryCountdown] = useState(0);
   const [params, setParams] = useState<CarListingParams>(() => {
     if (typeof window !== "undefined") {
       return parseParamsFromURL(new URLSearchParams(window.location.search));
     }
     return DEFAULT_PARAMS;
   });
+
+  const retryCountRef = useRef(0);
+  const countdownTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  const clearRetryState = useCallback(() => {
+    setRateLimited(false);
+    setRetryCountdown(0);
+    retryCountRef.current = 0;
+    if (countdownTimerRef.current) {
+      clearInterval(countdownTimerRef.current);
+      countdownTimerRef.current = null;
+    }
+  }, []);
+
+  const buildSearchParams = useCallback((p: CarListingParams) => {
+    const searchParams = new URLSearchParams();
+    for (const [key, value] of Object.entries(p)) {
+      if (value !== undefined && value !== "") {
+        if (key === "CarPriceFrom" || key === "CarPriceTo") {
+          const num = parseInt(String(value), 10);
+          if (!isNaN(num)) {
+            searchParams.set(key, String(Math.round(num / 10000)));
+            continue;
+          }
+        }
+        searchParams.set(key, String(value));
+      }
+    }
+    return searchParams;
+  }, []);
+
+  const fetchCars = useCallback(async (p: CarListingParams, signal?: AbortSignal): Promise<boolean> => {
+    const searchParams = buildSearchParams(p);
+    const res = await fetch(`${BACKEND_URL}/api/cars?${searchParams.toString()}`, { signal });
+    const data = await res.json();
+
+    if (res.status === 429 || data.status === "rate_limited") {
+      return false; // rate limited
+    }
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
+    setCars(data.listings || []);
+    setTotal(data.total || 0);
+    clearRetryState();
+    return true; // success
+  }, [buildSearchParams, clearRetryState]);
+
+  const startRetryCountdown = useCallback((p: CarListingParams, abortController: AbortController) => {
+    setRateLimited(true);
+    setRetryCountdown(RETRY_COUNTDOWN_SECS);
+
+    if (countdownTimerRef.current) clearInterval(countdownTimerRef.current);
+
+    let remaining = RETRY_COUNTDOWN_SECS;
+    countdownTimerRef.current = setInterval(async () => {
+      remaining--;
+      setRetryCountdown(remaining);
+
+      if (remaining <= 0) {
+        if (countdownTimerRef.current) {
+          clearInterval(countdownTimerRef.current);
+          countdownTimerRef.current = null;
+        }
+
+        retryCountRef.current++;
+        if (retryCountRef.current > MAX_CLIENT_RETRIES) {
+          setRateLimited(false);
+          setLoading(false);
+          setCars([]);
+          setTotal(0);
+          return;
+        }
+
+        try {
+          const ok = await fetchCars(p, abortController.signal);
+          if (!ok) {
+            startRetryCountdown(p, abortController);
+          } else {
+            setLoading(false);
+          }
+        } catch {
+          setRateLimited(false);
+          setLoading(false);
+        }
+      }
+    }, 1000);
+  }, [fetchCars]);
 
   // Load filter data — only if server didn't provide them
   useEffect(() => {
@@ -97,47 +189,35 @@ export function CatalogContent({ initialFilters, initialCars, initialTotal }: Ca
       return;
     }
 
-    let ignore = false;
+    clearRetryState();
+    const abortController = new AbortController();
     setLoading(true);
 
-    const searchParams = new URLSearchParams();
-    for (const [key, value] of Object.entries(params)) {
-      if (value !== undefined && value !== "") {
-        if (key === "CarPriceFrom" || key === "CarPriceTo") {
-          const num = parseInt(String(value), 10);
-          if (!isNaN(num)) {
-            searchParams.set(key, String(Math.round(num / 10000)));
-            continue;
-          }
-        }
-        searchParams.set(key, String(value));
-      }
-    }
-
-    fetch(`${BACKEND_URL}/api/cars?${searchParams.toString()}`)
-      .then((res) => {
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        return res.json();
-      })
-      .then((data) => {
-        if (!ignore) {
-          setCars(data.listings || []);
-          setTotal(data.total || 0);
+    fetchCars(params, abortController.signal)
+      .then((ok) => {
+        if (abortController.signal.aborted) return;
+        if (!ok) {
+          startRetryCountdown(params, abortController);
+        } else {
+          setLoading(false);
         }
       })
       .catch((error) => {
+        if (abortController.signal.aborted) return;
         console.error("Failed to fetch cars:", error);
-        if (!ignore) {
-          setCars([]);
-          setTotal(0);
-        }
-      })
-      .finally(() => {
-        if (!ignore) setLoading(false);
+        setCars([]);
+        setTotal(0);
+        setLoading(false);
       });
 
-    return () => { ignore = true; };
-  }, [params]);
+    return () => {
+      abortController.abort();
+      if (countdownTimerRef.current) {
+        clearInterval(countdownTimerRef.current);
+        countdownTimerRef.current = null;
+      }
+    };
+  }, [params, fetchCars, clearRetryState, startRetryCountdown]);
 
   // Sync params to URL on subsequent changes
   useEffect(() => {
@@ -172,8 +252,10 @@ export function CatalogContent({ initialFilters, initialCars, initialTotal }: Ca
       />
 
       {/* Results */}
-      <div className={`mt-6 ${loading && cars.length > 0 ? "opacity-50 pointer-events-none" : ""}`}>
-        {loading && cars.length === 0 ? (
+      <div className={`mt-6 ${loading && !rateLimited && cars.length > 0 ? "opacity-50 pointer-events-none" : ""}`}>
+        {rateLimited ? (
+          <RateLimitMessage countdown={retryCountdown} />
+        ) : loading && cars.length === 0 ? (
           <LoadingSkeleton />
         ) : (
           <CarGrid cars={cars} />
@@ -194,6 +276,30 @@ export function CatalogContent({ initialFilters, initialCars, initialTotal }: Ca
           disabled={loading}
         />
       )}
+    </div>
+  );
+}
+
+function RateLimitMessage({ countdown }: { countdown: number }) {
+  return (
+    <div className="flex flex-col items-center justify-center py-16 text-center">
+      <svg
+        className="mb-4 h-10 w-10 animate-spin text-accent"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+      >
+        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+      </svg>
+      <p className="text-lg font-medium text-text-primary">
+        Сервер временно перегружен
+      </p>
+      <p className="mt-2 text-sm text-text-secondary">
+        {countdown > 0
+          ? `Повторная попытка через ${countdown} сек...`
+          : "Повторная попытка..."}
+      </p>
     </div>
   );
 }

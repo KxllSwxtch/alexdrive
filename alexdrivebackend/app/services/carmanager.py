@@ -36,6 +36,26 @@ _last_successful_parse: float = 0.0
 
 _RATE_LIMIT_MARKER = "limits_box"
 
+# --- Outbound request throttling ---
+_last_listing_request_time: float = 0.0
+_throttle_lock = asyncio.Lock()
+MIN_REQUEST_INTERVAL = 2.0
+
+# --- Rate-limit tracking ---
+_last_rate_limit_time: float = 0.0
+_RATE_LIMIT_COOLDOWN = 60.0  # skip detail warming for 60s after rate limit
+
+
+async def _throttle_listing_request() -> None:
+    """Enforce minimum interval between listing requests to avoid triggering rate limits."""
+    global _last_listing_request_time
+    async with _throttle_lock:
+        now = time.time()
+        elapsed = now - _last_listing_request_time
+        if elapsed < MIN_REQUEST_INTERVAL:
+            await asyncio.sleep(MIN_REQUEST_INTERVAL - elapsed)
+        _last_listing_request_time = time.time()
+
 
 def get_last_successful_parse() -> float:
     """Return timestamp of last successful listing parse (0.0 if never)."""
@@ -207,19 +227,39 @@ def _build_datapart_params(params: dict) -> dict:
     }}
 
 
-async def _fetch_and_cache_listings(cache_key: str, json_body: dict, _retried: bool = False) -> dict:
+async def _fetch_and_cache_listings(
+    cache_key: str, json_body: dict,
+    _retried: bool = False, _rate_limit_attempt: int = 0,
+) -> dict:
     """Fetch listings from carmanager via /Car/DataPart JSON API, parse, cache, and return."""
-    global _last_successful_parse
+    global _last_successful_parse, _last_rate_limit_time
 
+    await _throttle_listing_request()
     html = await post_json("/Car/DataPart", json_body)
 
     # Rate-limit detection — not an auth issue, don't invalidate session or retry
     if _RATE_LIMIT_MARKER in html:
+        _last_rate_limit_time = time.time()
         print("[carmanager] Rate-limited by carmanager.co.kr (limits_box detected)")
+
+        # 1. Serve stale cache if available (and extend its TTL)
         existing = _listing_cache.get(cache_key)
         if existing and existing["data"].get("listings"):
+            existing["expiry"] = time.time() + LISTING_TTL  # extend TTL
             print(f"[carmanager] Serving stale cached listings ({len(existing['data']['listings'])} cars)")
             return existing["data"]
+
+        # 2. No cache → retry with backoff (max 2 retries)
+        if _rate_limit_attempt < 2:
+            delay = 3.0 * (2 ** _rate_limit_attempt)  # 3s, 6s
+            print(f"[carmanager] No cache available, retrying in {delay}s (attempt {_rate_limit_attempt + 1}/2)")
+            await asyncio.sleep(delay)
+            return await _fetch_and_cache_listings(
+                cache_key, json_body, _retried, _rate_limit_attempt + 1,
+            )
+
+        # 3. All retries exhausted
+        print("[carmanager] Rate-limit retries exhausted, returning empty")
         return {"listings": [], "total": 0, "status": "rate_limited"}
 
     listings = parse_car_listings(html)
@@ -436,6 +476,11 @@ async def detail_cache_persist_loop() -> None:
 
 async def warm_detail_cache_for_listings(listings: list[dict], max_concurrent: int = 3) -> None:
     """Background: warm detail cache for listing IDs not already cached."""
+    # Skip warming if recently rate-limited (detail requests share IP budget)
+    if _last_rate_limit_time and time.time() - _last_rate_limit_time < _RATE_LIMIT_COOLDOWN:
+        print("[carmanager] Skipping detail cache warming (rate-limited recently)")
+        return
+
     ids_to_warm = [
         car["encryptedId"] for car in listings
         if car.get("encryptedId") and car["encryptedId"] not in _detail_cache
