@@ -37,9 +37,10 @@ def reset_carmanager_globals():
     cm_mod._listing_lock = asyncio.Lock()
     cm_mod._detail_locks = {}
     cm_mod._detail_locks_guard = asyncio.Lock()
-    cm_mod._last_listing_request_time = 0.0
+    cm_mod._last_request_time = 0.0
     cm_mod._throttle_lock = asyncio.Lock()
     cm_mod._last_rate_limit_time = 0.0
+    cm_mod._rate_limit_count = 0
     yield
     cm_mod._filter_cache = None
     cm_mod._listing_cache = {}
@@ -47,8 +48,9 @@ def reset_carmanager_globals():
     cm_mod._listing_refresh_keys = set()
     cm_mod._detail_refresh_keys = set()
     cm_mod._detail_locks = {}
-    cm_mod._last_listing_request_time = 0.0
+    cm_mod._last_request_time = 0.0
     cm_mod._last_rate_limit_time = 0.0
+    cm_mod._rate_limit_count = 0
 
 
 @pytest.fixture(autouse=True)

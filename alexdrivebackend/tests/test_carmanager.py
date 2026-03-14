@@ -10,7 +10,7 @@ from app.services.carmanager import (
     _build_datapart_params,
     _evict_oldest,
     _fetch_and_cache_listings,
-    _throttle_listing_request,
+    _throttle_request,
     SORT_MAP,
     DEFAULT_SIDO,
     DEFAULT_AREA,
@@ -274,7 +274,7 @@ class TestThrottle:
     @pytest.mark.asyncio
     async def test_throttle_enforces_minimum_interval(self):
         """Throttle should enforce minimum interval between calls."""
-        cm_mod._last_listing_request_time = time.time()  # just called
+        cm_mod._last_request_time = time.time()  # just called
 
         sleep_called_with = []
         original_sleep = asyncio.sleep
@@ -284,7 +284,7 @@ class TestThrottle:
             # Don't actually sleep in tests
 
         with patch("app.services.carmanager.asyncio.sleep", side_effect=mock_sleep):
-            await _throttle_listing_request()
+            await _throttle_request()
 
         assert len(sleep_called_with) == 1
         assert sleep_called_with[0] > 0
@@ -293,7 +293,7 @@ class TestThrottle:
     @pytest.mark.asyncio
     async def test_throttle_no_delay_when_interval_passed(self):
         """Throttle should not delay if enough time has passed."""
-        cm_mod._last_listing_request_time = time.time() - MIN_REQUEST_INTERVAL - 1
+        cm_mod._last_request_time = time.time() - MIN_REQUEST_INTERVAL - 1
 
         sleep_called = False
 
@@ -302,7 +302,7 @@ class TestThrottle:
             sleep_called = True
 
         with patch("app.services.carmanager.asyncio.sleep", side_effect=mock_sleep):
-            await _throttle_listing_request()
+            await _throttle_request()
 
         assert not sleep_called
 
@@ -314,6 +314,7 @@ class TestWarmDetailCacheSkipsOnRateLimit:
         from app.services.carmanager import warm_detail_cache_for_listings
 
         cm_mod._last_rate_limit_time = time.time()  # just rate-limited
+        cm_mod._rate_limit_count = 1
 
         with patch("app.services.carmanager.get_car_detail", new_callable=AsyncMock) as mock_detail:
             await warm_detail_cache_for_listings([{"encryptedId": "abc"}])

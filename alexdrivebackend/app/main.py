@@ -46,20 +46,21 @@ async def lifespan(app: FastAPI):
         except Exception as e:
             print(f"[server] Session pre-warm failed (will retry on first request): {e}")
 
-        # Pre-warm filter + listing caches in parallel (both need session, not each other)
-        warmup_results = await asyncio.gather(
-            get_filter_data(),
-            get_car_listings({
+        # Pre-warm caches sequentially to avoid burst requests
+        try:
+            await get_filter_data()
+            print("[server] Filter cache pre-warmed")
+        except Exception as e:
+            print(f"[server] Filter pre-warm failed: {e}")
+
+        try:
+            await get_car_listings({
                 "PageNow": 1, "PageSize": 20,
                 "PageSort": "ModDt", "PageAscDesc": "DESC",
-            }),
-            return_exceptions=True,
-        )
-        for label, result in zip(["Filter", "Listing"], warmup_results):
-            if isinstance(result, Exception):
-                print(f"[server] {label} pre-warm failed: {result}")
-            else:
-                print(f"[server] {label} cache pre-warmed")
+            })
+            print("[server] Listing cache pre-warmed")
+        except Exception as e:
+            print(f"[server] Listing pre-warm failed: {e}")
 
         # Start background tasks
         keepalive_task = asyncio.create_task(session_keepalive_loop())

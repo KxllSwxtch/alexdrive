@@ -36,25 +36,55 @@ _last_successful_parse: float = 0.0
 
 _RATE_LIMIT_MARKER = "limits_box"
 
-# --- Outbound request throttling ---
-_last_listing_request_time: float = 0.0
+# --- Global outbound request throttling ---
+_last_request_time: float = 0.0
 _throttle_lock = asyncio.Lock()
-MIN_REQUEST_INTERVAL = 2.0
+MIN_REQUEST_INTERVAL = 3.0  # seconds between ANY carmanager request
 
 # --- Rate-limit tracking ---
 _last_rate_limit_time: float = 0.0
-_RATE_LIMIT_COOLDOWN = 60.0  # skip detail warming for 60s after rate limit
+_RATE_LIMIT_COOLDOWN = 300.0  # skip detail warming for 5 min after rate limit
+_rate_limit_count: int = 0  # consecutive rate limits (for escalating backoff)
 
 
-async def _throttle_listing_request() -> None:
-    """Enforce minimum interval between listing requests to avoid triggering rate limits."""
-    global _last_listing_request_time
+async def _throttle_request() -> None:
+    """Enforce minimum interval between ALL outbound requests to carmanager."""
+    global _last_request_time
     async with _throttle_lock:
         now = time.time()
-        elapsed = now - _last_listing_request_time
+        elapsed = now - _last_request_time
         if elapsed < MIN_REQUEST_INTERVAL:
             await asyncio.sleep(MIN_REQUEST_INTERVAL - elapsed)
-        _last_listing_request_time = time.time()
+        _last_request_time = time.time()
+
+
+def _record_rate_limit() -> None:
+    """Record a rate-limit event and escalate cooldown."""
+    global _last_rate_limit_time, _rate_limit_count
+    _last_rate_limit_time = time.time()
+    _rate_limit_count += 1
+    print(f"[carmanager] Rate limit #{_rate_limit_count} recorded (cooldown={_get_cooldown()}s)")
+
+
+def _get_cooldown() -> float:
+    """Get current cooldown duration, escalating with consecutive rate limits."""
+    # 5min, 10min, 20min (capped)
+    return min(_RATE_LIMIT_COOLDOWN * (2 ** min(_rate_limit_count - 1, 2)), 1200.0)
+
+
+def _clear_rate_limit() -> None:
+    """Clear rate-limit state after a successful request."""
+    global _rate_limit_count
+    if _rate_limit_count > 0:
+        _rate_limit_count = 0
+        print("[carmanager] Rate limit cleared (successful request)")
+
+
+def is_rate_limited() -> bool:
+    """Check if we're currently in rate-limit cooldown."""
+    if not _last_rate_limit_time:
+        return False
+    return time.time() - _last_rate_limit_time < _get_cooldown()
 
 
 def get_last_successful_parse() -> float:
@@ -100,17 +130,20 @@ CAR_JS_FILES = [
 
 
 async def _fetch_filter_data_internal() -> dict:
+    global _filter_cache
     print("[carmanager] Fetching filter data...")
 
-    # 1. Fetch JS files sequentially (safe for limited proxy connections)
+    # 1. Fetch JS files sequentially with throttle
     car_js_contents = []
     for path in CAR_JS_FILES:
+        await _throttle_request()
         car_js_contents.append(await fetch_page(path))
 
     combined_js = "\n".join(car_js_contents)
     page_filters = parse_filter_data_from_js(combined_js)
 
     # 2. Fetch danjis via JSON API (no JS parsing needed)
+    await _throttle_request()
     danjis_raw = await post_json_parsed(f"/CodeBase/JsonBaseCodeDanji/{DEFAULT_AREA}")
     danjis = [
         {"DanjiNo": int(d["DanjiNo"]), "DanjiName": d["DanjiName"]}
@@ -118,7 +151,17 @@ async def _fetch_filter_data_internal() -> dict:
     ]
 
     # 3. Fetch /Car/Data HTML for color/fuel/mission select options
+    await _throttle_request()
     page_html = await fetch_page("/Car/Data")
+
+    # Check for rate limit on the Car/Data page itself
+    if _RATE_LIMIT_MARKER in page_html:
+        _record_rate_limit()
+        print("[carmanager] Rate-limited on /Car/Data during filter fetch")
+        # Still try to use the JS-based filters we already have
+        if _filter_cache:
+            return _filter_cache["data"]
+
     color_opts = parse_select_options(page_html, "cbxSearchColor")
     fuel_opts = parse_select_options(page_html, "cbxSearchFuel")
     mission_opts = parse_select_options(page_html, "cbxSearchMission")
@@ -140,7 +183,6 @@ async def _fetch_filter_data_internal() -> dict:
         "danjis": danjis,
     }
 
-    global _filter_cache
     _filter_cache = {"data": data, "expiry": time.time() + FILTER_TTL}
     print(f"[carmanager] Filter data cached ({len(data['makers'])} makers, {len(data['colors'])} colors)")
     return data
@@ -234,12 +276,12 @@ async def _fetch_and_cache_listings(
     """Fetch listings from carmanager via /Car/DataPart JSON API, parse, cache, and return."""
     global _last_successful_parse, _last_rate_limit_time
 
-    await _throttle_listing_request()
+    await _throttle_request()
     html = await post_json("/Car/DataPart", json_body)
 
     # Rate-limit detection — not an auth issue, don't invalidate session or retry
     if _RATE_LIMIT_MARKER in html:
-        _last_rate_limit_time = time.time()
+        _record_rate_limit()
         print("[carmanager] Rate-limited by carmanager.co.kr (limits_box detected)")
 
         # 1. Serve stale cache if available (and extend its TTL)
@@ -283,6 +325,7 @@ async def _fetch_and_cache_listings(
     if len(listings) > 0:
         status = "ok"
         _last_successful_parse = time.time()
+        _clear_rate_limit()
     elif len(html) <= 50:
         status = "empty"
     else:
@@ -314,6 +357,11 @@ async def listing_refresh_loop() -> None:
     }
     while True:
         await asyncio.sleep(LISTING_REFRESH_INTERVAL)
+
+        if is_rate_limited():
+            print("[carmanager] Proactive refresh skipped (rate-limited)")
+            continue
+
         try:
             json_body = _build_datapart_params(default_params)
             cache_key = hashlib.md5(
@@ -370,11 +418,17 @@ async def _refresh_detail_cache(encrypted_id: str) -> None:
     """Background refresh — errors caught silently (stale data stays)."""
     _detail_refresh_keys.add(encrypted_id)
     try:
+        await _throttle_request()
         html = await post_form("/PopupFrame/CarDetailEnc", {"encarno": encrypted_id})
+        if _RATE_LIMIT_MARKER in html:
+            _record_rate_limit()
+            print(f"[carmanager] Detail refresh rate-limited ({encrypted_id[:16]}...)")
+            return
         result = parse_car_detail(html, encrypted_id)
         result["inspectionUrl"] = result.pop("inspectionUrl", None)
         _detail_cache[encrypted_id] = {"data": result, "expiry": time.time() + DETAIL_TTL}
         _evict_oldest(_detail_cache, MAX_DETAIL_CACHE_ENTRIES)
+        _clear_rate_limit()
         print(f"[carmanager] Detail background refresh OK ({encrypted_id[:16]}...)")
     except Exception as e:
         print(f"[carmanager] Detail background refresh failed ({encrypted_id[:16]}...): {e}")
@@ -400,6 +454,7 @@ async def get_car_detail(encrypted_id: str) -> dict:
         if cached and time.time() < cached["expiry"]:
             return cached["data"]
 
+        await _throttle_request()
         try:
             html = await post_form("/PopupFrame/CarDetailEnc", {"encarno": encrypted_id})
         except NetworkError:
@@ -409,6 +464,16 @@ async def get_car_detail(encrypted_id: str) -> dict:
                 return cached["data"]
             raise
 
+        # Rate-limit detection on detail requests
+        if _RATE_LIMIT_MARKER in html:
+            _record_rate_limit()
+            print(f"[carmanager] Detail request rate-limited ({encrypted_id[:16]}...)")
+            cached = _detail_cache.get(encrypted_id)
+            if cached:
+                cached["expiry"] = time.time() + DETAIL_TTL
+                return cached["data"]
+            raise NetworkError("Rate-limited on detail request, no cache available")
+
         result = parse_car_detail(html, encrypted_id)
 
         # Pass inspection URL through (no external fetch needed)
@@ -416,6 +481,7 @@ async def get_car_detail(encrypted_id: str) -> dict:
 
         _detail_cache[encrypted_id] = {"data": result, "expiry": time.time() + DETAIL_TTL}
         _evict_oldest(_detail_cache, MAX_DETAIL_CACHE_ENTRIES)
+        _clear_rate_limit()
         return result
 
 
@@ -474,27 +540,33 @@ async def detail_cache_persist_loop() -> None:
 # --- Proactive detail cache warming ---
 
 
-async def warm_detail_cache_for_listings(listings: list[dict], max_concurrent: int = 3) -> None:
-    """Background: warm detail cache for listing IDs not already cached."""
-    # Skip warming if recently rate-limited (detail requests share IP budget)
-    if _last_rate_limit_time and time.time() - _last_rate_limit_time < _RATE_LIMIT_COOLDOWN:
-        print("[carmanager] Skipping detail cache warming (rate-limited recently)")
+DETAIL_WARMING_MAX = 5  # warm at most 5 details per listing load
+
+
+async def warm_detail_cache_for_listings(listings: list[dict]) -> None:
+    """Background: warm detail cache for listing IDs not already cached.
+
+    Requests are sequential (no concurrency) with global throttle between each,
+    and warming stops immediately if a rate limit is detected.
+    """
+    if is_rate_limited():
+        print("[carmanager] Skipping detail cache warming (rate-limited)")
         return
 
     ids_to_warm = [
         car["encryptedId"] for car in listings
         if car.get("encryptedId") and car["encryptedId"] not in _detail_cache
-    ]
+    ][:DETAIL_WARMING_MAX]
+
     if not ids_to_warm:
         return
 
-    semaphore = asyncio.Semaphore(max_concurrent)
-
-    async def warm_one(eid: str) -> None:
-        async with semaphore:
-            try:
-                await get_car_detail(eid)
-            except Exception:
-                pass
-
-    await asyncio.gather(*(warm_one(eid) for eid in ids_to_warm), return_exceptions=True)
+    print(f"[carmanager] Warming {len(ids_to_warm)} detail caches (sequential)...")
+    for eid in ids_to_warm:
+        if is_rate_limited():
+            print("[carmanager] Stopping detail warming (rate-limited)")
+            break
+        try:
+            await get_car_detail(eid)
+        except Exception:
+            pass
