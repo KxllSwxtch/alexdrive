@@ -2,6 +2,7 @@ import asyncio
 import hashlib
 import json
 import os
+import re
 import time
 
 from app.config import settings
@@ -380,6 +381,33 @@ async def get_car_listings(params: dict) -> dict:
 
 # ── Detail data ──────────────────────────────────────────────
 
+_KOREAN_PLATE_RE = re.compile(r"^\d{2,3}[가-힣]\d{4}$")
+
+
+def _extract_korean_car_number(data: dict) -> str:
+    """Extract Korean license plate from non-translated API response."""
+    info = data.get("info", {})
+    # Primary: known Korean key
+    plate = info.get("차량번호", "")
+    if plate and _KOREAN_PLATE_RE.match(plate.strip()):
+        return plate.strip()
+    # Fallback: regex scan all info values
+    for value in info.values():
+        if isinstance(value, str) and _KOREAN_PLATE_RE.match(value.strip()):
+            return value.strip()
+    return ""
+
+
+async def _fetch_korean_car_number(car_id: str) -> str:
+    """Fetch car detail without lang=ru to get the original Korean car number."""
+    try:
+        await _throttle_request()
+        data = await fetch_json(_api_url(f"/api/proxy/cars/{car_id}"), {})
+        return _extract_korean_car_number(data)
+    except Exception as e:
+        print(f"[namsuwon] Failed to fetch Korean car number for {car_id}: {e}")
+        return ""
+
 
 def _transform_detail(data: dict) -> dict:
     """Map namsuwon detail to frontend CarDetail shape."""
@@ -431,11 +459,13 @@ async def _refresh_detail_cache(car_id: str) -> None:
     _detail_refresh_keys.add(car_id)
     try:
         await _throttle_request()
-        data = await fetch_json(
-            _api_url(f"/api/proxy/cars/{car_id}"),
-            {"lang": "ru"},
+        data, korean_plate = await asyncio.gather(
+            fetch_json(_api_url(f"/api/proxy/cars/{car_id}"), {"lang": "ru"}),
+            _fetch_korean_car_number(car_id),
         )
         result = _transform_detail(data)
+        if korean_plate:
+            result["carNumber"] = korean_plate
         _detail_cache[car_id] = {"data": result, "expiry": time.time() + DETAIL_TTL}
         _evict_oldest(_detail_cache, MAX_DETAIL_CACHE_ENTRIES)
         print(f"[namsuwon] Detail background refresh OK ({car_id})")
@@ -463,9 +493,12 @@ async def get_car_detail(car_id: str) -> dict:
 
         await _throttle_request()
         try:
-            data = await fetch_json(
-                _api_url(f"/api/proxy/cars/{car_id}"),
-                {"lang": "ru"},
+            data, korean_plate = await asyncio.gather(
+                fetch_json(
+                    _api_url(f"/api/proxy/cars/{car_id}"),
+                    {"lang": "ru"},
+                ),
+                _fetch_korean_car_number(car_id),
             )
         except NetworkError:
             cached = _detail_cache.get(car_id)
@@ -475,6 +508,8 @@ async def get_car_detail(car_id: str) -> dict:
             raise
 
         result = _transform_detail(data)
+        if korean_plate:
+            result["carNumber"] = korean_plate
         _detail_cache[car_id] = {"data": result, "expiry": time.time() + DETAIL_TTL}
         _evict_oldest(_detail_cache, MAX_DETAIL_CACHE_ENTRIES)
         return result
