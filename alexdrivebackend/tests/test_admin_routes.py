@@ -28,16 +28,23 @@ async def client(app):
 class TestDiagnoseEndpoint:
     @pytest.mark.asyncio
     async def test_diagnose_success(self, client):
-        html = '<html><ul><li><a href="/?seq=001">Car</a></li></ul></html>'
-        with patch("app.routes.admin.fetch_page", new_callable=AsyncMock, return_value=html):
+        mock_data = {
+            "total": 100,
+            "items": [
+                {"no": 123, "car_name": "Test Car", "price": 10000000},
+                {"no": 456, "car_name": "Test Car 2", "price": 20000000},
+            ],
+        }
+        with patch("app.routes.admin.fetch_json", new_callable=AsyncMock, return_value=mock_data):
             resp = await client.get(
                 "/api/admin/diagnose",
                 headers={"X-Admin-Secret": "test-secret"},
             )
         assert resp.status_code == 200
         data = resp.json()
-        assert "html_length" in data
-        assert "diagnosis" in data
+        assert data["total_cars"] == 100
+        assert data["sample_count"] == 2
+        assert data["status"] == "ok"
 
     @pytest.mark.asyncio
     async def test_diagnose_wrong_secret(self, client):

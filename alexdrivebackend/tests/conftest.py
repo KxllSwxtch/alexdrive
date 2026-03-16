@@ -5,7 +5,7 @@ import pytest
 import respx
 
 from app.services import session as session_mod
-from app.services import jenya as jenya_mod
+from app.services import namsuwon as namsuwon_mod
 from app.config import settings
 
 
@@ -18,37 +18,45 @@ def reset_session_globals():
 
 
 @pytest.fixture(autouse=True)
-def reset_jenya_globals():
-    """Reset all caches and locks in jenya.py."""
-    jenya_mod._filter_cache = None
-    jenya_mod._carcode_data = None
-    jenya_mod._listing_cache = {}
-    jenya_mod._detail_cache = {}
-    jenya_mod._listing_refresh_keys = set()
-    jenya_mod._detail_refresh_keys = set()
-    jenya_mod._filter_lock = asyncio.Lock()
-    jenya_mod._listing_lock = asyncio.Lock()
-    jenya_mod._detail_locks = {}
-    jenya_mod._detail_locks_guard = asyncio.Lock()
-    jenya_mod._last_request_time = 0.0
-    jenya_mod._throttle_lock = asyncio.Lock()
+def reset_namsuwon_globals():
+    """Reset all caches and locks in namsuwon.py."""
+    namsuwon_mod._makers_cache = None
+    namsuwon_mod._colors_cache = None
+    namsuwon_mod._models_cache = {}
+    namsuwon_mod._series_cache = {}
+    namsuwon_mod._maker_cho_map = {}
+    namsuwon_mod._listing_cache = {}
+    namsuwon_mod._detail_cache = {}
+    namsuwon_mod._listing_refresh_keys = set()
+    namsuwon_mod._detail_refresh_keys = set()
+    namsuwon_mod._filter_lock = asyncio.Lock()
+    namsuwon_mod._listing_lock = asyncio.Lock()
+    namsuwon_mod._detail_locks = {}
+    namsuwon_mod._detail_locks_guard = asyncio.Lock()
+    namsuwon_mod._last_request_time = 0.0
+    namsuwon_mod._throttle_lock = asyncio.Lock()
+    namsuwon_mod._last_successful_fetch = 0.0
     yield
-    jenya_mod._filter_cache = None
-    jenya_mod._carcode_data = None
-    jenya_mod._listing_cache = {}
-    jenya_mod._detail_cache = {}
-    jenya_mod._listing_refresh_keys = set()
-    jenya_mod._detail_refresh_keys = set()
-    jenya_mod._detail_locks = {}
-    jenya_mod._last_request_time = 0.0
+    namsuwon_mod._makers_cache = None
+    namsuwon_mod._colors_cache = None
+    namsuwon_mod._models_cache = {}
+    namsuwon_mod._series_cache = {}
+    namsuwon_mod._maker_cho_map = {}
+    namsuwon_mod._listing_cache = {}
+    namsuwon_mod._detail_cache = {}
+    namsuwon_mod._listing_refresh_keys = set()
+    namsuwon_mod._detail_refresh_keys = set()
+    namsuwon_mod._detail_locks = {}
+    namsuwon_mod._last_request_time = 0.0
+    namsuwon_mod._last_successful_fetch = 0.0
 
 
 @pytest.fixture(autouse=True)
 def mock_settings(monkeypatch):
     """Provide test-safe settings values."""
-    monkeypatch.setattr(settings, "jenya_base_url", "https://test.jenya.co.kr")
-    monkeypatch.setattr(settings, "jenya_carcode_url", "https://test.jenya.co.kr/as5/script/carcode2_en.js")
+    monkeypatch.setattr(settings, "namsuwon_base_url", "https://test.namsuwon.com")
     monkeypatch.setattr(settings, "admin_secret", "test-secret")
+    monkeypatch.setattr(settings, "min_request_interval", 0.0)
 
 
 @pytest.fixture

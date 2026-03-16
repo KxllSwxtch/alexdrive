@@ -9,15 +9,11 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "photo5.autosale.co.kr",
-      },
-      {
-        protocol: "http",
-        hostname: "photo5.autosale.co.kr",
+        hostname: "www.carmodoo.com",
       },
       {
         protocol: "https",
-        hostname: "m.jenya.co.kr",
+        hostname: "code2.car2b.com",
       },
     ],
     minimumCacheTTL: 86400,

@@ -9,8 +9,8 @@ NETWORK_RETRY_ERRORS = (httpx.ConnectError, httpx.ConnectTimeout, httpx.ReadTime
 
 HEADERS = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
-    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-    "Accept-Language": "ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7,ru;q=0.6",
+    "Accept": "application/json",
+    "Accept-Language": "ru,en;q=0.9,ko;q=0.8",
 }
 
 
@@ -19,15 +19,15 @@ class NetworkError(Exception):
     pass
 
 
-async def fetch_page(url: str) -> str:
-    """GET a URL with network retry. No auth needed."""
+async def fetch_json(url: str, params: dict | None = None) -> dict | list:
+    """GET a URL and return parsed JSON with network retry."""
     client = get_http_client()
     last_exc = None
     for attempt in range(1, MAX_NETWORK_RETRIES + 1):
         try:
-            resp = await client.get(url, headers=HEADERS)
+            resp = await client.get(url, headers=HEADERS, params=params)
             resp.raise_for_status()
-            return resp.text
+            return resp.json()
         except NETWORK_RETRY_ERRORS as exc:
             last_exc = exc
             print(f"[client] Network error on attempt {attempt}/{MAX_NETWORK_RETRIES}: {exc}")

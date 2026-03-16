@@ -3,8 +3,6 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { permanentRedirect } from "next/navigation";
 import type { CarDetail } from "@/lib/types";
-import { translateSmartly } from "@/lib/translations";
-import { formatPrice } from "@/lib/format";
 import { buildCarDetailPath } from "@/lib/url";
 import { CarDetailContent, fetchCar } from "@/components/CarDetailContent";
 import { CarDetailSkeleton } from "@/components/CarDetailSkeleton";
@@ -31,13 +29,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
     if (!car) return { title: "Автомобиль - AlexDrive" };
 
-    const translatedName = translateSmartly(car.name);
     return {
-      title: `${translatedName} ${car.year} - AlexDrive`,
-      description: `${translatedName} ${car.year}, ${car.mileage}, ${formatPrice(car.price)} - купить в AlexDrive, Сувон`,
+      title: `${car.name} ${car.year} - AlexDrive`,
+      description: `${car.name} ${car.year}, ${car.mileage}, ${car.price} - купить в AlexDrive, Сувон`,
       openGraph: {
-        title: `${translatedName} ${car.year} - AlexDrive`,
-        description: `${translatedName} - ${formatPrice(car.price)}`,
+        title: `${car.name} ${car.year} - AlexDrive`,
+        description: `${car.name} - ${car.price}`,
         images: car.images[0] ? [car.images[0]] : [],
       },
     };
@@ -61,9 +58,8 @@ export default async function CarDetailPage({ params }: PageProps) {
       return <ErrorState />;
     }
 
-    const translatedName = translateSmartly(car.name);
     const newPath = buildCarDetailPath(
-      translatedName,
+      car.name,
       car.year,
       car.encryptedId,
     );

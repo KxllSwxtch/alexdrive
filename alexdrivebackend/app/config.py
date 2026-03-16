@@ -4,10 +4,10 @@ from pydantic_settings import BaseSettings
 class Settings(BaseSettings):
     port: int = 3001
     cors_origins: str = "http://localhost:3000"
-    jenya_base_url: str = "https://m.jenya.co.kr"
-    jenya_carcode_url: str = "https://m.jenya.co.kr/as5/script/carcode2_en.js"
+    namsuwon_base_url: str = "https://cars.namsuwon.com"
     proxy_url: str = ""
     admin_secret: str = ""
+    min_request_interval: float = 0.5
 
     model_config = {"env_file": ".env", "extra": "ignore"}
 

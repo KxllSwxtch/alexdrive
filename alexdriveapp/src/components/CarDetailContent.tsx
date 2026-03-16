@@ -2,15 +2,29 @@ import { cache } from "react";
 import Link from "next/link";
 import { backendFetch } from "@/lib/api";
 import type { CarDetail } from "@/lib/types";
-import { translateSmartly } from "@/lib/translations";
-import { formatPrice, priceStringToKrw } from "@/lib/format";
+import { manWonToKrw } from "@/lib/format";
 import { ImageGallery } from "@/components/ImageGallery";
 import { ContactCard } from "@/components/ContactCard";
 import { CarOptions } from "@/components/CarOptions";
 import { CreditCalculatorLazy } from "@/components/CreditCalculatorLazy";
 import { ShareButton } from "@/components/ShareButton";
 
-/** Fetch car detail by seq ID (deduplicated across generateMetadata + page) */
+const INSPECTION_LABELS: Record<string, string> = {
+  vin: "VIN",
+  mileage: "Пробег",
+  emissions: "Выбросы",
+  engine_type: "Тип двигателя",
+  warranty: "Гарантия",
+  inspection_validity: "Срок действия",
+  has_accident: "ДТП",
+  has_simple_repair: "Мелкий ремонт",
+  inspector_notes: "Заметки инспектора",
+  inspector_name: "Инспектор",
+  inspection_date: "Дата проверки",
+  insurance_premium: "Страховая премия",
+};
+
+/** Fetch car detail by ID (deduplicated across generateMetadata + page) */
 export const fetchCar = cache(async (id: string): Promise<CarDetail> => {
   return backendFetch<CarDetail>(
     "/cars/detail",
@@ -40,46 +54,63 @@ export async function CarDetailContent({ id }: { id: string }) {
     );
   }
 
-  const translatedName = translateSmartly(car.name);
-  const translatedFuel = car.fuel ? translateSmartly(car.fuel) : "";
-  const translatedTransmission = car.transmission ? translateSmartly(car.transmission) : "";
-  const translatedColor = car.color ? translateSmartly(car.color) : "";
+  const carPriceKrw = car.priceMl ? manWonToKrw(car.priceMl) : 0;
+  const shareTitle = `${car.name} ${car.year}${car.price ? ` - ${car.price}` : ""}`;
 
-  const carPriceKrw = car.price ? priceStringToKrw(car.price) : 0;
-  const shareTitle = `${translatedName} ${car.year}${car.price ? ` - ${formatPrice(car.price)}` : ""}`;
-
+  // Basic specs from info
   const specs = [
     { label: "Год выпуска", value: car.year },
     { label: "Пробег", value: car.mileage },
-    { label: "Топливо", value: translatedFuel },
-    { label: "КПП", value: translatedTransmission },
-    { label: "Цвет", value: translatedColor },
-    { label: "Номер авто", value: car.carNumber },
+    { label: "Топливо", value: car.fuel },
+    { label: "КПП", value: car.transmission },
+    { label: "Цвет", value: car.color },
+    { label: "Гос. номер", value: car.carNumber },
   ].filter((s) => s.value);
+
+  // Extended specs from API
+  const extSpecs = car.specs ? Object.entries(car.specs) : [];
+
+  // Pricing comparison
+  const pricing = car.pricing ? Object.entries(car.pricing) : [];
+
+  // Inspection data
+  const inspection = car.inspection && Object.keys(car.inspection).length > 0 ? car.inspection : null;
 
   return (
     <>
       {/* Left column */}
       <div className="min-w-0 space-y-6">
         {/* Gallery */}
-        <ImageGallery images={car.images} alt={translatedName} blurDataUrl={car.blurDataUrl} />
+        <ImageGallery images={car.images} alt={car.name} />
 
         {/* Title & Price + Share */}
         <div className="flex items-start justify-between gap-3">
           <div>
             <h1 className="font-heading text-2xl font-bold tracking-tight sm:text-3xl">
-              {translatedName}
+              {car.name}
             </h1>
             {car.price && (
               <p className="mt-2 text-2xl font-bold text-gold">
-                {formatPrice(car.price)}
+                {car.price}
               </p>
             )}
           </div>
           <ShareButton title={shareTitle} />
         </div>
 
-        {/* Specs grid */}
+        {/* Description */}
+        {car.description && (
+          <div className="rounded-xl border border-border bg-bg-surface p-5">
+            <h2 className="text-sm font-semibold uppercase tracking-wider text-text-secondary">
+              Описание
+            </h2>
+            <p className="mt-3 text-sm text-text-primary whitespace-pre-line leading-relaxed">
+              {car.description}
+            </p>
+          </div>
+        )}
+
+        {/* Basic specs grid */}
         {specs.length > 0 && (
           <div className="rounded-xl border border-border bg-bg-surface p-5">
             <h2 className="text-sm font-semibold uppercase tracking-wider text-text-secondary">
@@ -98,21 +129,68 @@ export async function CarDetailContent({ id }: { id: string }) {
           </div>
         )}
 
-        {/* Diagnostics report link */}
-        {car.diagnosticsUrl && (
-          <a
-            href={car.diagnosticsUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 text-sm text-gold transition-colors hover:text-gold-light"
-          >
-            Посмотреть диагностику авто
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6" strokeLinecap="round" strokeLinejoin="round" />
-              <path d="M15 3h6v6" strokeLinecap="round" strokeLinejoin="round" />
-              <path d="M10 14L21 3" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-          </a>
+        {/* Pricing comparison */}
+        {pricing.length > 0 && (
+          <div className="rounded-xl border border-border bg-bg-surface p-5">
+            <h2 className="text-sm font-semibold uppercase tracking-wider text-text-secondary">
+              Ценовая информация
+            </h2>
+            <div className="mt-4 grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
+              {pricing.map(([label, value]) => (
+                <div key={label}>
+                  <p className="text-xs text-text-secondary">{label}</p>
+                  <p className="mt-0.5 text-sm font-medium text-text-primary">
+                    {typeof value === "number"
+                      ? `₩${value.toLocaleString("en-US")}`
+                      : String(value)}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Extended specs */}
+        {extSpecs.length > 0 && (
+          <div className="rounded-xl border border-border bg-bg-surface p-5">
+            <h2 className="text-sm font-semibold uppercase tracking-wider text-text-secondary">
+              Технические характеристики
+            </h2>
+            <div className="mt-4 grid gap-3 grid-cols-1 sm:grid-cols-2">
+              {extSpecs.map(([label, value]) => (
+                <div key={label} className="flex justify-between gap-2 border-b border-border/50 pb-2">
+                  <span className="text-xs text-text-secondary shrink-0">{label}</span>
+                  <span className="text-xs font-medium text-text-primary text-right">{String(value)}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Inspection report */}
+        {inspection && (
+          <div className="rounded-xl border border-border bg-bg-surface p-5">
+            <h2 className="text-sm font-semibold uppercase tracking-wider text-text-secondary">
+              Отчёт о проверке
+            </h2>
+            <div className="mt-4 grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
+              {Object.entries(inspection).map(([label, value]) => {
+                // Skip empty values, nested objects, and arrays (photos handled separately)
+                if (!value) return null;
+                if (typeof value === "object") return null;
+                // Skip raw field names that are just internal keys
+                if (label === "photos" || label === "stamp_url") return null;
+                return (
+                  <div key={label}>
+                    <p className="text-xs text-text-secondary">{INSPECTION_LABELS[label] || label}</p>
+                    <p className="mt-0.5 text-sm font-medium text-text-primary">
+                      {value === true ? "Да" : value === false ? "Нет" : String(value)}
+                    </p>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
         )}
 
         {/* Compact calculator - mobile only */}
@@ -124,12 +202,7 @@ export async function CarDetailContent({ id }: { id: string }) {
 
         {/* Options */}
         {car.options.length > 0 && (
-          <CarOptions
-            options={car.options.map((group) => ({
-              group: translateSmartly(group.group) || "Опции",
-              items: group.items.map((item) => translateSmartly(item)),
-            }))}
-          />
+          <CarOptions options={car.options} />
         )}
       </div>
 

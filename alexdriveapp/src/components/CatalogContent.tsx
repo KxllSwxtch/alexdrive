@@ -10,28 +10,21 @@ const PAGE_SIZE = 20;
 const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:3001";
 
 const VALID_PARAM_KEYS = new Set([
-  "carnation",
-  "CarMakerNo", "CarModelNo", "CarModelDetailNo", "CarGradeNo", "CarGradeDetailNo",
-  "CarYearFrom", "CarYearTo", "CarMileageFrom", "CarMileageTo", "CarPriceFrom", "CarPriceTo",
-  "CarFuelNo", "CarColorNo", "CarMissionNo", "SearchCarNo",
-  "PageNow", "PageSize", "PageSort", "PageAscDesc",
+  "bm_no", "bo_no", "bs_no", "bd_no",
+  "yearFrom", "yearTo", "mileageFrom", "mileageTo", "priceFrom", "priceTo",
+  "fuel", "transmission", "color", "keyword",
+  "extFlag1", "extFlag2", "extFlag3", "extFlag4", "extFlag5",
+  "sort", "order", "page", "page_size",
 ]);
 
-const NUMBER_KEYS = new Set(["PageNow", "PageSize"]);
+const NUMBER_KEYS = new Set(["page", "page_size"]);
 
 const DEFAULT_PARAMS: CarListingParams = {
-  carnation: "1",
-  PageNow: 1,
-  PageSize: PAGE_SIZE,
-  PageSort: "ModDt",
-  PageAscDesc: "DESC",
+  page: 1,
+  page_size: PAGE_SIZE,
+  sort: "date",
+  order: "desc",
 };
-
-const CATEGORY_TABS = [
-  { value: "1", label: "Корейские" },
-  { value: "2", label: "Иностранные" },
-  { value: "3", label: "Грузовые" },
-];
 
 function parseParamsFromURL(searchParams: URLSearchParams): CarListingParams {
   const parsed: CarListingParams = { ...DEFAULT_PARAMS };
@@ -51,11 +44,10 @@ function syncParamsToURL(params: CarListingParams) {
   const urlParams = new URLSearchParams();
   for (const [key, value] of Object.entries(params)) {
     if (value === undefined || value === "") continue;
-    if (key === "carnation" && value === "1") continue;
-    if (key === "PageNow" && value === 1) continue;
-    if (key === "PageSize" && value === PAGE_SIZE) continue;
-    if (key === "PageSort" && value === "ModDt") continue;
-    if (key === "PageAscDesc" && value === "DESC") continue;
+    if (key === "page" && value === 1) continue;
+    if (key === "page_size" && value === PAGE_SIZE) continue;
+    if (key === "sort" && value === "date") continue;
+    if (key === "order" && value === "desc") continue;
     urlParams.set(key, String(value));
   }
   const qs = urlParams.toString();
@@ -171,22 +163,19 @@ export function CatalogContent({ initialFilters, initialCars, initialTotal, init
     }, 1000);
   }, [fetchCars]);
 
-  // Fetch filters when carnation changes
-  const fetchFilters = useCallback(async (carnation: string) => {
-    try {
-      const res = await fetch(`${BACKEND_URL}/api/filters?carnation=${carnation}`);
-      const data = await res.json();
-      if (data && data.makers) setFilters(data);
-    } catch (e) {
-      console.error("Failed to fetch filters:", e);
-    }
-  }, []);
-
   // Load filter data — only if server didn't provide them
   useEffect(() => {
     if (initialFilters) return;
-    fetchFilters(params.carnation || "1");
-  }, [initialFilters, fetchFilters, params.carnation]);
+    (async () => {
+      try {
+        const res = await fetch(`${BACKEND_URL}/api/filters`);
+        const data = await res.json();
+        if (data && data.makers) setFilters(data);
+      } catch (e) {
+        console.error("Failed to fetch filters:", e);
+      }
+    })();
+  }, [initialFilters]);
 
   // Load cars when params change — skip on initial mount
   useEffect(() => {
@@ -233,17 +222,7 @@ export function CatalogContent({ initialFilters, initialCars, initialTotal, init
     }
   }, [params]);
 
-  const handleCategoryChange = useCallback((carnation: string) => {
-    // Reset filters when switching category
-    setParams({
-      ...DEFAULT_PARAMS,
-      carnation,
-    });
-    fetchFilters(carnation);
-  }, [fetchFilters]);
-
   const totalPages = Math.ceil(total / PAGE_SIZE);
-  const activeCarnation = params.carnation || "1";
 
   return (
     <div className="px-4 py-6 sm:px-6 lg:px-8">
@@ -253,25 +232,8 @@ export function CatalogContent({ initialFilters, initialCars, initialTotal, init
           Каталог автомобилей
         </h1>
         <p className="mt-1 text-sm text-text-secondary">
-          {total > 0 ? `${total.toLocaleString("ru-RU")}+ авто` : "загрузка..."}
+          {total > 0 ? `${total.toLocaleString("ru-RU")} авто` : "загрузка..."}
         </p>
-      </div>
-
-      {/* Category tabs */}
-      <div className="mb-4 flex gap-1 rounded-lg border border-border bg-bg-surface p-1">
-        {CATEGORY_TABS.map((tab) => (
-          <button
-            key={tab.value}
-            onClick={() => handleCategoryChange(tab.value)}
-            className={`flex-1 rounded-md px-3 py-2 text-sm font-medium transition-colors ${
-              activeCarnation === tab.value
-                ? "bg-gold text-bg-base"
-                : "text-text-secondary hover:text-text-primary"
-            }`}
-          >
-            {tab.label}
-          </button>
-        ))}
       </div>
 
       {/* Filters */}
@@ -299,13 +261,13 @@ export function CatalogContent({ initialFilters, initialCars, initialTotal, init
       {/* Pagination */}
       {totalPages > 1 && (
         <Pagination
-          currentPage={params.PageNow || 1}
+          currentPage={params.page || 1}
           totalPages={totalPages}
           onPageChange={(page) => {
-            if (page === (params.PageNow || 1)) return;
+            if (page === (params.page || 1)) return;
             window.scrollTo({ top: 0, behavior: "instant" });
             setLoading(true);
-            setParams((prev) => ({ ...prev, PageNow: page }));
+            setParams((prev) => ({ ...prev, page }));
           }}
           disabled={loading}
         />

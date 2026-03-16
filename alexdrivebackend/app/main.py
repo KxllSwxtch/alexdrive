@@ -11,7 +11,7 @@ from starlette.middleware.gzip import GZipMiddleware
 
 from app.config import settings
 from app.routes import admin, cars, filters, health
-from app.services.jenya import (
+from app.services.namsuwon import (
     get_car_listings,
     get_filter_data,
     listing_refresh_loop,
@@ -48,12 +48,7 @@ async def lifespan(app: FastAPI):
             print(f"[server] Filter pre-warm failed: {e}")
 
         try:
-            await get_car_listings({
-                "PageNow": 1,
-                "PageSort": "ModDt",
-                "PageAscDesc": "DESC",
-                "carnation": "1",
-            })
+            await get_car_listings({"page": 1, "page_size": 20})
             print("[server] Listing cache pre-warmed")
         except Exception as e:
             print(f"[server] Listing pre-warm failed: {e}")
