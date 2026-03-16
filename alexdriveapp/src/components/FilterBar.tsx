@@ -443,8 +443,8 @@ export function FilterBar({
               toValue={draftParams.priceTo || ""}
               onFromChange={(v) => updateDraft("priceFrom", v)}
               onToChange={(v) => updateDraft("priceTo", v)}
-              placeholderFrom="От"
-              placeholderTo="До"
+              placeholderFrom="От (напр. 3000)"
+              placeholderTo="До (напр. 5000)"
             />
           </div>
 

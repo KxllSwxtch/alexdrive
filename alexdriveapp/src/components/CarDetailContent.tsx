@@ -2,7 +2,7 @@ import { cache } from "react";
 import Link from "next/link";
 import { backendFetch } from "@/lib/api";
 import type { CarDetail } from "@/lib/types";
-import { manWonToKrw } from "@/lib/format";
+import { manWonToKrw, formatPriceKrw } from "@/lib/format";
 import { ImageGallery } from "@/components/ImageGallery";
 import { ContactCard } from "@/components/ContactCard";
 import { CarOptions } from "@/components/CarOptions";
@@ -55,7 +55,8 @@ export async function CarDetailContent({ id }: { id: string }) {
   }
 
   const carPriceKrw = car.priceMl ? manWonToKrw(car.priceMl) : 0;
-  const shareTitle = `${car.name} ${car.year}${car.price ? ` - ${car.price}` : ""}`;
+  const formattedPrice = car.priceMl ? formatPriceKrw(car.priceMl) : "";
+  const shareTitle = `${car.name} ${car.year}${formattedPrice ? ` - ${formattedPrice}` : ""}`;
 
   // Basic specs from info
   const specs = [
@@ -89,9 +90,9 @@ export async function CarDetailContent({ id }: { id: string }) {
             <h1 className="font-heading text-2xl font-bold tracking-tight sm:text-3xl">
               {car.name}
             </h1>
-            {car.price && (
+            {formattedPrice && (
               <p className="mt-2 text-2xl font-bold text-gold">
-                {car.price}
+                {formattedPrice}
               </p>
             )}
           </div>

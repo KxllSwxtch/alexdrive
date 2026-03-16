@@ -5,7 +5,7 @@ import Image from "next/image";
 import { useState, useCallback } from "react";
 
 import type { CarListing } from "@/lib/types";
-import { formatMileage } from "@/lib/format";
+import { formatMileage, formatPriceKrw } from "@/lib/format";
 import { buildCarDetailPath } from "@/lib/url";
 
 const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:3001";
@@ -61,11 +61,11 @@ export function CarCard({ car, index }: CarCardProps) {
       {/* Info */}
       <div className="flex flex-1 flex-col p-4">
         {/* Price */}
-        {car.price && (
+        {car.priceMl ? (
           <p className="text-lg font-bold text-gold">
-            {car.price}
+            {formatPriceKrw(car.priceMl)}
           </p>
-        )}
+        ) : null}
 
         {/* Name */}
         <h3 className="mt-1.5 line-clamp-2 text-sm font-semibold leading-snug text-text-primary group-hover:text-gold transition-colors">

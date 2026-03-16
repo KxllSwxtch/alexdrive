@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { permanentRedirect } from "next/navigation";
 import type { CarDetail } from "@/lib/types";
+import { formatPriceKrw } from "@/lib/format";
 import { buildCarDetailPath } from "@/lib/url";
 import { CarDetailContent, fetchCar } from "@/components/CarDetailContent";
 import { CarDetailSkeleton } from "@/components/CarDetailSkeleton";
@@ -31,10 +32,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
     return {
       title: `${car.name} ${car.year} - AlexDrive`,
-      description: `${car.name} ${car.year}, ${car.mileage}, ${car.price} - купить в AlexDrive, Сувон`,
+      description: `${car.name} ${car.year}, ${car.mileage}, ${car.priceMl ? formatPriceKrw(car.priceMl) : ""} - купить в AlexDrive, Сувон`,
       openGraph: {
         title: `${car.name} ${car.year} - AlexDrive`,
-        description: `${car.name} - ${car.price}`,
+        description: `${car.name} - ${car.priceMl ? formatPriceKrw(car.priceMl) : ""}`,
         images: car.images[0] ? [car.images[0]] : [],
       },
     };

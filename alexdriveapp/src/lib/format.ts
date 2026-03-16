@@ -20,6 +20,12 @@ export function manWonToKrw(priceMan: number): number {
   return priceMan * 10000;
 }
 
+/** Format man-won to full KRW display: 3240 → "₩32,400,000" */
+export function formatPriceKrw(priceManWon: number): string {
+  if (!priceManWon) return "";
+  return formatPrice(manWonToKrw(priceManWon));
+}
+
 export function formatKrw(value: number): string {
   return Math.round(value).toLocaleString("en-US");
 }
