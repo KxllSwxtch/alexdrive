@@ -8,21 +8,8 @@ import { ContactCard } from "@/components/ContactCard";
 import { CarOptions } from "@/components/CarOptions";
 import { CreditCalculatorLazy } from "@/components/CreditCalculatorLazy";
 import { ShareButton } from "@/components/ShareButton";
-
-const INSPECTION_LABELS: Record<string, string> = {
-  vin: "VIN",
-  mileage: "Пробег",
-  emissions: "Выбросы",
-  engine_type: "Тип двигателя",
-  warranty: "Гарантия",
-  inspection_validity: "Срок действия",
-  has_accident: "ДТП",
-  has_simple_repair: "Мелкий ремонт",
-  inspector_notes: "Заметки инспектора",
-  inspector_name: "Инспектор",
-  inspection_date: "Дата проверки",
-  insurance_premium: "Страховая премия",
-};
+import { InspectionReport } from "@/components/InspectionReport";
+import { DescriptionBlock } from "@/components/DescriptionBlock";
 
 /** Fetch car detail by ID (deduplicated across generateMetadata + page) */
 export const fetchCar = cache(async (id: string): Promise<CarDetail> => {
@@ -101,14 +88,7 @@ export async function CarDetailContent({ id }: { id: string }) {
 
         {/* Description */}
         {car.description && (
-          <div className="rounded-xl border border-border bg-bg-surface p-5">
-            <h2 className="text-sm font-semibold uppercase tracking-wider text-text-secondary">
-              Описание
-            </h2>
-            <p className="mt-3 text-sm text-text-primary whitespace-pre-line leading-relaxed">
-              {car.description}
-            </p>
-          </div>
+          <DescriptionBlock text={car.description} />
         )}
 
         {/* Basic specs grid */}
@@ -137,16 +117,19 @@ export async function CarDetailContent({ id }: { id: string }) {
               Ценовая информация
             </h2>
             <div className="mt-4 grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
-              {pricing.map(([label, value]) => (
-                <div key={label}>
-                  <p className="text-xs text-text-secondary">{label}</p>
-                  <p className="mt-0.5 text-sm font-medium text-text-primary">
-                    {typeof value === "number"
-                      ? `₩${value.toLocaleString("en-US")}`
-                      : String(value)}
-                  </p>
-                </div>
-              ))}
+              {pricing.map(([label, value]) => {
+                const isSalePrice = label.toLowerCase().includes("продаж") || label.toLowerCase().includes("sale");
+                return (
+                  <div key={label}>
+                    <p className="text-xs text-text-secondary">{label}</p>
+                    <p className={`mt-0.5 text-sm font-medium ${isSalePrice ? "text-gold" : "text-text-primary"}`}>
+                      {typeof value === "number"
+                        ? `₩${value.toLocaleString("en-US")}`
+                        : String(value)}
+                    </p>
+                  </div>
+                );
+              })}
             </div>
           </div>
         )}
@@ -170,28 +153,7 @@ export async function CarDetailContent({ id }: { id: string }) {
 
         {/* Inspection report */}
         {inspection && (
-          <div className="rounded-xl border border-border bg-bg-surface p-5">
-            <h2 className="text-sm font-semibold uppercase tracking-wider text-text-secondary">
-              Отчёт о проверке
-            </h2>
-            <div className="mt-4 grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
-              {Object.entries(inspection).map(([label, value]) => {
-                // Skip empty values, nested objects, and arrays (photos handled separately)
-                if (!value) return null;
-                if (typeof value === "object") return null;
-                // Skip raw field names that are just internal keys
-                if (label === "photos" || label === "stamp_url") return null;
-                return (
-                  <div key={label}>
-                    <p className="text-xs text-text-secondary">{INSPECTION_LABELS[label] || label}</p>
-                    <p className="mt-0.5 text-sm font-medium text-text-primary">
-                      {value === true ? "Да" : value === false ? "Нет" : String(value)}
-                    </p>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
+          <InspectionReport inspection={inspection} />
         )}
 
         {/* Compact calculator - mobile only */}

@@ -394,6 +394,9 @@ def _transform_detail(data: dict) -> dict:
     options = []
     for group_name, items_str in options_raw.items():
         if items_str and isinstance(items_str, str):
+            # Skip "options not registered" text
+            if "не зарегистрированы" in items_str.lower():
+                continue
             items = [item.strip() for item in items_str.split(",") if item.strip()]
             if items:
                 options.append({"group": group_name, "items": items})
