@@ -10,7 +10,7 @@ import { CarOptions } from "@/components/CarOptions";
 import { CreditCalculatorLazy } from "@/components/CreditCalculatorLazy";
 import { ShareButton } from "@/components/ShareButton";
 
-/** Fetch car detail by raw base64 ID (deduplicated across generateMetadata + page) */
+/** Fetch car detail by seq ID (deduplicated across generateMetadata + page) */
 export const fetchCar = cache(async (id: string): Promise<CarDetail> => {
   return backendFetch<CarDetail>(
     "/cars/detail",
@@ -54,10 +54,7 @@ export async function CarDetailContent({ id }: { id: string }) {
     { label: "Топливо", value: translatedFuel },
     { label: "КПП", value: translatedTransmission },
     { label: "Цвет", value: translatedColor },
-    { label: "Двигатель", value: car.engineCapacity },
     { label: "Номер авто", value: car.carNumber },
-    { label: "Регистрация", value: car.registrationDate },
-    { label: "Расположение", value: car.location },
   ].filter((s) => s.value);
 
   return (
@@ -101,15 +98,15 @@ export async function CarDetailContent({ id }: { id: string }) {
           </div>
         )}
 
-        {/* Inspection report link */}
-        {car.inspectionUrl && (
+        {/* Diagnostics report link */}
+        {car.diagnosticsUrl && (
           <a
-            href={car.inspectionUrl}
+            href={car.diagnosticsUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-1.5 text-sm text-gold transition-colors hover:text-gold-light"
           >
-            Посмотреть технический лист авто
+            Посмотреть диагностику авто
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6" strokeLinecap="round" strokeLinejoin="round" />
               <path d="M15 3h6v6" strokeLinecap="round" strokeLinejoin="round" />

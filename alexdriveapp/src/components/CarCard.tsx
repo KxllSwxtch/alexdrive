@@ -30,6 +30,7 @@ export function CarCard({ car, index }: CarCardProps) {
         method: "POST",
       }).catch(() => {});
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [prefetchActive, car.encryptedId]);
 
   return (

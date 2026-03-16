@@ -2,52 +2,47 @@ from pydantic import BaseModel
 
 
 class CarMaker(BaseModel):
-    MakerNo: int
+    MakerNo: str
     MakerName: str
 
 
 class CarModel(BaseModel):
-    ModelNo: int
+    ModelNo: str
     ModelName: str
-    MakerNo: int
+    MakerNo: str
 
 
 class CarModelDetail(BaseModel):
-    ModelDetailNo: int
+    ModelDetailNo: str
     ModelDetailName: str
-    ModelNo: int
+    ModelNo: str
 
 
 class CarGrade(BaseModel):
-    GradeNo: int
+    GradeNo: str
     GradeName: str
-    ModelDetailNo: int
+    ModelDetailNo: str
 
 
 class CarGradeDetail(BaseModel):
-    GradeDetailNo: int
+    GradeDetailNo: str
     GradeDetailName: str
-    GradeNo: int
+    GradeNo: str
 
 
 class CarColor(BaseModel):
-    CKeyNo: int
+    CKeyNo: str
     ColorName: str
 
 
 class CarFuel(BaseModel):
-    FKeyNo: int
+    FKeyNo: str
     FuelName: str
 
 
 class CarMission(BaseModel):
-    MKeyNo: int
+    MKeyNo: str
     MissionName: str
-
-
-class Danji(BaseModel):
-    DanjiNo: int
-    DanjiName: str
 
 
 class FilterData(BaseModel):
@@ -59,7 +54,7 @@ class FilterData(BaseModel):
     colors: list[CarColor]
     fuels: list[CarFuel]
     missions: list[CarMission]
-    danjis: list[Danji]
+    categories: list[dict]
 
 
 class CarListing(BaseModel):
@@ -71,7 +66,6 @@ class CarListing(BaseModel):
     fuel: str
     transmission: str
     price: str
-    location: str
     dealer: str
     phone: str
 
@@ -91,16 +85,14 @@ class CarDetail(BaseModel):
     transmission: str
     price: str
     color: str
-    engineCapacity: str
     carNumber: str
-    location: str
     options: list[OptionGroup]
     dealer: str
     phone: str
-    registrationDate: str
-    modelYear: str
+    diagnosticsUrl: str | None = None
 
 
 class CarListingsResponse(BaseModel):
     listings: list[CarListing]
     total: int
+    hasNext: bool = False

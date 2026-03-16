@@ -1,44 +1,44 @@
 export interface CarMaker {
-  MakerNo: number;
+  MakerNo: string;
   MakerName: string;
 }
 
 export interface CarModel {
-  ModelNo: number;
+  ModelNo: string;
   ModelName: string;
-  MakerNo: number;
+  MakerNo: string;
 }
 
 export interface CarModelDetail {
-  ModelDetailNo: number;
+  ModelDetailNo: string;
   ModelDetailName: string;
-  ModelNo: number;
+  ModelNo: string;
 }
 
 export interface CarGrade {
-  GradeNo: number;
+  GradeNo: string;
   GradeName: string;
-  ModelDetailNo: number;
+  ModelDetailNo: string;
 }
 
 export interface CarGradeDetail {
-  GradeDetailNo: number;
+  GradeDetailNo: string;
   GradeDetailName: string;
-  GradeNo: number;
+  GradeNo: string;
 }
 
 export interface CarColor {
-  CKeyNo: number;
+  CKeyNo: string;
   ColorName: string;
 }
 
 export interface CarFuel {
-  FKeyNo: number;
+  FKeyNo: string;
   FuelName: string;
 }
 
 export interface CarMission {
-  MKeyNo: number;
+  MKeyNo: string;
   MissionName: string;
 }
 
@@ -48,26 +48,20 @@ export interface CarOption {
   CarOptionGroupName: string;
 }
 
-export interface Danji {
-  DanjiNo: number;
-  DanjiName: string;
-}
-
 export interface FilterData {
   makers: CarMaker[];
-  models: Record<number, CarModel[]>;
-  modelDetails: Record<number, CarModelDetail[]>;
-  grades: Record<number, CarGrade[]>;
-  gradeDetails: Record<number, CarGradeDetail[]>;
+  models: Record<string, CarModel[]>;
+  modelDetails: Record<string, CarModelDetail[]>;
+  grades: Record<string, CarGrade[]>;
+  gradeDetails: Record<string, CarGradeDetail[]>;
   colors: CarColor[];
   fuels: CarFuel[];
   missions: CarMission[];
-  danjis: Danji[];
+  categories?: { value: string; label: string }[];
 }
 
 export interface CarListingParams {
-  CarSiDoNo?: string;
-  CarSiDoAreaNo?: string;
+  carnation?: string;
   CarMakerNo?: string;
   CarModelNo?: string;
   CarModelDetailNo?: string;
@@ -82,14 +76,6 @@ export interface CarListingParams {
   CarMissionNo?: string;
   CarFuelNo?: string;
   CarColorNo?: string;
-  DanjiNo?: string;
-  CarLpg?: string;
-  CarInsurance?: string;
-  CarPhoto?: string;
-  CarSalePrice?: string;
-  CarInspection?: string;
-  CarLease?: string;
-  SearchName?: string;
   SearchCarNo?: string;
   PageNow?: number;
   PageSize?: number;
@@ -106,7 +92,6 @@ export interface CarListing {
   fuel: string;
   transmission: string;
   price: string;
-  location: string;
   dealer: string;
   phone: string;
 }
@@ -121,14 +106,10 @@ export interface CarDetail {
   transmission: string;
   price: string;
   color: string;
-  engineCapacity: string;
   carNumber: string;
-  location: string;
   options: { group: string; items: string[] }[];
   dealer: string;
   phone: string;
-  registrationDate: string;
-  modelYear: string;
-  inspectionUrl: string | null;
+  diagnosticsUrl?: string | null;
   blurDataUrl?: string;
 }

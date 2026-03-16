@@ -10,22 +10,28 @@ const PAGE_SIZE = 20;
 const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:3001";
 
 const VALID_PARAM_KEYS = new Set([
+  "carnation",
   "CarMakerNo", "CarModelNo", "CarModelDetailNo", "CarGradeNo", "CarGradeDetailNo",
   "CarYearFrom", "CarYearTo", "CarMileageFrom", "CarMileageTo", "CarPriceFrom", "CarPriceTo",
-  "CarFuelNo", "CarColorNo", "CarPhoto", "CarInsurance", "CarInspection", "CarLease",
-  "CarMissionNo", "DanjiNo", "CarSiDoNo", "CarSiDoAreaNo", "SearchName", "SearchCarNo",
-  "CarLpg", "CarSalePrice",
+  "CarFuelNo", "CarColorNo", "CarMissionNo", "SearchCarNo",
   "PageNow", "PageSize", "PageSort", "PageAscDesc",
 ]);
 
 const NUMBER_KEYS = new Set(["PageNow", "PageSize"]);
 
 const DEFAULT_PARAMS: CarListingParams = {
+  carnation: "1",
   PageNow: 1,
   PageSize: PAGE_SIZE,
   PageSort: "ModDt",
   PageAscDesc: "DESC",
 };
+
+const CATEGORY_TABS = [
+  { value: "1", label: "Корейские" },
+  { value: "2", label: "Иностранные" },
+  { value: "3", label: "Грузовые" },
+];
 
 function parseParamsFromURL(searchParams: URLSearchParams): CarListingParams {
   const parsed: CarListingParams = { ...DEFAULT_PARAMS };
@@ -45,6 +51,7 @@ function syncParamsToURL(params: CarListingParams) {
   const urlParams = new URLSearchParams();
   for (const [key, value] of Object.entries(params)) {
     if (value === undefined || value === "") continue;
+    if (key === "carnation" && value === "1") continue;
     if (key === "PageNow" && value === 1) continue;
     if (key === "PageSize" && value === PAGE_SIZE) continue;
     if (key === "PageSort" && value === "ModDt") continue;
@@ -60,17 +67,19 @@ interface CatalogContentProps {
   initialFilters: FilterData | null;
   initialCars: CarListing[];
   initialTotal: number;
+  initialHasNext?: boolean;
 }
 
 const MAX_CLIENT_RETRIES = 3;
 const RETRY_COUNTDOWN_SECS = 10;
 
-export function CatalogContent({ initialFilters, initialCars, initialTotal }: CatalogContentProps) {
+export function CatalogContent({ initialFilters, initialCars, initialTotal, initialHasNext }: CatalogContentProps) {
   const isInitialMount = useRef(true);
 
   const [filters, setFilters] = useState<FilterData | null>(initialFilters);
   const [cars, setCars] = useState<CarListing[]>(initialCars);
   const [total, setTotal] = useState(initialTotal);
+  const [hasNext, setHasNext] = useState(initialHasNext ?? false);
   const [loading, setLoading] = useState(false);
   const [rateLimited, setRateLimited] = useState(false);
   const [retryCountdown, setRetryCountdown] = useState(0);
@@ -98,13 +107,6 @@ export function CatalogContent({ initialFilters, initialCars, initialTotal }: Ca
     const searchParams = new URLSearchParams();
     for (const [key, value] of Object.entries(p)) {
       if (value !== undefined && value !== "") {
-        if (key === "CarPriceFrom" || key === "CarPriceTo") {
-          const num = parseInt(String(value), 10);
-          if (!isNaN(num)) {
-            searchParams.set(key, String(Math.round(num / 10000)));
-            continue;
-          }
-        }
         searchParams.set(key, String(value));
       }
     }
@@ -117,14 +119,15 @@ export function CatalogContent({ initialFilters, initialCars, initialTotal }: Ca
     const data = await res.json();
 
     if (res.status === 429 || data.status === "rate_limited") {
-      return false; // rate limited
+      return false;
     }
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
 
     setCars(data.listings || []);
     setTotal(data.total || 0);
+    setHasNext(data.hasNext ?? false);
     clearRetryState();
-    return true; // success
+    return true;
   }, [buildSearchParams, clearRetryState]);
 
   const startRetryCountdown = useCallback((p: CarListingParams, abortController: AbortController) => {
@@ -168,20 +171,24 @@ export function CatalogContent({ initialFilters, initialCars, initialTotal }: Ca
     }, 1000);
   }, [fetchCars]);
 
+  // Fetch filters when carnation changes
+  const fetchFilters = useCallback(async (carnation: string) => {
+    try {
+      const res = await fetch(`${BACKEND_URL}/api/filters?carnation=${carnation}`);
+      const data = await res.json();
+      if (data && data.makers) setFilters(data);
+    } catch (e) {
+      console.error("Failed to fetch filters:", e);
+    }
+  }, []);
+
   // Load filter data — only if server didn't provide them
   useEffect(() => {
     if (initialFilters) return;
-    let ignore = false;
-    fetch(`${BACKEND_URL}/api/filters`)
-      .then((r) => r.json())
-      .then((data) => {
-        if (!ignore && data && data.makers) setFilters(data);
-      })
-      .catch(console.error);
-    return () => { ignore = true; };
-  }, [initialFilters]);
+    fetchFilters(params.carnation || "1");
+  }, [initialFilters, fetchFilters, params.carnation]);
 
-  // Load cars when params change — skip on initial mount (server already provided data)
+  // Load cars when params change — skip on initial mount
   useEffect(() => {
     if (isInitialMount.current) {
       isInitialMount.current = false;
@@ -226,7 +233,17 @@ export function CatalogContent({ initialFilters, initialCars, initialTotal }: Ca
     }
   }, [params]);
 
+  const handleCategoryChange = useCallback((carnation: string) => {
+    // Reset filters when switching category
+    setParams({
+      ...DEFAULT_PARAMS,
+      carnation,
+    });
+    fetchFilters(carnation);
+  }, [fetchFilters]);
+
   const totalPages = Math.ceil(total / PAGE_SIZE);
+  const activeCarnation = params.carnation || "1";
 
   return (
     <div className="px-4 py-6 sm:px-6 lg:px-8">
@@ -236,8 +253,25 @@ export function CatalogContent({ initialFilters, initialCars, initialTotal }: Ca
           Каталог автомобилей
         </h1>
         <p className="mt-1 text-sm text-text-secondary">
-          Сувон, Кёнги &mdash; {total > 0 ? `${total.toLocaleString("ru-RU")} авто` : "загрузка..."}
+          {total > 0 ? `${total.toLocaleString("ru-RU")}+ авто` : "загрузка..."}
         </p>
+      </div>
+
+      {/* Category tabs */}
+      <div className="mb-4 flex gap-1 rounded-lg border border-border bg-bg-surface p-1">
+        {CATEGORY_TABS.map((tab) => (
+          <button
+            key={tab.value}
+            onClick={() => handleCategoryChange(tab.value)}
+            className={`flex-1 rounded-md px-3 py-2 text-sm font-medium transition-colors ${
+              activeCarnation === tab.value
+                ? "bg-gold text-bg-base"
+                : "text-text-secondary hover:text-text-primary"
+            }`}
+          >
+            {tab.label}
+          </button>
+        ))}
       </div>
 
       {/* Filters */}

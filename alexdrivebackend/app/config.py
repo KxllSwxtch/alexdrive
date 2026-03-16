@@ -4,9 +4,8 @@ from pydantic_settings import BaseSettings
 class Settings(BaseSettings):
     port: int = 3001
     cors_origins: str = "http://localhost:3000"
-    carmanager_username: str = ""
-    carmanager_password: str = ""
-    carmanager_base_url: str = "https://www.carmanager.co.kr"
+    jenya_base_url: str = "https://m.jenya.co.kr"
+    jenya_carcode_url: str = "https://m.jenya.co.kr/as5/script/carcode2_en.js"
     proxy_url: str = ""
     admin_secret: str = ""
 

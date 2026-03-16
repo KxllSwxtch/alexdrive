@@ -1,24 +1,16 @@
-import json
 import re
-from typing import Any
-
-from selectolax.lexbor import LexborHTMLParser
 
 
-def extract_js_var(js_content: str, var_name: str) -> str | None:
-    search_str = f"var {var_name}"
-    idx = js_content.find(search_str)
-    if idx == -1:
-        return None
+def parse_carcode_js(js_content: str) -> list[list]:
+    """Extract the carcode array from carcode2_en.js.
 
-    eq_idx = js_content.find("=", idx + len(search_str))
-    if eq_idx == -1:
-        return None
+    Each entry: [carnation, maker, series, trim, trimVariant, detail, cartype2, cartype]
+    """
+    match = re.search(r"var\s+carcode\s*=\s*\[", js_content)
+    if not match:
+        return []
 
-    start = eq_idx + 1
-    while start < len(js_content) and js_content[start] == " ":
-        start += 1
-
+    start = match.end() - 1  # include the opening [
     depth = 0
     in_str = False
     str_ch = ""
@@ -40,126 +32,165 @@ def extract_js_var(js_content: str, var_name: str) -> str | None:
             in_str = True
             str_ch = ch
             continue
-        if ch in ("[", "{"):
+        if ch == "[":
             depth += 1
-        if ch in ("]", "}"):
+        elif ch == "]":
             depth -= 1
             if depth == 0:
-                return js_content[start:i + 1]
+                array_str = js_content[start:i + 1]
+                break
+    else:
+        return []
 
-    return None
-
-
-def safe_parse_json(text: str) -> Any:
+    # Parse the JS array — entries use double quotes for strings
+    # Convert to valid JSON by replacing single quotes if needed
     try:
-        json_text = re.sub(r'([{,]\s*)([A-Za-z_]\w*)(\s*:)', r'\1"\2"\3', text)
-        return json.loads(json_text)
+        import json
+        return json.loads(array_str)
     except (json.JSONDecodeError, ValueError):
-        return None
+        # Try replacing single quotes
+        try:
+            fixed = array_str.replace("'", '"')
+            return json.loads(fixed)
+        except (json.JSONDecodeError, ValueError):
+            return []
 
 
-def parse_makers(js: str) -> list[dict]:
-    raw = extract_js_var(js, "CarBaseMaker")
-    if not raw:
-        return []
-    data = safe_parse_json(raw)
-    if not isinstance(data, list):
-        return []
-    return data
+def build_filter_hierarchy(carcode: list[list], carnation: int) -> dict:
+    """Build hierarchical filter structure for a specific category (carnation).
 
+    Returns dict with makers, models, modelDetails, grades, gradeDetails.
+    """
+    makers_set: set[str] = set()
+    models_dict: dict[str, set[str]] = {}      # maker -> set of series
+    details_dict: dict[str, set[str]] = {}      # series -> set of trims
+    grades_dict: dict[str, set[str]] = {}       # trim -> set of trimVariants
+    grade_details_dict: dict[str, set[str]] = {}  # trimVariant -> set of details
 
-def parse_models(js: str) -> dict[str, list[dict]]:
-    raw = extract_js_var(js, "CarBaseModel")
-    if not raw:
-        return {}
-    data = safe_parse_json(raw)
-    if not isinstance(data, dict):
-        return {}
-    return data
+    for entry in carcode:
+        if len(entry) < 6:
+            continue
+        entry_carnation = entry[0]
+        if entry_carnation != carnation:
+            continue
 
+        maker = entry[1]
+        series = entry[2]
+        trim = entry[3]
+        trim_variant = entry[4]
+        detail = entry[5]
 
-def parse_model_details(js: str) -> dict[str, list[dict]]:
-    raw = extract_js_var(js, "CarBaseModelDetail")
-    if not raw:
-        return {}
-    data = safe_parse_json(raw)
-    if not isinstance(data, dict):
-        return {}
-    # Normalize: MDetailNo → ModelDetailNo, MDetailName → ModelDetailName
+        if maker:
+            makers_set.add(maker)
+        if maker and series:
+            models_dict.setdefault(maker, set()).add(series)
+        if series and trim:
+            details_dict.setdefault(series, set()).add(trim)
+        if trim and trim_variant:
+            grades_dict.setdefault(trim, set()).add(trim_variant)
+        if trim_variant and detail:
+            grade_details_dict.setdefault(trim_variant, set()).add(detail)
+
+    # Convert to list format matching frontend expectations
+    makers = sorted(
+        [{"MakerNo": m, "MakerName": m} for m in makers_set],
+        key=lambda x: x["MakerName"],
+    )
+
+    models: dict[str, list[dict]] = {}
+    for maker, series_set in models_dict.items():
+        models[maker] = sorted(
+            [{"ModelNo": s, "ModelName": s, "MakerNo": maker} for s in series_set],
+            key=lambda x: x["ModelName"],
+        )
+
+    model_details: dict[str, list[dict]] = {}
+    for series, trim_set in details_dict.items():
+        model_details[series] = sorted(
+            [{"ModelDetailNo": t, "ModelDetailName": t, "ModelNo": series} for t in trim_set],
+            key=lambda x: x["ModelDetailName"],
+        )
+
+    grades: dict[str, list[dict]] = {}
+    for trim, variant_set in grades_dict.items():
+        grades[trim] = sorted(
+            [{"GradeNo": v, "GradeName": v, "ModelDetailNo": trim} for v in variant_set],
+            key=lambda x: x["GradeName"],
+        )
+
+    grade_details: dict[str, list[dict]] = {}
+    for variant, detail_set in grade_details_dict.items():
+        grade_details[variant] = sorted(
+            [{"GradeDetailNo": d, "GradeDetailName": d, "GradeNo": variant} for d in detail_set],
+            key=lambda x: x["GradeDetailName"],
+        )
+
     return {
-        key: [
-            {
-                "ModelDetailNo": item.get("MDetailNo"),
-                "ModelDetailName": item.get("MDetailName"),
-                "ModelNo": item.get("ModelNo"),
-            }
-            for item in items
-        ]
-        for key, items in data.items()
+        "makers": makers,
+        "models": models,
+        "modelDetails": model_details,
+        "grades": grades,
+        "gradeDetails": grade_details,
     }
 
 
-def parse_grades(js: str) -> dict[str, list[dict]]:
-    raw = extract_js_var(js, "CarBaseGrade")
-    if not raw:
-        return {}
-    data = safe_parse_json(raw)
-    if not isinstance(data, dict):
-        return {}
-    # Normalize: MDetailNo → ModelDetailNo
-    return {
-        key: [
-            {
-                "GradeNo": item.get("GradeNo"),
-                "GradeName": item.get("GradeName"),
-                "ModelDetailNo": item.get("MDetailNo"),
-            }
-            for item in items
-        ]
-        for key, items in data.items()
-    }
+# Static filter options from jenya HTML
 
+COLORS = [
+    {"CKeyNo": "흰색", "ColorName": "Белый"},
+    {"CKeyNo": "검정", "ColorName": "Черный"},
+    {"CKeyNo": "은색", "ColorName": "Серебристый"},
+    {"CKeyNo": "회색", "ColorName": "Серый"},
+    {"CKeyNo": "진주", "ColorName": "Жемчужный"},
+    {"CKeyNo": "파란", "ColorName": "Синий"},
+    {"CKeyNo": "빨강", "ColorName": "Красный"},
+    {"CKeyNo": "녹색", "ColorName": "Зеленый"},
+    {"CKeyNo": "갈색", "ColorName": "Коричневый"},
+    {"CKeyNo": "주황", "ColorName": "Оранжевый"},
+    {"CKeyNo": "노랑", "ColorName": "Желтый"},
+    {"CKeyNo": "금색", "ColorName": "Золотой"},
+    {"CKeyNo": "보라", "ColorName": "Фиолетовый"},
+    {"CKeyNo": "분홍", "ColorName": "Розовый"},
+    {"CKeyNo": "연금", "ColorName": "Светло-золотой"},
+    {"CKeyNo": "쥐색", "ColorName": "Мышиный"},
+    {"CKeyNo": "청색", "ColorName": "Голубой"},
+    {"CKeyNo": "하늘", "ColorName": "Небесный"},
+    {"CKeyNo": "베이지", "ColorName": "Бежевый"},
+    {"CKeyNo": "은회색", "ColorName": "Серебристо-серый"},
+    {"CKeyNo": "연회색", "ColorName": "Светло-серый"},
+    {"CKeyNo": "진회색", "ColorName": "Темно-серый"},
+    {"CKeyNo": "밤색", "ColorName": "Каштановый"},
+    {"CKeyNo": "연파랑", "ColorName": "Светло-синий"},
+    {"CKeyNo": "진파랑", "ColorName": "Темно-синий"},
+    {"CKeyNo": "연초록", "ColorName": "Светло-зеленый"},
+    {"CKeyNo": "진초록", "ColorName": "Темно-зеленый"},
+    {"CKeyNo": "연빨강", "ColorName": "Светло-красный"},
+    {"CKeyNo": "진빨강", "ColorName": "Темно-красный"},
+    {"CKeyNo": "흰진주", "ColorName": "Белый перламутр"},
+    {"CKeyNo": "검진주", "ColorName": "Черный перламутр"},
+    {"CKeyNo": "기타", "ColorName": "Другой"},
+]
 
-def parse_grade_details(js: str) -> dict[str, list[dict]]:
-    raw = extract_js_var(js, "CarBaseGradeDetail")
-    if not raw:
-        return {}
-    data = safe_parse_json(raw)
-    if not isinstance(data, dict):
-        return {}
-    # Normalize: GDetailNo → GradeDetailNo, GDetailName → GradeDetailName
-    return {
-        key: [
-            {
-                "GradeDetailNo": item.get("GDetailNo"),
-                "GradeDetailName": item.get("GDetailName"),
-                "GradeNo": item.get("GradeNo"),
-            }
-            for item in items
-        ]
-        for key, items in data.items()
-    }
+FUELS = [
+    {"FKeyNo": "1", "FuelName": "Бензин"},
+    {"FKeyNo": "2", "FuelName": "Дизель"},
+    {"FKeyNo": "3", "FuelName": "LPG"},
+    {"FKeyNo": "4", "FuelName": "Гибрид"},
+    {"FKeyNo": "5", "FuelName": "Электро"},
+    {"FKeyNo": "6", "FuelName": "CNG"},
+    {"FKeyNo": "7", "FuelName": "Водород"},
+    {"FKeyNo": "8", "FuelName": "LPG Гибрид"},
+]
 
+MISSIONS = [
+    {"MKeyNo": "오토", "MissionName": "Автоматическая коробка передач"},
+    {"MKeyNo": "수동", "MissionName": "Механическая коробка передач"},
+    {"MKeyNo": "세미오토", "MissionName": "Полуавтомат"},
+    {"MKeyNo": "무단변속", "MissionName": "Вариатор"},
+]
 
-def parse_filter_data_from_js(js_content: str) -> dict:
-    return {
-        "makers": parse_makers(js_content),
-        "models": parse_models(js_content),
-        "modelDetails": parse_model_details(js_content),
-        "grades": parse_grades(js_content),
-        "gradeDetails": parse_grade_details(js_content),
-    }
-
-
-def parse_select_options(html: str, select_id: str) -> list[dict[str, str]]:
-    parser = LexborHTMLParser(html)
-    select = parser.css_first(f"select#{select_id}")
-    if not select:
-        return []
-    options: list[dict[str, str]] = []
-    for el in select.css("option"):
-        value = el.attributes.get("value", "")
-        label = el.text(strip=True)
-        if value and value != "" and value != "0":
-            options.append({"value": value, "label": label})
-    return options
+CATEGORIES = [
+    {"value": "1", "label": "Корейские марки"},
+    {"value": "2", "label": "Иностранные марки"},
+    {"value": "3", "label": "Грузовые автомобили"},
+]

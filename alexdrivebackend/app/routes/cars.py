@@ -3,15 +3,14 @@ import asyncio
 from fastapi import APIRouter, Query
 from fastapi.responses import JSONResponse
 
-from app.services.carmanager import _detail_cache, get_car_detail, get_car_listings, warm_detail_cache_for_listings
+from app.services.jenya import _detail_cache, get_car_detail, get_car_listings, warm_detail_cache_for_listings
 
 router = APIRouter(prefix="/api")
 
 
 @router.get("/cars")
 async def get_cars(
-    CarSiDoNo: str | None = Query(None),
-    CarSiDoAreaNo: str | None = Query(None),
+    carnation: str | None = Query(None),
     CarMakerNo: str | None = Query(None),
     CarModelNo: str | None = Query(None),
     CarModelDetailNo: str | None = Query(None),
@@ -26,23 +25,13 @@ async def get_cars(
     CarMissionNo: str | None = Query(None),
     CarFuelNo: str | None = Query(None),
     CarColorNo: str | None = Query(None),
-    DanjiNo: str | None = Query(None),
-    CarLpg: str | None = Query(None),
-    CarInsurance: str | None = Query(None),
-    CarPhoto: str | None = Query(None),
-    CarSalePrice: str | None = Query(None),
-    CarInspection: str | None = Query(None),
-    CarLease: str | None = Query(None),
-    SearchName: str | None = Query(None),
     SearchCarNo: str | None = Query(None),
     PageNow: int | None = Query(None),
-    PageSize: int | None = Query(None),
     PageSort: str | None = Query(None),
     PageAscDesc: str | None = Query(None),
 ):
     params = {
-        "CarSiDoNo": CarSiDoNo,
-        "CarSiDoAreaNo": CarSiDoAreaNo,
+        "carnation": carnation or "1",
         "CarMakerNo": CarMakerNo,
         "CarModelNo": CarModelNo,
         "CarModelDetailNo": CarModelDetailNo,
@@ -57,28 +46,12 @@ async def get_cars(
         "CarMissionNo": CarMissionNo,
         "CarFuelNo": CarFuelNo,
         "CarColorNo": CarColorNo,
-        "DanjiNo": DanjiNo,
-        "CarLpg": CarLpg,
-        "CarInsurance": CarInsurance,
-        "CarPhoto": CarPhoto,
-        "CarSalePrice": CarSalePrice,
-        "CarInspection": CarInspection,
-        "CarLease": CarLease,
-        "SearchName": SearchName,
         "SearchCarNo": SearchCarNo,
         "PageNow": PageNow,
-        "PageSize": PageSize,
         "PageSort": PageSort,
         "PageAscDesc": PageAscDesc,
     }
     data = await get_car_listings(params)
-
-    if data.get("status") == "rate_limited" and not data.get("listings"):
-        return JSONResponse(
-            status_code=429,
-            content=data,
-            headers={"Retry-After": "10", "Cache-Control": "no-cache"},
-        )
 
     if data.get("listings"):
         asyncio.ensure_future(warm_detail_cache_for_listings(data["listings"]))

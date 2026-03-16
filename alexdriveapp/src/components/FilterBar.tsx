@@ -6,7 +6,6 @@ import { translateSmartly } from "@/lib/translations";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Checkbox } from "@/components/ui/checkbox";
 import {
   Select,
   SelectContent,
@@ -57,10 +56,6 @@ const FILTER_KEYS = [
   "CarPriceTo",
   "CarFuelNo",
   "CarColorNo",
-  "CarPhoto",
-  "CarInsurance",
-  "CarInspection",
-  "CarLease",
 ] as const;
 
 export function FilterBar({
@@ -185,22 +180,22 @@ export function FilterBar({
     onApplyFilters(merged);
   };
 
-  // Get cascading options
+  // Get cascading options — string keys for jenya
   const models =
     selectedMaker && filters?.models
-      ? filters.models[Number(selectedMaker)] || []
+      ? filters.models[selectedMaker] || []
       : [];
   const modelDetails =
     selectedModel && filters?.modelDetails
-      ? filters.modelDetails[Number(selectedModel)] || []
+      ? filters.modelDetails[selectedModel] || []
       : [];
   const grades =
     selectedModelDetail && filters?.grades
-      ? filters.grades[Number(selectedModelDetail)] || []
+      ? filters.grades[selectedModelDetail] || []
       : [];
   const gradeDetails =
     selectedGrade && filters?.gradeDetails
-      ? filters.gradeDetails[Number(selectedGrade)] || []
+      ? filters.gradeDetails[selectedGrade] || []
       : [];
 
   // Translated options
@@ -269,6 +264,7 @@ export function FilterBar({
 
   const handleReset = () => {
     const resetParams: CarListingParams = {
+      carnation: appliedParams.carnation || "1",
       PageNow: 1,
       PageSize: appliedParams.PageSize || 20,
       PageSort: "ModDt",
@@ -347,7 +343,6 @@ export function FilterBar({
             <FilterDropdown
               options={[
                 { value: "ModDt", label: "По обновлению" },
-                { value: "RegDt", label: "По дате размещения" },
                 { value: "CarPrice", label: "По цене" },
                 { value: "CarMileage", label: "По пробегу" },
                 { value: "CarYear", label: "По году" },
@@ -460,30 +455,8 @@ export function FilterBar({
             />
           </div>
 
-          {/* Checkbox filters */}
+          {/* Sort direction — instant-apply */}
           <div className="mt-3 flex flex-wrap gap-3">
-            <CheckboxFilter
-              label="С фото"
-              checked={draftParams.CarPhoto === "Y"}
-              onChange={(v) => updateDraft("CarPhoto", v ? "Y" : "")}
-            />
-            <CheckboxFilter
-              label="Страховая история"
-              checked={draftParams.CarInsurance === "Y"}
-              onChange={(v) => updateDraft("CarInsurance", v ? "Y" : "")}
-            />
-            <CheckboxFilter
-              label="Проверка авто"
-              checked={draftParams.CarInspection === "Y"}
-              onChange={(v) => updateDraft("CarInspection", v ? "Y" : "")}
-            />
-            <CheckboxFilter
-              label="Лизинг"
-              checked={draftParams.CarLease === "Y"}
-              onChange={(v) => updateDraft("CarLease", v ? "Y" : "")}
-            />
-
-            {/* Sort direction — instant-apply */}
             <div className="ml-auto flex items-center gap-0.5 rounded-lg border border-border">
               <Button
                 variant="ghost"
@@ -716,33 +689,5 @@ function RangeInput({
         />
       </div>
     </div>
-  );
-}
-
-function CheckboxFilter({
-  label,
-  checked,
-  onChange,
-}: {
-  label: string;
-  checked: boolean;
-  onChange: (checked: boolean) => void;
-}) {
-  return (
-    <label
-      className={cn(
-        "inline-flex cursor-pointer items-center gap-2 rounded-lg border px-3 py-1.5 text-xs font-medium transition-colors",
-        checked
-          ? "border-gold/30 text-gold"
-          : "border-border text-text-secondary hover:border-border hover:text-text-primary"
-      )}
-    >
-      <Checkbox
-        checked={checked}
-        onCheckedChange={(v) => onChange(!!v)}
-        className="size-3.5"
-      />
-      {label}
-    </label>
   );
 }

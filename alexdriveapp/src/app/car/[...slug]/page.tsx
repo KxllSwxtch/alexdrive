@@ -5,7 +5,7 @@ import { permanentRedirect } from "next/navigation";
 import type { CarDetail } from "@/lib/types";
 import { translateSmartly } from "@/lib/translations";
 import { formatPrice } from "@/lib/format";
-import { fromUrlSafeId, buildCarDetailPath } from "@/lib/url";
+import { buildCarDetailPath } from "@/lib/url";
 import { CarDetailContent, fetchCar } from "@/components/CarDetailContent";
 import { CarDetailSkeleton } from "@/components/CarDetailSkeleton";
 import { MobileContactBar } from "@/components/MobileContactBar";
@@ -19,10 +19,9 @@ interface PageProps {
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   try {
     const slugParts = (await params).slug;
-    const id =
-      slugParts.length === 1
-        ? decodeURIComponent(slugParts[0])
-        : fromUrlSafeId(slugParts[slugParts.length - 1]);
+    const id = slugParts.length === 1
+      ? decodeURIComponent(slugParts[0])
+      : slugParts[slugParts.length - 1];
 
     // Race: if cache hit, return rich metadata; if cold, return generic quickly
     const car = await Promise.race([
@@ -53,32 +52,26 @@ export default async function CarDetailPage({ params }: PageProps) {
   // OLD URL: /car/ENCODED_ID → 301 redirect to new SEO-friendly URL
   if (slugParts.length === 1) {
     const rawSegment = slugParts[0];
-    let id = decodeURIComponent(rawSegment);
+    const id = decodeURIComponent(rawSegment);
     let car: CarDetail;
 
     try {
       car = await fetchCar(id);
     } catch {
-      id = fromUrlSafeId(rawSegment);
-      try {
-        car = await fetchCar(id);
-      } catch {
-        return <ErrorState />;
-      }
+      return <ErrorState />;
     }
 
     const translatedName = translateSmartly(car.name);
     const newPath = buildCarDetailPath(
       translatedName,
-      car.modelYear || car.year,
+      car.year,
       car.encryptedId,
     );
     permanentRedirect(newPath);
   }
 
-  // NEW URL: /car/slug/urlSafeId
-  const urlSafeId = slugParts[slugParts.length - 1];
-  const originalId = fromUrlSafeId(urlSafeId);
+  // NEW URL: /car/slug/id
+  const id = slugParts[slugParts.length - 1];
 
   return (
     <div className="px-4 py-6 pb-20 md:pb-6 sm:px-6 lg:px-8">
@@ -101,7 +94,7 @@ export default async function CarDetailPage({ params }: PageProps) {
         </>
       }>
         <div className="grid gap-6 md:grid-cols-[1fr_320px] lg:grid-cols-[1fr_300px]">
-          <CarDetailContent id={originalId} />
+          <CarDetailContent id={id} />
         </div>
       </Suspense>
     </div>

@@ -4,126 +4,116 @@ from selectolax.lexbor import LexborHTMLParser
 
 
 def parse_car_listings(html: str) -> list[dict]:
+    """Parse car listings from jenya listing page HTML."""
     parser = LexborHTMLParser(html)
     listings: list[dict] = []
 
-    for row in parser.css("tr.uc_carcss"):
-        # Find link with encrypted ID
-        link = None
-        for a in row.css("a[href]"):
-            href = a.attributes.get("href", "")
-            if "carmangerDetailWindowPopUp_CHECK" in href:
-                link = a
-                break
+    # Find all listing links: <a href="/?m=sale&s=detail&seq=XXXXXXXXXX">
+    for li in parser.css("ul li"):
+        link = li.css_first("a[href]")
         if not link:
             continue
         href = link.attributes.get("href", "")
-        enc_match = re.search(r"carmangerDetailWindowPopUp_CHECK\('([^']+)'\)", href)
-        if not enc_match:
+        seq_match = re.search(r"[?&]seq=(\d+)", href)
+        if not seq_match:
             continue
-        encrypted_id = enc_match.group(1)
+        seq_id = seq_match.group(1)
 
-        img = row.css_first("img.thumbnail")
+        # Image
+        img = li.css_first("img")
         image_url = img.attributes.get("src", "") if img else ""
 
-        name_cell = row.css_first("td.uc_textleft")
-        maker = ""
-        model = ""
-        if name_cell:
-            maker_label = name_cell.css_first("label.uc_carmaker")
-            if maker_label:
-                maker = maker_label.text(strip=True)
-            model_link = name_cell.css_first("span > a")
-            if model_link:
-                model = model_link.text(strip=True)
-        name = f"{maker} {model}".strip()
+        # Name from .carinfo span
+        carinfo = li.css_first("span.carinfo, .carinfo")
+        name = carinfo.text(strip=True) if carinfo else ""
 
-        cells = row.css("td")
-        transmission = ""
+        # Info line: "2015/08 | 109000km | Автоматическая коробка передач | Бензин"
         year = ""
-        model_year = ""
+        mileage = ""
+        transmission = ""
         fuel = ""
 
-        for td in cells:
-            first_p = td.css_first("p")
-            if first_p:
-                p_text = first_p.text(strip=True)
-                if p_text and re.search(r"오토|수동|세미오토|무단변속", p_text) and not transmission:
-                    transmission = p_text
+        # Find the info span (second span in carmemo, or span without class)
+        carmemo = li.css_first("div.carmemo, .carmemo")
+        if carmemo:
+            spans = carmemo.css("span")
+            for span in spans:
+                text = span.text(strip=True)
+                if not text:
+                    continue
+                # Skip the carinfo span (already got name from it)
+                span_class = span.attributes.get("class", "")
+                if "carinfo" in span_class:
+                    continue
+                # Parse pipe-delimited info
+                if "|" in text:
+                    parts = [p.strip() for p in text.split("|")]
+                    if len(parts) >= 1:
+                        year = parts[0]
+                    if len(parts) >= 2:
+                        mileage = parts[1]
+                    if len(parts) >= 3:
+                        transmission = parts[2]
+                    if len(parts) >= 4:
+                        fuel = parts[3]
 
-            reg_span = td.css_first("span.uc_carreg")
-            if reg_span:
-                reg_text = reg_span.text(strip=True)
-                if reg_text and not year:
-                    year = reg_text
-
-            year_span = td.css_first("span.uc_carreg_year")
-            if year_span:
-                year_text = year_span.text(strip=True)
-                if year_text and year_text.startswith("[") and not model_year:
-                    model_year = year_text.strip("[]")
-
-        for td in cells:
-            text = td.text(strip=True)
-            td_class = td.attributes.get("class")
-            if not td_class and re.match(r"^(휘발유|경유|LPG|전기|하이브리드|CNG|수소)", text) and not fuel:
-                fuel = text
-
-        mileage_td = row.css_first("td.uc_carusekm")
-        mileage = mileage_td.text(strip=True) if mileage_td else ""
-
-        price_b = row.css_first("b.uc_caramount")
-        price = price_b.text(strip=True) if price_b else ""
-
-        area_td = row.css_first("td.uc_cararea")
-        location = re.sub(r"\s+", " ", area_td.text(strip=True)) if area_td else ""
-
-        dealer_span = row.css_first("span.uc_cardealer")
-        dealer = dealer_span.text(strip=True) if dealer_span else ""
-
-        phone_span = row.css_first("span.uc_cardealer_phone")
-        phone = phone_span.text(strip=True) if phone_span else ""
-
-        display_year = f"{year} [{model_year}]" if model_year else year
+        # Price from <strong>
+        price_el = li.css_first("strong")
+        price = ""
+        if price_el:
+            price_text = price_el.text(strip=True)
+            # Strip leading backslash if present (jenya uses \9,290,000 format)
+            price = price_text.lstrip("\\").strip()
 
         listings.append({
-            "encryptedId": encrypted_id,
-            "imageUrl": normalize_image_url(image_url),
+            "encryptedId": seq_id,
+            "imageUrl": image_url,
             "name": name,
-            "year": display_year,
+            "year": year,
             "mileage": mileage,
             "fuel": fuel,
             "transmission": transmission,
             "price": price,
-            "location": location,
-            "dealer": dealer,
-            "phone": phone,
+            "dealer": "",
+            "phone": "",
         })
 
     return listings
 
 
-def parse_total_count(html: str) -> int:
-    # Format 1: hidden input (from /Car/Data full page)
-    match = re.search(r'id="hdfCarRowCount"[^>]*value="(\d+)"', html)
-    if match:
-        return int(match.group(1))
-    # Format 2: jQuery .val() call (from /Car/DataPart)
-    match = re.search(r'hdfCarRowCount.*?\.val\([\'"](\d+)[\'"]\)', html)
-    if match:
-        return int(match.group(1))
-    # Format 3: reLoadPage first argument
-    match = re.search(r"reLoadPage\(['\"](\d+)['\"]", html)
-    if match:
-        return int(match.group(1))
-    return 0
+def parse_pagination(html: str) -> dict:
+    """Parse pagination info from jenya listing HTML.
+
+    Returns {"max_visible_page": int, "has_next": bool}
+    """
+    # Find page links: javascript:page('N')
+    page_numbers = [int(m) for m in re.findall(r"javascript:page\('(\d+)'\)", html)]
+
+    # Also check for current page (may be shown without javascript: link)
+    # Look for <b> or <strong> or active class with page number
+    current_match = re.findall(r'class="[^"]*on[^"]*"[^>]*>(\d+)<', html)
+    for m in current_match:
+        page_numbers.append(int(m))
+
+    if not page_numbers:
+        return {"max_visible_page": 1, "has_next": False}
+
+    max_page = max(page_numbers)
+
+    # Check if there's a "next" link (▶ or > or 다음)
+    has_next = bool(re.search(r"javascript:page\('\d+'\)[^>]*>[▶>»]|다음|next", html, re.IGNORECASE))
+
+    return {"max_visible_page": max_page, "has_next": has_next}
 
 
-def normalize_image_url(url: str) -> str:
-    if not url:
-        return ""
-    if url.startswith("//"):
-        return f"https:{url}"
-    if url.startswith("/"):
-        return f"https://www.carmanager.co.kr{url}"
-    return url
+def estimate_total(pagination: dict, page_size: int = 20) -> int:
+    """Estimate total count from pagination info."""
+    max_page = pagination["max_visible_page"]
+    has_next = pagination["has_next"]
+
+    if has_next:
+        # There are more pages beyond what's visible
+        return max_page * page_size + 1
+    else:
+        # Last visible page is the last page
+        return max_page * page_size

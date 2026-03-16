@@ -1,9 +1,9 @@
 export function formatPrice(price: string): string {
-  const cleaned = price.replace(/만원$/, "").replace(/,/g, "").trim();
+  // jenya prices are full won amounts like "9,290,000"
+  const cleaned = price.replace(/[^0-9]/g, "").trim();
   const num = parseInt(cleaned, 10);
   if (isNaN(num)) return price;
-  const krw = num * 10000;
-  return `₩${krw.toLocaleString("en-US")}`;
+  return `₩${num.toLocaleString("en-US")}`;
 }
 
 export function formatKrw(value: number): string {
@@ -15,9 +15,9 @@ export function parseKrwInput(raw: string): number {
 }
 
 export function priceStringToKrw(price: string): number {
-  const cleaned = price.replace(/만원$/, "").replace(/,/g, "").trim();
+  const cleaned = price.replace(/[^0-9]/g, "").trim();
   const num = parseInt(cleaned, 10);
-  return isNaN(num) ? 0 : num * 10000;
+  return isNaN(num) ? 0 : num;
 }
 
 export function formatMileage(mileage: string): string {
