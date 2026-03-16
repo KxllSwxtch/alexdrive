@@ -27,6 +27,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { ChevronsUpDown, ChevronDown, RotateCcw, Search } from "lucide-react";
+import { ModelSelectorModal } from "@/components/ModelSelectorModal";
 
 const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:3001";
 
@@ -224,16 +225,6 @@ export function FilterBar({
     [filters?.makers]
   );
 
-  // Model options
-  const modelOptions = useMemo(
-    () =>
-      models.map((m) => ({
-        value: String(m.bo_no),
-        label: m.bo_name,
-      })),
-    [models]
-  );
-
   // Series options
   const seriesOptions = useMemo(
     () =>
@@ -286,12 +277,10 @@ export function FilterBar({
           </FilterField>
 
           <FilterField label="Модель">
-            <FilterCombobox
-              options={modelOptions}
-              value={selectedModel}
-              onChange={handleModelChange}
-              placeholder="Все модели"
-              searchPlaceholder="Найти модель..."
+            <ModelSelectorModal
+              models={models}
+              selectedModel={selectedModel}
+              onSelect={handleModelChange}
               disabled={!selectedMaker}
               isLoading={modelsLoading}
             />
