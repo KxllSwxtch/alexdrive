@@ -381,32 +381,77 @@ async def get_car_listings(params: dict) -> dict:
 
 # ── Detail data ──────────────────────────────────────────────
 
-_KOREAN_PLATE_RE = re.compile(r"^\d{2,3}[가-힣]\d{4}$")
+# Russian plate format: "NNN TranslatedWord NNNN"
+_RU_PLATE_RE = re.compile(r"^\s*(\d{2,3})\s+(.+?)\s+(\d{4})\s*$")
+
+# Verified reverse mapping: Russian translation → Korean plate character
+_RU_TO_KOREAN_PLATE: dict[str, str] = {
+    # Verified from namsuwon API responses (case-insensitive keys used at lookup)
+    "стоимость": "가",   # value
+    "гео": "거",         # Geo (romanization)
+    "высокий": "고",     # High
+    "провинция": "도",   # Province
+    "ла": "라",          # La (romanization)
+    "ро": "로",          # Ro (romanization)
+    "мер": "머",         # Mer (partial romanization)
+    "нет": "무",         # None
+    "страховка": "보",   # Insurance
+    "малый": "소",       # Small
+    "ср": "수",          # Wed (Среда abbreviated)
+    "система": "시",     # System
+    "низкий": "저",      # Low
+    "основной": "주",    # Main
+    # Unverified but logically inferred (add verified ones as discovered):
+    "на": "나",          # Na (romanization)
+    "да": "다",          # Da (romanization)
+    "ма": "마",          # Ma (romanization)
+    "нео": "너",         # Neo (romanization)
+    "део": "더",         # Deo (romanization)
+    "рео": "러",         # Reo (romanization)
+    "бео": "버",         # Beo (romanization)
+    "со": "서",          # Seo → Со? (needs verification)
+    "ео": "어",          # Eo (romanization)
+    "чео": "저",         # Jeo (romanization) — alias
+    "но": "노",          # No (romanization)
+    "мо": "모",          # Mo (romanization)
+    "бо": "보",          # Bo (romanization) — alias for 보
+    "о": "오",           # O (romanization)
+    "чо": "조",          # Jo (romanization)
+    "гу": "구",          # Gu (romanization)
+    "ну": "누",          # Nu (romanization)
+    "ду": "두",          # Du (romanization)
+    "ру": "루",          # Ru (romanization)
+    "му": "무",          # Mu (romanization) — alias for 무
+    "бу": "부",          # Bu (romanization)
+    "су": "수",          # Su (romanization) — alias for 수
+    "у": "우",           # U (romanization)
+    "чу": "주",          # Ju (romanization) — alias for 주
+    "ха": "하",          # Ha (romanization)
+    "хео": "허",         # Heo (romanization)
+    "хо": "호",          # Ho (romanization)
+    "бэ": "배",          # Bae (romanization)
+    "а": "아",           # A (romanization)
+}
 
 
-def _extract_korean_car_number(data: dict) -> str:
-    """Extract Korean license plate from non-translated API response."""
-    info = data.get("info", {})
-    # Primary: known Korean key
-    plate = info.get("차량번호", "")
-    if plate and _KOREAN_PLATE_RE.match(plate.strip()):
-        return plate.strip()
-    # Fallback: regex scan all info values
-    for value in info.values():
-        if isinstance(value, str) and _KOREAN_PLATE_RE.match(value.strip()):
-            return value.strip()
-    return ""
+def _restore_korean_plate(ru_plate: str) -> str:
+    """Convert Russian-translated plate back to Korean format.
 
-
-async def _fetch_korean_car_number(car_id: str) -> str:
-    """Fetch car detail without lang=ru to get the original Korean car number."""
-    try:
-        await _throttle_request()
-        data = await fetch_json(_api_url(f"/api/proxy/cars/{car_id}"), {})
-        return _extract_korean_car_number(data)
-    except Exception as e:
-        print(f"[namsuwon] Failed to fetch Korean car number for {car_id}: {e}")
+    "120 Ро 2779" → "120로2779"
+    Returns "" if plate format doesn't match or translation unknown.
+    """
+    if not ru_plate:
         return ""
+    m = _RU_PLATE_RE.match(ru_plate)
+    if not m:
+        return ""
+    prefix, middle, suffix = m.group(1), m.group(2), m.group(3)
+    korean = _RU_TO_KOREAN_PLATE.get(middle.lower())
+    if korean:
+        return f"{prefix}{korean}{suffix}"
+    # Log unknown translation for future mapping expansion
+    print(f"[namsuwon] Unknown plate translation: '{middle}' in '{ru_plate}'")
+    return ""
 
 
 def _transform_detail(data: dict) -> dict:
@@ -459,11 +504,12 @@ async def _refresh_detail_cache(car_id: str) -> None:
     _detail_refresh_keys.add(car_id)
     try:
         await _throttle_request()
-        data, korean_plate = await asyncio.gather(
-            fetch_json(_api_url(f"/api/proxy/cars/{car_id}"), {"lang": "ru"}),
-            _fetch_korean_car_number(car_id),
+        data = await fetch_json(
+            _api_url(f"/api/proxy/cars/{car_id}"),
+            {"lang": "ru"},
         )
         result = _transform_detail(data)
+        korean_plate = _restore_korean_plate(result["carNumber"])
         if korean_plate:
             result["carNumber"] = korean_plate
         _detail_cache[car_id] = {"data": result, "expiry": time.time() + DETAIL_TTL}
@@ -493,12 +539,9 @@ async def get_car_detail(car_id: str) -> dict:
 
         await _throttle_request()
         try:
-            data, korean_plate = await asyncio.gather(
-                fetch_json(
-                    _api_url(f"/api/proxy/cars/{car_id}"),
-                    {"lang": "ru"},
-                ),
-                _fetch_korean_car_number(car_id),
+            data = await fetch_json(
+                _api_url(f"/api/proxy/cars/{car_id}"),
+                {"lang": "ru"},
             )
         except NetworkError:
             cached = _detail_cache.get(car_id)
@@ -508,6 +551,7 @@ async def get_car_detail(car_id: str) -> dict:
             raise
 
         result = _transform_detail(data)
+        korean_plate = _restore_korean_plate(result["carNumber"])
         if korean_plate:
             result["carNumber"] = korean_plate
         _detail_cache[car_id] = {"data": result, "expiry": time.time() + DETAIL_TTL}

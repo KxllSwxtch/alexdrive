@@ -14,7 +14,7 @@ from app.services.namsuwon import (
     get_car_detail,
     _transform_listing,
     _transform_detail,
-    _extract_korean_car_number,
+    _restore_korean_plate,
     _save_detail_cache_to_disk,
     _load_detail_cache_from_disk,
 )
@@ -78,7 +78,7 @@ DETAIL_RESPONSE = {
         "КПП": "Автомат",
         "Топливо": "Гибрид",
         "Цвет": "Белый",
-        "Гос. номер": "123 Га 4567",
+        "Гос. номер": "123 Ро 4567",
     },
     "options": {
         "Экстерьер": "LED фары, Складные зеркала",
@@ -88,26 +88,6 @@ DETAIL_RESPONSE = {
     "specs": {"Объём (cc)": 1999, "Мощность (л.с.)": 152},
     "inspection": {},
 }
-
-DETAIL_RESPONSE_KO = {
-    "no": 6612064,
-    "car_name": "기아 K5 2.0 노블레스",
-    "price_man": 3240,
-    "photos": ["https://example.com/1.jpg", "https://example.com/2.jpg"],
-    "info": {"차량번호": "123가4567"},
-    "options": {},
-    "pricing": {},
-    "specs": {},
-    "inspection": {},
-}
-
-
-def _detail_side_effect(request):
-    """Return Russian or Korean response based on lang param."""
-    if "lang" in dict(request.url.params):
-        return httpx.Response(200, json=DETAIL_RESPONSE)
-    return httpx.Response(200, json=DETAIL_RESPONSE_KO)
-
 
 # ── Tests ─────────────────────────────────────────────────────
 
@@ -232,7 +212,7 @@ class TestTransformDetail:
         assert result["price"] == "3,240 만원"
         assert result["priceMl"] == 3240
         assert result["color"] == "Белый"
-        assert result["carNumber"] == "123 Га 4567"
+        assert result["carNumber"] == "123 Ро 4567"
         assert result["description"] == "Great car"
         assert len(result["options"]) == 2
         assert result["options"][0]["group"] == "Экстерьер"
@@ -279,67 +259,48 @@ class TestListings:
 class TestDetail:
     @pytest.mark.asyncio
     async def test_fetches_detail(self, mock_http_client):
-        """get_car_detail fetches Russian + Korean detail and uses Korean plate."""
-        mock_http_client.get("https://test.namsuwon.com/api/proxy/cars/6612064").mock(
-            side_effect=_detail_side_effect,
+        """get_car_detail fetches detail and restores Korean plate."""
+        mock_http_client.get("https://test.namsuwon.com/api/proxy/cars/6612064").respond(
+            200, json=DETAIL_RESPONSE,
         )
 
         result = await get_car_detail("6612064")
         assert result["encryptedId"] == "6612064"
         assert result["name"] == "Kia K5 2.0 Noblesse"
         assert len(result["images"]) == 2
-        assert result["carNumber"] == "123가4567"
+        assert result["carNumber"] == "123로4567"
 
     @pytest.mark.asyncio
     async def test_caches_detail(self, mock_http_client):
         """get_car_detail returns cached data on second call."""
-        mock_http_client.get("https://test.namsuwon.com/api/proxy/cars/6612064").mock(
-            side_effect=_detail_side_effect,
+        mock_http_client.get("https://test.namsuwon.com/api/proxy/cars/6612064").respond(
+            200, json=DETAIL_RESPONSE,
         )
 
         await get_car_detail("6612064")
         await get_car_detail("6612064")
-        # 2 calls on first fetch (Russian + Korean), 0 on cached second fetch
-        assert len(mock_http_client.calls) == 2
+        # 1 call on first fetch, 0 on cached second fetch
+        assert len(mock_http_client.calls) == 1
 
     @pytest.mark.asyncio
     async def test_serves_stale_on_error(self, mock_http_client):
         """get_car_detail serves stale cache on network error."""
-        # First call succeeds (2 requests: Russian + Korean)
-        mock_http_client.get("https://test.namsuwon.com/api/proxy/cars/6612064").mock(
-            side_effect=_detail_side_effect,
+        # First call succeeds
+        mock_http_client.get("https://test.namsuwon.com/api/proxy/cars/6612064").respond(
+            200, json=DETAIL_RESPONSE,
         )
         result1 = await get_car_detail("6612064")
 
         # Expire the cache
         namsuwon_mod._detail_cache["6612064"]["expiry"] = 0
 
-        # Second call fails — both Russian and Korean will fail
+        # Second call fails
         mock_http_client.get("https://test.namsuwon.com/api/proxy/cars/6612064").mock(
             side_effect=httpx.ConnectError("fail"),
         )
 
         result2 = await get_car_detail("6612064")
         assert result2["encryptedId"] == result1["encryptedId"]
-
-    @pytest.mark.asyncio
-    async def test_korean_call_fails_keeps_russian_value(self, mock_http_client):
-        """When Korean call fails, carNumber falls back to Russian transliteration."""
-        call_count = 0
-
-        def _russian_ok_korean_fail(request):
-            nonlocal call_count
-            call_count += 1
-            if "lang" in dict(request.url.params):
-                return httpx.Response(200, json=DETAIL_RESPONSE)
-            raise httpx.ConnectError("korean fetch failed")
-
-        mock_http_client.get("https://test.namsuwon.com/api/proxy/cars/6612064").mock(
-            side_effect=_russian_ok_korean_fail,
-        )
-
-        result = await get_car_detail("6612064")
-        assert result["carNumber"] == "123 Га 4567"
 
 
 class TestDiskPersistence:
@@ -377,23 +338,23 @@ class TestDiskPersistence:
         assert loaded == 0
 
 
-class TestExtractKoreanCarNumber:
-    def test_primary_key(self):
-        """Extracts plate from 차량번호 key."""
-        data = {"info": {"차량번호": "123가4567"}}
-        assert _extract_korean_car_number(data) == "123가4567"
+class TestRestoreKoreanPlate:
+    def test_known_translation(self):
+        """Restores Korean plate from known Russian transliteration."""
+        assert _restore_korean_plate("120 Ро 2779") == "120로2779"
 
-    def test_regex_fallback(self):
-        """Falls back to regex scan when primary key is missing."""
-        data = {"info": {"기타": "some text", "번호": "45나6789"}}
-        assert _extract_korean_car_number(data) == "45나6789"
+    def test_word_translation(self):
+        """Restores Korean plate from word-level Russian translation."""
+        assert _restore_korean_plate("42 Высокий 1080") == "42고1080"
 
-    def test_no_match(self):
-        """Returns empty string when no Korean plate found."""
-        data = {"info": {"Год": "2024", "Пробег": "35,983Km"}}
-        assert _extract_korean_car_number(data) == ""
+    def test_unknown_translation(self):
+        """Returns empty string for unknown translation."""
+        assert _restore_korean_plate("120 Xyz 2779") == ""
 
-    def test_empty_info(self):
-        """Returns empty string for empty or missing info."""
-        assert _extract_korean_car_number({}) == ""
-        assert _extract_korean_car_number({"info": {}}) == ""
+    def test_empty_plate(self):
+        """Returns empty string for empty input."""
+        assert _restore_korean_plate("") == ""
+
+    def test_case_insensitive(self):
+        """Lookup is case-insensitive."""
+        assert _restore_korean_plate("120 ро 2779") == "120로2779"
