@@ -9,7 +9,7 @@ import { CarOptions } from "@/components/CarOptions";
 import { CreditCalculatorLazy } from "@/components/CreditCalculatorLazy";
 import { ShareButton } from "@/components/ShareButton";
 import { InspectionReport } from "@/components/InspectionReport";
-import { DescriptionBlock } from "@/components/DescriptionBlock";
+
 
 /** Fetch car detail by ID (deduplicated across generateMetadata + page) */
 export const fetchCar = cache(async (id: string): Promise<CarDetail> => {
@@ -85,11 +85,6 @@ export async function CarDetailContent({ id }: { id: string }) {
           </div>
           <ShareButton title={shareTitle} />
         </div>
-
-        {/* Description */}
-        {car.description && (
-          <DescriptionBlock text={car.description} />
-        )}
 
         {/* Basic specs grid */}
         {specs.length > 0 && (
