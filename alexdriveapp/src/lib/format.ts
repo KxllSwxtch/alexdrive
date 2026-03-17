@@ -40,8 +40,24 @@ export function priceStringToKrw(price: string): number {
   return isNaN(num) ? 0 : num;
 }
 
+/** Parse man-won value from a carmanager price string.
+ *  Handles both "3,240만원" and plain "3,240" (man-won without suffix). */
+export function parseManWonFromString(price: string): number | null {
+  // First try with 만 suffix
+  const manMatch = price.match(/([\d,]+)\s*만/);
+  if (manMatch) {
+    const num = parseInt(manMatch[1].replace(/,/g, ""), 10);
+    return isNaN(num) ? null : num;
+  }
+  // Fallback: treat plain numeric string as man-won (carmanager format)
+  const cleaned = price.replace(/[^0-9]/g, "");
+  if (!cleaned) return null;
+  const num = parseInt(cleaned, 10);
+  return isNaN(num) || num === 0 ? null : num;
+}
+
 export function formatMileage(mileage: string): string {
-  // namsuwon provides pre-formatted "35,983Km" — normalize to "35,983 km"
+  // Normalize various mileage formats to "35,983 km"
   const kmMatch = mileage.match(/([\d,]+)\s*[Kk][Mm]/i);
   if (kmMatch) {
     const num = parseInt(kmMatch[1].replace(/,/g, ""), 10);

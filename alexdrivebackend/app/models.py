@@ -2,38 +2,64 @@ from pydantic import BaseModel
 
 
 class CarMaker(BaseModel):
-    bm_no: str
-    bm_name: str
-    bm_logoImage: str = ""
+    MakerNo: int
+    MakerName: str
 
 
 class CarModel(BaseModel):
-    bo_no: str
-    bo_name: str
-    bo_faceImage: str = ""
-    bo_startDate: str = ""
-    bo_endDate: str = ""
-    bo_group: str = ""
+    ModelNo: int
+    ModelName: str
+    MakerNo: int
 
 
-class CarSeries(BaseModel):
-    bs_no: str
-    bs_name: str
-    bd: list[dict] = []  # [{bd_no, bd_name}]
+class CarModelDetail(BaseModel):
+    ModelDetailNo: int
+    ModelDetailName: str
+    ModelNo: int
+
+
+class CarGrade(BaseModel):
+    GradeNo: int
+    GradeName: str
+    ModelDetailNo: int
+
+
+class CarGradeDetail(BaseModel):
+    GradeDetailNo: int
+    GradeDetailName: str
+    GradeNo: int
 
 
 class CarColor(BaseModel):
-    bc_no: str
-    bc_name: str
-    bc_rgb1: str = ""
-    bc_rgb2: str = ""
+    CKeyNo: int
+    ColorName: str
+
+
+class CarFuel(BaseModel):
+    FKeyNo: int
+    FuelName: str
+
+
+class CarMission(BaseModel):
+    MKeyNo: int
+    MissionName: str
+
+
+class Danji(BaseModel):
+    DanjiNo: int
+    DanjiName: str
 
 
 class FilterData(BaseModel):
     makers: list[CarMaker]
+    models: dict[str, list[CarModel]]
+    modelDetails: dict[str, list[CarModelDetail]]
+    grades: dict[str, list[CarGrade]]
+    gradeDetails: dict[str, list[CarGradeDetail]]
     colors: list[CarColor]
-    fuels: list[dict]
-    transmissions: list[dict]
+    fuels: list[CarFuel]
+    missions: list[CarMission]
+    danjis: list[Danji]
 
 
 class CarListing(BaseModel):
@@ -45,26 +71,14 @@ class CarListing(BaseModel):
     fuel: str
     transmission: str
     price: str
-    priceMl: int = 0  # price in man-won (만원)
-    dealer: str = ""
-    phone: str = ""
+    location: str
+    dealer: str
+    phone: str
 
 
 class OptionGroup(BaseModel):
     group: str
     items: list[str]
-
-
-class InspectionData(BaseModel):
-    vin: str = ""
-    mileage: str = ""
-    emissions: str = ""
-    has_accident: bool | None = None
-    has_simple_repair: bool | None = None
-    inspector_notes: str = ""
-    inspection_date: str = ""
-    photos: list[str] = []
-    stamp_url: str = ""
 
 
 class CarDetail(BaseModel):
@@ -76,20 +90,19 @@ class CarDetail(BaseModel):
     fuel: str
     transmission: str
     price: str
-    priceMl: int = 0
-    color: str = ""
-    carNumber: str = ""
-    options: list[OptionGroup] = []
-    dealer: str = ""
-    phone: str = ""
-    description: str = ""
-    info: dict = {}
-    pricing: dict = {}
-    specs: dict = {}
-    inspection: dict = {}
+    color: str
+    engineCapacity: str
+    carNumber: str
+    location: str
+    options: list[OptionGroup]
+    dealer: str
+    phone: str
+    registrationDate: str
+    modelYear: str
+    inspectionUrl: str | None = None
+    blurDataUrl: str | None = None
 
 
 class CarListingsResponse(BaseModel):
     listings: list[CarListing]
     total: int
-    hasNext: bool = False

@@ -15,6 +15,10 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "code2.car2b.com",
       },
+      {
+        protocol: "https",
+        hostname: "www.carmanager.co.kr",
+      },
     ],
     minimumCacheTTL: 86400,
     formats: ["image/avif", "image/webp"],

@@ -4,10 +4,10 @@ from pydantic_settings import BaseSettings
 class Settings(BaseSettings):
     port: int = 3001
     cors_origins: str = "http://localhost:3000"
-    namsuwon_base_url: str = "https://cars.namsuwon.com"
-    proxy_url: str = ""
+    carmanager_username: str = ""
+    carmanager_password: str = ""
+    carmanager_base_url: str = "https://www.carmanager.co.kr"
     admin_secret: str = ""
-    min_request_interval: float = 0.5
 
     model_config = {"env_file": ".env", "extra": "ignore"}
 

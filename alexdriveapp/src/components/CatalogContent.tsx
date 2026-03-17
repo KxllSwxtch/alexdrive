@@ -10,20 +10,21 @@ const PAGE_SIZE = 20;
 const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:3001";
 
 const VALID_PARAM_KEYS = new Set([
-  "bm_no", "bo_no", "bs_no", "bd_no",
-  "yearFrom", "yearTo", "mileageFrom", "mileageTo", "priceFrom", "priceTo",
-  "fuel", "transmission", "color", "keyword",
-  "extFlag1", "extFlag2", "extFlag3", "extFlag4", "extFlag5",
-  "sort", "order", "page", "page_size",
+  "CarMakerNo", "CarModelNo", "CarModelDetailNo", "CarGradeNo", "CarGradeDetailNo",
+  "CarYearFrom", "CarYearTo", "CarMileageFrom", "CarMileageTo", "CarPriceFrom", "CarPriceTo",
+  "CarMissionNo", "CarFuelNo", "CarColorNo", "DanjiNo",
+  "CarLpg", "CarInspection", "CarPhoto", "CarSalePrice", "CarLease",
+  "SearchName", "SearchCarNo",
+  "PageNow", "PageSize", "PageSort", "PageAscDesc",
 ]);
 
-const NUMBER_KEYS = new Set(["page", "page_size"]);
+const NUMBER_KEYS = new Set(["PageNow", "PageSize"]);
 
 const DEFAULT_PARAMS: CarListingParams = {
-  page: 1,
-  page_size: PAGE_SIZE,
-  sort: "date",
-  order: "desc",
+  PageNow: 1,
+  PageSize: PAGE_SIZE,
+  PageSort: "ModDt",
+  PageAscDesc: "DESC",
 };
 
 function parseParamsFromURL(searchParams: URLSearchParams): CarListingParams {
@@ -44,10 +45,10 @@ function syncParamsToURL(params: CarListingParams) {
   const urlParams = new URLSearchParams();
   for (const [key, value] of Object.entries(params)) {
     if (value === undefined || value === "") continue;
-    if (key === "page" && value === 1) continue;
-    if (key === "page_size" && value === PAGE_SIZE) continue;
-    if (key === "sort" && value === "date") continue;
-    if (key === "order" && value === "desc") continue;
+    if (key === "PageNow" && value === 1) continue;
+    if (key === "PageSize" && value === PAGE_SIZE) continue;
+    if (key === "PageSort" && value === "ModDt") continue;
+    if (key === "PageAscDesc" && value === "DESC") continue;
     urlParams.set(key, String(value));
   }
   const qs = urlParams.toString();
@@ -261,13 +262,13 @@ export function CatalogContent({ initialFilters, initialCars, initialTotal, init
       {/* Pagination */}
       {totalPages > 1 && (
         <Pagination
-          currentPage={params.page || 1}
+          currentPage={params.PageNow || 1}
           totalPages={totalPages}
           onPageChange={(page) => {
-            if (page === (params.page || 1)) return;
+            if (page === (params.PageNow || 1)) return;
             window.scrollTo({ top: 0, behavior: "instant" });
             setLoading(true);
-            setParams((prev) => ({ ...prev, page }));
+            setParams((prev) => ({ ...prev, PageNow: page }));
           }}
           disabled={loading}
         />

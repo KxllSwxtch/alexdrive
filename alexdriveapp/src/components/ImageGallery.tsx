@@ -91,6 +91,7 @@ export function ImageGallery({ images, alt, blurDataUrl }: ImageGalleryProps) {
           sizes="(max-width: 1024px) 100vw, 60vw"
           className="object-cover"
           priority
+          unoptimized
           placeholder={blurDataUrl ? "blur" : "empty"}
           blurDataURL={blurDataUrl}
         />
@@ -147,6 +148,7 @@ export function ImageGallery({ images, alt, blurDataUrl }: ImageGalleryProps) {
                 sizes="96px"
                 className="object-cover"
                 loading="lazy"
+                unoptimized
               />
             </button>
           ))}
@@ -203,6 +205,7 @@ export function ImageGallery({ images, alt, blurDataUrl }: ImageGalleryProps) {
                 sizes="90vw"
                 className="object-contain"
                 loading="eager"
+                unoptimized
               />
             </div>
 
@@ -250,6 +253,7 @@ export function ImageGallery({ images, alt, blurDataUrl }: ImageGalleryProps) {
                         fill
                         sizes="80px"
                         className="object-cover"
+                        unoptimized
                       />
                     ) : (
                       <div className="absolute inset-0 bg-bg-elevated" />

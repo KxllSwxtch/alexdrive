@@ -5,11 +5,12 @@ import type { FilterData, CarListing } from "@/lib/types";
 const PAGE_SIZE = 20;
 
 const VALID_PARAM_KEYS = new Set([
-  "bm_no", "bo_no", "bs_no", "bd_no",
-  "yearFrom", "yearTo", "mileageFrom", "mileageTo", "priceFrom", "priceTo",
-  "fuel", "transmission", "color", "keyword",
-  "extFlag1", "extFlag2", "extFlag3", "extFlag4", "extFlag5",
-  "sort", "order", "page", "page_size",
+  "CarMakerNo", "CarModelNo", "CarModelDetailNo", "CarGradeNo", "CarGradeDetailNo",
+  "CarYearFrom", "CarYearTo", "CarMileageFrom", "CarMileageTo", "CarPriceFrom", "CarPriceTo",
+  "CarMissionNo", "CarFuelNo", "CarColorNo", "DanjiNo",
+  "CarLpg", "CarInspection", "CarPhoto", "CarSalePrice", "CarLease",
+  "SearchName", "SearchCarNo",
+  "PageNow", "PageSize", "PageSort", "PageAscDesc",
 ]);
 
 interface PageProps {
@@ -27,7 +28,7 @@ export default async function CatalogPage({ searchParams }: PageProps) {
   }
 
   // Set defaults if not present in URL
-  if (!backendParams.has("page_size")) backendParams.set("page_size", String(PAGE_SIZE));
+  if (!backendParams.has("PageSize")) backendParams.set("PageSize", String(PAGE_SIZE));
 
   // Parallel server-side fetch (internal network, no CORS)
   let filters: FilterData | null = null;

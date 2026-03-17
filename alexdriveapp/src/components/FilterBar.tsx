@@ -1,8 +1,7 @@
 "use client";
 
 import { useState, useEffect, useMemo, useCallback } from "react";
-import Image from "next/image";
-import type { FilterData, CarListingParams, CarModel, CarSeries } from "@/lib/types";
+import type { FilterData, CarListingParams } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -27,9 +26,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { ChevronsUpDown, ChevronDown, RotateCcw, Search } from "lucide-react";
-import { ModelSelectorModal } from "@/components/ModelSelectorModal";
-
-const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:3001";
+import { translateSmartly } from "@/lib/translations";
 
 interface FilterBarProps {
   filters: FilterData | null;
@@ -41,30 +38,30 @@ interface FilterBarProps {
 interface SelectOption {
   value: string;
   label: string;
-  logo?: string;
 }
 
 const ALL_VALUE = "__all__";
 
 const FILTER_KEYS = [
-  "bm_no", "bo_no", "bs_no", "bd_no",
-  "yearFrom", "yearTo", "mileageFrom", "mileageTo", "priceFrom", "priceTo",
-  "fuel", "transmission", "color", "keyword",
-  "extFlag1", "extFlag2", "extFlag3", "extFlag4", "extFlag5",
+  "CarMakerNo", "CarModelNo", "CarModelDetailNo", "CarGradeNo", "CarGradeDetailNo",
+  "CarYearFrom", "CarYearTo", "CarMileageFrom", "CarMileageTo", "CarPriceFrom", "CarPriceTo",
+  "CarMissionNo", "CarFuelNo", "CarColorNo",
+  "CarLpg", "CarInspection", "CarPhoto", "CarSalePrice", "CarLease",
+  "SearchName", "SearchCarNo",
 ] as const;
 
 const SORT_OPTIONS = [
-  { value: "date", label: "По дате" },
-  { value: "price", label: "По цене" },
-  { value: "mileage", label: "По пробегу" },
-  { value: "year", label: "По году" },
+  { value: "ModDt", label: "По дате" },
+  { value: "CarPrice", label: "По цене" },
+  { value: "CarMileage", label: "По пробегу" },
+  { value: "CarYear", label: "По году" },
 ];
 
 const DEFAULT_PARAMS: CarListingParams = {
-  page: 1,
-  page_size: 20,
-  sort: "date",
-  order: "desc",
+  PageNow: 1,
+  PageSize: 20,
+  PageSort: "ModDt",
+  PageAscDesc: "DESC",
 };
 
 export function FilterBar({
@@ -78,66 +75,22 @@ export function FilterBar({
   // Draft state — local, uncommitted filter values
   const [draftParams, setDraftParams] = useState<CarListingParams>(appliedParams);
 
-  // Cascading state
-  const [selectedMaker, setSelectedMaker] = useState(appliedParams.bm_no || "");
-  const [selectedModel, setSelectedModel] = useState(appliedParams.bo_no || "");
-  const [selectedSeries, setSelectedSeries] = useState(appliedParams.bs_no || "");
-  const [selectedTrim, setSelectedTrim] = useState(appliedParams.bd_no || "");
-
-  // Async cascading data
-  const [models, setModels] = useState<CarModel[]>([]);
-  const [series, setSeries] = useState<CarSeries[]>([]);
-  const [modelsLoading, setModelsLoading] = useState(false);
-  const [seriesLoading, setSeriesLoading] = useState(false);
+  // 5-level cascading state
+  const [selectedMaker, setSelectedMaker] = useState(appliedParams.CarMakerNo || "");
+  const [selectedModel, setSelectedModel] = useState(appliedParams.CarModelNo || "");
+  const [selectedModelDetail, setSelectedModelDetail] = useState(appliedParams.CarModelDetailNo || "");
+  const [selectedGrade, setSelectedGrade] = useState(appliedParams.CarGradeNo || "");
+  const [selectedGradeDetail, setSelectedGradeDetail] = useState(appliedParams.CarGradeDetailNo || "");
 
   // Sync draft from parent when appliedParams change (e.g. pagination)
   useEffect(() => {
     setDraftParams(appliedParams);
-    setSelectedMaker(appliedParams.bm_no || "");
-    setSelectedModel(appliedParams.bo_no || "");
-    setSelectedSeries(appliedParams.bs_no || "");
-    setSelectedTrim(appliedParams.bd_no || "");
+    setSelectedMaker(appliedParams.CarMakerNo || "");
+    setSelectedModel(appliedParams.CarModelNo || "");
+    setSelectedModelDetail(appliedParams.CarModelDetailNo || "");
+    setSelectedGrade(appliedParams.CarGradeNo || "");
+    setSelectedGradeDetail(appliedParams.CarGradeDetailNo || "");
   }, [appliedParams]);
-
-  // Fetch models when maker changes
-  useEffect(() => {
-    if (!selectedMaker) {
-      setModels([]);
-      return;
-    }
-    let cancelled = false;
-    setModelsLoading(true);
-    fetch(`${BACKEND_URL}/api/filters/models?bm_no=${selectedMaker}`)
-      .then((r) => r.json())
-      .then((data) => {
-        if (!cancelled) setModels(data || []);
-      })
-      .catch(() => {})
-      .finally(() => {
-        if (!cancelled) setModelsLoading(false);
-      });
-    return () => { cancelled = true; };
-  }, [selectedMaker]);
-
-  // Fetch series when model changes
-  useEffect(() => {
-    if (!selectedModel) {
-      setSeries([]);
-      return;
-    }
-    let cancelled = false;
-    setSeriesLoading(true);
-    fetch(`${BACKEND_URL}/api/filters/series?bo_no=${selectedModel}`)
-      .then((r) => r.json())
-      .then((data) => {
-        if (!cancelled) setSeries(data || []);
-      })
-      .catch(() => {})
-      .finally(() => {
-        if (!cancelled) setSeriesLoading(false);
-      });
-    return () => { cancelled = true; };
-  }, [selectedModel]);
 
   // Dirty detection
   const hasUnappliedChanges = useMemo(() => {
@@ -148,117 +101,141 @@ export function FilterBar({
 
   const updateDraft = useCallback(
     (key: keyof CarListingParams, value: string) => {
-      setDraftParams((prev) => ({ ...prev, [key]: value || undefined, page: 1 }));
+      setDraftParams((prev) => ({ ...prev, [key]: value || undefined, PageNow: 1 }));
     },
     []
   );
 
+  // 5-level cascade handlers — all from local filter data
   const handleMakerChange = (value: string) => {
     setSelectedMaker(value);
     setSelectedModel("");
-    setSelectedSeries("");
-    setSelectedTrim("");
+    setSelectedModelDetail("");
+    setSelectedGrade("");
+    setSelectedGradeDetail("");
     setDraftParams((prev) => ({
       ...prev,
-      bm_no: value || undefined,
-      bo_no: undefined,
-      bs_no: undefined,
-      bd_no: undefined,
-      page: 1,
+      CarMakerNo: value || undefined,
+      CarModelNo: undefined,
+      CarModelDetailNo: undefined,
+      CarGradeNo: undefined,
+      CarGradeDetailNo: undefined,
+      PageNow: 1,
     }));
   };
 
   const handleModelChange = (value: string) => {
     setSelectedModel(value);
-    setSelectedSeries("");
-    setSelectedTrim("");
+    setSelectedModelDetail("");
+    setSelectedGrade("");
+    setSelectedGradeDetail("");
     setDraftParams((prev) => ({
       ...prev,
-      bo_no: value || undefined,
-      bs_no: undefined,
-      bd_no: undefined,
-      page: 1,
+      CarModelNo: value || undefined,
+      CarModelDetailNo: undefined,
+      CarGradeNo: undefined,
+      CarGradeDetailNo: undefined,
+      PageNow: 1,
     }));
   };
 
-  const handleSeriesChange = (value: string) => {
-    setSelectedSeries(value);
-    setSelectedTrim("");
+  const handleModelDetailChange = (value: string) => {
+    setSelectedModelDetail(value);
+    setSelectedGrade("");
+    setSelectedGradeDetail("");
     setDraftParams((prev) => ({
       ...prev,
-      bs_no: value || undefined,
-      bd_no: undefined,
-      page: 1,
+      CarModelDetailNo: value || undefined,
+      CarGradeNo: undefined,
+      CarGradeDetailNo: undefined,
+      PageNow: 1,
     }));
   };
 
-  const handleTrimChange = (value: string) => {
-    setSelectedTrim(value);
+  const handleGradeChange = (value: string) => {
+    setSelectedGrade(value);
+    setSelectedGradeDetail("");
     setDraftParams((prev) => ({
       ...prev,
-      bd_no: value || undefined,
-      page: 1,
+      CarGradeNo: value || undefined,
+      CarGradeDetailNo: undefined,
+      PageNow: 1,
+    }));
+  };
+
+  const handleGradeDetailChange = (value: string) => {
+    setSelectedGradeDetail(value);
+    setDraftParams((prev) => ({
+      ...prev,
+      CarGradeDetailNo: value || undefined,
+      PageNow: 1,
     }));
   };
 
   // Sort — instant-apply
   const handleSortChange = (value: string) => {
-    const merged = { ...draftParams, sort: value || undefined, page: 1 };
+    const merged = { ...draftParams, PageSort: value || undefined, PageNow: 1 };
     setDraftParams(merged);
     onApplyFilters(merged);
   };
 
   const handleSortDirectionChange = (value: string) => {
-    const merged = { ...draftParams, order: value, page: 1 };
+    const merged = { ...draftParams, PageAscDesc: value, PageNow: 1 };
     setDraftParams(merged);
     onApplyFilters(merged);
   };
 
-  // Maker options with logos
+  // Maker options (no logos)
   const makerOptions = useMemo(
     () =>
       (filters?.makers || []).map((m) => ({
-        value: String(m.bm_no),
-        label: m.bm_name,
-        logo: m.bm_logoImage,
+        value: String(m.MakerNo),
+        label: translateSmartly(m.MakerName),
       })),
     [filters?.makers]
   );
 
-  // Series options
-  const seriesOptions = useMemo(
-    () =>
-      series.map((s) => ({
-        value: String(s.bs_no),
-        label: s.bs_name,
-      })),
-    [series]
-  );
+  // Model options — filtered from local data by selected maker
+  const modelOptions = useMemo(() => {
+    if (!selectedMaker || !filters?.models) return [];
+    const items = filters.models[selectedMaker] || [];
+    return items.map((m) => ({ value: String(m.ModelNo), label: translateSmartly(m.ModelName) }));
+  }, [filters?.models, selectedMaker]);
 
-  // Trim options (from selected series)
-  const trimOptions = useMemo(() => {
-    const selectedSeriesObj = series.find((s) => String(s.bs_no) === selectedSeries);
-    if (!selectedSeriesObj?.bd) return [];
-    return selectedSeriesObj.bd.map((t) => ({
-      value: String(t.bd_no),
-      label: t.bd_name,
-    }));
-  }, [series, selectedSeries]);
+  // ModelDetail options — filtered by selected model
+  const modelDetailOptions = useMemo(() => {
+    if (!selectedModel || !filters?.modelDetails) return [];
+    const items = filters.modelDetails[selectedModel] || [];
+    return items.map((m) => ({ value: String(m.ModelDetailNo), label: translateSmartly(m.ModelDetailName) }));
+  }, [filters?.modelDetails, selectedModel]);
+
+  // Grade options — filtered by selected model detail
+  const gradeOptions = useMemo(() => {
+    if (!selectedModelDetail || !filters?.grades) return [];
+    const items = filters.grades[selectedModelDetail] || [];
+    return items.map((g) => ({ value: String(g.GradeNo), label: translateSmartly(g.GradeName) }));
+  }, [filters?.grades, selectedModelDetail]);
+
+  // GradeDetail options — filtered by selected grade
+  const gradeDetailOptions = useMemo(() => {
+    if (!selectedGrade || !filters?.gradeDetails) return [];
+    const items = filters.gradeDetails[selectedGrade] || [];
+    return items.map((g) => ({ value: String(g.GradeDetailNo), label: translateSmartly(g.GradeDetailName) }));
+  }, [filters?.gradeDetails, selectedGrade]);
 
   const handleReset = () => {
     setSelectedMaker("");
     setSelectedModel("");
-    setSelectedSeries("");
-    setSelectedTrim("");
-    setModels([]);
-    setSeries([]);
+    setSelectedModelDetail("");
+    setSelectedGrade("");
+    setSelectedGradeDetail("");
     const resetParams: CarListingParams = { ...DEFAULT_PARAMS };
     setDraftParams(resetParams);
     onApplyFilters(resetParams);
   };
 
   const handleApply = () => {
-    onApplyFilters({ ...draftParams, page: 1 });
+    onApplyFilters({ ...draftParams, PageNow: 1 });
   };
 
   return (
@@ -277,50 +254,50 @@ export function FilterBar({
           </FilterField>
 
           <FilterField label="Модель">
-            <ModelSelectorModal
-              models={models}
-              selectedModel={selectedModel}
-              onSelect={handleModelChange}
+            <FilterCombobox
+              options={modelOptions}
+              value={selectedModel}
+              onChange={handleModelChange}
+              placeholder="Все модели"
+              searchPlaceholder="Найти модель..."
               disabled={!selectedMaker}
-              isLoading={modelsLoading}
             />
           </FilterField>
 
-          <FilterField label="Серия">
+          <FilterField label="Модификация">
             <FilterDropdown
-              options={seriesOptions}
-              value={selectedSeries}
-              onChange={handleSeriesChange}
+              options={modelDetailOptions}
+              value={selectedModelDetail}
+              onChange={handleModelDetailChange}
               placeholder="Все"
               disabled={!selectedModel}
-              isLoading={seriesLoading}
             />
           </FilterField>
 
           <FilterField label="Комплектация">
             <FilterDropdown
-              options={trimOptions}
-              value={selectedTrim}
-              onChange={handleTrimChange}
+              options={gradeOptions}
+              value={selectedGrade}
+              onChange={handleGradeChange}
               placeholder="Все"
-              disabled={!selectedSeries}
+              disabled={!selectedModelDetail}
             />
           </FilterField>
 
-          <FilterField label="Поиск по номеру">
-            <Input
-              type="text"
-              value={draftParams.keyword || ""}
-              onChange={(e) => updateDraft("keyword", e.target.value)}
-              placeholder="Гос. номер или ключевое слово"
-              className="h-9 bg-bg-elevated"
+          <FilterField label="Доп. комплектация">
+            <FilterDropdown
+              options={gradeDetailOptions}
+              value={selectedGradeDetail}
+              onChange={handleGradeDetailChange}
+              placeholder="Все"
+              disabled={!selectedGrade}
             />
           </FilterField>
 
           <FilterField label="Сортировка">
             <FilterDropdown
               options={SORT_OPTIONS}
-              value={draftParams.sort || "date"}
+              value={draftParams.PageSort || "ModDt"}
               onChange={handleSortChange}
               placeholder="По дате"
               allowClear={false}
@@ -380,28 +357,38 @@ export function FilterBar({
           {/* Fuel radio group */}
           <FilterField label="Топливо">
             <FilterPillGroup
-              options={filters?.fuels || []}
-              value={draftParams.fuel || ""}
-              onChange={(v) => updateDraft("fuel", v)}
+              options={(filters?.fuels || []).map((f) => ({
+                value: String(f.FKeyNo),
+                label: translateSmartly(f.FuelName),
+              }))}
+              value={draftParams.CarFuelNo || ""}
+              onChange={(v) => updateDraft("CarFuelNo", v)}
             />
           </FilterField>
 
-          {/* Transmission radio group */}
+          {/* Mission (transmission) radio group */}
           <FilterField label="КПП">
             <FilterPillGroup
-              options={filters?.transmissions || []}
-              value={draftParams.transmission || ""}
-              onChange={(v) => updateDraft("transmission", v)}
+              options={(filters?.missions || []).map((m) => ({
+                value: String(m.MKeyNo),
+                label: translateSmartly(m.MissionName),
+              }))}
+              value={draftParams.CarMissionNo || ""}
+              onChange={(v) => updateDraft("CarMissionNo", v)}
             />
           </FilterField>
 
-          {/* Color grid */}
+          {/* Color dropdown (no RGB data for grid) */}
           {filters?.colors && filters.colors.length > 0 && (
             <FilterField label="Цвет">
-              <FilterColorGrid
-                colors={filters.colors}
-                value={draftParams.color || ""}
-                onChange={(v) => updateDraft("color", v)}
+              <FilterDropdown
+                options={filters.colors.map((c) => ({
+                  value: String(c.CKeyNo),
+                  label: translateSmartly(c.ColorName),
+                }))}
+                value={draftParams.CarColorNo || ""}
+                onChange={(v) => updateDraft("CarColorNo", v)}
+                placeholder="Все цвета"
               />
             </FilterField>
           )}
@@ -410,60 +397,82 @@ export function FilterBar({
           <div className="grid gap-3 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
             <RangeInput
               label="Год выпуска"
-              fromValue={draftParams.yearFrom || ""}
-              toValue={draftParams.yearTo || ""}
-              onFromChange={(v) => updateDraft("yearFrom", v)}
-              onToChange={(v) => updateDraft("yearTo", v)}
+              fromValue={draftParams.CarYearFrom || ""}
+              toValue={draftParams.CarYearTo || ""}
+              onFromChange={(v) => updateDraft("CarYearFrom", v)}
+              onToChange={(v) => updateDraft("CarYearTo", v)}
               placeholderFrom="От (2015)"
               placeholderTo="До (2024)"
             />
             <RangeInput
               label="Пробег (км)"
-              fromValue={draftParams.mileageFrom || ""}
-              toValue={draftParams.mileageTo || ""}
-              onFromChange={(v) => updateDraft("mileageFrom", v)}
-              onToChange={(v) => updateDraft("mileageTo", v)}
+              fromValue={draftParams.CarMileageFrom || ""}
+              toValue={draftParams.CarMileageTo || ""}
+              onFromChange={(v) => updateDraft("CarMileageFrom", v)}
+              onToChange={(v) => updateDraft("CarMileageTo", v)}
               placeholderFrom="От"
               placeholderTo="До"
             />
             <RangeInput
               label="Цена (만원)"
-              fromValue={draftParams.priceFrom || ""}
-              toValue={draftParams.priceTo || ""}
-              onFromChange={(v) => updateDraft("priceFrom", v)}
-              onToChange={(v) => updateDraft("priceTo", v)}
-              placeholderFrom="От (напр. 3000)"
+              fromValue={draftParams.CarPriceFrom || ""}
+              toValue={draftParams.CarPriceTo || ""}
+              onFromChange={(v) => updateDraft("CarPriceFrom", v)}
+              onToChange={(v) => updateDraft("CarPriceTo", v)}
+              placeholderFrom="От (напр. 1000)"
               placeholderTo="До (напр. 5000)"
             />
+          </div>
+
+          {/* Search inputs */}
+          <div className="grid gap-3 grid-cols-1 sm:grid-cols-2">
+            <FilterField label="Поиск по названию">
+              <Input
+                type="text"
+                value={draftParams.SearchName || ""}
+                onChange={(e) => updateDraft("SearchName", e.target.value)}
+                placeholder="Название модели"
+                className="h-9 bg-bg-elevated"
+              />
+            </FilterField>
+            <FilterField label="Поиск по номеру">
+              <Input
+                type="text"
+                value={draftParams.SearchCarNo || ""}
+                onChange={(e) => updateDraft("SearchCarNo", e.target.value)}
+                placeholder="Гос. номер"
+                className="h-9 bg-bg-elevated"
+              />
+            </FilterField>
           </div>
 
           {/* Checkbox options */}
           <FilterField label="Опции">
             <div className="flex flex-wrap gap-2">
               <FilterCheckbox
-                label="Навигация"
-                checked={draftParams.extFlag1 === "1"}
-                onChange={(c) => updateDraft("extFlag1", c ? "1" : "")}
-              />
-              <FilterCheckbox
-                label="Люк"
-                checked={draftParams.extFlag2 === "1"}
-                onChange={(c) => updateDraft("extFlag2", c ? "1" : "")}
-              />
-              <FilterCheckbox
-                label="Умный ключ"
-                checked={draftParams.extFlag3 === "1"}
-                onChange={(c) => updateDraft("extFlag3", c ? "1" : "")}
-              />
-              <FilterCheckbox
-                label="Без ДТП"
-                checked={draftParams.extFlag4 === "1"}
-                onChange={(c) => updateDraft("extFlag4", c ? "1" : "")}
+                label="LPG"
+                checked={draftParams.CarLpg === "1"}
+                onChange={(c) => updateDraft("CarLpg", c ? "1" : "")}
               />
               <FilterCheckbox
                 label="Тех. осмотр"
-                checked={draftParams.extFlag5 === "1"}
-                onChange={(c) => updateDraft("extFlag5", c ? "1" : "")}
+                checked={draftParams.CarInspection === "1"}
+                onChange={(c) => updateDraft("CarInspection", c ? "1" : "")}
+              />
+              <FilterCheckbox
+                label="С фото"
+                checked={draftParams.CarPhoto === "1"}
+                onChange={(c) => updateDraft("CarPhoto", c ? "1" : "")}
+              />
+              <FilterCheckbox
+                label="Цена продажи"
+                checked={draftParams.CarSalePrice === "1"}
+                onChange={(c) => updateDraft("CarSalePrice", c ? "1" : "")}
+              />
+              <FilterCheckbox
+                label="Лизинг"
+                checked={draftParams.CarLease === "1"}
+                onChange={(c) => updateDraft("CarLease", c ? "1" : "")}
               />
             </div>
           </FilterField>
@@ -474,10 +483,10 @@ export function FilterBar({
               <Button
                 variant="ghost"
                 size="sm"
-                onClick={() => handleSortDirectionChange("asc")}
+                onClick={() => handleSortDirectionChange("ASC")}
                 className={cn(
                   "rounded-r-none border-0",
-                  draftParams.order === "asc"
+                  draftParams.PageAscDesc === "ASC"
                     ? "bg-gold/10 text-gold"
                     : "text-text-secondary hover:text-text-primary"
                 )}
@@ -487,10 +496,10 @@ export function FilterBar({
               <Button
                 variant="ghost"
                 size="sm"
-                onClick={() => handleSortDirectionChange("desc")}
+                onClick={() => handleSortDirectionChange("DESC")}
                 className={cn(
                   "rounded-l-none border-0",
-                  draftParams.order !== "asc"
+                  draftParams.PageAscDesc !== "ASC"
                     ? "bg-gold/10 text-gold"
                     : "text-text-secondary hover:text-text-primary"
                 )}
@@ -537,7 +546,6 @@ function FilterCombobox({
   placeholder,
   searchPlaceholder,
   disabled,
-  isLoading,
 }: {
   options: SelectOption[];
   value: string;
@@ -545,17 +553,11 @@ function FilterCombobox({
   placeholder: string;
   searchPlaceholder: string;
   disabled?: boolean;
-  isLoading?: boolean;
 }) {
   const [open, setOpen] = useState(false);
 
   const selectedLabel = useMemo(
     () => options.find((o) => o.value === value)?.label,
-    [options, value]
-  );
-
-  const selectedLogo = useMemo(
-    () => options.find((o) => o.value === value)?.logo,
     [options, value]
   );
 
@@ -573,11 +575,8 @@ function FilterCombobox({
           value ? "text-text-primary" : "text-muted-foreground"
         )}
       >
-        <span className="truncate flex items-center gap-2">
-          {selectedLogo && (
-            <Image src={selectedLogo} alt="" width={20} height={20} className="rounded-sm" unoptimized />
-          )}
-          {isLoading ? "Загрузка..." : selectedLabel || placeholder}
+        <span className="truncate">
+          {selectedLabel || placeholder}
         </span>
         <ChevronsUpDown className="ml-2 size-3.5 shrink-0 text-muted-foreground" />
       </PopoverTrigger>
@@ -607,12 +606,7 @@ function FilterCombobox({
                   }}
                   data-checked={value === opt.value}
                 >
-                  <span className="flex items-center gap-2">
-                    {opt.logo && (
-                      <Image src={opt.logo} alt="" width={20} height={20} className="rounded-sm" unoptimized />
-                    )}
-                    {opt.label}
-                  </span>
+                  {opt.label}
                 </CommandItem>
               ))}
             </CommandGroup>
@@ -706,48 +700,6 @@ function FilterPillGroup({
           {opt.label}
         </button>
       ))}
-    </div>
-  );
-}
-
-function FilterColorGrid({
-  colors,
-  value,
-  onChange,
-}: {
-  colors: { bc_no: string; bc_name: string; bc_rgb1: string; bc_rgb2: string }[];
-  value: string;
-  onChange: (value: string) => void;
-}) {
-  return (
-    <div className="flex flex-wrap gap-2">
-      {colors.map((color) => {
-        const isSelected = value === String(color.bc_no);
-        const isTwoTone = color.bc_rgb1 !== color.bc_rgb2;
-        return (
-          <button
-            key={color.bc_no}
-            onClick={() => onChange(isSelected ? "" : String(color.bc_no))}
-            className={cn(
-              "group relative flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-xs transition-all",
-              isSelected
-                ? "border-gold bg-gold/10 text-gold"
-                : "border-border bg-bg-elevated text-text-secondary hover:border-border hover:text-text-primary"
-            )}
-            title={color.bc_name}
-          >
-            <span
-              className="inline-block size-3.5 rounded-full border border-white/20 shrink-0"
-              style={{
-                background: isTwoTone
-                  ? `linear-gradient(135deg, ${color.bc_rgb1} 50%, ${color.bc_rgb2} 50%)`
-                  : color.bc_rgb1,
-              }}
-            />
-            <span className="hidden sm:inline">{color.bc_name}</span>
-          </button>
-        );
-      })}
     </div>
   );
 }

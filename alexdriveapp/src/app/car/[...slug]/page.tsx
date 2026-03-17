@@ -3,8 +3,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { permanentRedirect } from "next/navigation";
 import type { CarDetail } from "@/lib/types";
-import { formatPriceKrw } from "@/lib/format";
-import { buildCarDetailPath } from "@/lib/url";
+import { buildCarDetailPath, fromUrlSafeId } from "@/lib/url";
 import { CarDetailContent, fetchCar } from "@/components/CarDetailContent";
 import { CarDetailSkeleton } from "@/components/CarDetailSkeleton";
 import { MobileContactBar } from "@/components/MobileContactBar";
@@ -18,9 +17,8 @@ interface PageProps {
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   try {
     const slugParts = (await params).slug;
-    const id = slugParts.length === 1
-      ? decodeURIComponent(slugParts[0])
-      : slugParts[slugParts.length - 1];
+    const rawId = slugParts[slugParts.length - 1];
+    const id = fromUrlSafeId(rawId);
 
     // Race: if cache hit, return rich metadata; if cold, return generic quickly
     const car = await Promise.race([
@@ -32,10 +30,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
     return {
       title: `${car.name} ${car.year} - AlexDrive`,
-      description: `${car.name} ${car.year}, ${car.mileage}, ${car.priceMl ? formatPriceKrw(car.priceMl) : ""} - купить в AlexDrive, Сувон`,
+      description: `${car.name} ${car.year}, ${car.mileage}, ${car.price} - купить в AlexDrive, Сувон`,
       openGraph: {
         title: `${car.name} ${car.year} - AlexDrive`,
-        description: `${car.name} - ${car.priceMl ? formatPriceKrw(car.priceMl) : ""}`,
+        description: `${car.name} - ${car.price}`,
         images: car.images[0] ? [car.images[0]] : [],
       },
     };
@@ -50,7 +48,7 @@ export default async function CarDetailPage({ params }: PageProps) {
   // OLD URL: /car/ENCODED_ID → 301 redirect to new SEO-friendly URL
   if (slugParts.length === 1) {
     const rawSegment = slugParts[0];
-    const id = decodeURIComponent(rawSegment);
+    const id = fromUrlSafeId(rawSegment);
     let car: CarDetail;
 
     try {
@@ -68,7 +66,8 @@ export default async function CarDetailPage({ params }: PageProps) {
   }
 
   // NEW URL: /car/slug/id
-  const id = slugParts[slugParts.length - 1];
+  const rawId = slugParts[slugParts.length - 1];
+  const id = fromUrlSafeId(rawId);
 
   return (
     <div className="px-4 py-6 pb-20 md:pb-6 sm:px-6 lg:px-8">

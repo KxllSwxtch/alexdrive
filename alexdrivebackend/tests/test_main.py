@@ -16,6 +16,7 @@ def _make_test_app():
     app = FastAPI()
     app.include_router(admin.router)
 
+    # Replicate the exception handler from main.py
     @app.exception_handler(Exception)
     async def global_exception_handler(request: Request, exc: Exception):
         if isinstance(exc, NetworkError):
@@ -24,6 +25,7 @@ def _make_test_app():
             return JSONResponse(status_code=503, content={"error": "Service temporarily unavailable"})
         return JSONResponse(status_code=500, content={"error": "Internal server error"})
 
+    # Add test routes that raise specific exceptions
     @app.get("/test/network-error")
     async def raise_network_error():
         raise NetworkError("connection lost")
@@ -73,10 +75,12 @@ class TestExceptionHandlers:
 class TestLifespan:
     @pytest.mark.asyncio
     async def test_lifespan_continues_on_prewarm_failure(self):
-        """If pre-warm fails during startup, lifespan still completes."""
+        """If get_session raises during startup, lifespan still completes."""
         from app.main import lifespan, app as real_app
 
-        with patch("app.main.get_filter_data", new_callable=AsyncMock, side_effect=RuntimeError("no network")), \
-             patch("app.main.get_car_listings", new_callable=AsyncMock, side_effect=RuntimeError("no network")):
+        with patch("app.main.get_session", new_callable=AsyncMock, side_effect=RuntimeError("no creds")), \
+             patch("app.main.get_filter_data", new_callable=AsyncMock, side_effect=RuntimeError("no session")), \
+             patch("app.main.get_car_listings", new_callable=AsyncMock, side_effect=RuntimeError("no session")), \
+             patch("app.main.session_keepalive_loop", new_callable=AsyncMock):
             async with lifespan(real_app):
                 pass  # If we reach here, lifespan didn't crash

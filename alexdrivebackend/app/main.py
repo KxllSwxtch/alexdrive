@@ -11,7 +11,7 @@ from starlette.middleware.gzip import GZipMiddleware
 
 from app.config import settings
 from app.routes import admin, cars, filters, health
-from app.services.namsuwon import (
+from app.services.carmanager import (
     get_car_listings,
     get_filter_data,
     listing_refresh_loop,
@@ -20,50 +20,62 @@ from app.services.namsuwon import (
     detail_cache_persist_loop,
 )
 from app.services.client import NetworkError
-from app.services.session import set_http_client
+from app.services.session import set_http_client, get_session, session_keepalive_loop
+
+
+async def _prewarm_caches():
+    """Background cache warming — runs after server is accepting connections."""
+    try:
+        await get_session()
+        print("[server] Session pre-warmed successfully")
+    except Exception as e:
+        print(f"[server] Session pre-warm failed (will retry on first request): {e}")
+
+    try:
+        await get_filter_data()
+        print("[server] Filter cache pre-warmed")
+    except Exception as e:
+        print(f"[server] Filter pre-warm failed: {e}")
+
+    try:
+        await get_car_listings({
+            "PageNow": 1, "PageSize": 20,
+            "PageSort": "ModDt", "PageAscDesc": "DESC",
+        })
+        print("[server] Listing cache pre-warmed")
+    except Exception as e:
+        print(f"[server] Listing pre-warm failed: {e}")
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    client_kwargs: dict = {
-        "timeout": httpx.Timeout(30.0),
-        "follow_redirects": False,
-    }
-    if settings.proxy_url:
-        client_kwargs["proxy"] = settings.proxy_url
-
-    async with httpx.AsyncClient(**client_kwargs) as client:
+    async with httpx.AsyncClient(
+        timeout=httpx.Timeout(30.0),
+        follow_redirects=False,
+    ) as client:
         set_http_client(client)
 
-        # Load detail cache from disk before any warmup
+        # Load detail cache from disk (instant, no network)
         loaded = _load_detail_cache_from_disk()
         if loaded:
             print(f"[server] Restored {loaded} detail cache entries from disk")
 
-        # Pre-warm caches sequentially
-        try:
-            await get_filter_data()
-            print("[server] Filter cache pre-warmed")
-        except Exception as e:
-            print(f"[server] Filter pre-warm failed: {e}")
-
-        try:
-            await get_car_listings({"page": 1, "page_size": 20})
-            print("[server] Listing cache pre-warmed")
-        except Exception as e:
-            print(f"[server] Listing pre-warm failed: {e}")
-
-        # Start background tasks
+        # Start background tasks including pre-warming
+        prewarm_task = asyncio.create_task(_prewarm_caches())
+        keepalive_task = asyncio.create_task(session_keepalive_loop())
         listing_refresh_task = asyncio.create_task(listing_refresh_loop())
         detail_persist_task = asyncio.create_task(detail_cache_persist_loop())
 
         print(f"[server] AlexDrive backend running on port {settings.port}")
         yield
 
+        prewarm_task.cancel()
+        keepalive_task.cancel()
         listing_refresh_task.cancel()
         detail_persist_task.cancel()
         try:
             await asyncio.gather(
+                prewarm_task, keepalive_task,
                 listing_refresh_task, detail_persist_task,
                 return_exceptions=True,
             )

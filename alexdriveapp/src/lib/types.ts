@@ -1,69 +1,98 @@
+// Filter hierarchy (5 levels)
 export interface CarMaker {
-  bm_no: string;
-  bm_name: string;
-  bm_logoImage: string;
+  MakerNo: number;
+  MakerName: string;
 }
 
 export interface CarModel {
-  bo_no: string;
-  bo_name: string;
-  bo_faceImage?: string;
-  bo_startDate?: string;
-  bo_endDate?: string;
-  bo_group?: string;
+  ModelNo: number;
+  ModelName: string;
+  MakerNo: number;
 }
 
-export interface CarSeries {
-  bs_no: string;
-  bs_name: string;
-  bd: CarTrim[];
+export interface CarModelDetail {
+  ModelDetailNo: number;
+  ModelDetailName: string;
+  ModelNo: number;
 }
 
-export interface CarTrim {
-  bd_no: string;
-  bd_name: string;
+export interface CarGrade {
+  GradeNo: number;
+  GradeName: string;
+  ModelDetailNo: number;
 }
 
+export interface CarGradeDetail {
+  GradeDetailNo: number;
+  GradeDetailName: string;
+  GradeNo: number;
+}
+
+// Filter options
 export interface CarColor {
-  bc_no: string;
-  bc_name: string;
-  bc_rgb1: string;
-  bc_rgb2: string;
+  CKeyNo: number;
+  ColorName: string;
 }
 
+export interface CarFuel {
+  FKeyNo: number;
+  FuelName: string;
+}
+
+export interface CarMission {
+  MKeyNo: number;
+  MissionName: string;
+}
+
+export interface Danji {
+  DanjiNo: number;
+  DanjiName: string;
+}
+
+// Filter data (all loaded upfront)
 export interface FilterData {
   makers: CarMaker[];
+  models: Record<string, CarModel[]>;
+  modelDetails: Record<string, CarModelDetail[]>;
+  grades: Record<string, CarGrade[]>;
+  gradeDetails: Record<string, CarGradeDetail[]>;
   colors: CarColor[];
-  fuels: { value: string; label: string }[];
-  transmissions: { value: string; label: string }[];
+  fuels: CarFuel[];
+  missions: CarMission[];
+  danjis: Danji[];
 }
 
+// Listing params (carmanager query params)
 export interface CarListingParams {
-  bm_no?: string;
-  bo_no?: string;
-  bs_no?: string;
-  bd_no?: string;
-  yearFrom?: string;
-  yearTo?: string;
-  mileageFrom?: string;
-  mileageTo?: string;
-  priceFrom?: string;
-  priceTo?: string;
-  fuel?: string;
-  transmission?: string;
-  color?: string;
-  keyword?: string;
-  extFlag1?: string; // navigation
-  extFlag2?: string; // sunroof
-  extFlag3?: string; // smart key
-  extFlag4?: string; // no accidents
-  extFlag5?: string; // with inspection
-  sort?: string;
-  order?: string;
-  page?: number;
-  page_size?: number;
+  CarMakerNo?: string;
+  CarModelNo?: string;
+  CarModelDetailNo?: string;
+  CarGradeNo?: string;
+  CarGradeDetailNo?: string;
+  CarYearFrom?: string;
+  CarYearTo?: string;
+  CarMileageFrom?: string;
+  CarMileageTo?: string;
+  CarPriceFrom?: string;
+  CarPriceTo?: string;
+  CarMissionNo?: string;
+  CarFuelNo?: string;
+  CarColorNo?: string;
+  DanjiNo?: string;
+  CarLpg?: string;
+  CarInspection?: string;
+  CarPhoto?: string;
+  CarSalePrice?: string;
+  CarLease?: string;
+  SearchName?: string;
+  SearchCarNo?: string;
+  PageNow?: number;
+  PageSize?: number;
+  PageSort?: string;
+  PageAscDesc?: string;
 }
 
+// Listing
 export interface CarListing {
   encryptedId: string;
   imageUrl: string;
@@ -73,11 +102,12 @@ export interface CarListing {
   fuel: string;
   transmission: string;
   price: string;
-  priceMl?: number;
+  location: string;
   dealer: string;
   phone: string;
 }
 
+// Detail
 export interface CarDetail {
   encryptedId: string;
   name: string;
@@ -87,15 +117,15 @@ export interface CarDetail {
   fuel: string;
   transmission: string;
   price: string;
-  priceMl?: number;
   color: string;
+  engineCapacity: string;
   carNumber: string;
+  location: string;
   options: { group: string; items: string[] }[];
   dealer: string;
   phone: string;
-  description?: string;
-  info?: Record<string, string | number>;
-  pricing?: Record<string, string | number>;
-  specs?: Record<string, string | number>;
-  inspection?: Record<string, unknown>;
+  registrationDate: string;
+  modelYear: string;
+  inspectionUrl?: string;
+  blurDataUrl?: string;
 }

@@ -1,0 +1,26 @@
+services:
+  backend:
+    build: ./alexdrivebackend
+    ports:
+      - "3001:3001"
+    environment:
+      - CARMANAGER_USERNAME=${CARMANAGER_USERNAME}
+      - CARMANAGER_PASSWORD=${CARMANAGER_PASSWORD}
+      - CORS_ORIGINS=${CORS_ORIGINS}
+      - ADMIN_SECRET=${ADMIN_SECRET}
+      - PORT=3001
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./alexdriveapp
+      args:
+        NEXT_PUBLIC_BACKEND_URL: ${NEXT_PUBLIC_BACKEND_URL}
+    ports:
+      - "3000:3000"
+    environment:
+      - BACKEND_URL=http://backend:3001
+      - NEXT_PUBLIC_BACKEND_URL=${NEXT_PUBLIC_BACKEND_URL}
+    depends_on:
+      - backend
+    restart: unless-stopped

@@ -5,58 +5,63 @@ import pytest
 import respx
 
 from app.services import session as session_mod
-from app.services import namsuwon as namsuwon_mod
+from app.services import carmanager as cm_mod
 from app.config import settings
 
 
 @pytest.fixture(autouse=True)
 def reset_session_globals():
-    """Reset HTTP client before and after each test."""
+    """Reset all module-level globals in session.py before and after each test."""
+    session_mod._cached_cookies = ""
+    session_mod._cookie_expiry = 0.0
     session_mod._http_client = None
+    session_mod._disk_loaded = False
+    session_mod._session_lock = asyncio.Lock()
+    session_mod._current_ua = session_mod._USER_AGENTS[0]
     yield
+    session_mod._cached_cookies = ""
+    session_mod._cookie_expiry = 0.0
     session_mod._http_client = None
+    session_mod._disk_loaded = False
+    session_mod._session_lock = asyncio.Lock()
+    session_mod._current_ua = session_mod._USER_AGENTS[0]
 
 
 @pytest.fixture(autouse=True)
-def reset_namsuwon_globals():
-    """Reset all caches and locks in namsuwon.py."""
-    namsuwon_mod._makers_cache = None
-    namsuwon_mod._colors_cache = None
-    namsuwon_mod._models_cache = {}
-    namsuwon_mod._series_cache = {}
-    namsuwon_mod._maker_cho_map = {}
-    namsuwon_mod._listing_cache = {}
-    namsuwon_mod._detail_cache = {}
-    namsuwon_mod._listing_refresh_keys = set()
-    namsuwon_mod._detail_refresh_keys = set()
-    namsuwon_mod._filter_lock = asyncio.Lock()
-    namsuwon_mod._listing_lock = asyncio.Lock()
-    namsuwon_mod._detail_locks = {}
-    namsuwon_mod._detail_locks_guard = asyncio.Lock()
-    namsuwon_mod._last_request_time = 0.0
-    namsuwon_mod._throttle_lock = asyncio.Lock()
-    namsuwon_mod._last_successful_fetch = 0.0
+def reset_carmanager_globals():
+    """Reset all caches and locks in carmanager.py."""
+    cm_mod._filter_cache = None
+    cm_mod._listing_cache = {}
+    cm_mod._detail_cache = {}
+    cm_mod._listing_refresh_keys = set()
+    cm_mod._detail_refresh_keys = set()
+    cm_mod._filter_lock = asyncio.Lock()
+    cm_mod._listing_lock = asyncio.Lock()
+    cm_mod._detail_locks = {}
+    cm_mod._detail_locks_guard = asyncio.Lock()
+    cm_mod._last_request_time = 0.0
+    cm_mod._throttle_lock = asyncio.Lock()
+    cm_mod._last_rate_limit_time = 0.0
+    cm_mod._rate_limit_count = 0
     yield
-    namsuwon_mod._makers_cache = None
-    namsuwon_mod._colors_cache = None
-    namsuwon_mod._models_cache = {}
-    namsuwon_mod._series_cache = {}
-    namsuwon_mod._maker_cho_map = {}
-    namsuwon_mod._listing_cache = {}
-    namsuwon_mod._detail_cache = {}
-    namsuwon_mod._listing_refresh_keys = set()
-    namsuwon_mod._detail_refresh_keys = set()
-    namsuwon_mod._detail_locks = {}
-    namsuwon_mod._last_request_time = 0.0
-    namsuwon_mod._last_successful_fetch = 0.0
+    cm_mod._filter_cache = None
+    cm_mod._listing_cache = {}
+    cm_mod._detail_cache = {}
+    cm_mod._listing_refresh_keys = set()
+    cm_mod._detail_refresh_keys = set()
+    cm_mod._detail_locks = {}
+    cm_mod._last_request_time = 0.0
+    cm_mod._last_rate_limit_time = 0.0
+    cm_mod._rate_limit_count = 0
 
 
 @pytest.fixture(autouse=True)
 def mock_settings(monkeypatch):
     """Provide test-safe settings values."""
-    monkeypatch.setattr(settings, "namsuwon_base_url", "https://test.namsuwon.com")
+    monkeypatch.setattr(settings, "carmanager_username", "testuser")
+    monkeypatch.setattr(settings, "carmanager_password", "testpass")
+    monkeypatch.setattr(settings, "carmanager_base_url", "https://test.carmanager.co.kr")
     monkeypatch.setattr(settings, "admin_secret", "test-secret")
-    monkeypatch.setattr(settings, "min_request_interval", 0.0)
 
 
 @pytest.fixture
@@ -66,3 +71,11 @@ def mock_http_client():
         client = httpx.AsyncClient(timeout=httpx.Timeout(5.0))
         session_mod.set_http_client(client)
         yield router
+
+
+@pytest.fixture
+def session_file(tmp_path, monkeypatch):
+    """Point SESSION_FILE to a temp location so tests don't touch real disk."""
+    path = tmp_path / "alexdrive_session.json"
+    monkeypatch.setattr(session_mod, "SESSION_FILE", path)
+    return path

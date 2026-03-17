@@ -1,7 +1,10 @@
+import time
 from unittest.mock import AsyncMock, patch
 
 import pytest
 from httpx import ASGITransport, AsyncClient
+
+from app.services import session as session_mod
 
 
 def _make_app():
@@ -25,46 +28,75 @@ async def client(app):
         yield c
 
 
-class TestDiagnoseEndpoint:
+class TestSetSession:
     @pytest.mark.asyncio
-    async def test_diagnose_success(self, client):
-        mock_data = {
-            "total": 100,
-            "items": [
-                {"no": 123, "car_name": "Test Car", "price": 10000000},
-                {"no": 456, "car_name": "Test Car 2", "price": 20000000},
-            ],
-        }
-        with patch("app.routes.admin.fetch_json", new_callable=AsyncMock, return_value=mock_data):
-            resp = await client.get(
-                "/api/admin/diagnose",
+    async def test_set_session_success(self, client):
+        with patch("app.routes.admin.inject_cookies", new_callable=AsyncMock, return_value=True):
+            resp = await client.post(
+                "/api/admin/session",
+                json={"cookies": "valid-cookie"},
                 headers={"X-Admin-Secret": "test-secret"},
             )
         assert resp.status_code == 200
-        data = resp.json()
-        assert data["total_cars"] == 100
-        assert data["sample_count"] == 2
-        assert data["status"] == "ok"
+        assert resp.json()["status"] == "ok"
 
     @pytest.mark.asyncio
-    async def test_diagnose_wrong_secret(self, client):
-        resp = await client.get(
-            "/api/admin/diagnose",
-            headers={"X-Admin-Secret": "wrong"},
+    async def test_set_session_wrong_secret(self, client):
+        resp = await client.post(
+            "/api/admin/session",
+            json={"cookies": "any"},
+            headers={"X-Admin-Secret": "wrong-secret"},
         )
         assert resp.status_code == 403
 
     @pytest.mark.asyncio
-    async def test_diagnose_missing_secret(self, client):
-        resp = await client.get("/api/admin/diagnose")
+    async def test_set_session_missing_secret(self, client):
+        resp = await client.post(
+            "/api/admin/session",
+            json={"cookies": "any"},
+        )
         assert resp.status_code == 422
 
     @pytest.mark.asyncio
-    async def test_diagnose_disabled(self, client, monkeypatch):
+    async def test_set_session_invalid_cookies(self, client):
+        with patch("app.routes.admin.inject_cookies", new_callable=AsyncMock, return_value=False):
+            resp = await client.post(
+                "/api/admin/session",
+                json={"cookies": "bad-cookie"},
+                headers={"X-Admin-Secret": "test-secret"},
+            )
+        assert resp.status_code == 400
+
+    @pytest.mark.asyncio
+    async def test_set_session_empty_admin_config(self, client, monkeypatch):
         from app.config import settings
         monkeypatch.setattr(settings, "admin_secret", "")
-        resp = await client.get(
-            "/api/admin/diagnose",
+        resp = await client.post(
+            "/api/admin/session",
+            json={"cookies": "any"},
             headers={"X-Admin-Secret": ""},
+        )
+        assert resp.status_code == 403
+
+
+class TestGetSessionStatus:
+    @pytest.mark.asyncio
+    async def test_get_session_status(self, client):
+        session_mod._cached_cookies = "test-cookie"
+        session_mod._cookie_expiry = time.time() + 1800
+        resp = await client.get(
+            "/api/admin/session",
+            headers={"X-Admin-Secret": "test-secret"},
+        )
+        assert resp.status_code == 200
+        data = resp.json()
+        assert data["has_cookies"] is True
+        assert data["ttl_remaining_sec"] > 0
+
+    @pytest.mark.asyncio
+    async def test_get_session_wrong_secret(self, client):
+        resp = await client.get(
+            "/api/admin/session",
+            headers={"X-Admin-Secret": "wrong"},
         )
         assert resp.status_code == 403
