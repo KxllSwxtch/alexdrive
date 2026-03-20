@@ -45,6 +45,21 @@ class TestBuildDatapartParams:
         desc = _build_datapart_params({"PageAscDesc": "DESC"})
         assert desc["para"]["PageAscDesc"] == "1"
 
+    def test_search_params_mapping(self):
+        body = _build_datapart_params({
+            "SearchCarNo": "246욧4517",
+            "SearchName": "소나타",
+        })
+        para = body["para"]
+        assert para["CarNumber"] == "246욧4517"
+        assert para["CarName"] == "소나타"
+
+    def test_search_params_default_empty(self):
+        body = _build_datapart_params({})
+        para = body["para"]
+        assert para["CarNumber"] == ""
+        assert para["CarName"] == ""
+
 
 # ── _fetch_and_cache_listings — 0-listings retry ─────────────
 
