@@ -1,4 +1,4 @@
-import { backendFetch } from "@/lib/api";
+import { backendFetch, fetchFiltersCached } from "@/lib/api";
 import { CatalogContent } from "@/components/CatalogContent";
 import type { FilterData, CarListing } from "@/lib/types";
 
@@ -38,7 +38,7 @@ export default async function CatalogPage({ searchParams }: PageProps) {
 
   try {
     const [filtersData, carsData] = await Promise.all([
-      backendFetch<FilterData>("/filters", undefined, { revalidate: 3600 }),
+      fetchFiltersCached<FilterData>(),
       backendFetch<{ listings: CarListing[]; total: number; hasNext?: boolean }>("/cars", backendParams, { revalidate: 300 }),
     ]);
     filters = filtersData;

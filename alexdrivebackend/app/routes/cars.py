@@ -3,7 +3,7 @@ import asyncio
 from fastapi import APIRouter, Query
 from fastapi.responses import JSONResponse
 
-from app.services.carmanager import _detail_cache, get_car_detail, get_car_listings, warm_detail_cache_for_listings
+from app.services.carmanager import _detail_cache, get_car_detail, get_car_listings, get_rate_limit_retry_after, warm_detail_cache_for_listings
 
 router = APIRouter(prefix="/api")
 
@@ -82,10 +82,11 @@ async def get_cars(
     data = await get_car_listings(params)
 
     if data.get("status") == "rate_limited" and not data.get("listings"):
+        retry_after = data.get("retry_after") or get_rate_limit_retry_after() or 60
         return JSONResponse(
             status_code=429,
             content=data,
-            headers={"Retry-After": "10", "Cache-Control": "no-cache"},
+            headers={"Retry-After": str(retry_after), "Cache-Control": "no-cache"},
         )
 
     if data.get("listings"):

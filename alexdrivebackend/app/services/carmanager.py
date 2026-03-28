@@ -71,16 +71,22 @@ def _record_rate_limit() -> None:
 
 def _get_cooldown() -> float:
     """Get current cooldown duration, escalating with consecutive rate limits."""
+    if _rate_limit_count <= 0:
+        return _RATE_LIMIT_COOLDOWN  # 300s default
     # 5min, 10min, 20min (capped)
     return min(_RATE_LIMIT_COOLDOWN * (2 ** min(_rate_limit_count - 1, 2)), 1200.0)
 
 
-def _clear_rate_limit() -> None:
-    """Clear rate-limit state after a successful request."""
+def _clear_rate_limit(source: str = "listing") -> None:
+    """Gradually clear rate-limit state after a successful request.
+
+    Only listing successes reduce the counter. Detail successes are ignored
+    because carmanager may rate-limit listings and details independently.
+    """
     global _rate_limit_count
-    if _rate_limit_count > 0:
-        _rate_limit_count = 0
-        print("[carmanager] Rate limit cleared (successful request)")
+    if _rate_limit_count > 0 and source == "listing":
+        _rate_limit_count = max(0, _rate_limit_count - 1)
+        print(f"[carmanager] Rate limit decremented to {_rate_limit_count} (successful {source} request)")
 
 
 def is_rate_limited() -> bool:
@@ -88,6 +94,14 @@ def is_rate_limited() -> bool:
     if not _last_rate_limit_time:
         return False
     return time.time() - _last_rate_limit_time < _get_cooldown()
+
+
+def get_rate_limit_retry_after() -> int:
+    """Return seconds until rate-limit cooldown expires, or 0 if not rate-limited."""
+    if not _last_rate_limit_time:
+        return 0
+    remaining = _get_cooldown() - (time.time() - _last_rate_limit_time)
+    return max(int(remaining), 0)
 
 
 def get_last_successful_parse() -> float:
@@ -274,10 +288,21 @@ def _build_datapart_params(params: dict) -> dict:
 
 async def _fetch_and_cache_listings(
     cache_key: str, json_body: dict,
-    _retried: bool = False, _rate_limit_attempt: int = 0,
+    _retried: bool = False,
 ) -> dict:
     """Fetch listings from carmanager via /Car/DataPart JSON API, parse, cache, and return."""
     global _last_successful_parse, _last_rate_limit_time
+
+    # Early bail-out: don't hit carmanager if we already know we're rate-limited
+    if is_rate_limited():
+        existing = _listing_cache.get(cache_key)
+        if existing and existing["data"].get("listings"):
+            existing["expiry"] = time.time() + LISTING_TTL
+            print(f"[carmanager] Rate-limited, serving stale cache ({cache_key[:8]})")
+            return existing["data"]
+        remaining = get_rate_limit_retry_after()
+        print(f"[carmanager] Rate-limited, no cache, cooldown remaining: {remaining}s")
+        return {"listings": [], "total": 0, "status": "rate_limited", "retry_after": remaining}
 
     await _throttle_request()
     html = await post_json("/Car/DataPart", json_body)
@@ -287,25 +312,16 @@ async def _fetch_and_cache_listings(
         _record_rate_limit()
         print("[carmanager] Rate-limited by carmanager.co.kr (limits_box detected)")
 
-        # 1. Serve stale cache if available (and extend its TTL)
+        # Serve stale cache if available (and extend its TTL)
         existing = _listing_cache.get(cache_key)
         if existing and existing["data"].get("listings"):
-            existing["expiry"] = time.time() + LISTING_TTL  # extend TTL
+            existing["expiry"] = time.time() + LISTING_TTL
             print(f"[carmanager] Serving stale cached listings ({len(existing['data']['listings'])} cars)")
             return existing["data"]
 
-        # 2. No cache → retry with backoff (max 2 retries)
-        if _rate_limit_attempt < 2:
-            delay = 3.0 * (2 ** _rate_limit_attempt)  # 3s, 6s
-            print(f"[carmanager] No cache available, retrying in {delay}s (attempt {_rate_limit_attempt + 1}/2)")
-            await asyncio.sleep(delay)
-            return await _fetch_and_cache_listings(
-                cache_key, json_body, _retried, _rate_limit_attempt + 1,
-            )
-
-        # 3. All retries exhausted
-        print("[carmanager] Rate-limit retries exhausted, returning empty")
-        return {"listings": [], "total": 0, "status": "rate_limited"}
+        # No cache — return immediately (no retries: carmanager rate limits last minutes)
+        remaining = get_rate_limit_retry_after()
+        return {"listings": [], "total": 0, "status": "rate_limited", "retry_after": remaining}
 
     listings = parse_car_listings(html)
     total = parse_total_count(html)
@@ -396,10 +412,15 @@ async def get_car_listings(params: dict) -> dict:
         age = time.time() - (cached["expiry"] - LISTING_TTL)
         if age < LISTING_TTL:  # not expired
             if age >= LISTING_REFRESH_AT and cache_key not in _listing_refresh_keys:
-                # Stale-while-revalidate: return cached, refresh in background
-                asyncio.create_task(_refresh_listing_cache(cache_key, json_body))
+                if not is_rate_limited():  # Don't trigger background refresh if rate-limited
+                    asyncio.create_task(_refresh_listing_cache(cache_key, json_body))
             print(f"[carmanager] Listing cache hit ({cache_key[:8]})")
             return cached["data"]
+
+    # If rate-limited and cache miss, bail out immediately
+    if is_rate_limited():
+        remaining = get_rate_limit_retry_after()
+        return {"listings": [], "total": 0, "status": "rate_limited", "retry_after": remaining}
 
     # Cache miss — blocking fetch
     async with _listing_lock:
@@ -432,7 +453,7 @@ async def _refresh_detail_cache(encrypted_id: str) -> None:
         result["inspectionUrl"] = result.pop("inspectionUrl", None)
         _detail_cache[encrypted_id] = {"data": result, "expiry": time.time() + DETAIL_TTL}
         _evict_oldest(_detail_cache, MAX_DETAIL_CACHE_ENTRIES)
-        _clear_rate_limit()
+        _clear_rate_limit("detail")
         print(f"[carmanager] Detail background refresh OK ({encrypted_id[:16]}...)")
     except Exception as e:
         print(f"[carmanager] Detail background refresh failed ({encrypted_id[:16]}...): {e}")
@@ -485,7 +506,7 @@ async def get_car_detail(encrypted_id: str) -> dict:
 
         _detail_cache[encrypted_id] = {"data": result, "expiry": time.time() + DETAIL_TTL}
         _evict_oldest(_detail_cache, MAX_DETAIL_CACHE_ENTRIES)
-        _clear_rate_limit()
+        _clear_rate_limit("detail")
         return result
 
 

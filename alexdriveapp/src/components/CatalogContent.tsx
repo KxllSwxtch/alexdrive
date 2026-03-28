@@ -63,8 +63,8 @@ interface CatalogContentProps {
   initialHasNext?: boolean;
 }
 
-const MAX_CLIENT_RETRIES = 3;
-const RETRY_COUNTDOWN_SECS = 10;
+const MAX_CLIENT_RETRIES = 1;
+const MAX_RETRY_COUNTDOWN_SECS = 120;
 
 export function CatalogContent({ initialFilters, initialCars, initialTotal, initialHasNext }: CatalogContentProps) {
   const isInitialMount = useRef(true);
@@ -106,13 +106,15 @@ export function CatalogContent({ initialFilters, initialCars, initialTotal, init
     return searchParams;
   }, []);
 
-  const fetchCars = useCallback(async (p: CarListingParams, signal?: AbortSignal): Promise<boolean> => {
+  const fetchCars = useCallback(async (p: CarListingParams, signal?: AbortSignal): Promise<{ ok: boolean; retryAfter?: number }> => {
     const searchParams = buildSearchParams(p);
     const res = await fetch(`${BACKEND_URL}/api/cars?${searchParams.toString()}`, { signal });
     const data = await res.json();
 
     if (res.status === 429 || data.status === "rate_limited") {
-      return false;
+      const retryAfter = parseInt(res.headers.get("Retry-After") || "0", 10)
+                         || data.retry_after || 60;
+      return { ok: false, retryAfter };
     }
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
 
@@ -120,16 +122,17 @@ export function CatalogContent({ initialFilters, initialCars, initialTotal, init
     setTotal(data.total || 0);
     setHasNext(data.hasNext ?? false);
     clearRetryState();
-    return true;
+    return { ok: true };
   }, [buildSearchParams, clearRetryState]);
 
-  const startRetryCountdown = useCallback((p: CarListingParams, abortController: AbortController) => {
+  const startRetryCountdown = useCallback((p: CarListingParams, abortController: AbortController, retryAfterSecs: number) => {
+    const countdown = Math.min(retryAfterSecs, MAX_RETRY_COUNTDOWN_SECS);
     setRateLimited(true);
-    setRetryCountdown(RETRY_COUNTDOWN_SECS);
+    setRetryCountdown(countdown);
 
     if (countdownTimerRef.current) clearInterval(countdownTimerRef.current);
 
-    let remaining = RETRY_COUNTDOWN_SECS;
+    let remaining = countdown;
     countdownTimerRef.current = setInterval(async () => {
       remaining--;
       setRetryCountdown(remaining);
@@ -150,9 +153,9 @@ export function CatalogContent({ initialFilters, initialCars, initialTotal, init
         }
 
         try {
-          const ok = await fetchCars(p, abortController.signal);
-          if (!ok) {
-            startRetryCountdown(p, abortController);
+          const result = await fetchCars(p, abortController.signal);
+          if (!result.ok) {
+            startRetryCountdown(p, abortController, result.retryAfter ?? 60);
           } else {
             setLoading(false);
           }
@@ -191,10 +194,10 @@ export function CatalogContent({ initialFilters, initialCars, initialTotal, init
     setLoading(true);
 
     fetchCars(params, abortController.signal)
-      .then((ok) => {
+      .then((result) => {
         if (abortController.signal.aborted) return;
-        if (!ok) {
-          startRetryCountdown(params, abortController);
+        if (!result.ok) {
+          startRetryCountdown(params, abortController, result.retryAfter ?? 60);
         } else {
           setLoading(false);
         }
