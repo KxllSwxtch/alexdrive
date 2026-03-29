@@ -70,12 +70,12 @@ def parse_car_listings(html: str) -> list[dict]:
             fuel = spec_items[2] if len(spec_items) > 2 else ""
             color = spec_items[3] if len(spec_items) > 3 else ""
 
-        # Price — look for text matching 만원 pattern
+        # Price — look for text matching 만원 pattern (check all elements)
         price = ""
-        for div in li.css("div"):
-            text = div.text(strip=True)
+        for el in li.css("div, span, p, strong"):
+            text = el.text(strip=True)
             # Match price like "4,270만원" but not monthly payment "월 51만원"
-            if text and "만원" in text and "월" not in text:
+            if text and re.match(r"^[\d,]+만원$", text):
                 price = text
                 break
 
@@ -98,10 +98,22 @@ def parse_car_listings(html: str) -> list[dict]:
 
 
 def parse_total_count(html: str) -> int:
-    """Extract total count from '전체 49,659대' text."""
-    match = re.search(r"전체\s+([\d,]+)\s*대", html)
+    """Extract total count from '전체 49,659대' text or pagination."""
+    # Try direct text match first
+    match = re.search(r"전체\s*([\d,]+)\s*대", html)
     if match:
         return int(match.group(1).replace(",", ""))
+
+    # Fallback: estimate from last pagination page link
+    # Pattern: /search/model/.../2069?... (last page number)
+    pages = re.findall(r'/search/model/\w+/(\d+)\?', html)
+    if pages:
+        last_page = max(int(p) for p in pages)
+        # Extract customSelect (items per page) from URL
+        per_page_match = re.search(r'customSelect=(\d+)', html)
+        per_page = int(per_page_match.group(1)) if per_page_match else 24
+        return last_page * per_page
+
     return 0
 
 
