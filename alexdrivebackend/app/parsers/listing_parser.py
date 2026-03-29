@@ -29,12 +29,18 @@ def parse_car_listings(html: str) -> list[dict]:
             continue
         car_id = id_match.group(1)
 
-        # Image — first img inside the detail link
-        img = link.css_first("img")
+        # Image — from CSS background:url() on div.car-img, or <img> fallback
         image_url = ""
-        if img:
-            # Try data-lazy first (slick lazy loading), then src
-            image_url = img.attributes.get("data-lazy", "") or img.attributes.get("src", "")
+        car_img_div = li.css_first("div.car-img")
+        if car_img_div:
+            style = car_img_div.attributes.get("style", "")
+            url_match = re.search(r"background:\s*url\(([^)]+)\)", style)
+            if url_match:
+                image_url = url_match.group(1).strip("'\"")
+        if not image_url:
+            img = link.css_first("img")
+            if img:
+                image_url = img.attributes.get("data-lazy", "") or img.attributes.get("src", "")
         image_url = normalize_image_url(image_url)
 
         # Name — from button or link text containing [Maker]Model
