@@ -3,23 +3,20 @@ import asyncio
 from fastapi import APIRouter, Query
 from fastapi.responses import JSONResponse
 
-from app.services.carmanager import _detail_cache, get_car_detail, get_car_listings, get_rate_limit_retry_after, warm_detail_cache_for_listings
+from app.services.salecars import _detail_cache, get_car_detail, get_car_listings, get_rate_limit_retry_after, warm_detail_cache_for_listings
 
 router = APIRouter(prefix="/api")
 
 _prefetch_semaphore = asyncio.Semaphore(3)
 
 
-async def _capped_prefetch(encrypted_id: str) -> None:
-    """Prefetch a car detail with concurrency cap."""
+async def _capped_prefetch(car_id: str) -> None:
     async with _prefetch_semaphore:
-        await get_car_detail(encrypted_id)
+        await get_car_detail(car_id)
 
 
 @router.get("/cars")
 async def get_cars(
-    CarSiDoNo: str | None = Query(None),
-    CarSiDoAreaNo: str | None = Query(None),
     CarMakerNo: str | None = Query(None),
     CarModelNo: str | None = Query(None),
     CarModelDetailNo: str | None = Query(None),
@@ -34,23 +31,15 @@ async def get_cars(
     CarMissionNo: str | None = Query(None),
     CarFuelNo: str | None = Query(None),
     CarColorNo: str | None = Query(None),
-    DanjiNo: str | None = Query(None),
-    CarLpg: str | None = Query(None),
-    CarInsurance: str | None = Query(None),
-    CarPhoto: str | None = Query(None),
-    CarSalePrice: str | None = Query(None),
-    CarInspection: str | None = Query(None),
-    CarLease: str | None = Query(None),
     SearchName: str | None = Query(None),
     SearchCarNo: str | None = Query(None),
+    carnation: str | None = Query(None),
     PageNow: int | None = Query(None),
     PageSize: int | None = Query(None),
     PageSort: str | None = Query(None),
     PageAscDesc: str | None = Query(None),
 ):
     params = {
-        "CarSiDoNo": CarSiDoNo,
-        "CarSiDoAreaNo": CarSiDoAreaNo,
         "CarMakerNo": CarMakerNo,
         "CarModelNo": CarModelNo,
         "CarModelDetailNo": CarModelDetailNo,
@@ -65,15 +54,9 @@ async def get_cars(
         "CarMissionNo": CarMissionNo,
         "CarFuelNo": CarFuelNo,
         "CarColorNo": CarColorNo,
-        "DanjiNo": DanjiNo,
-        "CarLpg": CarLpg,
-        "CarInsurance": CarInsurance,
-        "CarPhoto": CarPhoto,
-        "CarSalePrice": CarSalePrice,
-        "CarInspection": CarInspection,
-        "CarLease": CarLease,
         "SearchName": SearchName,
         "SearchCarNo": SearchCarNo,
+        "carnation": carnation,
         "PageNow": PageNow,
         "PageSize": PageSize,
         "PageSort": PageSort,
@@ -99,7 +82,6 @@ async def get_cars(
 
 @router.post("/cars/prefetch")
 async def prefetch_detail(id: str | None = Query(None)):
-    """Fire-and-forget cache warming. Returns 202 immediately."""
     if not id:
         return JSONResponse(status_code=400, content={"error": "Missing id"})
     if id not in _detail_cache:

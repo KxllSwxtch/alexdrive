@@ -4,9 +4,8 @@ from pydantic_settings import BaseSettings
 class Settings(BaseSettings):
     port: int = 3001
     cors_origins: str = "http://localhost:3000"
-    carmanager_username: str = ""
-    carmanager_password: str = ""
-    carmanager_base_url: str = "https://www.carmanager.co.kr"
+    salecars_base_url: str = "https://www.salecars.co.kr"
+    carmanager_base_url: str = "https://www.carmanager.co.kr"  # only for public JS filter files
     admin_secret: str = ""
 
     model_config = {"env_file": ".env", "extra": "ignore"}

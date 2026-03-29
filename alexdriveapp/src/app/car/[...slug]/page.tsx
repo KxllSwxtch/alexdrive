@@ -60,7 +60,7 @@ export default async function CarDetailPage({ params }: PageProps) {
     const newPath = buildCarDetailPath(
       car.name,
       car.year,
-      car.encryptedId,
+      car.id,
     );
     permanentRedirect(newPath);
   }

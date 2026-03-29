@@ -9,11 +9,15 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "www.carmodoo.com",
+        hostname: "myshop-img.carmanager.co.kr",
       },
       {
         protocol: "https",
-        hostname: "code2.car2b.com",
+        hostname: "myshop-img2.carmanager.co.kr",
+      },
+      {
+        protocol: "https",
+        hostname: "img.carmanager.co.kr",
       },
       {
         protocol: "https",

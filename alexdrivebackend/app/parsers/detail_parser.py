@@ -3,149 +3,160 @@ import re
 from selectolax.lexbor import LexborHTMLParser
 
 
-# Dark SVG placeholder matching the site's dark theme — zero-latency, no network fetch
+# Dark SVG placeholder matching the site's dark theme
 BLUR_PLACEHOLDER = "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjE2IiBoZWlnaHQ9IjEwIiBmaWxsPSIjMWExYTFhIi8+PC9zdmc+"
 
 
-def parse_car_detail(html: str, encrypted_id: str) -> dict:
+def parse_car_detail(html: str, car_id: str) -> dict:
+    """Parse a salecars.co.kr detail page.
+
+    Structure:
+    - .car_name → car name
+    - .car_price → price
+    - table (first, no class) → specs rows (th/td pairs)
+    - table.type02 → seller info
+    - .slick-slide img / .img_box img → gallery images
+    - input[type='checkbox'][checked] + label → options
+    """
     parser = LexborHTMLParser(html)
 
-    name_el = parser.css_first("#ui_ViewCarName")
+    # Name — from .car_name or first <p> with bracket notation
+    name = ""
+    name_el = parser.css_first(".car_name p")
     if name_el:
         name = name_el.text(strip=True)
-    else:
-        tit_h2 = parser.css_first(".uc_cardetail .tit h2")
-        name = tit_h2.text(strip=True) if tit_h2 else ""
+    if not name:
+        name_el = parser.css_first(".car_name")
+        if name_el:
+            name = name_el.text(strip=True)
+    # Strip surrounding quotes if present
+    name = name.strip('"').strip("'")
 
+    # Price — from .car_price
+    price = ""
+    price_el = parser.css_first(".car_price")
+    if price_el:
+        price_text = price_el.text(strip=True)
+        # Extract "1,800만원" from "판매가 1,800만원"
+        m = re.search(r"([\d,]+\s*만원)", price_text)
+        if m:
+            price = m.group(1)
+
+    # Images — from gallery slider
     images: list[str] = []
-    for a in parser.css("a.img_box"):
-        imgs = a.css("img")
-        full_img = imgs[1] if len(imgs) > 1 else imgs[0] if imgs else None
-        if full_img:
-            src = full_img.attributes.get("src", "")
-            if src and "noimage" not in src and "sblank" not in src:
-                images.append(normalize_image_url(src))
+    seen = set()
+    for img in parser.css(".slick-slide img, .img_box img, .car-img-slider img"):
+        src = img.attributes.get("data-lazy", "") or img.attributes.get("src", "")
+        src = normalize_image_url(src)
+        if not src or "noimage" in src or "xbox" in src or "sblank" in src or "_TH." in src:
+            continue
+        if src not in seen:
+            seen.add(src)
+            images.append(src)
 
-    spec_table = parser.css_first("table.car_info_201210")
-    specs = extract_specs_from_table(spec_table) if spec_table else {}
+    # Specs from first table (no class or unnamed class)
+    specs = _extract_specs(parser)
 
-    price_el = parser.css_first("#ui_ViewCarAmount")
-    price = price_el.text(strip=True) if price_el else ""
+    # Options — checked checkboxes with adjacent labels
+    options = _extract_options(parser)
 
-    options = extract_options(parser)
-
-    # Extract inspection report URL from script tags
+    # Inspection URL — from script or performance report button link
     inspection_url = None
     m = re.search(r"var\s+carcheckoutUrl\s*=\s*'([^']*)'", html)
     if m and m.group(1).strip():
         inspection_url = m.group(1).strip()
-        # Open report in view mode, not print mode
         inspection_url = re.sub(r"([?&])print=\d+", r"\1print=0", inspection_url)
 
+    # Also check for autocafe link in onclick handlers
+    if not inspection_url:
+        m = re.search(r"(https?://[^\s'\"]*autocafe\.co\.kr[^\s'\"]*)", html)
+        if m:
+            inspection_url = m.group(1)
+
     return {
-        "encryptedId": encrypted_id,
+        "id": car_id,
         "name": name,
         "images": images,
-        "year": specs.get("modelYear", ""),
+        "year": specs.get("year", ""),
         "mileage": specs.get("mileage", ""),
         "fuel": specs.get("fuel", ""),
         "transmission": specs.get("transmission", ""),
         "price": price,
         "color": specs.get("color", ""),
-        "engineCapacity": specs.get("engineCapacity", ""),
+        "engineCapacity": "",
         "carNumber": specs.get("carNumber", ""),
         "location": specs.get("location", ""),
         "options": options,
-        "dealer": specs.get("dealer", ""),
-        "phone": specs.get("phone", ""),
+        "dealer": "",  # suppressed — keep AlexDrive's own contacts
+        "phone": "",   # suppressed
         "registrationDate": specs.get("registrationDate", ""),
-        "modelYear": specs.get("modelYear", ""),
+        "modelYear": specs.get("year", ""),
         "inspectionUrl": inspection_url,
         "blurDataUrl": BLUR_PLACEHOLDER if images else None,
     }
 
 
-def extract_specs_from_table(table) -> dict:
-    specs = {
-        "year": "",
-        "mileage": "",
-        "fuel": "",
-        "transmission": "",
-        "color": "",
-        "engineCapacity": "",
-        "carNumber": "",
-        "location": "",
-        "dealer": "",
-        "phone": "",
-        "registrationDate": "",
-        "modelYear": "",
-    }
+def _extract_specs(parser) -> dict:
+    """Extract specs from the detail page tables.
 
-    for tr in table.css("tr"):
-        ths = tr.css("th")
-        tds = tr.css("td")
+    salecars uses tables with th/td pairs per row:
+    - 연식 / 최초등록일
+    - 연료 / 변속기
+    - 색상 / 주행거리
+    - 차량번호 / 차대번호
+    """
+    specs: dict[str, str] = {}
 
-        for i, th in enumerate(ths):
-            if i >= len(tds):
-                break
-            label = th.text(strip=True)
-            td = tds[i]
-            value = re.sub(r"\s+", " ", td.text(strip=True))
+    for table in parser.css("table"):
+        # Skip seller info table (class=type02)
+        if table.attributes.get("class", "") == "type02":
+            continue
 
-            if label == "차량번호":
-                plate_input = td.css_first("input#carplatenoCopy")
-                specs["carNumber"] = plate_input.attributes.get("value", "") if plate_input else value
-            elif label == "주행거리":
-                specs["mileage"] = value
-            elif label == "미션":
-                specs["transmission"] = value
-            elif label == "연형":
-                year_match = re.search(r"(\d{4})\s*년", value)
-                if year_match:
-                    specs["modelYear"] = year_match.group(1)
-                reg_match = re.search(r"\((\d{4}-\d{2}-\d{2})\)", value)
-                if reg_match:
-                    specs["registrationDate"] = reg_match.group(1)
-            elif label == "연료":
-                specs["fuel"] = value
-            elif label == "색상":
-                specs["color"] = value
-            elif label == "주차위치":
-                specs["location"] = value
-            elif label == "담당사원":
-                phones = re.findall(r"\d{2,4}-\d{3,4}-\d{4}", value)
-                if phones:
-                    specs["phone"] = phones[-1]
-                for span in td.css("span"):
-                    text = span.text(strip=True)
-                    if text and "-" not in text and "(" not in text and "증번호" not in text and len(text) < 10:
-                        specs["dealer"] = text
+        for tr in table.css("tr"):
+            ths = tr.css("th")
+            tds = tr.css("td")
+
+            for i, th in enumerate(ths):
+                if i >= len(tds):
+                    break
+                label = th.text(strip=True)
+                value = re.sub(r"\s+", " ", tds[i].text(strip=True))
+
+                if label == "연식":
+                    specs["year"] = value
+                elif label == "최초등록일":
+                    specs["registrationDate"] = value
+                elif label == "연료":
+                    specs["fuel"] = value
+                elif label == "변속기":
+                    specs["transmission"] = value
+                elif label == "색상":
+                    specs["color"] = value
+                elif label == "주행거리":
+                    specs["mileage"] = value
+                elif label == "차량번호":
+                    specs["carNumber"] = value
+                elif label == "주차위치":
+                    specs["location"] = value
 
     return specs
 
 
-def extract_options(parser) -> list[dict]:
-    option_groups: list[dict] = []
+def _extract_options(parser) -> list[dict]:
+    """Extract car options from checked checkboxes with labels."""
+    items: list[str] = []
 
-    for group in parser.css("div.num01sub"):
-        h4 = group.css_first("h4")
-        group_name = h4.text(strip=True) if h4 else ""
-        if not group_name:
-            continue
+    for checkbox in parser.css("input[type='checkbox'][checked]"):
+        sibling = checkbox.next
+        if sibling and sibling.tag == "label":
+            text = sibling.text(strip=True)
+            # Skip consent checkbox
+            if text and "개인정보" not in text and "동의" not in text:
+                items.append(text)
 
-        items: list[str] = []
-        for checkbox in group.css("input[type='checkbox'][checked]"):
-            # selectolax doesn't have find_next_sibling — use .next to get adjacent label
-            sibling = checkbox.next
-            if sibling and sibling.tag == "label":
-                text = sibling.text(strip=True)
-                if text:
-                    items.append(text)
-
-        if items:
-            option_groups.append({"group": group_name, "items": items})
-
-    return option_groups
+    if items:
+        return [{"group": "옵션", "items": items}]
+    return []
 
 
 def normalize_image_url(url: str) -> str:
@@ -154,5 +165,5 @@ def normalize_image_url(url: str) -> str:
     if url.startswith("//"):
         return f"https:{url}"
     if url.startswith("/"):
-        return f"https://www.carmanager.co.kr{url}"
+        return f"https://www.salecars.co.kr{url}"
     return url

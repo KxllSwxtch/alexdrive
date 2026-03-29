@@ -94,7 +94,7 @@ export interface CarListingParams {
 
 // Listing
 export interface CarListing {
-  encryptedId: string;
+  id: string;
   imageUrl: string;
   name: string;
   year: string;
@@ -109,7 +109,7 @@ export interface CarListing {
 
 // Detail
 export interface CarDetail {
-  encryptedId: string;
+  id: string;
   name: string;
   images: string[];
   year: string;

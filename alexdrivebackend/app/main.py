@@ -11,7 +11,7 @@ from starlette.middleware.gzip import GZipMiddleware
 
 from app.config import settings
 from app.routes import admin, cars, filters, health
-from app.services.carmanager import (
+from app.services.salecars import (
     get_car_listings,
     get_filter_data,
     listing_refresh_loop,
@@ -19,18 +19,11 @@ from app.services.carmanager import (
     _save_detail_cache_to_disk,
     detail_cache_persist_loop,
 )
-from app.services.client import NetworkError
-from app.services.session import set_http_client, get_session, session_keepalive_loop
+from app.services.client import NetworkError, set_http_client
 
 
 async def _prewarm_caches():
     """Background cache warming — runs after server is accepting connections."""
-    try:
-        await get_session()
-        print("[server] Session pre-warmed successfully")
-    except Exception as e:
-        print(f"[server] Session pre-warm failed (will retry on first request): {e}")
-
     try:
         await get_filter_data()
         print("[server] Filter cache pre-warmed")
@@ -60,9 +53,8 @@ async def lifespan(app: FastAPI):
         if loaded:
             print(f"[server] Restored {loaded} detail cache entries from disk")
 
-        # Start background tasks including pre-warming
+        # Start background tasks
         prewarm_task = asyncio.create_task(_prewarm_caches())
-        keepalive_task = asyncio.create_task(session_keepalive_loop())
         listing_refresh_task = asyncio.create_task(listing_refresh_loop())
         detail_persist_task = asyncio.create_task(detail_cache_persist_loop())
 
@@ -70,12 +62,11 @@ async def lifespan(app: FastAPI):
         yield
 
         prewarm_task.cancel()
-        keepalive_task.cancel()
         listing_refresh_task.cancel()
         detail_persist_task.cancel()
         try:
             await asyncio.gather(
-                prewarm_task, keepalive_task,
+                prewarm_task,
                 listing_refresh_task, detail_persist_task,
                 return_exceptions=True,
             )

@@ -22,16 +22,16 @@ export function CarCard({ car, index }: CarCardProps) {
   const onHover = useCallback(() => {
     if (!prefetchActive) {
       setPrefetchActive(true);
-      fetch(`${BACKEND_URL}/api/cars/prefetch?id=${encodeURIComponent(car.encryptedId)}`, {
+      fetch(`${BACKEND_URL}/api/cars/prefetch?id=${encodeURIComponent(car.id)}`, {
         method: "POST",
       }).catch(() => {});
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [prefetchActive, car.encryptedId]);
+  }, [prefetchActive, car.id]);
 
   return (
     <Link
-      href={buildCarDetailPath(car.name, car.year, car.encryptedId)}
+      href={buildCarDetailPath(car.name, car.year, car.id)}
       prefetch={prefetchActive ? null : false}
       onMouseEnter={onHover}
       onTouchStart={onHover}
