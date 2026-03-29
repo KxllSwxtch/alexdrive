@@ -76,11 +76,11 @@ def parse_car_listings(html: str) -> list[dict]:
             fuel = spec_items[2] if len(spec_items) > 2 else ""
             color = spec_items[3] if len(spec_items) > 3 else ""
 
-        # Price — look for text matching 만원 pattern (check all elements)
+        # Price — from div/p with standalone price like "4,270만원"
+        # Skip <strong> to avoid matching monthly payment "30만원" inside "월 <strong>30만원</strong>"
         price = ""
-        for el in li.css("div, span, p, strong"):
+        for el in li.css("div, p"):
             text = el.text(strip=True)
-            # Match price like "4,270만원" but not monthly payment "월 51만원"
             if text and re.match(r"^[\d,]+만원$", text):
                 price = text
                 break

@@ -243,7 +243,7 @@ def _build_listing_url(params: dict) -> str:
         "mission": params.get("CarMissionNo") or "",
         "color": params.get("CarColorNo") or "",
         "carName": params.get("SearchName") or "",
-        "carNo": params.get("SearchCarNo") or "",
+        "carPlateNumber": params.get("SearchCarNo") or "",
     }
 
     # Sort mapping
