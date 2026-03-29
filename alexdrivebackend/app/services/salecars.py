@@ -9,7 +9,7 @@ from app.config import settings
 from app.parsers.detail_parser import parse_car_detail
 from app.parsers.filter_parser import parse_filter_data_from_js
 from app.parsers.listing_parser import parse_car_listings, parse_total_count
-from app.services.client import NetworkError, fetch_page
+from app.services.client import NetworkError, fetch_page, post_form
 
 _filter_cache: dict | None = None
 _filter_lock = asyncio.Lock()
@@ -395,6 +395,64 @@ async def get_car_listings(params: dict) -> dict:
 # --- Detail fetch ---
 
 
+async def _fetch_detail_images(car_id: str) -> list[str]:
+    """Fetch car images via AJAX endpoint (returns JSON)."""
+    try:
+        url = f"{settings.salecars_base_url}/search/imageList"
+        text = await post_form(url, {"carNo": car_id})
+        data = json.loads(text)
+        return [
+            img["CarImageFullName"]
+            for img in data.get("info", [])
+            if img.get("CarImageFullName") and "noimage" not in img["CarImageFullName"]
+        ]
+    except Exception as e:
+        print(f"[salecars] Failed to fetch images for {car_id}: {e}")
+        return []
+
+
+async def _fetch_detail_options(car_id: str) -> list[dict]:
+    """Fetch car options via AJAX endpoint (returns HTML with checkboxes)."""
+    try:
+        url = f"{settings.salecars_base_url}/search/optionList"
+        html = await post_form(url, {"carNo": car_id})
+        return _parse_options_html(html)
+    except Exception as e:
+        print(f"[salecars] Failed to fetch options for {car_id}: {e}")
+        return []
+
+
+def _parse_options_html(html: str) -> list[dict]:
+    """Parse options HTML from AJAX response."""
+    from selectolax.lexbor import LexborHTMLParser
+    parser = LexborHTMLParser(html)
+    groups: list[dict] = []
+
+    for h5 in parser.css("h5"):
+        group_name = h5.text(strip=True)
+        if not group_name:
+            continue
+        # Find the next <ul> sibling
+        ul = h5.next
+        while ul and ul.tag != "ul":
+            ul = ul.next
+        if not ul:
+            continue
+
+        items = []
+        for checkbox in ul.css("input[type='checkbox'][checked]"):
+            label = checkbox.next
+            if label and label.tag == "label":
+                text = label.text(strip=True)
+                if text:
+                    items.append(text)
+
+        if items:
+            groups.append({"group": group_name, "items": items})
+
+    return groups
+
+
 async def _refresh_detail_cache(car_id: str) -> None:
     _detail_refresh_keys.add(car_id)
     try:
@@ -405,6 +463,16 @@ async def _refresh_detail_cache(car_id: str) -> None:
             _record_rate_limit()
             return
         result = parse_car_detail(html, car_id)
+
+        # Fetch images and options via AJAX (no throttle needed — different endpoints)
+        images, options = await asyncio.gather(
+            _fetch_detail_images(car_id),
+            _fetch_detail_options(car_id),
+        )
+        result["images"] = images
+        if options:
+            result["options"] = options
+
         _detail_cache[car_id] = {"data": result, "expiry": time.time() + DETAIL_TTL}
         _evict_oldest(_detail_cache, MAX_DETAIL_CACHE_ENTRIES)
         _clear_rate_limit()
@@ -451,6 +519,17 @@ async def get_car_detail(car_id: str) -> dict:
             raise NetworkError("Rate-limited on detail request, no cache available")
 
         result = parse_car_detail(html, car_id)
+
+        # Fetch images and options via AJAX (parallel, no throttle)
+        images, options = await asyncio.gather(
+            _fetch_detail_images(car_id),
+            _fetch_detail_options(car_id),
+        )
+        result["images"] = images
+        result["blurDataUrl"] = result["blurDataUrl"] if images else None
+        if options:
+            result["options"] = options
+
         _detail_cache[car_id] = {"data": result, "expiry": time.time() + DETAIL_TTL}
         _evict_oldest(_detail_cache, MAX_DETAIL_CACHE_ENTRIES)
         _clear_rate_limit()

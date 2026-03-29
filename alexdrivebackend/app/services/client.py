@@ -52,3 +52,25 @@ async def fetch_page(url: str) -> str:
                 await asyncio.sleep(0.5 * attempt)
 
     raise NetworkError(f"Failed after {MAX_NETWORK_RETRIES} attempts: {last_exc}") from last_exc
+
+
+async def post_form(url: str, data: dict[str, str]) -> str:
+    """Simple HTTP POST with form data and retry."""
+    client = get_http_client()
+    ua = random.choice(_USER_AGENTS)
+
+    last_exc = None
+    for attempt in range(1, MAX_NETWORK_RETRIES + 1):
+        try:
+            response = await client.post(
+                url,
+                data=data,
+                headers={"User-Agent": ua},
+            )
+            return response.text
+        except NETWORK_RETRY_ERRORS as exc:
+            last_exc = exc
+            if attempt < MAX_NETWORK_RETRIES:
+                await asyncio.sleep(0.5 * attempt)
+
+    raise NetworkError(f"POST failed after {MAX_NETWORK_RETRIES} attempts: {last_exc}") from last_exc
