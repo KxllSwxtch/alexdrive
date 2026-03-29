@@ -423,34 +423,26 @@ async def _fetch_detail_options(car_id: str) -> list[dict]:
 
 
 def _parse_options_html(html: str) -> list[dict]:
-    """Parse options HTML from AJAX response."""
+    """Parse options HTML from AJAX response.
+
+    Structure: <li><h5>Group</h5><ul><li>checkboxes...</li></ul></li>
+    Checked checkboxes have 'checked' attribute; their labels follow immediately.
+    """
     from selectolax.lexbor import LexborHTMLParser
     parser = LexborHTMLParser(html)
-    groups: list[dict] = []
 
-    for h5 in parser.css("h5"):
-        group_name = h5.text(strip=True)
-        if not group_name:
-            continue
-        # Find the next <ul> sibling
-        ul = h5.next
-        while ul and ul.tag != "ul":
-            ul = ul.next
-        if not ul:
-            continue
+    # Simple approach: collect all checked options as a flat list
+    items: list[str] = []
+    for checkbox in parser.css("input[type='checkbox'][checked]"):
+        sibling = checkbox.next
+        if sibling and sibling.tag == "label":
+            text = sibling.text(strip=True)
+            if text:
+                items.append(text)
 
-        items = []
-        for checkbox in ul.css("input[type='checkbox'][checked]"):
-            label = checkbox.next
-            if label and label.tag == "label":
-                text = label.text(strip=True)
-                if text:
-                    items.append(text)
-
-        if items:
-            groups.append({"group": group_name, "items": items})
-
-    return groups
+    if items:
+        return [{"group": "옵션", "items": items}]
+    return []
 
 
 async def _refresh_detail_cache(car_id: str) -> None:
