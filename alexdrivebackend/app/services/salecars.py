@@ -431,10 +431,13 @@ def _parse_options_html(html: str) -> list[dict]:
     from selectolax.lexbor import LexborHTMLParser
     parser = LexborHTMLParser(html)
 
-    # Simple approach: collect all checked options as a flat list
+    # Collect all checked options as a flat list
     items: list[str] = []
     for checkbox in parser.css("input[type='checkbox'][checked]"):
+        # Skip text/whitespace nodes to find the <label>
         sibling = checkbox.next
+        while sibling and sibling.tag and sibling.tag.startswith("-"):
+            sibling = sibling.next
         if sibling and sibling.tag == "label":
             text = sibling.text(strip=True)
             if text:
