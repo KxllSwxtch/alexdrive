@@ -37,8 +37,8 @@ _RATE_LIMIT_MARKER = "limits_box"
 # --- Global outbound request throttling ---
 _last_request_time: float = 0.0
 _throttle_lock = asyncio.Lock()
-MIN_REQUEST_INTERVAL = 2.0  # public site — less aggressive than B2B
-MAX_REQUEST_JITTER = 2.0
+MIN_REQUEST_INTERVAL = 0.3  # public website — just be polite
+MAX_REQUEST_JITTER = 0.2
 
 # --- Rate-limit tracking ---
 _last_rate_limit_time: float = 0.0
@@ -164,12 +164,9 @@ async def _fetch_filter_data_internal() -> dict:
     global _filter_cache
     print("[salecars] Fetching filter data from carmanager JS files...")
 
-    # Fetch public JS files from carmanager (no auth needed)
-    car_js_contents = []
-    for path in CAR_JS_FILES:
-        await _throttle_request()
-        url = f"{settings.carmanager_base_url}{path}"
-        car_js_contents.append(await fetch_page(url))
+    # Fetch public JS files from carmanager in parallel (no auth needed)
+    urls = [f"{settings.carmanager_base_url}{path}" for path in CAR_JS_FILES]
+    car_js_contents = await asyncio.gather(*[fetch_page(url) for url in urls])
 
     combined_js = "\n".join(car_js_contents)
     page_filters = parse_filter_data_from_js(combined_js)
