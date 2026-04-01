@@ -76,14 +76,17 @@ def parse_car_listings(html: str) -> list[dict]:
             fuel = spec_items[2] if len(spec_items) > 2 else ""
             color = spec_items[3] if len(spec_items) > 3 else ""
 
-        # Price — from div/p with standalone price like "4,270만원"
-        # Skip <strong> to avoid matching monthly payment "30만원" inside "월 <strong>30만원</strong>"
+        # Price — from <span class="price"> containing <span class="num">
+        # Structure: <span class="price"><span class="num">979</span>만원</span>
+        # Skip the monthly-payment span which has <strong> instead of <span class="num">
         price = ""
-        for el in li.css("div, p"):
-            text = el.text(strip=True)
-            if text and re.match(r"^[\d,]+만원$", text):
-                price = text
-                break
+        for span in li.css("span.price"):
+            num_el = span.css_first("span.num")
+            if num_el:
+                num_text = num_el.text(strip=True)
+                if num_text:
+                    price = f"{num_text}만원"
+                    break
 
         listings.append({
             "id": car_id,

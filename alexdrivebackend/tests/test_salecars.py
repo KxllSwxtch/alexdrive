@@ -83,7 +83,7 @@ class TestListingParser:
         <ul>
           <li>
             <a href="/search/detail/12345">
-              <img src="https://img.carmanager.co.kr/photo.jpg" />
+              <div class="car-img" style="background:url(https://img.carmanager.co.kr/photo.jpg)"></div>
             </a>
             <div>
               <button><a href="/search/detail/12345">[현대]소나타 2.0</a></button>
@@ -93,8 +93,12 @@ class TestListingParser:
                 <li>휘발유</li>
                 <li>흰색</li>
               </ul>
-              <div>월 <strong>30만원</strong></div>
-              <div>2,500만원</div>
+              <span class="price">
+                월 <strong class="representativeColor">
+                  <span class="equalRepaymentOfPrincipalAndInterestPrice">30</span>만원
+                </strong>
+              </span>
+              <span class="price"><span class="num">2,500</span>만원</span>
             </div>
           </li>
         </ul>
