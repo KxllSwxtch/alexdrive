@@ -8,6 +8,7 @@ services:
       - CARMANAGER_PASSWORD=${CARMANAGER_PASSWORD}
       - CORS_ORIGINS=${CORS_ORIGINS}
       - ADMIN_SECRET=${ADMIN_SECRET}
+      - PROXY_URL=${PROXY_URL:-}
       - PORT=3001
     restart: unless-stopped
 

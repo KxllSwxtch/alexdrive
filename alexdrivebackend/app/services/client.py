@@ -44,6 +44,11 @@ async def fetch_page(url: str) -> str:
                 url,
                 headers={"User-Agent": ua, "Accept": "text/html,*/*"},
             )
+            if response.status_code >= 400:
+                print(f"[client] HTTP {response.status_code} for {url[:80]}")
+                if response.status_code in {429, 500, 502, 503, 504} and attempt < MAX_NETWORK_RETRIES:
+                    await asyncio.sleep(0.5 * attempt)
+                    continue
             return response.text
         except NETWORK_RETRY_ERRORS as exc:
             last_exc = exc
@@ -67,6 +72,11 @@ async def post_form(url: str, data: dict[str, str]) -> str:
                 data=data,
                 headers={"User-Agent": ua},
             )
+            if response.status_code >= 400:
+                print(f"[client] HTTP {response.status_code} for POST {url[:80]}")
+                if response.status_code in {429, 500, 502, 503, 504} and attempt < MAX_NETWORK_RETRIES:
+                    await asyncio.sleep(0.5 * attempt)
+                    continue
             return response.text
         except NETWORK_RETRY_ERRORS as exc:
             last_exc = exc

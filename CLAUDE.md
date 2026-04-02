@@ -4,15 +4,15 @@ You're a Senior full-stack developer with 40+ years of experience, you are an ex
 
 ## Project
 
-AlexDrive — car dealer website for a Korean used-car market. Scrapes m.jenya.co.kr listings (public HTML, no auth required), translates remaining Korean text to Russian, and presents them with a dark-themed frontend.
+AlexDrive — car dealer website for a Korean used-car market. Scrapes salecars.co.kr listings (public HTML, no auth required), translates remaining Korean text to Russian, and presents them with a dark-themed frontend.
 
 ## Architecture
 
 ```
-Browser → alexdriveapp (Next.js :3000) → alexdrivebackend (FastAPI :3001) → m.jenya.co.kr (via proxy)
+Browser → alexdriveapp (Next.js :3000) → alexdrivebackend (FastAPI :3001) → salecars.co.kr (via optional proxy)
 ```
 
-**alexdrivebackend/** — FastAPI (Python) server handling all scraping, HTML parsing, and caching. Uses httpx for HTTP requests, selectolax for parsing, pydantic-settings for config. No authentication needed — jenya is public. Persistent process keeps module-level filter/listing/detail caches alive.
+**alexdrivebackend/** — FastAPI (Python) server handling all scraping, HTML parsing, and caching. Uses httpx for HTTP requests, selectolax for parsing, pydantic-settings for config. No authentication needed — salecars is public. Persistent process keeps module-level filter/listing/detail caches alive.
 
 **alexdriveapp/** — Next.js 16 (App Router) frontend. Pure presentation layer: fetches JSON from backend, renders UI, translates Korean→Russian client-side.
 
@@ -45,14 +45,14 @@ npm start      # next start
 npm run lint   # eslint (no auto-fix)
 ```
 
-Backend tests: `cd alexdrivebackend && pytest -v` (86 tests, pytest + pytest-asyncio + respx).
+Backend tests: `cd alexdrivebackend && pytest -v` (33 tests, pytest + pytest-asyncio + respx).
 
 ## Environment Variables
 
 ### Backend (.env)
 
-- `JENYA_BASE_URL` — optional, default `https://m.jenya.co.kr`
-- `PROXY_URL` — optional HTTP proxy for outbound requests
+- `SALECARS_BASE_URL` — optional, default `https://www.salecars.co.kr`
+- `PROXY_URL` — HTTP proxy for outbound requests (required in production to avoid IP bans)
 - `PORT` — default 3001
 - `CORS_ORIGINS` — comma-separated, default "http://localhost:3000"
 
@@ -64,28 +64,27 @@ Backend tests: `cd alexdrivebackend && pytest -v` (86 tests, pytest + pytest-asy
 ## Key Conventions
 
 - **Car IDs are simple numeric seq** (e.g., `0006687244`). The detail endpoint uses query params (`GET /api/cars/detail?id=xxx`).
-- **Filter data from single JS file** (`carcode2_en.js`, ~21k entries). Parsed once, cached 24h. Hierarchy built per carnation (1=Korean, 2=Foreign, 3=Trucks).
-- **No authentication** — jenya.co.kr is public. No session management, no cookies, no login.
+- **Filter data from 5 public JS files** on carmanager.co.kr (CarBaseMaker, CarBaseModel, etc.). Parsed once, cached 24h. Hierarchy built per carnation (1=Korean, 2=Foreign, 3=Trucks).
+- **No authentication** — salecars.co.kr is public. No session management, no cookies, no login.
 - **Filter cache has 24h TTL** with thundering-herd protection (asyncio.Lock + double-check).
 - **Listing cache** has 10min TTL, max 200 entries, stale-while-revalidate at 80% TTL.
 - **Detail cache** has 10min TTL, max 1000 entries, per-key locking, disk persistence.
-- **Request throttling** — 3s minimum between outbound requests to jenya.
+- **Request throttling** — 2-3s minimum between outbound requests to salecars.
 - **Categories as tabs** — Korean (carnation=1), Foreign (carnation=2), Trucks (carnation=3) shown as tabs above filter bar.
 - **Translations** live in `alexdriveapp/src/lib/translations.ts` (~1830 lines). The `translateSmartly()` function converts Korean text to Russian with brand/model name awareness.
 - **Dark theme** with Classic Gold (#D4AF37) accent. Colors defined as CSS custom properties in `globals.css`.
 - **Fonts:** Jost (headings), Inter (body), both with cyrillic subset.
-- **Russian UI** — all user-facing text is in Russian. Jenya already provides some Russian labels.
+- **Russian UI** — all user-facing text is in Russian.
 - **Client-side debouncing** — 500ms delay on filter param changes before fetching car listings.
 - **ISR on detail pages** — 10-minute revalidation (`revalidate=600`).
-- **Images from CDN** — `photo5.autosale.co.kr` (car_large for detail, car_middle for listings).
+- **Images from CDN** — `myshop-img.carmanager.co.kr` (listing thumbnails and detail images).
 
 ## Backend Request Flow
 
 1. `routes/` receive HTTP request via FastAPI router, extract params
-2. `services/jenya.py` orchestrates business logic (filter fetch, listing search, detail fetch)
-3. `services/client.py` makes simple GET requests with network retry (no auth)
-4. `services/session.py` manages httpx client lifecycle only
-5. `parsers/` extract structured data from HTML/JS responses using selectolax
+2. `services/salecars.py` orchestrates business logic (filter fetch, listing search, detail fetch)
+3. `services/client.py` makes simple GET requests with network retry and HTTP status checking (no auth)
+4. `parsers/` extract structured data from HTML/JS responses using selectolax
 
 ## Frontend Data Flow
 

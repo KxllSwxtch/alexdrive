@@ -1,0 +1,24 @@
+===
+COMMON PROMPTS
+===
+/superpowers:using-superpowers
+
+Identify the root cause and Create a comprehensive plan, think of each detail for the best solution possible. use context7
+Identify the root cause and Create a comprehensive plan, ultrathink of each detail for the best solution possible. use context7
+
+Create a comprehensive plan, think of each detail for the best solution possible. use context7
+Create a comprehensive plan, ultrathink of each detail for the best solution possible. use context7
+
+Create a comprehensive plan, think of each detail for the best solution possible. use context7. use web for tips/tricks and best practices
+Create a comprehensive plan, ultrathink of each detail for the best solution possible. use context7. use web for tips/tricks and best practices
+
+Are you 100% sure everything is done properly and without any issues?
+
+
+
+===
+FOR THIS PROJECT
+===
+Commit and push all changes, then using this SSH access to the production server git pull then rebuild and redeploy the production to apply new changes:
+ssh root@175.45.194.210
+G8+Ne$UUNei

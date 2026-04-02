@@ -7,6 +7,7 @@ class Settings(BaseSettings):
     salecars_base_url: str = "https://www.salecars.co.kr"
     carmanager_base_url: str = "https://www.carmanager.co.kr"  # only for public JS filter files
     admin_secret: str = ""
+    proxy_url: str = ""
 
     model_config = {"env_file": ".env", "extra": "ignore"}
 

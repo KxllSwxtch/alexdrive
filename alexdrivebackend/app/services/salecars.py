@@ -37,8 +37,8 @@ _RATE_LIMIT_MARKER = "limits_box"
 # --- Global outbound request throttling ---
 _last_request_time: float = 0.0
 _throttle_lock = asyncio.Lock()
-MIN_REQUEST_INTERVAL = 0.3  # public website — just be polite
-MAX_REQUEST_JITTER = 0.2
+MIN_REQUEST_INTERVAL = 2.0  # was 0.3 — too aggressive, caused IP ban
+MAX_REQUEST_JITTER = 1.0
 
 # --- Rate-limit tracking ---
 _last_rate_limit_time: float = 0.0
@@ -306,8 +306,10 @@ async def _fetch_and_cache_listings(cache_key: str, params: dict) -> dict:
         _clear_rate_limit()
     elif len(html) <= 50:
         status = "empty"
+        print(f"[salecars] WARNING: Empty response ({len(html)} bytes): {html[:200]!r}")
     else:
         status = "parse_failure"
+        print(f"[salecars] WARNING: Parse failure, HTML start: {html[:500]!r}")
 
     result = {"listings": listings, "total": total, "status": status}
     _listing_cache[cache_key] = {"data": result, "expiry": time.time() + LISTING_TTL}

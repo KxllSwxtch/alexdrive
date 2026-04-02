@@ -42,10 +42,16 @@ async def _prewarm_caches():
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    async with httpx.AsyncClient(
-        timeout=httpx.Timeout(30.0),
-        follow_redirects=False,
-    ) as client:
+    client_kwargs: dict = {
+        "timeout": httpx.Timeout(30.0),
+        "follow_redirects": True,
+    }
+    if settings.proxy_url:
+        client_kwargs["proxy"] = settings.proxy_url
+        masked = settings.proxy_url.split("@")[-1] if "@" in settings.proxy_url else settings.proxy_url
+        print(f"[server] Using proxy: {masked}")
+
+    async with httpx.AsyncClient(**client_kwargs) as client:
         set_http_client(client)
 
         # Load detail cache from disk (instant, no network)
