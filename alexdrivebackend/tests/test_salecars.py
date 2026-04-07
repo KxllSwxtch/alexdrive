@@ -72,11 +72,16 @@ class TestBuildListingUrl:
 
 class TestListingParser:
     def test_parse_total_count(self):
-        html = '<div>전체 49,659대</div>'
+        html = '<html><body><div>전체 49,659대</div></body></html>'
         assert parse_total_count(html) == 49659
 
+    def test_parse_total_count_nested_spans(self):
+        """Real salecars.co.kr HTML wraps the number in a span."""
+        html = '<html><body><span>전체 <span class="txt-primary font-bold">30,804</span>대</span></body></html>'
+        assert parse_total_count(html) == 30804
+
     def test_parse_total_count_no_match(self):
-        assert parse_total_count("<html></html>") == 0
+        assert parse_total_count("<html><body></body></html>") == 0
 
     def test_parse_listings_basic(self):
         html = '''

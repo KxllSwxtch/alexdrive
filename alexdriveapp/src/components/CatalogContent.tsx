@@ -6,7 +6,7 @@ import { CarGrid } from "@/components/CarGrid";
 import { Pagination } from "@/components/Pagination";
 import type { FilterData, CarListing, CarListingParams } from "@/lib/types";
 
-const PAGE_SIZE = 20;
+const PAGE_SIZE = 24;
 const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:3001";
 
 const VALID_PARAM_KEYS = new Set([

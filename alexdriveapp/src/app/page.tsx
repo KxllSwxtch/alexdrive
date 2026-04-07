@@ -2,7 +2,7 @@ import { backendFetch, fetchFiltersCached } from "@/lib/api";
 import { CatalogContent } from "@/components/CatalogContent";
 import type { FilterData, CarListing } from "@/lib/types";
 
-const PAGE_SIZE = 20;
+const PAGE_SIZE = 24;
 
 const VALID_PARAM_KEYS = new Set([
   "CarMakerNo", "CarModelNo", "CarModelDetailNo", "CarGradeNo", "CarGradeDetailNo",
