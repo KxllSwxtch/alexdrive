@@ -188,6 +188,56 @@ class TestExtractLocation:
         assert result["location"] == "수원"
 
 
+# ── Listing exclusion filter ─────────────────────────────────
+
+
+class TestFilterExcludedListings:
+    def setup_method(self):
+        from app.services import salecars
+        self._original = dict(salecars._excluded_car_ids)
+        salecars._excluded_car_ids.clear()
+
+    def teardown_method(self):
+        from app.services import salecars
+        salecars._excluded_car_ids.clear()
+        salecars._excluded_car_ids.update(self._original)
+
+    def test_total_adjusted_by_page_removed_not_global(self):
+        """total should subtract per-page removed count, not global exclusion size."""
+        import time
+        from app.services.salecars import _filter_excluded_listings, _excluded_car_ids
+        # Simulate 100 globally excluded IDs
+        for i in range(100):
+            _excluded_car_ids[f"other_{i}"] = time.time()
+        # Only 2 of them are on this page
+        _excluded_car_ids["car_A"] = time.time()
+        _excluded_car_ids["car_B"] = time.time()
+
+        data = {
+            "listings": [
+                {"id": "car_A"}, {"id": "car_C"}, {"id": "car_B"}, {"id": "car_D"},
+            ],
+            "total": 50,
+            "status": "ok",
+        }
+        result = _filter_excluded_listings(data)
+        assert len(result["listings"]) == 2  # car_C, car_D remain
+        assert result["total"] == 48  # 50 - 2 (not 50 - 102)
+
+    def test_no_exclusions_passes_through(self):
+        from app.services.salecars import _filter_excluded_listings
+        data = {"listings": [{"id": "x"}], "total": 10, "status": "ok"}
+        assert _filter_excluded_listings(data) is data
+
+    def test_no_overlap_passes_through(self):
+        import time
+        from app.services.salecars import _filter_excluded_listings, _excluded_car_ids
+        _excluded_car_ids["other"] = time.time()
+        data = {"listings": [{"id": "x"}], "total": 10, "status": "ok"}
+        result = _filter_excluded_listings(data)
+        assert result["total"] == 10  # unchanged
+
+
 # ── Cache eviction ────────────────────────────────────────────
 
 

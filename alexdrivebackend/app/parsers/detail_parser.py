@@ -102,7 +102,7 @@ def _extract_location(parser) -> str:
     if tooltip:
         text = tooltip.text(strip=True)
         # Extract region from last parentheses: "(주)건우(안산)" → "안산"
-        match = re.search(r"\(([^)]+)\)$", text)
+        match = re.search(r"\(([^)]+)\)\s*$", text)
         if match:
             return match.group(1)
     return ""

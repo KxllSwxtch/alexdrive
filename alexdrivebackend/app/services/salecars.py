@@ -34,8 +34,9 @@ _last_successful_parse: float = 0.0
 
 # --- Location-based exclusion (progressive Suwon filter) ---
 ALLOWED_LOCATIONS: set[str] = {"수원"}
-_excluded_car_ids: set[str] = set()  # car IDs confirmed non-Suwon
+_excluded_car_ids: dict[str, float] = {}  # car_id → timestamp when excluded
 EXCLUSION_SET_PATH = "/tmp/alexdrive_excluded_ids.json"
+EXCLUSION_TTL = 7 * 24 * 60 * 60  # 7 days
 
 _RATE_LIMIT_MARKER = "limits_box"
 
@@ -373,7 +374,7 @@ def _filter_excluded_listings(data: dict) -> dict:
     if len(filtered) < len(listings):
         removed = len(listings) - len(filtered)
         print(f"[salecars] Filtered {removed} non-Suwon cars from listings")
-        return {**data, "listings": filtered, "total": max(0, data["total"] - len(_excluded_car_ids))}
+        return {**data, "listings": filtered, "total": max(0, data["total"] - removed)}
     return data
 
 
@@ -488,7 +489,7 @@ async def _refresh_detail_cache(car_id: str) -> None:
 
         location = result.get("location", "")
         if location and location not in ALLOWED_LOCATIONS:
-            _excluded_car_ids.add(car_id)
+            _excluded_car_ids[car_id] = time.time()
 
         _detail_cache[car_id] = {"data": result, "expiry": time.time() + DETAIL_TTL}
         _evict_oldest(_detail_cache, MAX_DETAIL_CACHE_ENTRIES)
@@ -550,7 +551,7 @@ async def get_car_detail(car_id: str) -> dict:
         # Track non-Suwon cars for progressive listing filter
         location = result.get("location", "")
         if location and location not in ALLOWED_LOCATIONS:
-            _excluded_car_ids.add(car_id)
+            _excluded_car_ids[car_id] = time.time()
 
         _detail_cache[car_id] = {"data": result, "expiry": time.time() + DETAIL_TTL}
         _evict_oldest(_detail_cache, MAX_DETAIL_CACHE_ENTRIES)
@@ -601,12 +602,15 @@ def _load_detail_cache_from_disk() -> int:
 def _save_excluded_ids_to_disk() -> None:
     if not _excluded_car_ids:
         return
+    now = time.time()
+    # Only save non-expired entries
+    active = {k: v for k, v in _excluded_car_ids.items() if now - v < EXCLUSION_TTL}
     try:
         tmp_path = EXCLUSION_SET_PATH + ".tmp"
         with open(tmp_path, "w") as f:
-            json.dump(list(_excluded_car_ids), f)
+            json.dump(active, f)
         os.replace(tmp_path, EXCLUSION_SET_PATH)
-        print(f"[salecars] Saved {len(_excluded_car_ids)} excluded car IDs to disk")
+        print(f"[salecars] Saved {len(active)} excluded car IDs to disk")
     except Exception as e:
         print(f"[salecars] Failed to save excluded IDs to disk: {e}")
 
@@ -614,14 +618,22 @@ def _save_excluded_ids_to_disk() -> None:
 def _load_excluded_ids_from_disk() -> int:
     try:
         with open(EXCLUSION_SET_PATH) as f:
-            ids = json.load(f)
+            data = json.load(f)
     except (FileNotFoundError, json.JSONDecodeError):
         return 0
+    now = time.time()
     loaded = 0
-    for car_id in ids:
-        if car_id not in _excluded_car_ids:
-            _excluded_car_ids.add(car_id)
-            loaded += 1
+    # Support both old format (list) and new format (dict with timestamps)
+    if isinstance(data, list):
+        for car_id in data:
+            if car_id not in _excluded_car_ids:
+                _excluded_car_ids[car_id] = now
+                loaded += 1
+    elif isinstance(data, dict):
+        for car_id, ts in data.items():
+            if now - ts < EXCLUSION_TTL and car_id not in _excluded_car_ids:
+                _excluded_car_ids[car_id] = ts
+                loaded += 1
     if loaded:
         print(f"[salecars] Loaded {loaded} excluded car IDs from disk")
     return loaded

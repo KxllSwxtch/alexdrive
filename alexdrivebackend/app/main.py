@@ -33,7 +33,7 @@ async def _prewarm_caches():
 
     try:
         await get_car_listings({
-            "PageNow": 1, "PageSize": 20,
+            "PageNow": 1, "PageSize": 24,
             "PageSort": "ModDt", "PageAscDesc": "DESC",
         })
         print("[server] Listing cache pre-warmed")
