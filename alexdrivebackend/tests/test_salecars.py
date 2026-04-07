@@ -155,6 +155,39 @@ class TestDetailParser:
         assert result["phone"] == ""   # suppressed
 
 
+class TestExtractLocation:
+    def test_suwon(self):
+        from app.parsers.detail_parser import _extract_location
+        from selectolax.lexbor import LexborHTMLParser
+        html = '<html><body><span class="tooltip-box">(주)세일카(수원)</span></body></html>'
+        assert _extract_location(LexborHTMLParser(html)) == "수원"
+
+    def test_ansan(self):
+        from app.parsers.detail_parser import _extract_location
+        from selectolax.lexbor import LexborHTMLParser
+        html = '<html><body><span class="tooltip-box">(주)건우(안산)</span></body></html>'
+        assert _extract_location(LexborHTMLParser(html)) == "안산"
+
+    def test_empty(self):
+        from app.parsers.detail_parser import _extract_location
+        from selectolax.lexbor import LexborHTMLParser
+        html = '<html><body></body></html>'
+        assert _extract_location(LexborHTMLParser(html)) == ""
+
+    def test_detail_parser_uses_location(self):
+        """parse_car_detail extracts location from tooltip."""
+        html = '''
+        <div class="car_name"><p>[현대]소나타</p></div>
+        <div class="car_price">판매가 1,000만원</div>
+        <table><tr><th>연식</th><td>2020</td></tr></table>
+        <table class="type02">
+          <tr><th>판매방식</th><td>알선판매<span class="tooltip-box">벧엘2(수원)</span></td></tr>
+        </table>
+        '''
+        result = parse_car_detail(html, "99999")
+        assert result["location"] == "수원"
+
+
 # ── Cache eviction ────────────────────────────────────────────
 
 

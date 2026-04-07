@@ -16,6 +16,7 @@ from app.services.salecars import (
     get_filter_data,
     listing_refresh_loop,
     _load_detail_cache_from_disk,
+    _load_excluded_ids_from_disk,
     _save_detail_cache_to_disk,
     detail_cache_persist_loop,
 )
@@ -54,10 +55,13 @@ async def lifespan(app: FastAPI):
     async with httpx.AsyncClient(**client_kwargs) as client:
         set_http_client(client)
 
-        # Load detail cache from disk (instant, no network)
+        # Load detail cache and exclusion set from disk (instant, no network)
         loaded = _load_detail_cache_from_disk()
         if loaded:
             print(f"[server] Restored {loaded} detail cache entries from disk")
+        excluded = _load_excluded_ids_from_disk()
+        if excluded:
+            print(f"[server] Restored {excluded} excluded car IDs from disk")
 
         # Start background tasks
         prewarm_task = asyncio.create_task(_prewarm_caches())

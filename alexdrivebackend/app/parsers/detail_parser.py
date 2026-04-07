@@ -85,7 +85,7 @@ def parse_car_detail(html: str, car_id: str) -> dict:
         "color": specs.get("color", ""),
         "engineCapacity": "",
         "carNumber": specs.get("carNumber", ""),
-        "location": specs.get("location", ""),
+        "location": _extract_location(parser) or specs.get("location", ""),
         "options": options,
         "dealer": "",  # suppressed — keep AlexDrive's own contacts
         "phone": "",   # suppressed
@@ -94,6 +94,18 @@ def parse_car_detail(html: str, car_id: str) -> dict:
         "inspectionUrl": inspection_url,
         "blurDataUrl": BLUR_PLACEHOLDER if images else None,
     }
+
+
+def _extract_location(parser) -> str:
+    """Extract location from 판매방식 tooltip, e.g. '(주)건우(안산)' → '안산'."""
+    tooltip = parser.css_first("span.tooltip-box")
+    if tooltip:
+        text = tooltip.text(strip=True)
+        # Extract region from last parentheses: "(주)건우(안산)" → "안산"
+        match = re.search(r"\(([^)]+)\)$", text)
+        if match:
+            return match.group(1)
+    return ""
 
 
 def _extract_specs(parser) -> dict:

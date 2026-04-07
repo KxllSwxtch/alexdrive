@@ -32,6 +32,11 @@ _detail_refresh_keys: set[str] = set()
 
 _last_successful_parse: float = 0.0
 
+# --- Location-based exclusion (progressive Suwon filter) ---
+ALLOWED_LOCATIONS: set[str] = {"수원"}
+_excluded_car_ids: set[str] = set()  # car IDs confirmed non-Suwon
+EXCLUSION_SET_PATH = "/tmp/alexdrive_excluded_ids.json"
+
 _RATE_LIMIT_MARKER = "limits_box"
 
 # --- Global outbound request throttling ---
@@ -359,6 +364,19 @@ async def listing_refresh_loop() -> None:
             print(f"[salecars] Proactive listing refresh failed: {e}")
 
 
+def _filter_excluded_listings(data: dict) -> dict:
+    """Remove cars confirmed as non-Suwon from listing results."""
+    if not _excluded_car_ids or not data.get("listings"):
+        return data
+    listings = data["listings"]
+    filtered = [car for car in listings if car["id"] not in _excluded_car_ids]
+    if len(filtered) < len(listings):
+        removed = len(listings) - len(filtered)
+        print(f"[salecars] Filtered {removed} non-Suwon cars from listings")
+        return {**data, "listings": filtered, "total": max(0, data["total"] - len(_excluded_car_ids))}
+    return data
+
+
 async def get_car_listings(params: dict) -> dict:
     cache_key = hashlib.md5(json.dumps(params, sort_keys=True).encode()).hexdigest()
 
@@ -370,7 +388,7 @@ async def get_car_listings(params: dict) -> dict:
                 if not is_rate_limited():
                     asyncio.create_task(_refresh_listing_cache(cache_key, params))
             print(f"[salecars] Listing cache hit ({cache_key[:8]})")
-            return cached["data"]
+            return _filter_excluded_listings(cached["data"])
 
     if is_rate_limited():
         remaining = get_rate_limit_retry_after()
@@ -379,15 +397,16 @@ async def get_car_listings(params: dict) -> dict:
     async with _listing_lock:
         cached = _listing_cache.get(cache_key)
         if cached and time.time() < cached["expiry"]:
-            return cached["data"]
+            return _filter_excluded_listings(cached["data"])
 
         try:
-            return await _fetch_and_cache_listings(cache_key, params)
+            result = await _fetch_and_cache_listings(cache_key, params)
+            return _filter_excluded_listings(result)
         except NetworkError:
             cached = _listing_cache.get(cache_key)
             if cached:
                 print(f"[salecars] Serving stale listing cache due to network error ({cache_key[:8]})")
-                return cached["data"]
+                return _filter_excluded_listings(cached["data"])
             raise
 
 
@@ -467,6 +486,10 @@ async def _refresh_detail_cache(car_id: str) -> None:
         if options:
             result["options"] = options
 
+        location = result.get("location", "")
+        if location and location not in ALLOWED_LOCATIONS:
+            _excluded_car_ids.add(car_id)
+
         _detail_cache[car_id] = {"data": result, "expiry": time.time() + DETAIL_TTL}
         _evict_oldest(_detail_cache, MAX_DETAIL_CACHE_ENTRIES)
         _clear_rate_limit()
@@ -524,6 +547,11 @@ async def get_car_detail(car_id: str) -> dict:
         if options:
             result["options"] = options
 
+        # Track non-Suwon cars for progressive listing filter
+        location = result.get("location", "")
+        if location and location not in ALLOWED_LOCATIONS:
+            _excluded_car_ids.add(car_id)
+
         _detail_cache[car_id] = {"data": result, "expiry": time.time() + DETAIL_TTL}
         _evict_oldest(_detail_cache, MAX_DETAIL_CACHE_ENTRIES)
         _clear_rate_limit()
@@ -570,15 +598,45 @@ def _load_detail_cache_from_disk() -> int:
     return loaded
 
 
+def _save_excluded_ids_to_disk() -> None:
+    if not _excluded_car_ids:
+        return
+    try:
+        tmp_path = EXCLUSION_SET_PATH + ".tmp"
+        with open(tmp_path, "w") as f:
+            json.dump(list(_excluded_car_ids), f)
+        os.replace(tmp_path, EXCLUSION_SET_PATH)
+        print(f"[salecars] Saved {len(_excluded_car_ids)} excluded car IDs to disk")
+    except Exception as e:
+        print(f"[salecars] Failed to save excluded IDs to disk: {e}")
+
+
+def _load_excluded_ids_from_disk() -> int:
+    try:
+        with open(EXCLUSION_SET_PATH) as f:
+            ids = json.load(f)
+    except (FileNotFoundError, json.JSONDecodeError):
+        return 0
+    loaded = 0
+    for car_id in ids:
+        if car_id not in _excluded_car_ids:
+            _excluded_car_ids.add(car_id)
+            loaded += 1
+    if loaded:
+        print(f"[salecars] Loaded {loaded} excluded car IDs from disk")
+    return loaded
+
+
 async def detail_cache_persist_loop() -> None:
     while True:
         await asyncio.sleep(DETAIL_CACHE_PERSIST_INTERVAL)
         _save_detail_cache_to_disk()
+        _save_excluded_ids_to_disk()
 
 
 # --- Detail cache warming ---
 
-DETAIL_WARMING_MAX = 2
+DETAIL_WARMING_MAX = 5
 
 
 async def warm_detail_cache_for_listings(listings: list[dict]) -> None:
