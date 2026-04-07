@@ -38,6 +38,15 @@ _excluded_car_ids: dict[str, float] = {}  # car_id → timestamp when excluded
 EXCLUSION_SET_PATH = "/tmp/alexdrive_excluded_ids.json"
 EXCLUSION_TTL = 7 * 24 * 60 * 60  # 7 days
 
+# --- Location cache (for scanner — tracks ALL checked cars) ---
+_location_cache: dict[str, tuple[str, float]] = {}  # car_id → (location, timestamp)
+LOCATION_CACHE_PATH = "/tmp/alexdrive_location_cache.json"
+
+# --- Background location scanner ---
+SCANNER_EXTRA_DELAY = 1.0  # extra sleep between scanner requests (yield to users)
+SCANNER_RESCAN_INTERVAL = 2 * 60 * 60  # 2 hours between full passes
+SCANNER_STARTUP_DELAY = 60  # wait for prewarm to finish
+
 _RATE_LIMIT_MARKER = "limits_box"
 
 # --- Global outbound request throttling ---
@@ -488,6 +497,8 @@ async def _refresh_detail_cache(car_id: str) -> None:
             result["options"] = options
 
         location = result.get("location", "")
+        if location:
+            _location_cache[car_id] = (location, time.time())
         if location and location not in ALLOWED_LOCATIONS:
             _excluded_car_ids[car_id] = time.time()
 
@@ -548,8 +559,10 @@ async def get_car_detail(car_id: str) -> dict:
         if options:
             result["options"] = options
 
-        # Track non-Suwon cars for progressive listing filter
+        # Track location for progressive listing filter
         location = result.get("location", "")
+        if location:
+            _location_cache[car_id] = (location, time.time())
         if location and location not in ALLOWED_LOCATIONS:
             _excluded_car_ids[car_id] = time.time()
 
@@ -644,11 +657,222 @@ async def detail_cache_persist_loop() -> None:
         await asyncio.sleep(DETAIL_CACHE_PERSIST_INTERVAL)
         _save_detail_cache_to_disk()
         _save_excluded_ids_to_disk()
+        _save_location_cache_to_disk()
+
+
+# --- Location cache persistence ---
+
+
+def _save_location_cache_to_disk() -> None:
+    if not _location_cache:
+        return
+    now = time.time()
+    active = {k: [loc, ts] for k, (loc, ts) in _location_cache.items() if now - ts < EXCLUSION_TTL}
+    try:
+        tmp_path = LOCATION_CACHE_PATH + ".tmp"
+        with open(tmp_path, "w") as f:
+            json.dump(active, f)
+        os.replace(tmp_path, LOCATION_CACHE_PATH)
+        print(f"[salecars] Saved {len(active)} location cache entries to disk")
+    except Exception as e:
+        print(f"[salecars] Failed to save location cache to disk: {e}")
+
+
+def _load_location_cache_from_disk() -> int:
+    try:
+        with open(LOCATION_CACHE_PATH) as f:
+            data = json.load(f)
+    except (FileNotFoundError, json.JSONDecodeError):
+        return 0
+    now = time.time()
+    loaded = 0
+    for car_id, entry in data.items():
+        if not isinstance(entry, list) or len(entry) != 2:
+            continue
+        loc, ts = entry[0], entry[1]
+        if now - ts < EXCLUSION_TTL and car_id not in _location_cache:
+            _location_cache[car_id] = (loc, ts)
+            # Rebuild exclusion set from loaded locations
+            if loc and loc not in ALLOWED_LOCATIONS and car_id not in _excluded_car_ids:
+                _excluded_car_ids[car_id] = ts
+            loaded += 1
+    if loaded:
+        print(f"[salecars] Loaded {loaded} location cache entries from disk")
+    return loaded
+
+
+# --- Lightweight location checker (for scanner) ---
+
+
+async def _check_car_location(car_id: str) -> str | None:
+    """Fetch detail page HTML only, extract location from tooltip.
+
+    Lightweight: does NOT fetch images/options, does NOT populate _detail_cache.
+    Returns location string, or None if fetch failed.
+    """
+    # Check location cache first
+    cached = _location_cache.get(car_id)
+    if cached:
+        loc, ts = cached
+        if time.time() - ts < EXCLUSION_TTL:
+            return loc
+
+    if is_rate_limited():
+        return None
+
+    url = f"{settings.salecars_base_url}/search/detail/{car_id}"
+    await _throttle_request()
+
+    try:
+        html = await fetch_page(url)
+    except NetworkError:
+        return None
+
+    if _RATE_LIMIT_MARKER in html:
+        _record_rate_limit()
+        return None
+
+    from selectolax.lexbor import LexborHTMLParser
+    from app.parsers.detail_parser import _extract_location
+    parser = LexborHTMLParser(html)
+    location = _extract_location(parser)
+
+    _location_cache[car_id] = (location, time.time())
+    if location and location not in ALLOWED_LOCATIONS:
+        _excluded_car_ids[car_id] = time.time()
+
+    _clear_rate_limit()
+    return location
+
+
+# --- Background location scanner ---
+
+
+async def _scan_page_locations(page_num: int) -> int:
+    """Scan one listing page: fetch car IDs, check unchecked locations.
+    Returns number of cars checked.
+    """
+    if is_rate_limited():
+        remaining = get_rate_limit_retry_after()
+        print(f"[scanner] Rate-limited, waiting {remaining}s")
+        await asyncio.sleep(remaining)
+
+    params = {
+        "PageNow": page_num,
+        "PageSize": 24,
+        "PageSort": "ModDt",
+        "PageAscDesc": "DESC",
+    }
+    url = _build_listing_url(params)
+    await _throttle_request()
+
+    try:
+        html = await fetch_page(url)
+    except NetworkError as e:
+        print(f"[scanner] Failed to fetch page {page_num}: {e}")
+        return 0
+
+    if _RATE_LIMIT_MARKER in html:
+        _record_rate_limit()
+        return 0
+
+    listings = parse_car_listings(html)
+    _clear_rate_limit()
+
+    checked = 0
+    for car in listings:
+        car_id = car.get("id")
+        if not car_id:
+            continue
+
+        # Skip if already in location cache and not expired
+        cached = _location_cache.get(car_id)
+        if cached and time.time() - cached[1] < EXCLUSION_TTL:
+            continue
+
+        if is_rate_limited():
+            remaining = get_rate_limit_retry_after()
+            print(f"[scanner] Rate-limited during page {page_num}, waiting {remaining}s")
+            await asyncio.sleep(remaining)
+
+        await _check_car_location(car_id)
+        checked += 1
+        await asyncio.sleep(SCANNER_EXTRA_DELAY)
+
+    return checked
+
+
+async def location_scanner_loop() -> None:
+    """Background loop: systematically scan all listing pages for car locations."""
+    await asyncio.sleep(SCANNER_STARTUP_DELAY)
+    print("[scanner] Starting background location scanner")
+
+    while True:
+        try:
+            # Fetch page 1 to get total count
+            params = {"PageNow": 1, "PageSize": 24, "PageSort": "ModDt", "PageAscDesc": "DESC"}
+            url = _build_listing_url(params)
+            await _throttle_request()
+            html = await fetch_page(url)
+
+            if _RATE_LIMIT_MARKER in html:
+                _record_rate_limit()
+                remaining = get_rate_limit_retry_after()
+                print(f"[scanner] Rate-limited on start, waiting {remaining}s")
+                await asyncio.sleep(remaining)
+                continue
+
+            total = parse_total_count(html)
+            total_pages = max(1, -(-total // 24))  # ceil division
+            print(f"[scanner] Starting full pass: {total} cars across {total_pages} pages")
+
+            total_checked = 0
+            total_excluded = 0
+
+            for page in range(1, total_pages + 1):
+                if is_rate_limited():
+                    remaining = get_rate_limit_retry_after()
+                    await asyncio.sleep(remaining)
+
+                checked = await _scan_page_locations(page)
+                total_checked += checked
+
+                if page % 10 == 0 or page == total_pages:
+                    print(
+                        f"[scanner] Page {page}/{total_pages}, "
+                        f"checked {total_checked} cars, "
+                        f"{len(_excluded_car_ids)} excluded total, "
+                        f"{len(_location_cache)} in location cache"
+                    )
+
+            print(
+                f"[scanner] Full pass complete: checked {total_checked} new cars, "
+                f"{len(_excluded_car_ids)} total excluded, "
+                f"{len(_location_cache)} total in location cache"
+            )
+
+            # Clean expired entries
+            now = time.time()
+            expired = [k for k, (_, ts) in _location_cache.items() if now - ts >= EXCLUSION_TTL]
+            for k in expired:
+                del _location_cache[k]
+            if expired:
+                print(f"[scanner] Cleaned {len(expired)} expired location cache entries")
+
+            _save_location_cache_to_disk()
+            _save_excluded_ids_to_disk()
+
+        except asyncio.CancelledError:
+            raise
+        except Exception as e:
+            print(f"[scanner] Error during scan: {e}")
+
+        await asyncio.sleep(SCANNER_RESCAN_INTERVAL)
 
 
 # --- Detail cache warming ---
 
-DETAIL_WARMING_MAX = 5
+DETAIL_WARMING_MAX = 24
 
 
 async def warm_detail_cache_for_listings(listings: list[dict]) -> None:

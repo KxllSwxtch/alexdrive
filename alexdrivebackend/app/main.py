@@ -17,8 +17,11 @@ from app.services.salecars import (
     listing_refresh_loop,
     _load_detail_cache_from_disk,
     _load_excluded_ids_from_disk,
+    _load_location_cache_from_disk,
     _save_detail_cache_to_disk,
+    _save_location_cache_to_disk,
     detail_cache_persist_loop,
+    location_scanner_loop,
 )
 from app.services.client import NetworkError, set_http_client
 
@@ -62,11 +65,15 @@ async def lifespan(app: FastAPI):
         excluded = _load_excluded_ids_from_disk()
         if excluded:
             print(f"[server] Restored {excluded} excluded car IDs from disk")
+        loc_loaded = _load_location_cache_from_disk()
+        if loc_loaded:
+            print(f"[server] Restored {loc_loaded} location cache entries from disk")
 
         # Start background tasks
         prewarm_task = asyncio.create_task(_prewarm_caches())
         listing_refresh_task = asyncio.create_task(listing_refresh_loop())
         detail_persist_task = asyncio.create_task(detail_cache_persist_loop())
+        scanner_task = asyncio.create_task(location_scanner_loop())
 
         print(f"[server] AlexDrive backend running on port {settings.port}")
         yield
@@ -74,10 +81,11 @@ async def lifespan(app: FastAPI):
         prewarm_task.cancel()
         listing_refresh_task.cancel()
         detail_persist_task.cancel()
+        scanner_task.cancel()
         try:
             await asyncio.gather(
                 prewarm_task,
-                listing_refresh_task, detail_persist_task,
+                listing_refresh_task, detail_persist_task, scanner_task,
                 return_exceptions=True,
             )
         except asyncio.CancelledError:
@@ -85,6 +93,7 @@ async def lifespan(app: FastAPI):
 
         # Final save on shutdown
         _save_detail_cache_to_disk()
+        _save_location_cache_to_disk()
 
 
 app = FastAPI(lifespan=lifespan)

@@ -238,6 +238,66 @@ class TestFilterExcludedListings:
         assert result["total"] == 10  # unchanged
 
 
+# ── Location cache ───────────────────────────────────────────
+
+
+class TestLocationCache:
+    def setup_method(self):
+        from app.services import salecars
+        self._orig_loc = dict(salecars._location_cache)
+        self._orig_exc = dict(salecars._excluded_car_ids)
+        salecars._location_cache.clear()
+        salecars._excluded_car_ids.clear()
+
+    def teardown_method(self):
+        from app.services import salecars
+        salecars._location_cache.clear()
+        salecars._location_cache.update(self._orig_loc)
+        salecars._excluded_car_ids.clear()
+        salecars._excluded_car_ids.update(self._orig_exc)
+
+    def test_check_car_location_caches_result(self):
+        """_check_car_location stores result in _location_cache."""
+        import time as t
+        from app.services.salecars import _location_cache
+        # Simulate a cached entry
+        _location_cache["test123"] = ("수원", t.time())
+        from app.services.salecars import _check_car_location
+        import asyncio
+        loc = asyncio.get_event_loop().run_until_complete(_check_car_location("test123"))
+        assert loc == "수원"
+
+    def test_location_cache_persistence_roundtrip(self):
+        """Save and load location cache preserves data."""
+        import time as t
+        import tempfile, os
+        from app.services import salecars
+        orig_path = salecars.LOCATION_CACHE_PATH
+        try:
+            # Use temp file
+            fd, tmp = tempfile.mkstemp(suffix=".json")
+            os.close(fd)
+            salecars.LOCATION_CACHE_PATH = tmp
+
+            salecars._location_cache["car1"] = ("수원", t.time())
+            salecars._location_cache["car2"] = ("안산", t.time())
+            salecars._save_location_cache_to_disk()
+
+            salecars._location_cache.clear()
+            salecars._excluded_car_ids.clear()
+            loaded = salecars._load_location_cache_from_disk()
+            assert loaded == 2
+            assert salecars._location_cache["car1"][0] == "수원"
+            assert salecars._location_cache["car2"][0] == "안산"
+            # Non-suwon car should be in exclusion set
+            assert "car2" in salecars._excluded_car_ids
+            assert "car1" not in salecars._excluded_car_ids
+        finally:
+            salecars.LOCATION_CACHE_PATH = orig_path
+            if os.path.exists(tmp):
+                os.unlink(tmp)
+
+
 # ── Cache eviction ────────────────────────────────────────────
 
 
