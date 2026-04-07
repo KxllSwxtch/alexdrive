@@ -66,6 +66,18 @@ class TestBuildListingUrl:
         url = _build_listing_url({"PageAscDesc": "ASC"})
         assert "ascending=asc" in url
 
+    def test_skips_empty_values(self):
+        url = _build_listing_url({"CarMakerNo": "10055"})
+        assert "model=" not in url
+        assert "dmodel=" not in url
+        assert "grade=" not in url
+        assert "fuel=" not in url
+
+    def test_encodes_special_chars(self):
+        url = _build_listing_url({"SearchName": "소나타"})
+        assert "carName=%EC%86%8C%EB%82%98%ED%83%80" in url
+        assert "소나타" not in url
+
 
 # ── Listing parser ───────────────────────────────────────────
 
@@ -431,3 +443,90 @@ class TestCarsRoute429:
                 assert resp.status_code == 200
                 data = resp.json()
                 assert data["status"] == "ok"
+
+    @pytest.mark.asyncio
+    async def test_returns_503_on_empty_status(self):
+        from app.main import app
+
+        empty_response = {"listings": [], "total": 0, "status": "empty"}
+
+        with patch("app.routes.cars.get_car_listings", new_callable=AsyncMock, return_value=empty_response):
+            transport = ASGITransport(app=app, raise_app_exceptions=False)
+            async with AsyncClient(transport=transport, base_url="http://test") as client:
+                resp = await client.get("/api/cars")
+                assert resp.status_code == 503
+                assert resp.headers["retry-after"] == "30"
+                assert resp.headers["cache-control"] == "no-cache"
+
+    @pytest.mark.asyncio
+    async def test_returns_503_on_parse_failure(self):
+        from app.main import app
+
+        failure_response = {"listings": [], "total": 0, "status": "parse_failure"}
+
+        with patch("app.routes.cars.get_car_listings", new_callable=AsyncMock, return_value=failure_response):
+            transport = ASGITransport(app=app, raise_app_exceptions=False)
+            async with AsyncClient(transport=transport, base_url="http://test") as client:
+                resp = await client.get("/api/cars")
+                assert resp.status_code == 503
+
+
+# ── Cache poisoning prevention ──────────────────────────────
+
+
+class TestCachePoisoning:
+    def setup_method(self):
+        self._orig_cache = dict(sc_mod._listing_cache)
+        sc_mod._listing_cache.clear()
+
+    def teardown_method(self):
+        sc_mod._listing_cache.clear()
+        sc_mod._listing_cache.update(self._orig_cache)
+
+    @pytest.mark.asyncio
+    async def test_empty_response_not_cached(self):
+        """Failed fetches (status=empty) should NOT be stored in the cache."""
+        with patch("app.services.salecars.fetch_page", new_callable=AsyncMock, return_value=""), \
+             patch("app.services.salecars._throttle_request", new_callable=AsyncMock), \
+             patch("app.services.salecars.is_rate_limited", return_value=False):
+            result = await _fetch_and_cache_listings("test_empty", {"PageSize": 24})
+            assert result["status"] == "empty"
+            assert "test_empty" not in sc_mod._listing_cache
+
+    @pytest.mark.asyncio
+    async def test_ok_response_is_cached(self):
+        """Successful fetches (status=ok) should be stored in the cache."""
+        html = '''<ul><li>
+            <a href="/search/detail/12345">
+              <div class="car-img" style="background:url(https://img.carmanager.co.kr/photo.jpg)"></div>
+            </a>
+            <div>
+              <button><a href="/search/detail/12345">[현대]소나타</a></button>
+              <ul><li>2023</li><li>10,000km</li><li>휘발유</li><li>흰색</li></ul>
+              <span class="price"><span class="num">2,000</span>만원</span>
+            </div>
+          </li></ul>
+          <div>전체 1대</div>'''
+
+        with patch("app.services.salecars.fetch_page", new_callable=AsyncMock, return_value=html), \
+             patch("app.services.salecars._throttle_request", new_callable=AsyncMock), \
+             patch("app.services.salecars.is_rate_limited", return_value=False):
+            result = await _fetch_and_cache_listings("test_ok", {"PageSize": 24})
+            assert result["status"] == "ok"
+            assert "test_ok" in sc_mod._listing_cache
+
+    @pytest.mark.asyncio
+    async def test_stale_cache_served_on_failure(self):
+        """When a fetch fails but stale cache exists, serve the stale data."""
+        # Pre-populate cache with stale data
+        sc_mod._listing_cache["test_stale"] = {
+            "data": {"listings": [{"id": "1"}], "total": 1, "status": "ok"},
+            "expiry": time.time() - 100,  # expired
+        }
+
+        with patch("app.services.salecars.fetch_page", new_callable=AsyncMock, return_value=""), \
+             patch("app.services.salecars._throttle_request", new_callable=AsyncMock), \
+             patch("app.services.salecars.is_rate_limited", return_value=False):
+            result = await _fetch_and_cache_listings("test_stale", {"PageSize": 24})
+            assert result["status"] == "ok"  # stale data served
+            assert len(result["listings"]) == 1

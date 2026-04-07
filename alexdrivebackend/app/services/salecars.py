@@ -4,6 +4,7 @@ import json
 import os
 import random
 import time
+from urllib.parse import urlencode
 
 from app.config import settings
 from app.parsers.detail_parser import parse_car_detail
@@ -263,7 +264,7 @@ def _build_listing_url(params: dict) -> str:
     qp["order"] = sort_map.get(params.get("PageSort") or "", "")
 
     # Build query string (skip empty values)
-    qs = "&".join(f"{k}={v}" for k, v in qp.items())
+    qs = urlencode({k: v for k, v in qp.items() if v})
 
     page_path = f"/{page}" if int(page) > 1 else ""
     return f"{base}/search/model/{country}{page_path}?{qs}"
@@ -321,14 +322,25 @@ async def _fetch_and_cache_listings(cache_key: str, params: dict) -> dict:
         _clear_rate_limit()
     elif len(html) <= 50:
         status = "empty"
-        print(f"[salecars] WARNING: Empty response ({len(html)} bytes): {html[:200]!r}")
+        print(f"[salecars] WARNING: Empty response ({len(html)} bytes) for {url}")
     else:
         status = "parse_failure"
-        print(f"[salecars] WARNING: Parse failure, HTML start: {html[:500]!r}")
+        print(f"[salecars] WARNING: Parse failure for {url}, HTML start: {html[:300]!r}")
 
     result = {"listings": listings, "total": total, "status": status}
-    _listing_cache[cache_key] = {"data": result, "expiry": time.time() + LISTING_TTL}
-    _evict_oldest(_listing_cache, MAX_LISTING_CACHE_ENTRIES)
+
+    if status == "ok":
+        _listing_cache[cache_key] = {"data": result, "expiry": time.time() + LISTING_TTL}
+        _evict_oldest(_listing_cache, MAX_LISTING_CACHE_ENTRIES)
+        return result
+
+    # Fetch failed — serve stale cache if available, do NOT cache the failure
+    existing = _listing_cache.get(cache_key)
+    if existing and existing["data"].get("listings"):
+        existing["expiry"] = time.time() + LISTING_TTL
+        print(f"[salecars] Serving stale cache after {status} ({cache_key[:8]})")
+        return existing["data"]
+
     return result
 
 

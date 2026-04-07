@@ -111,9 +111,9 @@ export function CatalogContent({ initialFilters, initialCars, initialTotal, init
     const res = await fetch(`${BACKEND_URL}/api/cars?${searchParams.toString()}`, { signal });
     const data = await res.json();
 
-    if (res.status === 429 || data.status === "rate_limited") {
+    if (res.status === 429 || res.status === 503 || data.status === "rate_limited") {
       const retryAfter = parseInt(res.headers.get("Retry-After") || "0", 10)
-                         || data.retry_after || 60;
+                         || data.retry_after || 30;
       return { ok: false, retryAfter };
     }
     if (!res.ok) throw new Error(`HTTP ${res.status}`);

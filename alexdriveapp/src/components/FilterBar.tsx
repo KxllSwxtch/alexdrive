@@ -59,7 +59,7 @@ const SORT_OPTIONS = [
 
 const DEFAULT_PARAMS: CarListingParams = {
   PageNow: 1,
-  PageSize: 20,
+  PageSize: 24,
   PageSort: "ModDt",
   PageAscDesc: "DESC",
 };
