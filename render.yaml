@@ -8,9 +8,7 @@ services:
     plan: starter
     healthCheckPath: /api/health
     envVars:
-      - key: CARMANAGER_USERNAME
-        sync: false
-      - key: CARMANAGER_PASSWORD
+      - key: SOURCE_BASE_URL
         sync: false
       - key: PROXY_URL
         sync: false

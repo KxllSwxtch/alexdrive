@@ -2,25 +2,26 @@ import re
 
 from selectolax.lexbor import LexborHTMLParser
 
+from app.config import settings
+
 
 # Dark SVG placeholder matching the site's dark theme
 BLUR_PLACEHOLDER = "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjE2IiBoZWlnaHQ9IjEwIiBmaWxsPSIjMWExYTFhIi8+PC9zdmc+"
 
 
 def parse_car_detail(html: str, car_id: str) -> dict:
-    """Parse a salecars.co.kr detail page.
+    """Parse a chasainmotors.com detail page.
 
     Structure:
     - .car_name → car name
     - .car_price → price
     - table (first, no class) → specs rows (th/td pairs)
-    - table.type02 → seller info
-    - .slick-slide img / .img_box img → gallery images
+    - .slick-slide img → gallery images
     - input[type='checkbox'][checked] + label → options
     """
     parser = LexborHTMLParser(html)
 
-    # Name — from .car_name or first <p> with bracket notation
+    # Name — from .car_name (text directly in div, or in child <p>)
     name = ""
     name_el = parser.css_first(".car_name p")
     if name_el:
@@ -73,6 +74,9 @@ def parse_car_detail(html: str, car_id: str) -> dict:
         if m:
             inspection_url = m.group(1)
 
+    # Location from tooltip or specs table
+    location = _extract_location(parser) or specs.get("location", "")
+
     return {
         "id": car_id,
         "name": name,
@@ -85,7 +89,7 @@ def parse_car_detail(html: str, car_id: str) -> dict:
         "color": specs.get("color", ""),
         "engineCapacity": "",
         "carNumber": specs.get("carNumber", ""),
-        "location": _extract_location(parser) or specs.get("location", ""),
+        "location": location,
         "options": options,
         "dealer": "",  # suppressed — keep AlexDrive's own contacts
         "phone": "",   # suppressed
@@ -97,11 +101,11 @@ def parse_car_detail(html: str, car_id: str) -> dict:
 
 
 def _extract_location(parser) -> str:
-    """Extract location from 판매방식 tooltip, e.g. '(주)건우(안산)' → '안산'."""
+    """Extract location from 판매방식 tooltip, e.g. '(주)엠모터스(수원)' → '수원'."""
     tooltip = parser.css_first("span.tooltip-box")
     if tooltip:
         text = tooltip.text(strip=True)
-        # Extract region from last parentheses: "(주)건우(안산)" → "안산"
+        # Extract region from last parentheses: "(주)엠모터스(수원)" → "수원"
         match = re.search(r"\(([^)]+)\)\s*$", text)
         if match:
             return match.group(1)
@@ -111,7 +115,7 @@ def _extract_location(parser) -> str:
 def _extract_specs(parser) -> dict:
     """Extract specs from the detail page tables.
 
-    salecars uses tables with th/td pairs per row:
+    Uses tables with th/td pairs per row:
     - 연식 / 최초등록일
     - 연료 / 변속기
     - 색상 / 주행거리
@@ -177,5 +181,5 @@ def normalize_image_url(url: str) -> str:
     if url.startswith("//"):
         return f"https:{url}"
     if url.startswith("/"):
-        return f"https://www.salecars.co.kr{url}"
+        return f"{settings.source_base_url}{url}"
     return url

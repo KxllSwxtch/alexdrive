@@ -3,7 +3,7 @@ import asyncio
 from fastapi import APIRouter, Query
 from fastapi.responses import JSONResponse
 
-from app.services.salecars import _detail_cache, get_car_detail, get_car_listings, get_rate_limit_retry_after, warm_detail_cache_for_listings
+from app.services.scraper import _detail_cache, get_car_detail, get_car_listings, get_rate_limit_retry_after, warm_detail_cache_for_listings
 
 router = APIRouter(prefix="/api")
 

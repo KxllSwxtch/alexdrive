@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 from fastapi.responses import JSONResponse
 
-from app.services.salecars import get_filter_data
+from app.services.scraper import get_filter_data
 
 router = APIRouter(prefix="/api")
 

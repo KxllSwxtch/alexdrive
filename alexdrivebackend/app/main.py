@@ -11,19 +11,13 @@ from starlette.middleware.gzip import GZipMiddleware
 
 from app.config import settings
 from app.routes import admin, cars, filters, health
-from app.services.salecars import (
+from app.services.scraper import (
     get_car_listings,
     get_filter_data,
     listing_refresh_loop,
     _load_detail_cache_from_disk,
-    _load_excluded_ids_from_disk,
-    _load_location_cache_from_disk,
-    _load_suwon_inventory_from_disk,
     _save_detail_cache_to_disk,
-    _save_location_cache_to_disk,
-    _save_suwon_inventory_to_disk,
     detail_cache_persist_loop,
-    location_scanner_loop,
 )
 from app.services.client import NetworkError, set_http_client
 
@@ -60,25 +54,15 @@ async def lifespan(app: FastAPI):
     async with httpx.AsyncClient(**client_kwargs) as client:
         set_http_client(client)
 
-        # Load detail cache and exclusion set from disk (instant, no network)
+        # Load detail cache from disk (instant, no network)
         loaded = _load_detail_cache_from_disk()
         if loaded:
             print(f"[server] Restored {loaded} detail cache entries from disk")
-        excluded = _load_excluded_ids_from_disk()
-        if excluded:
-            print(f"[server] Restored {excluded} excluded car IDs from disk")
-        loc_loaded = _load_location_cache_from_disk()
-        if loc_loaded:
-            print(f"[server] Restored {loc_loaded} location cache entries from disk")
-        inv_loaded = _load_suwon_inventory_from_disk()
-        if inv_loaded:
-            print(f"[server] Restored {inv_loaded} inventory entries from disk")
 
         # Start background tasks
         prewarm_task = asyncio.create_task(_prewarm_caches())
         listing_refresh_task = asyncio.create_task(listing_refresh_loop())
         detail_persist_task = asyncio.create_task(detail_cache_persist_loop())
-        scanner_task = asyncio.create_task(location_scanner_loop())
 
         print(f"[server] AlexDrive backend running on port {settings.port}")
         yield
@@ -86,11 +70,10 @@ async def lifespan(app: FastAPI):
         prewarm_task.cancel()
         listing_refresh_task.cancel()
         detail_persist_task.cancel()
-        scanner_task.cancel()
         try:
             await asyncio.gather(
                 prewarm_task,
-                listing_refresh_task, detail_persist_task, scanner_task,
+                listing_refresh_task, detail_persist_task,
                 return_exceptions=True,
             )
         except asyncio.CancelledError:
@@ -98,8 +81,6 @@ async def lifespan(app: FastAPI):
 
         # Final save on shutdown
         _save_detail_cache_to_disk()
-        _save_location_cache_to_disk()
-        _save_suwon_inventory_to_disk()
 
 
 app = FastAPI(lifespan=lifespan)

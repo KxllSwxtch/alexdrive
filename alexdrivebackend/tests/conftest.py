@@ -4,14 +4,14 @@ import httpx
 import pytest
 import respx
 
-from app.services import salecars as sc_mod
+from app.services import scraper as sc_mod
 from app.services import client as client_mod
 from app.config import settings
 
 
 @pytest.fixture(autouse=True)
-def reset_salecars_globals():
-    """Reset all caches and locks in salecars.py."""
+def reset_scraper_globals():
+    """Reset all caches and locks in scraper.py."""
     sc_mod._filter_cache = None
     sc_mod._listing_cache = {}
     sc_mod._detail_cache = {}
@@ -42,7 +42,7 @@ def reset_salecars_globals():
 @pytest.fixture(autouse=True)
 def mock_settings(monkeypatch):
     """Provide test-safe settings values."""
-    monkeypatch.setattr(settings, "salecars_base_url", "https://test.salecars.co.kr")
+    monkeypatch.setattr(settings, "source_base_url", "https://test.chasainmotors.com")
     monkeypatch.setattr(settings, "carmanager_base_url", "https://test.carmanager.co.kr")
     monkeypatch.setattr(settings, "admin_secret", "test-secret")
 

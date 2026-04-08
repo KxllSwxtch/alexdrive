@@ -6,21 +6,24 @@ from selectolax.lexbor import LexborHTMLParser
 def diagnose_listing_html(html: str) -> dict:
     """Analyze listing HTML to diagnose why parsing might fail.
 
-    Checks each CSS selector used by the listing parser and returns
+    Checks CSS selectors used by the listing parser and returns
     counts/booleans for each, plus markers for common error responses.
     """
     parser = LexborHTMLParser(html)
 
-    tr_uc_carcss = parser.css("tr.uc_carcss")
     all_tr = parser.css("tr")
 
-    a_with_popup_count = 0
+    detail_link_count = 0
     for a in parser.css("a[href]"):
         href = a.attributes.get("href", "")
-        if "carmangerDetailWindowPopUp_CHECK" in href:
-            a_with_popup_count += 1
+        if "/search/detail/" in href:
+            detail_link_count += 1
 
-    hdf_found = bool(re.search(r'hdfCarRowCount', html))
+    name_count = len(parser.css("span.name a"))
+    price_count = len(parser.css("span.car_pay"))
+    spec_count = len(parser.css("ul.car-option"))
+
+    total_match = re.search(r"전체\s*([\d,]+)\s*대", html)
 
     login_form_detected = (
         "/User/Login" in html
@@ -28,22 +31,16 @@ def diagnose_listing_html(html: str) -> dict:
         or 'id="userpwd"' in html
     )
 
-    sample_classes: list[str] = []
-    seen: set[str] = set()
-    for tr in all_tr:
-        cls = tr.attributes.get("class", "")
-        if cls and cls not in seen:
-            seen.add(cls)
-            sample_classes.append(cls)
-            if len(sample_classes) >= 10:
-                break
+    rate_limited = "limits_box" in html
 
     return {
         "html_length": len(html),
-        "tr_uc_carcss_count": len(tr_uc_carcss),
         "all_tr_count": len(all_tr),
-        "a_with_popup_count": a_with_popup_count,
-        "hdfCarRowCount_found": hdf_found,
+        "detail_link_count": detail_link_count,
+        "name_span_count": name_count,
+        "price_span_count": price_count,
+        "spec_ul_count": spec_count,
+        "total_count_text": total_match.group(0) if total_match else None,
         "login_form_detected": login_form_detected,
-        "sample_tr_classes": sample_classes,
+        "rate_limited": rate_limited,
     }

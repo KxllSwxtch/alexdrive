@@ -4,7 +4,7 @@ from pydantic_settings import BaseSettings
 class Settings(BaseSettings):
     port: int = 3001
     cors_origins: str = "http://localhost:3000"
-    salecars_base_url: str = "https://www.salecars.co.kr"
+    source_base_url: str = "http://www.chasainmotors.com"
     carmanager_base_url: str = "https://www.carmanager.co.kr"  # only for public JS filter files
     admin_secret: str = ""
     proxy_url: str = ""

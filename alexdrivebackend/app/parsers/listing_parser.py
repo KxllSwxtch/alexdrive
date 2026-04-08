@@ -2,20 +2,23 @@ import re
 
 from selectolax.lexbor import LexborHTMLParser
 
+from app.config import settings
+
 
 def parse_car_listings(html: str) -> list[dict]:
-    """Parse car listings from salecars.co.kr search result page.
+    """Parse car listings from chasainmotors.com search result page.
 
-    Each listing is an <li> inside ul.ul-car-detail (or similar list),
-    containing a link to /search/detail/{id}, image, name, specs, and price.
+    Each listing is a <tr> with td.car-detail, containing a link to
+    /search/detail/{id}, images, name, specs (year, mileage, fuel, transmission),
+    and price.
     """
     parser = LexborHTMLParser(html)
     listings: list[dict] = []
 
-    for li in parser.css("li"):
+    for tr in parser.css("tr"):
         # Find link to detail page
         link = None
-        for a in li.css("a[href]"):
+        for a in tr.css("a[href]"):
             href = a.attributes.get("href", "")
             if "/search/detail/" in href:
                 link = a
@@ -29,64 +32,45 @@ def parse_car_listings(html: str) -> list[dict]:
             continue
         car_id = id_match.group(1)
 
-        # Image — from CSS background:url() on div.car-img, or <img> fallback
-        image_url = ""
-        car_img_div = li.css_first("div.car-img")
-        if car_img_div:
-            style = car_img_div.attributes.get("style", "")
-            url_match = re.search(r"background:\s*url\(([^)]+)\)", style)
-            if url_match:
-                image_url = url_match.group(1).strip("'\"")
-        if not image_url:
-            img = link.css_first("img")
-            if img:
-                image_url = img.attributes.get("data-lazy", "") or img.attributes.get("src", "")
-        image_url = normalize_image_url(image_url)
-
-        # Name — from button or link text containing [Maker]Model
+        # Name — from span.name > a
         name = ""
-        name_btn = li.css_first("button")
-        if name_btn:
-            name_link = name_btn.css_first("a")
-            if name_link:
-                name = name_link.text(strip=True)
-            else:
-                name = name_btn.text(strip=True)
-
+        name_el = tr.css_first("span.name a")
+        if name_el:
+            name = name_el.text(strip=True)
         if not name:
             continue
 
-        # Specs list — <ul> with <li> items: year, mileage, fuel, color
+        # Specs list — ul.car-option with 4 <li>: year, mileage, fuel, transmission
         year = ""
         mileage = ""
         fuel = ""
-        color = ""
-        spec_items = []
-        for ul in li.css("ul"):
-            items = ul.css("li")
-            texts = [item.text(strip=True) for item in items if item.text(strip=True)]
-            # The specs list typically has 3-4 items (year, mileage, fuel, color)
-            if len(texts) >= 3 and re.match(r"\d{4}-\d{2}", texts[0]):
-                spec_items = texts
-                break
+        transmission = ""
+        spec_ul = tr.css_first("ul.car-option")
+        if spec_ul:
+            spec_items = [li.text(strip=True) for li in spec_ul.css("li") if li.text(strip=True)]
+            if len(spec_items) >= 1:
+                year = spec_items[0]
+            if len(spec_items) >= 2:
+                mileage = spec_items[1]
+            if len(spec_items) >= 3:
+                fuel = spec_items[2]
+            if len(spec_items) >= 4:
+                transmission = spec_items[3]
 
-        if spec_items:
-            year = spec_items[0] if len(spec_items) > 0 else ""
-            mileage = spec_items[1] if len(spec_items) > 1 else ""
-            fuel = spec_items[2] if len(spec_items) > 2 else ""
-            color = spec_items[3] if len(spec_items) > 3 else ""
-
-        # Price — from <span class="price"> containing <span class="num">
-        # Structure: <span class="price"><span class="num">979</span>만원</span>
-        # Skip the monthly-payment span which has <strong> instead of <span class="num">
+        # Price — from span.car_pay (number only, e.g. "1,370")
         price = ""
-        for span in li.css("span.price"):
-            num_el = span.css_first("span.num")
-            if num_el:
-                num_text = num_el.text(strip=True)
-                if num_text:
-                    price = f"{num_text}만원"
-                    break
+        price_el = tr.css_first("span.car_pay")
+        if price_el:
+            num_text = price_el.text(strip=True)
+            if num_text:
+                price = f"{num_text}만원"
+
+        # Image — first img in div.img-wrap
+        image_url = ""
+        img_el = tr.css_first("div.img-wrap img")
+        if img_el:
+            image_url = img_el.attributes.get("src", "")
+        image_url = normalize_image_url(image_url)
 
         listings.append({
             "id": car_id,
@@ -95,9 +79,9 @@ def parse_car_listings(html: str) -> list[dict]:
             "year": year,
             "mileage": mileage,
             "fuel": fuel,
-            "transmission": "",  # not shown in listing cards
+            "transmission": transmission,
             "price": price,
-            "color": color,
+            "color": "",
             "location": "",
             "dealer": "",
             "phone": "",
@@ -135,5 +119,5 @@ def normalize_image_url(url: str) -> str:
     if url.startswith("//"):
         return f"https:{url}"
     if url.startswith("/"):
-        return f"https://www.salecars.co.kr{url}"
+        return f"{settings.source_base_url}{url}"
     return url

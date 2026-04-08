@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, Header, HTTPException
 
 from app.config import settings
-from app.services.salecars import get_car_listings, is_rate_limited, get_rate_limit_retry_after
+from app.services.scraper import get_car_listings, is_rate_limited, get_rate_limit_retry_after
 
 router = APIRouter(prefix="/api/admin")
 
