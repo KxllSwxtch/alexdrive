@@ -18,8 +18,10 @@ from app.services.salecars import (
     _load_detail_cache_from_disk,
     _load_excluded_ids_from_disk,
     _load_location_cache_from_disk,
+    _load_suwon_inventory_from_disk,
     _save_detail_cache_to_disk,
     _save_location_cache_to_disk,
+    _save_suwon_inventory_to_disk,
     detail_cache_persist_loop,
     location_scanner_loop,
 )
@@ -68,6 +70,9 @@ async def lifespan(app: FastAPI):
         loc_loaded = _load_location_cache_from_disk()
         if loc_loaded:
             print(f"[server] Restored {loc_loaded} location cache entries from disk")
+        inv_loaded = _load_suwon_inventory_from_disk()
+        if inv_loaded:
+            print(f"[server] Restored {inv_loaded} inventory entries from disk")
 
         # Start background tasks
         prewarm_task = asyncio.create_task(_prewarm_caches())
@@ -94,6 +99,7 @@ async def lifespan(app: FastAPI):
         # Final save on shutdown
         _save_detail_cache_to_disk()
         _save_location_cache_to_disk()
+        _save_suwon_inventory_to_disk()
 
 
 app = FastAPI(lifespan=lifespan)

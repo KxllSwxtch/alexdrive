@@ -3,6 +3,7 @@ import hashlib
 import json
 import os
 import random
+import re
 import time
 from urllib.parse import urlencode
 
@@ -44,6 +45,14 @@ EXCLUSION_TTL = 7 * 24 * 60 * 60  # 7 days
 _location_cache: dict[str, tuple[str, float]] = {}  # car_id → (location, timestamp)
 LOCATION_CACHE_PATH = "/tmp/alexdrive_location_cache.json"
 
+# --- Suwon inventory (enriched listing data for verified Suwon cars) ---
+_suwon_inventory: dict[str, dict] = {}  # car_id → enriched listing dict
+SUWON_INVENTORY_PATH = "/tmp/alexdrive_suwon_inventory.json"
+
+# --- Filter name maps cache ---
+_filter_name_maps: dict[str, dict[str, str]] | None = None
+_filter_name_maps_expiry: float = 0.0
+
 
 def _update_location_tracking(car_id: str, location: str) -> None:
     """Update all location-tracking data structures after learning a car's location."""
@@ -54,6 +63,54 @@ def _update_location_tracking(car_id: str, location: str) -> None:
     else:
         _excluded_car_ids[car_id] = time.time()
         _verified_suwon_ids.discard(car_id)
+
+
+# --- Parsing helpers for inventory enrichment ---
+
+
+def _parse_year(year_str: str) -> int:
+    """'2023-05' -> 2023, '2023' -> 2023"""
+    m = re.match(r"(\d{4})", year_str)
+    return int(m.group(1)) if m else 0
+
+
+def _parse_mileage(mileage_str: str) -> int:
+    """'32,456km' -> 32456"""
+    m = re.search(r"([\d,]+)", mileage_str)
+    return int(m.group(1).replace(",", "")) if m else 0
+
+
+def _parse_price(price_str: str) -> int:
+    """'1,500만원' -> 1500"""
+    m = re.search(r"([\d,]+)", price_str)
+    return int(m.group(1).replace(",", "")) if m else 0
+
+
+def _extract_maker_name(name: str) -> str:
+    """'[기아]K5 2.0' -> '기아'"""
+    m = re.match(r"\[([^\]]+)\]", name)
+    return m.group(1) if m else ""
+
+
+def _extract_model_suffix(name: str) -> str:
+    """'[기아]K5 2.0' -> 'K5 2.0'"""
+    m = re.match(r"\[[^\]]+\](.*)", name)
+    return m.group(1).strip() if m else name
+
+
+def _enrich_listing(listing: dict) -> dict:
+    """Add parsed numeric and extracted fields to a listing dict."""
+    return {
+        **listing,
+        "_year_num": _parse_year(listing.get("year", "")),
+        "_mileage_num": _parse_mileage(listing.get("mileage", "")),
+        "_price_num": _parse_price(listing.get("price", "")),
+        "_maker_name": _extract_maker_name(listing.get("name", "")),
+        "_model_suffix": _extract_model_suffix(listing.get("name", "")),
+        "_fuel_name": listing.get("fuel", ""),
+        "_color_name": listing.get("color", ""),
+        "_scan_ts": time.time(),
+    }
 
 # --- Background location scanner ---
 SCANNER_EXTRA_DELAY = 1.0  # extra sleep between scanner requests (yield to users)
@@ -228,6 +285,69 @@ async def get_filter_data() -> dict:
                 print("[salecars] Serving stale filter cache due to network error")
                 return _filter_cache["data"]
             raise
+
+
+async def _get_filter_name_maps() -> dict[str, dict[str, str]]:
+    """Build reverse lookup dicts from filter IDs to Korean names for inventory filtering.
+    Cached alongside the filter data (rebuilds when filter cache expires).
+    """
+    global _filter_name_maps, _filter_name_maps_expiry
+
+    if _filter_name_maps and time.time() < _filter_name_maps_expiry:
+        return _filter_name_maps
+
+    try:
+        fdata = await get_filter_data()
+    except Exception:
+        return _filter_name_maps or {}
+
+    maps: dict[str, dict[str, str]] = {}
+
+    # Maker: {MakerNo_str: MakerName}
+    maps["maker"] = {str(m["MakerNo"]): m["MakerName"] for m in fdata.get("makers", []) if "MakerNo" in m and "MakerName" in m}
+
+    # Model: flatten all model lists -> {ModelNo_str: ModelName}
+    maps["model"] = {}
+    for models_list in fdata.get("models", {}).values():
+        if isinstance(models_list, list):
+            for m in models_list:
+                if "ModelNo" in m and "ModelName" in m:
+                    maps["model"][str(m["ModelNo"])] = m["ModelName"]
+
+    # Model detail: flatten -> {ModelDetailNo_str: ModelDetailName}
+    maps["model_detail"] = {}
+    for details_list in fdata.get("modelDetails", {}).values():
+        if isinstance(details_list, list):
+            for d in details_list:
+                if "ModelDetailNo" in d and "ModelDetailName" in d:
+                    maps["model_detail"][str(d["ModelDetailNo"])] = d["ModelDetailName"]
+
+    # Grade: flatten -> {GradeNo_str: GradeName}
+    maps["grade"] = {}
+    for grades_list in fdata.get("grades", {}).values():
+        if isinstance(grades_list, list):
+            for g in grades_list:
+                if "GradeNo" in g and "GradeName" in g:
+                    maps["grade"][str(g["GradeNo"])] = g["GradeName"]
+
+    # Grade detail: flatten -> {GradeDetailNo_str: GradeDetailName}
+    maps["grade_detail"] = {}
+    for gd_list in fdata.get("gradeDetails", {}).values():
+        if isinstance(gd_list, list):
+            for gd in gd_list:
+                if "GradeDetailNo" in gd and "GradeDetailName" in gd:
+                    maps["grade_detail"][str(gd["GradeDetailNo"])] = gd["GradeDetailName"]
+
+    # Fuel and Color: use static data (no async fetch needed)
+    maps["fuel"] = {str(f["FKeyNo"]): f["FuelName"] for f in STATIC_FUELS}
+    maps["color"] = {str(c["CKeyNo"]): c["ColorName"] for c in STATIC_COLORS}
+
+    # Mission (transmission): use static data
+    maps["mission"] = {str(m["MKeyNo"]): m["MissionName"] for m in STATIC_MISSIONS}
+
+    _filter_name_maps = maps
+    _filter_name_maps_expiry = time.time() + FILTER_TTL
+    return maps
 
 
 # --- URL construction ---
@@ -441,6 +561,152 @@ def _filter_excluded_listings(data: dict) -> dict:
 
 
 async def get_car_listings(params: dict) -> dict:
+    """Serve car listings — from Suwon inventory if available, else legacy fetch."""
+    if _suwon_inventory:
+        return await _get_car_listings_from_inventory(params)
+    return await _get_car_listings_legacy(params)
+
+
+def _strip_internal_fields(listing: dict) -> dict:
+    """Remove _-prefixed enrichment fields before API response."""
+    return {k: v for k, v in listing.items() if not k.startswith("_")}
+
+
+async def _get_car_listings_from_inventory(params: dict) -> dict:
+    """Serve car listings from the local Suwon inventory with proper pagination."""
+    name_maps = await _get_filter_name_maps()
+
+    candidates = list(_suwon_inventory.values())
+
+    # --- Apply filters ---
+
+    maker_no = params.get("CarMakerNo")
+    if maker_no and name_maps.get("maker"):
+        maker_name = name_maps["maker"].get(str(maker_no), "")
+        if maker_name:
+            candidates = [c for c in candidates if c.get("_maker_name") == maker_name]
+
+    model_no = params.get("CarModelNo")
+    if model_no and name_maps.get("model"):
+        model_name = name_maps["model"].get(str(model_no), "")
+        if model_name:
+            candidates = [c for c in candidates if model_name in c.get("_model_suffix", "")]
+
+    year_from = params.get("CarYearFrom")
+    if year_from:
+        try:
+            yf = int(year_from)
+            candidates = [c for c in candidates if c.get("_year_num", 0) >= yf]
+        except (ValueError, TypeError):
+            pass
+
+    year_to = params.get("CarYearTo")
+    if year_to:
+        try:
+            yt = int(year_to)
+            candidates = [c for c in candidates if c.get("_year_num", 0) <= yt]
+        except (ValueError, TypeError):
+            pass
+
+    mileage_from = params.get("CarMileageFrom")
+    if mileage_from:
+        try:
+            candidates = [c for c in candidates if c.get("_mileage_num", 0) >= int(mileage_from)]
+        except (ValueError, TypeError):
+            pass
+
+    mileage_to = params.get("CarMileageTo")
+    if mileage_to:
+        try:
+            candidates = [c for c in candidates if c.get("_mileage_num", 0) <= int(mileage_to)]
+        except (ValueError, TypeError):
+            pass
+
+    price_from = params.get("CarPriceFrom")
+    if price_from:
+        try:
+            candidates = [c for c in candidates if c.get("_price_num", 0) >= int(price_from)]
+        except (ValueError, TypeError):
+            pass
+
+    price_to = params.get("CarPriceTo")
+    if price_to:
+        try:
+            candidates = [c for c in candidates if c.get("_price_num", 0) <= int(price_to)]
+        except (ValueError, TypeError):
+            pass
+
+    fuel_no = params.get("CarFuelNo")
+    if fuel_no and name_maps.get("fuel"):
+        fuel_name = name_maps["fuel"].get(str(fuel_no), "")
+        if fuel_name:
+            candidates = [c for c in candidates if c.get("_fuel_name") == fuel_name]
+
+    color_no = params.get("CarColorNo")
+    if color_no and name_maps.get("color"):
+        color_name = name_maps["color"].get(str(color_no), "")
+        if color_name:
+            candidates = [c for c in candidates if c.get("_color_name") == color_name]
+
+    # Model detail, grade, grade detail: substring match in name
+    model_detail_no = params.get("CarModelDetailNo")
+    if model_detail_no and name_maps.get("model_detail"):
+        md_name = name_maps["model_detail"].get(str(model_detail_no), "")
+        if md_name:
+            candidates = [c for c in candidates if md_name in c.get("name", "")]
+
+    grade_no = params.get("CarGradeNo")
+    if grade_no and name_maps.get("grade"):
+        grade_name = name_maps["grade"].get(str(grade_no), "")
+        if grade_name:
+            candidates = [c for c in candidates if grade_name in c.get("name", "")]
+
+    grade_detail_no = params.get("CarGradeDetailNo")
+    if grade_detail_no and name_maps.get("grade_detail"):
+        gd_name = name_maps["grade_detail"].get(str(grade_detail_no), "")
+        if gd_name:
+            candidates = [c for c in candidates if gd_name in c.get("name", "")]
+
+    # Transmission: not available in listing cards, skip CarMissionNo
+
+    search_name = params.get("SearchName")
+    if search_name:
+        search_lower = search_name.lower()
+        candidates = [c for c in candidates if search_lower in c.get("name", "").lower()]
+
+    # --- Sort ---
+
+    sort_field = params.get("PageSort") or "ModDt"
+    ascending = (params.get("PageAscDesc") or "DESC") == "ASC"
+
+    sort_key_map = {
+        "CarPrice": "_price_num",
+        "CarYear": "_year_num",
+        "CarMileage": "_mileage_num",
+        "ModDt": "_scan_ts",
+        "RegDt": "_scan_ts",
+    }
+    sort_key = sort_key_map.get(sort_field, "_scan_ts")
+    candidates.sort(key=lambda c: c.get(sort_key, 0), reverse=not ascending)
+
+    # --- Paginate ---
+
+    total = len(candidates)
+    page_size = int(params.get("PageSize") or 24)
+    page_now = int(params.get("PageNow") or 1)
+    start = (page_now - 1) * page_size
+    end = start + page_size
+    page_items = candidates[start:end]
+
+    return {
+        "listings": [_strip_internal_fields(item) for item in page_items],
+        "total": total,
+        "status": "ok",
+    }
+
+
+async def _get_car_listings_legacy(params: dict) -> dict:
+    """Legacy listing fetch: scrape salecars and filter. Used as cold-start fallback."""
     cache_key = hashlib.md5(json.dumps(params, sort_keys=True).encode()).hexdigest()
 
     cached = _listing_cache.get(cache_key)
@@ -707,6 +973,7 @@ async def detail_cache_persist_loop() -> None:
         _save_detail_cache_to_disk()
         _save_excluded_ids_to_disk()
         _save_location_cache_to_disk()
+        _save_suwon_inventory_to_disk()
 
 
 # --- Location cache persistence ---
@@ -749,6 +1016,49 @@ def _load_location_cache_from_disk() -> int:
             loaded += 1
     if loaded:
         print(f"[salecars] Loaded {loaded} location cache entries from disk")
+    return loaded
+
+
+# --- Suwon inventory persistence ---
+
+
+def _save_suwon_inventory_to_disk() -> None:
+    if not _suwon_inventory:
+        return
+    try:
+        tmp_path = SUWON_INVENTORY_PATH + ".tmp"
+        with open(tmp_path, "w") as f:
+            json.dump(_suwon_inventory, f)
+        os.replace(tmp_path, SUWON_INVENTORY_PATH)
+        print(f"[salecars] Saved {len(_suwon_inventory)} inventory entries to disk")
+    except Exception as e:
+        print(f"[salecars] Failed to save inventory to disk: {e}")
+
+
+def _load_suwon_inventory_from_disk() -> int:
+    """Load inventory from disk. Must be called AFTER _load_location_cache_from_disk
+    (which populates _verified_suwon_ids)."""
+    global _suwon_inventory
+    try:
+        with open(SUWON_INVENTORY_PATH) as f:
+            data = json.load(f)
+    except (FileNotFoundError, json.JSONDecodeError):
+        return 0
+    if not isinstance(data, dict):
+        return 0
+    now = time.time()
+    loaded = 0
+    for car_id, listing in data.items():
+        if not isinstance(listing, dict) or car_id not in _verified_suwon_ids:
+            continue
+        # Skip entries with very old scan timestamps
+        scan_ts = listing.get("_scan_ts", 0)
+        if scan_ts and now - scan_ts > EXCLUSION_TTL:
+            continue
+        _suwon_inventory[car_id] = listing
+        loaded += 1
+    if loaded:
+        print(f"[salecars] Loaded {len(_suwon_inventory)} inventory entries from disk")
     return loaded
 
 
@@ -837,6 +1147,11 @@ async def _scan_page_locations(page_num: int) -> int:
         if not car_id:
             continue
 
+        # If already verified as Suwon, refresh listing data in inventory
+        if car_id in _verified_suwon_ids:
+            _suwon_inventory[car_id] = _enrich_listing(car)
+            continue
+
         # Skip if already in location cache and not expired
         cached = _location_cache.get(car_id)
         if cached and time.time() - cached[1] < EXCLUSION_TTL:
@@ -849,6 +1164,11 @@ async def _scan_page_locations(page_num: int) -> int:
 
         await _check_car_location(car_id)
         checked += 1
+
+        # If just verified as Suwon, add to inventory
+        if car_id in _verified_suwon_ids:
+            _suwon_inventory[car_id] = _enrich_listing(car)
+
         await asyncio.sleep(SCANNER_EXTRA_DELAY)
 
     return checked
@@ -914,8 +1234,18 @@ async def location_scanner_loop() -> None:
             if expired:
                 print(f"[scanner] Cleaned {len(expired)} expired location cache entries")
 
+            # Clean inventory: remove cars no longer verified as Suwon
+            stale_inv = [k for k in _suwon_inventory if k not in _verified_suwon_ids]
+            for k in stale_inv:
+                del _suwon_inventory[k]
+            if stale_inv:
+                print(f"[scanner] Removed {len(stale_inv)} stale inventory entries")
+
+            print(f"[scanner] Inventory: {len(_suwon_inventory)} Suwon cars")
+
             _save_location_cache_to_disk()
             _save_excluded_ids_to_disk()
+            _save_suwon_inventory_to_disk()
 
         except asyncio.CancelledError:
             raise

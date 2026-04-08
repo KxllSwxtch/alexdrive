@@ -444,11 +444,17 @@ class TestRateLimitHandling:
     async def test_get_car_listings_bails_when_rate_limited(self):
         sc_mod._last_rate_limit_time = time.time()
         sc_mod._rate_limit_count = 1
+        orig_inv = dict(sc_mod._suwon_inventory)
+        sc_mod._suwon_inventory.clear()
 
-        with patch("app.services.salecars.fetch_page", new_callable=AsyncMock) as mock_fetch:
-            result = await get_car_listings({"PageSize": 24})
-            mock_fetch.assert_not_called()
-            assert result["status"] == "rate_limited"
+        try:
+            with patch("app.services.salecars.fetch_page", new_callable=AsyncMock) as mock_fetch:
+                result = await get_car_listings({"PageSize": 24})
+                mock_fetch.assert_not_called()
+                assert result["status"] == "rate_limited"
+        finally:
+            sc_mod._suwon_inventory.clear()
+            sc_mod._suwon_inventory.update(orig_inv)
 
 
 class TestScopeAwareClearing:
@@ -610,3 +616,300 @@ class TestCachePoisoning:
             result = await _fetch_and_cache_listings("test_stale", {"PageSize": 24})
             assert result["status"] == "ok"  # stale data served
             assert len(result["listings"]) == 1
+
+
+# ── Parsing helpers ─────────────────────────────────────────
+
+
+from app.services.salecars import (
+    _parse_year,
+    _parse_mileage,
+    _parse_price,
+    _extract_maker_name,
+    _extract_model_suffix,
+    _enrich_listing,
+    _strip_internal_fields,
+    _get_car_listings_from_inventory,
+)
+
+
+class TestParsingHelpers:
+    def test_parse_year_with_month(self):
+        assert _parse_year("2023-05") == 2023
+
+    def test_parse_year_only(self):
+        assert _parse_year("2023") == 2023
+
+    def test_parse_year_empty(self):
+        assert _parse_year("") == 0
+
+    def test_parse_mileage_with_comma(self):
+        assert _parse_mileage("32,456km") == 32456
+
+    def test_parse_mileage_no_comma(self):
+        assert _parse_mileage("5000km") == 5000
+
+    def test_parse_mileage_empty(self):
+        assert _parse_mileage("") == 0
+
+    def test_parse_price_with_comma(self):
+        assert _parse_price("1,500만원") == 1500
+
+    def test_parse_price_simple(self):
+        assert _parse_price("979만원") == 979
+
+    def test_parse_price_empty(self):
+        assert _parse_price("") == 0
+
+    def test_extract_maker_name(self):
+        assert _extract_maker_name("[기아]K5 2.0 프레스티지") == "기아"
+
+    def test_extract_maker_name_foreign(self):
+        assert _extract_maker_name("[BMW]520d") == "BMW"
+
+    def test_extract_maker_name_empty(self):
+        assert _extract_maker_name("no brackets") == ""
+
+    def test_extract_model_suffix(self):
+        assert _extract_model_suffix("[기아]K5 2.0 프레스티지") == "K5 2.0 프레스티지"
+
+    def test_extract_model_suffix_no_brackets(self):
+        assert _extract_model_suffix("plain name") == "plain name"
+
+
+class TestEnrichListing:
+    def test_enriches_all_fields(self):
+        listing = {
+            "id": "12345",
+            "name": "[현대]소나타 2.0",
+            "year": "2023-06",
+            "mileage": "15,000km",
+            "fuel": "휘발유",
+            "price": "2,500만원",
+            "color": "흰색",
+        }
+        enriched = _enrich_listing(listing)
+        assert enriched["_year_num"] == 2023
+        assert enriched["_mileage_num"] == 15000
+        assert enriched["_price_num"] == 2500
+        assert enriched["_maker_name"] == "현대"
+        assert enriched["_model_suffix"] == "소나타 2.0"
+        assert enriched["_fuel_name"] == "휘발유"
+        assert enriched["_color_name"] == "흰색"
+        assert "_scan_ts" in enriched
+        # Original fields preserved
+        assert enriched["id"] == "12345"
+        assert enriched["name"] == "[현대]소나타 2.0"
+
+
+class TestStripInternalFields:
+    def test_strips_underscore_fields(self):
+        data = {"id": "1", "name": "test", "_year_num": 2023, "_price_num": 1500}
+        result = _strip_internal_fields(data)
+        assert result == {"id": "1", "name": "test"}
+
+    def test_empty_dict(self):
+        assert _strip_internal_fields({}) == {}
+
+
+# ── Inventory-based pagination ──────────────────────────────
+
+
+class TestInventoryPagination:
+    def setup_method(self):
+        self._orig_inv = dict(sc_mod._suwon_inventory)
+        sc_mod._suwon_inventory.clear()
+
+    def teardown_method(self):
+        sc_mod._suwon_inventory.clear()
+        sc_mod._suwon_inventory.update(self._orig_inv)
+
+    def _make_listing(self, car_id, maker="기아", model="K5", year=2023,
+                      mileage=10000, price=1500, fuel="휘발유", color="흰색", scan_ts=None):
+        return {
+            "id": car_id,
+            "name": f"[{maker}]{model}",
+            "imageUrl": "",
+            "year": f"{year}-01",
+            "mileage": f"{mileage:,}km",
+            "fuel": fuel,
+            "price": f"{price:,}만원",
+            "color": color,
+            "transmission": "",
+            "location": "",
+            "dealer": "",
+            "phone": "",
+            "_year_num": year,
+            "_mileage_num": mileage,
+            "_price_num": price,
+            "_maker_name": maker,
+            "_model_suffix": model,
+            "_fuel_name": fuel,
+            "_color_name": color,
+            "_scan_ts": scan_ts or time.time(),
+        }
+
+    @pytest.mark.asyncio
+    async def test_pagination_page_1_and_2(self):
+        for i in range(5):
+            sc_mod._suwon_inventory[f"car_{i}"] = self._make_listing(
+                f"car_{i}", price=1000 + i, scan_ts=100 - i
+            )
+
+        with patch("app.services.salecars._get_filter_name_maps", new_callable=AsyncMock, return_value={}):
+            result = await _get_car_listings_from_inventory({"PageSize": 3, "PageNow": 1})
+            assert result["total"] == 5
+            assert len(result["listings"]) == 3
+
+            result2 = await _get_car_listings_from_inventory({"PageSize": 3, "PageNow": 2})
+            assert result2["total"] == 5
+            assert len(result2["listings"]) == 2
+
+            # Different cars on each page
+            ids1 = {c["id"] for c in result["listings"]}
+            ids2 = {c["id"] for c in result2["listings"]}
+            assert ids1.isdisjoint(ids2)
+
+    @pytest.mark.asyncio
+    async def test_pagination_beyond_last_page(self):
+        sc_mod._suwon_inventory["car_1"] = self._make_listing("car_1")
+
+        with patch("app.services.salecars._get_filter_name_maps", new_callable=AsyncMock, return_value={}):
+            result = await _get_car_listings_from_inventory({"PageSize": 24, "PageNow": 5})
+            assert result["total"] == 1
+            assert len(result["listings"]) == 0
+
+    @pytest.mark.asyncio
+    async def test_no_internal_fields_in_response(self):
+        sc_mod._suwon_inventory["car_1"] = self._make_listing("car_1")
+
+        with patch("app.services.salecars._get_filter_name_maps", new_callable=AsyncMock, return_value={}):
+            result = await _get_car_listings_from_inventory({"PageSize": 24})
+            listing = result["listings"][0]
+            assert "id" in listing
+            assert "_year_num" not in listing
+            assert "_maker_name" not in listing
+
+    @pytest.mark.asyncio
+    async def test_sort_by_price_asc(self):
+        sc_mod._suwon_inventory["cheap"] = self._make_listing("cheap", price=500)
+        sc_mod._suwon_inventory["expensive"] = self._make_listing("expensive", price=3000)
+        sc_mod._suwon_inventory["mid"] = self._make_listing("mid", price=1500)
+
+        with patch("app.services.salecars._get_filter_name_maps", new_callable=AsyncMock, return_value={}):
+            result = await _get_car_listings_from_inventory({
+                "PageSort": "CarPrice", "PageAscDesc": "ASC"
+            })
+            prices = [int(_parse_price(c["price"])) for c in result["listings"]]
+            assert prices == [500, 1500, 3000]
+
+    @pytest.mark.asyncio
+    async def test_sort_by_price_desc(self):
+        sc_mod._suwon_inventory["cheap"] = self._make_listing("cheap", price=500)
+        sc_mod._suwon_inventory["expensive"] = self._make_listing("expensive", price=3000)
+
+        with patch("app.services.salecars._get_filter_name_maps", new_callable=AsyncMock, return_value={}):
+            result = await _get_car_listings_from_inventory({
+                "PageSort": "CarPrice", "PageAscDesc": "DESC"
+            })
+            prices = [int(_parse_price(c["price"])) for c in result["listings"]]
+            assert prices == [3000, 500]
+
+    @pytest.mark.asyncio
+    async def test_filter_by_year_range(self):
+        sc_mod._suwon_inventory["old"] = self._make_listing("old", year=2018)
+        sc_mod._suwon_inventory["new"] = self._make_listing("new", year=2024)
+        sc_mod._suwon_inventory["mid"] = self._make_listing("mid", year=2021)
+
+        with patch("app.services.salecars._get_filter_name_maps", new_callable=AsyncMock, return_value={}):
+            result = await _get_car_listings_from_inventory({
+                "CarYearFrom": "2020", "CarYearTo": "2022"
+            })
+            assert result["total"] == 1
+            assert result["listings"][0]["id"] == "mid"
+
+    @pytest.mark.asyncio
+    async def test_filter_by_maker(self):
+        sc_mod._suwon_inventory["kia"] = self._make_listing("kia", maker="기아")
+        sc_mod._suwon_inventory["hyundai"] = self._make_listing("hyundai", maker="현대")
+
+        name_maps = {"maker": {"10055": "기아"}, "model": {}, "fuel": {}, "color": {}}
+        with patch("app.services.salecars._get_filter_name_maps", new_callable=AsyncMock, return_value=name_maps):
+            result = await _get_car_listings_from_inventory({"CarMakerNo": "10055"})
+            assert result["total"] == 1
+            assert result["listings"][0]["id"] == "kia"
+
+    @pytest.mark.asyncio
+    async def test_filter_by_price_range(self):
+        sc_mod._suwon_inventory["cheap"] = self._make_listing("cheap", price=500)
+        sc_mod._suwon_inventory["mid"] = self._make_listing("mid", price=1500)
+        sc_mod._suwon_inventory["expensive"] = self._make_listing("expensive", price=3000)
+
+        with patch("app.services.salecars._get_filter_name_maps", new_callable=AsyncMock, return_value={}):
+            result = await _get_car_listings_from_inventory({
+                "CarPriceFrom": "1000", "CarPriceTo": "2000"
+            })
+            assert result["total"] == 1
+            assert result["listings"][0]["id"] == "mid"
+
+    @pytest.mark.asyncio
+    async def test_search_name(self):
+        sc_mod._suwon_inventory["sonata"] = self._make_listing("sonata", maker="현대", model="소나타 2.0")
+        sc_mod._suwon_inventory["k5"] = self._make_listing("k5", maker="기아", model="K5")
+
+        with patch("app.services.salecars._get_filter_name_maps", new_callable=AsyncMock, return_value={}):
+            result = await _get_car_listings_from_inventory({"SearchName": "소나타"})
+            assert result["total"] == 1
+            assert result["listings"][0]["id"] == "sonata"
+
+    @pytest.mark.asyncio
+    async def test_filter_by_grade_name(self):
+        """Grade filter uses substring match on car name."""
+        sc_mod._suwon_inventory["prestige"] = self._make_listing(
+            "prestige", maker="기아", model="K5 2.0 프레스티지"
+        )
+        sc_mod._suwon_inventory["luxury"] = self._make_listing(
+            "luxury", maker="기아", model="K5 2.0 럭셔리"
+        )
+
+        name_maps = {
+            "maker": {}, "model": {}, "fuel": {}, "color": {},
+            "model_detail": {}, "grade": {"501": "프레스티지"}, "grade_detail": {},
+            "mission": {},
+        }
+        with patch("app.services.salecars._get_filter_name_maps", new_callable=AsyncMock, return_value=name_maps):
+            result = await _get_car_listings_from_inventory({"CarGradeNo": "501"})
+            assert result["total"] == 1
+            assert result["listings"][0]["id"] == "prestige"
+
+    @pytest.mark.asyncio
+    async def test_combined_filters(self):
+        """Multiple filters applied together narrow results correctly."""
+        sc_mod._suwon_inventory["match"] = self._make_listing(
+            "match", maker="기아", year=2023, price=1500
+        )
+        sc_mod._suwon_inventory["wrong_year"] = self._make_listing(
+            "wrong_year", maker="기아", year=2018, price=1500
+        )
+        sc_mod._suwon_inventory["wrong_maker"] = self._make_listing(
+            "wrong_maker", maker="현대", year=2023, price=1500
+        )
+
+        name_maps = {"maker": {"10055": "기아"}, "model": {}, "fuel": {}, "color": {},
+                     "model_detail": {}, "grade": {}, "grade_detail": {}, "mission": {}}
+        with patch("app.services.salecars._get_filter_name_maps", new_callable=AsyncMock, return_value=name_maps):
+            result = await _get_car_listings_from_inventory({
+                "CarMakerNo": "10055", "CarYearFrom": "2020"
+            })
+            assert result["total"] == 1
+            assert result["listings"][0]["id"] == "match"
+
+    @pytest.mark.asyncio
+    async def test_cold_start_uses_legacy(self):
+        """When inventory is empty, get_car_listings falls back to legacy."""
+        sc_mod._suwon_inventory.clear()
+        sc_mod._last_rate_limit_time = time.time()
+        sc_mod._rate_limit_count = 1
+
+        result = await get_car_listings({"PageSize": 24})
+        assert result["status"] == "rate_limited"
