@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useMemo, useCallback } from "react";
+import { useState, useEffect, useRef, useMemo, useCallback } from "react";
 import type { FilterData, CarListingParams } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -32,6 +32,7 @@ interface FilterBarProps {
   filters: FilterData | null;
   appliedParams: CarListingParams;
   onApplyFilters: (params: CarListingParams) => void;
+  onPreload?: (params: CarListingParams) => void;
   loading?: boolean;
 }
 
@@ -68,6 +69,7 @@ export function FilterBar({
   filters,
   appliedParams,
   onApplyFilters,
+  onPreload,
   loading,
 }: FilterBarProps) {
   const [expanded, setExpanded] = useState(false);
@@ -98,6 +100,19 @@ export function FilterBar({
       (k) => (draftParams[k] || "") !== (appliedParams[k] || "")
     );
   }, [draftParams, appliedParams]);
+
+  // Prefetch: warm backend cache when filters change (before user clicks "Найти")
+  const preloadTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  useEffect(() => {
+    if (!onPreload || !hasUnappliedChanges) return;
+    if (preloadTimerRef.current) clearTimeout(preloadTimerRef.current);
+    preloadTimerRef.current = setTimeout(() => {
+      onPreload({ ...draftParams, PageNow: 1 });
+    }, 500);
+    return () => {
+      if (preloadTimerRef.current) clearTimeout(preloadTimerRef.current);
+    };
+  }, [draftParams, hasUnappliedChanges, onPreload]);
 
   const updateDraft = useCallback(
     (key: keyof CarListingParams, value: string) => {

@@ -106,6 +106,18 @@ export function CatalogContent({ initialFilters, initialCars, initialTotal, init
     return searchParams;
   }, []);
 
+  // Prefetch: warm backend cache before user clicks "Найти"
+  const preloadAbortRef = useRef<AbortController | null>(null);
+  const handlePreload = useCallback((p: CarListingParams) => {
+    if (preloadAbortRef.current) preloadAbortRef.current.abort();
+    const controller = new AbortController();
+    preloadAbortRef.current = controller;
+    const searchParams = buildSearchParams(p);
+    fetch(`${BACKEND_URL}/api/cars?${searchParams.toString()}`, {
+      signal: controller.signal,
+    }).catch(() => {}); // fire-and-forget, ignore errors
+  }, [buildSearchParams]);
+
   const fetchCars = useCallback(async (p: CarListingParams, signal?: AbortSignal): Promise<{ ok: boolean; retryAfter?: number }> => {
     const searchParams = buildSearchParams(p);
     const timeoutSignal = AbortSignal.timeout(15_000);
@@ -254,9 +266,11 @@ export function CatalogContent({ initialFilters, initialCars, initialTotal, init
         filters={filters}
         appliedParams={params}
         onApplyFilters={(newParams) => {
+          if (preloadAbortRef.current) preloadAbortRef.current.abort();
           window.scrollTo({ top: 0, behavior: "instant" });
           setParams(newParams);
         }}
+        onPreload={handlePreload}
         loading={loading}
       />
 

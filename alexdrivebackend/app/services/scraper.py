@@ -38,7 +38,7 @@ _last_successful_parse: float = 0.0
 _RATE_LIMIT_MARKER = "limits_box"
 
 # --- Global outbound request throttling ---
-MIN_REQUEST_INTERVAL = 2.0  # was 0.3 — too aggressive, caused IP ban
+MIN_REQUEST_INTERVAL = 1.5  # was 2.0, safe with proxy in production
 MAX_REQUEST_JITTER = 1.0
 BG_EXTRA_DELAY = 1.0  # background requests wait an extra second
 
