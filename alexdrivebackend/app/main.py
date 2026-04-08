@@ -43,8 +43,13 @@ async def _prewarm_caches():
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     client_kwargs: dict = {
-        "timeout": httpx.Timeout(30.0),
+        "timeout": httpx.Timeout(30.0, connect=10.0),
         "follow_redirects": True,
+        "limits": httpx.Limits(
+            max_connections=10,
+            max_keepalive_connections=5,
+            keepalive_expiry=30.0,
+        ),
     }
     if settings.proxy_url:
         client_kwargs["proxy"] = settings.proxy_url

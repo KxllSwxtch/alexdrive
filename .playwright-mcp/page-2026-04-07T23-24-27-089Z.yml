@@ -1,0 +1,379 @@
+- generic [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e3]:
+      - link "AlexDrive" [ref=e4] [cursor=pointer]:
+        - /url: /
+        - generic [ref=e5]: AlexDrive
+      - link "WhatsApp" [ref=e6] [cursor=pointer]:
+        - /url: https://wa.me/821039086050
+        - img [ref=e7]
+        - text: WhatsApp
+  - generic [ref=e9]:
+    - complementary [ref=e10]:
+      - generic [ref=e11]:
+        - paragraph [ref=e12]: Меню
+        - button "Свернуть меню" [ref=e13]:
+          - img [ref=e14]
+      - navigation [ref=e16]:
+        - link "Каталог" [ref=e17] [cursor=pointer]:
+          - /url: /
+          - img [ref=e18]
+          - generic [ref=e20]: Каталог
+        - link "О нас" [ref=e21] [cursor=pointer]:
+          - /url: /about
+          - img [ref=e22]
+          - generic [ref=e24]: О нас
+        - link "Контакты" [ref=e25] [cursor=pointer]:
+          - /url: /contacts
+          - img [ref=e26]
+          - generic [ref=e28]: Контакты
+        - link "Калькулятор" [ref=e29] [cursor=pointer]:
+          - /url: /calculator
+          - img [ref=e30]
+          - generic [ref=e32]: Калькулятор
+      - generic [ref=e33]:
+        - link "WhatsApp" [ref=e34] [cursor=pointer]:
+          - /url: https://wa.me/821039086050
+          - img [ref=e35]
+          - generic [ref=e37]: WhatsApp
+        - generic [ref=e38]:
+          - paragraph [ref=e39]: Кан Алексей
+          - link "+82-10-3908-6050" [ref=e40] [cursor=pointer]:
+            - /url: tel:+821039086050
+    - generic [ref=e41]:
+      - main [ref=e42]:
+        - generic [ref=e123]:
+          - generic [ref=e124]:
+            - heading "Каталог автомобилей" [level=1] [ref=e125]
+            - paragraph [ref=e126]: загрузка...
+          - generic [ref=e128]:
+            - generic [ref=e129]:
+              - generic [ref=e130]:
+                - generic [ref=e131]: Марка
+                - button "Все марки" [expanded] [ref=e132]:
+                  - generic [ref=e133]: Все марки
+                  - img [ref=e134]
+                - dialog [ref=e179]:
+                  - generic [ref=e180]:
+                    - group [ref=e183]:
+                      - combobox [expanded] [active] [ref=e184]
+                      - group [ref=e185]:
+                        - img [ref=e186]
+                    - listbox "Suggestions" [ref=e189]:
+                      - group [ref=e191]:
+                        - option "Все марки" [selected] [ref=e192]:
+                          - text: Все марки
+                          - img
+                        - option "Hyundai" [ref=e193]:
+                          - text: Hyundai
+                          - img
+                        - option "Genesis" [ref=e194]:
+                          - text: Genesis
+                          - img
+                        - option "Kia" [ref=e195]:
+                          - text: Kia
+                          - img
+                        - option "Грузовые" [ref=e196]:
+                          - text: Грузовые
+                          - img
+                        - option "Renault Korea (Samsung)" [ref=e197]:
+                          - text: Renault Korea (Samsung)
+                          - img
+                        - option "KG Mobility (SsangYong)" [ref=e198]:
+                          - text: KG Mobility (SsangYong)
+                          - img
+                        - option "Chevrolet" [ref=e199]:
+                          - text: Chevrolet
+                          - img
+                        - option "Daewoo" [ref=e200]:
+                          - text: Daewoo
+                          - img
+                        - option "Грузовики" [ref=e201]:
+                          - text: Грузовики
+                          - img
+                        - option "Автобусы" [ref=e202]:
+                          - text: Автобусы
+                          - img
+                        - option "Прочие" [ref=e203]:
+                          - text: Прочие
+                          - img
+                        - option "Mercedes-Benz" [ref=e204]:
+                          - text: Mercedes-Benz
+                          - img
+                        - option "BMW" [ref=e205]:
+                          - text: BMW
+                          - img
+                        - option "Audi" [ref=e206]:
+                          - text: Audi
+                          - img
+                        - option "Volkswagen" [ref=e207]:
+                          - text: Volkswagen
+                          - img
+                        - option "Mini" [ref=e208]:
+                          - text: Mini
+                          - img
+                        - option "Volvo" [ref=e209]:
+                          - text: Volvo
+                          - img
+                        - option "Land Rover" [ref=e210]:
+                          - text: Land Rover
+                          - img
+                        - option "Nissan" [ref=e211]:
+                          - text: Nissan
+                          - img
+                        - option "Daihatsu" [ref=e212]:
+                          - text: Daihatsu
+                          - img
+                        - option "Dachi" [ref=e213]:
+                          - text: Dachi
+                          - img
+                        - option "Dongfeng Sokon" [ref=e214]:
+                          - text: Dongfeng Sokon
+                          - img
+                        - option "Lamborghini" [ref=e215]:
+                          - text: Lamborghini
+                          - img
+                        - option "Lexus" [ref=e216]:
+                          - text: Lexus
+                          - img
+                        - option "Rover" [ref=e217]:
+                          - text: Rover
+                          - img
+                        - option "Lotus" [ref=e218]:
+                          - text: Lotus
+                          - img
+                        - option "Rolls-Royce" [ref=e219]:
+                          - text: Rolls-Royce
+                          - img
+                        - option "Renault" [ref=e220]:
+                          - text: Renault
+                          - img
+                        - option "Lincoln" [ref=e221]:
+                          - text: Lincoln
+                          - img
+                        - option "Maserati" [ref=e222]:
+                          - text: Maserati
+                          - img
+                        - option "Maybach" [ref=e223]:
+                          - text: Maybach
+                          - img
+                        - option "Mazda" [ref=e224]:
+                          - text: Mazda
+                          - img
+                        - option "McLaren" [ref=e225]:
+                          - text: McLaren
+                          - img
+                        - option "Mitsubishi" [ref=e226]:
+                          - text: Mitsubishi
+                          - img
+                        - option "Mitsuoka" [ref=e227]:
+                          - text: Mitsuoka
+                          - img
+                        - option "Bentley" [ref=e228]:
+                          - text: Bentley
+                          - img
+                        - option "Bugatti" [ref=e229]:
+                          - text: Bugatti
+                          - img
+                        - option "BAIC Yinxiang" [ref=e230]:
+                          - text: BAIC Yinxiang
+                          - img
+                        - option "Buick" [ref=e231]:
+                          - text: Buick
+                          - img
+                        - option "Saab" [ref=e232]:
+                          - text: Saab
+                          - img
+                        - option "Scion" [ref=e233]:
+                          - text: Scion
+                          - img
+                        - option "Sunlong Bus" [ref=e234]:
+                          - text: Sunlong Bus
+                          - img
+                        - option "Smart" [ref=e235]:
+                          - text: Smart
+                          - img
+                        - option "Subaru" [ref=e236]:
+                          - text: Subaru
+                          - img
+                        - option "Suzuki" [ref=e237]:
+                          - text: Suzuki
+                          - img
+                        - option "Chevrolet" [ref=e238]:
+                          - text: Chevrolet
+                          - img
+                        - option "Citroen" [ref=e239]:
+                          - text: Citroen
+                          - img
+                        - option "Alfa-Romeo" [ref=e240]:
+                          - text: Alfa-Romeo
+                          - img
+                        - option "Aston Martin" [ref=e241]:
+                          - text: Aston Martin
+                          - img
+                        - option "Acura" [ref=e242]:
+                          - text: Acura
+                          - img
+                        - option "Opel" [ref=e243]:
+                          - text: Opel
+                          - img
+                        - option "Oldsmobile" [ref=e244]:
+                          - text: Oldsmobile
+                          - img
+                        - option "Ineos" [ref=e245]:
+                          - text: Ineos
+                          - img
+                        - option "Iveco" [ref=e246]:
+                          - text: Iveco
+                          - img
+                        - option "Isuzu" [ref=e247]:
+                          - text: Isuzu
+                          - img
+                        - option "Infiniti" [ref=e248]:
+                          - text: Infiniti
+                          - img
+                        - option "Jaguar" [ref=e249]:
+                          - text: Jaguar
+                          - img
+                        - option "Geely" [ref=e250]:
+                          - text: Geely
+                          - img
+                        - option "Jeep" [ref=e251]:
+                          - text: Jeep
+                          - img
+                        - option "ZiDou" [ref=e252]:
+                          - text: ZiDou
+                          - img
+                        - option "Cadillac" [ref=e253]:
+                          - text: Cadillac
+                          - img
+                        - option "Chrysler" [ref=e254]:
+                          - text: Chrysler
+                          - img
+                        - option "Tesla" [ref=e255]:
+                          - text: Tesla
+                          - img
+                        - option "Toyota" [ref=e256]:
+                          - text: Toyota
+                          - img
+                        - option "Ferrari" [ref=e257]:
+                          - text: Ferrari
+                          - img
+                        - option "Ford" [ref=e258]:
+                          - text: Ford
+                          - img
+                        - option "Porsche" [ref=e259]:
+                          - text: Porsche
+                          - img
+                        - option "Foton" [ref=e260]:
+                          - text: Foton
+                          - img
+                        - option "Pontiac" [ref=e261]:
+                          - text: Pontiac
+                          - img
+                        - option "Polestar" [ref=e262]:
+                          - text: Polestar
+                          - img
+                        - option "Peugeot" [ref=e263]:
+                          - text: Peugeot
+                          - img
+                        - option "Fiat" [ref=e264]:
+                          - text: Fiat
+                          - img
+                        - option "Hummer" [ref=e265]:
+                          - text: Hummer
+                          - img
+                        - option "Honda" [ref=e266]:
+                          - text: Honda
+                          - img
+                        - option "BYD" [ref=e267]:
+                          - text: BYD
+                          - img
+                        - option "GMC" [ref=e268]:
+                          - text: GMC
+                          - img
+                        - option "LEVC" [ref=e269]:
+                          - text: LEVC
+                          - img
+              - generic [ref=e137]:
+                - generic [ref=e138]: Модель
+                - button "Все модели" [ref=e139]:
+                  - generic [ref=e140]: Все модели
+                  - img [ref=e141]
+              - generic [ref=e144]:
+                - generic [ref=e145]: Модификация
+                - combobox [disabled] [ref=e146]:
+                  - generic [ref=e147]: Все
+                  - img: ▼
+                - textbox [disabled] [ref=e148]: __all__
+              - generic [ref=e149]:
+                - generic [ref=e150]: Комплектация
+                - combobox [disabled] [ref=e151]:
+                  - generic [ref=e152]: Все
+                  - img: ▼
+                - textbox [disabled] [ref=e153]: __all__
+              - generic [ref=e154]:
+                - generic [ref=e155]: Доп. комплектация
+                - combobox [disabled] [ref=e156]:
+                  - generic [ref=e157]: Все
+                  - img: ▼
+                - textbox [disabled] [ref=e158]: __all__
+              - generic [ref=e159]:
+                - generic [ref=e160]: Сортировка
+                - combobox [ref=e161]:
+                  - generic [ref=e162]: По дате
+                  - img: ▼
+                - textbox [ref=e163]: ModDt
+            - generic [ref=e164]:
+              - button "Все фильтры" [ref=e165]:
+                - img
+                - text: Все фильтры
+              - generic [ref=e166]:
+                - button "Найти" [ref=e167]:
+                  - img
+                  - text: Найти
+                - button "Сбросить" [ref=e168]:
+                  - img
+                  - text: Сбросить
+          - generic [ref=e170]:
+            - img [ref=e171]
+            - paragraph [ref=e173]: Автомобили не найдены
+            - paragraph [ref=e174]: Попробуйте изменить параметры поиска
+      - contentinfo [ref=e96]:
+        - generic [ref=e97]:
+          - generic [ref=e98]:
+            - generic [ref=e99]:
+              - link "AlexDrive" [ref=e100] [cursor=pointer]:
+                - /url: /
+                - generic [ref=e101]: AlexDrive
+              - paragraph [ref=e102]:
+                - text: Автомобили в Южной Корее.
+                - text: Широкий выбор автомобилей в Сувоне
+            - generic [ref=e103]:
+              - heading "Навигация" [level=3] [ref=e104]
+              - navigation [ref=e105]:
+                - link "Каталог" [ref=e106] [cursor=pointer]:
+                  - /url: /
+                - link "О нас" [ref=e107] [cursor=pointer]:
+                  - /url: /about
+                - link "Контакты" [ref=e108] [cursor=pointer]:
+                  - /url: /contacts
+                - link "Калькулятор" [ref=e109] [cursor=pointer]:
+                  - /url: /calculator
+                - link "Конфиденциальность" [ref=e110] [cursor=pointer]:
+                  - /url: /privacy
+                - link "Условия использования" [ref=e111] [cursor=pointer]:
+                  - /url: /terms
+            - generic [ref=e112]:
+              - heading "Контакты" [level=3] [ref=e113]
+              - generic [ref=e114]:
+                - paragraph [ref=e115]: Кан Алексей
+                - link "+82-10-3908-6050" [ref=e116] [cursor=pointer]:
+                  - /url: tel:+821039086050
+                - link "WhatsApp" [ref=e117] [cursor=pointer]:
+                  - /url: https://wa.me/821039086050
+                  - img [ref=e118]
+                  - text: WhatsApp
+                - paragraph [ref=e120]: Кёнги, Сувон, Южная Корея
+          - generic [ref=e121]: © 2026 AlexDrive. Все права защищены.
+  - alert [ref=e122]

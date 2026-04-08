@@ -18,11 +18,11 @@ def reset_scraper_globals():
     sc_mod._listing_refresh_keys = set()
     sc_mod._detail_refresh_keys = set()
     sc_mod._filter_lock = asyncio.Lock()
-    sc_mod._listing_lock = asyncio.Lock()
+    sc_mod._listing_locks = {}
+    sc_mod._listing_locks_guard = asyncio.Lock()
     sc_mod._detail_locks = {}
     sc_mod._detail_locks_guard = asyncio.Lock()
-    sc_mod._last_request_time = 0.0
-    sc_mod._throttle_lock = asyncio.Lock()
+    sc_mod._throttle = sc_mod.ThrottleManager()
     sc_mod._last_rate_limit_time = 0.0
     sc_mod._rate_limit_count = 0
     sc_mod._last_successful_parse = 0.0
@@ -33,7 +33,8 @@ def reset_scraper_globals():
     sc_mod._listing_refresh_keys = set()
     sc_mod._detail_refresh_keys = set()
     sc_mod._detail_locks = {}
-    sc_mod._last_request_time = 0.0
+    sc_mod._listing_locks = {}
+    sc_mod._throttle = sc_mod.ThrottleManager()
     sc_mod._last_rate_limit_time = 0.0
     sc_mod._rate_limit_count = 0
     sc_mod._last_successful_parse = 0.0

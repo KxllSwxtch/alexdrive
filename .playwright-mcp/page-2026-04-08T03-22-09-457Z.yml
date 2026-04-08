@@ -1,0 +1,828 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - generic [ref=e4]:
+      - heading "로고" [level=1] [ref=e5]:
+        - link "로고" [ref=e6] [cursor=pointer]:
+          - /url: /
+          - img "로고" [ref=e7]
+      - heading "수원skv1모터스 차사인모터스 메뉴" [level=2] [ref=e8]
+      - list [ref=e9]:
+        - listitem [ref=e10]:
+          - link "국산차" [ref=e11] [cursor=pointer]:
+            - /url: /search/get_search?fn=model&country=kor&tab=model
+        - listitem [ref=e12]:
+          - link "수입차" [ref=e13] [cursor=pointer]:
+            - /url: /search/get_search?fn=model&country=foreign&tab=model
+        - listitem [ref=e14]:
+          - link "화물차" [ref=e15] [cursor=pointer]:
+            - /url: /search/get_search?fn=model&country=freight&tab=model
+        - listitem [ref=e16]:
+          - link "판매/구입문의" [ref=e17] [cursor=pointer]:
+            - /url: /consulting/sale
+        - listitem [ref=e18]:
+          - link "커뮤니티" [ref=e19] [cursor=pointer]:
+            - /url: /board/list/community/community?type=title&content=
+        - listitem [ref=e20]:
+          - link "회사소개" [ref=e21] [cursor=pointer]:
+            - /url: /common/introduce
+        - listitem [ref=e22]:
+          - link "오시는길" [ref=e23] [cursor=pointer]:
+            - /url: /common/map
+    - generic [ref=e25]:
+      - heading "전체메뉴" [level=2] [ref=e26]
+      - list [ref=e27]:
+        - listitem [ref=e28]:
+          - link "유튜브" [ref=e29] [cursor=pointer]:
+            - /url: https://www.youtube.com/user/kaose67
+        - listitem [ref=e30]:
+          - link "페이스북" [ref=e31] [cursor=pointer]:
+            - /url: https://www.facebook.com/kaose67
+        - listitem [ref=e32]:
+          - link "블로그" [ref=e33] [cursor=pointer]:
+            - /url: https://blog.naver.com/kaose55
+        - listitem [ref=e34]:
+          - link "카카오톡" [ref=e35] [cursor=pointer]:
+            - /url: https://open.kakao.com/o/gL9bam9c
+      - list [ref=e36]:
+        - listitem [ref=e37]:
+          - link "홈" [ref=e38] [cursor=pointer]:
+            - /url: /
+        - listitem [ref=e39]:
+          - link "관리자로그인" [ref=e40] [cursor=pointer]:
+            - /url: http://admin.chasainmotors.com
+        - listitem [ref=e41]:
+          - link "찾아오시는길" [ref=e42] [cursor=pointer]:
+            - /url: /common/map
+  - generic [ref=e44]:
+    - generic [ref=e45]:
+      - generic [ref=e46]:
+        - generic [ref=e47]:
+          - generic [ref=e48]:
+            - radio "판매" [checked] [ref=e49] [cursor=pointer]
+            - generic [ref=e50]: 판매
+          - generic [ref=e51]:
+            - radio "구매" [ref=e52] [cursor=pointer]
+            - generic [ref=e53]: 구매
+        - textbox "차명" [ref=e55]
+        - textbox "연락처" [ref=e57]
+        - generic [ref=e58]:
+          - generic [ref=e59]: ✓ 개인정보 사용 수집에 동의합니다.
+          - button "전문보기" [ref=e60] [cursor=pointer]
+        - button "상담요청" [ref=e62] [cursor=pointer]
+      - link "카카오톡 상담" [ref=e64] [cursor=pointer]:
+        - /url: https://open.kakao.com/o/gL9bam9c
+        - img "카카오톡 상담" [ref=e65]
+      - generic [ref=e66]:
+        - paragraph [ref=e67]: 최근본차량
+        - list [ref=e68]:
+          - listitem [ref=e69]:
+            - link "37저0433" [ref=e70] [cursor=pointer]:
+              - /url: javascript:;
+              - generic [ref=e72]: 37저0433
+        - link "TOP" [ref=e73] [cursor=pointer]:
+          - /url: "#"
+    - generic [ref=e74]:
+      - list [ref=e76]:
+        - listitem [ref=e77]:
+          - link "모델명 검색" [ref=e78] [cursor=pointer]:
+            - /url: /search/get_search?fn=model&country=kor&tab=model&type=
+        - listitem [ref=e79]:
+          - link "차종별 검색" [ref=e80] [cursor=pointer]:
+            - /url: /search/get_search?fn=vehicle&country=kor&tab=vehicle&type=
+      - generic [ref=e81]:
+        - listitem [ref=e82]:
+          - heading "제조사" [level=3] [ref=e83]
+          - list [ref=e84]:
+            - listitem [ref=e85] [cursor=pointer]: 현대
+            - listitem [ref=e86] [cursor=pointer]: 제네시스
+            - listitem [ref=e87] [cursor=pointer]: 기아
+            - listitem [ref=e88] [cursor=pointer]: 르노코리아(삼성)
+            - listitem [ref=e89] [cursor=pointer]: KG모빌리티(쌍용)
+            - listitem [ref=e90] [cursor=pointer]: 쉐보레
+            - listitem [ref=e91] [cursor=pointer]: 대우
+            - listitem [ref=e92] [cursor=pointer]: 기타제조사
+        - listitem [ref=e93]:
+          - heading "모델" [level=3] [ref=e94]
+          - list [ref=e95]:
+            - paragraph [ref=e96]:
+              - text: 제조사를
+              - text: 선택하세요
+        - listitem [ref=e97]:
+          - heading "세부모델" [level=3] [ref=e98]
+          - list [ref=e99]:
+            - paragraph [ref=e100]:
+              - text: 모델을
+              - text: 선택하세요
+        - listitem [ref=e101]:
+          - heading "등급" [level=3] [ref=e102]
+          - list [ref=e103]:
+            - paragraph [ref=e104]:
+              - text: 세부모델을
+              - text: 선택하세요
+        - listitem [ref=e105]:
+          - heading "세부등급" [level=3] [ref=e106]
+          - list [ref=e107]:
+            - paragraph [ref=e108]:
+              - text: 등급을
+              - text: 선택하세요
+      - button "상세검색열기" [ref=e109] [cursor=pointer]
+      - generic [ref=e110]:
+        - button "검색하기" [ref=e111] [cursor=pointer]
+        - button "선택초기화" [ref=e112] [cursor=pointer]
+      - generic [ref=e114]:
+        - generic [ref=e116]: 전체 29,893대
+        - generic [ref=e118]:
+          - list [ref=e119]:
+            - listitem [ref=e120]:
+              - text: 최근등록매물
+              - button [ref=e121] [cursor=pointer]
+              - button [ref=e122] [cursor=pointer]
+            - listitem [ref=e123]:
+              - text: 가격순
+              - button [ref=e124] [cursor=pointer]
+              - button [ref=e125] [cursor=pointer]
+            - listitem [ref=e126]:
+              - text: 연식순
+              - button [ref=e127] [cursor=pointer]
+              - button [ref=e128] [cursor=pointer]
+            - listitem [ref=e129]:
+              - text: 주행거리순
+              - button [ref=e130] [cursor=pointer]
+              - button [ref=e131] [cursor=pointer]
+          - combobox [ref=e132]:
+            - option "8개씩"
+            - option "16개씩"
+            - option "24개씩" [selected]
+            - option "32개씩"
+            - option "40개씩"
+        - table [ref=e133]:
+          - rowgroup [ref=e138]:
+            - row "+ [기아]K5 2세대 SX 2.0 프레스티지 2017-03 102,219km 휘발유 오토 102,219km 1,150 만원" [ref=e139]:
+              - cell "+ [기아]K5 2세대 SX 2.0 프레스티지 2017-03 102,219km 휘발유 오토" [ref=e140]:
+                - generic [ref=e141]:
+                  - link [ref=e142] [cursor=pointer]:
+                    - /url: /search/detail/113665537
+                  - link [ref=e143] [cursor=pointer]:
+                    - /url: /search/detail/113665537
+                  - generic [ref=e144]:
+                    - link [ref=e146] [cursor=pointer]:
+                      - /url: /search/detail/113665537
+                    - link [ref=e148] [cursor=pointer]:
+                      - /url: /search/detail/113665537
+                    - link [ref=e150] [cursor=pointer]:
+                      - /url: /search/detail/113665537
+                  - text: +
+                - generic [ref=e151]:
+                  - link "[기아]K5 2세대 SX 2.0 프레스티지" [ref=e153] [cursor=pointer]:
+                    - /url: /search/detail/113665537
+                  - list [ref=e154]:
+                    - listitem [ref=e155]: 2017-03
+                    - listitem [ref=e156]: 102,219km
+                    - listitem [ref=e157]: 휘발유
+                    - listitem [ref=e158]: 오토
+              - cell "102,219km" [ref=e159]
+              - cell "1,150 만원" [ref=e160]
+            - row "+ [기아]K8 하이브리드 노블레스 2023-07 96,735km 휘발유 하이브리드 오토 96,735km 2,599 만원" [ref=e161]:
+              - cell "+ [기아]K8 하이브리드 노블레스 2023-07 96,735km 휘발유 하이브리드 오토" [ref=e162]:
+                - generic [ref=e163]:
+                  - link [ref=e164] [cursor=pointer]:
+                    - /url: /search/detail/113667345
+                  - link [ref=e165] [cursor=pointer]:
+                    - /url: /search/detail/113667345
+                  - generic [ref=e166]:
+                    - link [ref=e168] [cursor=pointer]:
+                      - /url: /search/detail/113667345
+                    - link [ref=e170] [cursor=pointer]:
+                      - /url: /search/detail/113667345
+                    - link [ref=e172] [cursor=pointer]:
+                      - /url: /search/detail/113667345
+                  - text: +
+                - generic [ref=e173]:
+                  - link "[기아]K8 하이브리드 노블레스" [ref=e175] [cursor=pointer]:
+                    - /url: /search/detail/113667345
+                  - list [ref=e176]:
+                    - listitem [ref=e177]: 2023-07
+                    - listitem [ref=e178]: 96,735km
+                    - listitem [ref=e179]: 휘발유 하이브리드
+                    - listitem [ref=e180]: 오토
+              - cell "96,735km" [ref=e181]
+              - cell "2,599 만원" [ref=e182]
+            - row "+ [KG모빌리티(쌍용) ]렉스턴W 2.0 4WD 노블레스 2015-02 155,841km 경유 오토 155,841km 570 만원" [ref=e183]:
+              - cell "+ [KG모빌리티(쌍용) ]렉스턴W 2.0 4WD 노블레스 2015-02 155,841km 경유 오토" [ref=e184]:
+                - generic [ref=e185]:
+                  - link [ref=e186] [cursor=pointer]:
+                    - /url: /search/detail/113667949
+                  - link [ref=e187] [cursor=pointer]:
+                    - /url: /search/detail/113667949
+                  - generic [ref=e188]:
+                    - link [ref=e190] [cursor=pointer]:
+                      - /url: /search/detail/113667949
+                    - link [ref=e192] [cursor=pointer]:
+                      - /url: /search/detail/113667949
+                    - link [ref=e194] [cursor=pointer]:
+                      - /url: /search/detail/113667949
+                  - text: +
+                - generic [ref=e195]:
+                  - link "[KG모빌리티(쌍용) ]렉스턴W 2.0 4WD 노블레스" [ref=e197] [cursor=pointer]:
+                    - /url: /search/detail/113667949
+                  - list [ref=e198]:
+                    - listitem [ref=e199]: 2015-02
+                    - listitem [ref=e200]: 155,841km
+                    - listitem [ref=e201]: 경유
+                    - listitem [ref=e202]: 오토
+              - cell "155,841km" [ref=e203]
+              - cell "570 만원" [ref=e204]
+            - row "+ [현대]쏘나타 (DN8) 1.6 터보 프리미엄 패밀리 2019-11 18,876km 휘발유 오토 18,876km 2,420 만원" [ref=e205]:
+              - cell "+ [현대]쏘나타 (DN8) 1.6 터보 프리미엄 패밀리 2019-11 18,876km 휘발유 오토" [ref=e206]:
+                - generic [ref=e207]:
+                  - link [ref=e208] [cursor=pointer]:
+                    - /url: /search/detail/113669939
+                  - link [ref=e209] [cursor=pointer]:
+                    - /url: /search/detail/113669939
+                  - generic [ref=e210]:
+                    - link [ref=e212] [cursor=pointer]:
+                      - /url: /search/detail/113669939
+                    - link [ref=e214] [cursor=pointer]:
+                      - /url: /search/detail/113669939
+                    - link [ref=e216] [cursor=pointer]:
+                      - /url: /search/detail/113669939
+                  - text: +
+                - generic [ref=e217]:
+                  - link "[현대]쏘나타 (DN8) 1.6 터보 프리미엄 패밀리" [ref=e219] [cursor=pointer]:
+                    - /url: /search/detail/113669939
+                  - list [ref=e220]:
+                    - listitem [ref=e221]: 2019-11
+                    - listitem [ref=e222]: 18,876km
+                    - listitem [ref=e223]: 휘발유
+                    - listitem [ref=e224]: 오토
+              - cell "18,876km" [ref=e225]
+              - cell "2,420 만원" [ref=e226]
+            - row "+ [기아]K8 2.5 2WD 노블레스 2022-01 70,320km 휘발유 오토 70,320km 2,290 만원" [ref=e227]:
+              - cell "+ [기아]K8 2.5 2WD 노블레스 2022-01 70,320km 휘발유 오토" [ref=e228]:
+                - generic [ref=e229]:
+                  - link [ref=e230] [cursor=pointer]:
+                    - /url: /search/detail/113675477
+                  - link [ref=e231] [cursor=pointer]:
+                    - /url: /search/detail/113675477
+                  - generic [ref=e232]:
+                    - link [ref=e234] [cursor=pointer]:
+                      - /url: /search/detail/113675477
+                    - link [ref=e236] [cursor=pointer]:
+                      - /url: /search/detail/113675477
+                    - link [ref=e238] [cursor=pointer]:
+                      - /url: /search/detail/113675477
+                  - text: +
+                - generic [ref=e239]:
+                  - link "[기아]K8 2.5 2WD 노블레스" [ref=e241] [cursor=pointer]:
+                    - /url: /search/detail/113675477
+                  - list [ref=e242]:
+                    - listitem [ref=e243]: 2022-01
+                    - listitem [ref=e244]: 70,320km
+                    - listitem [ref=e245]: 휘발유
+                    - listitem [ref=e246]: 오토
+              - cell "70,320km" [ref=e247]
+              - cell "2,290 만원" [ref=e248]
+            - row "+ [현대]그랜저 하이브리드 (GN7) 프리미엄 2023-02 115,465km 휘발유 하이브리드 오토 115,465km 3,020 만원" [ref=e249]:
+              - cell "+ [현대]그랜저 하이브리드 (GN7) 프리미엄 2023-02 115,465km 휘발유 하이브리드 오토" [ref=e250]:
+                - generic [ref=e251]:
+                  - link [ref=e252] [cursor=pointer]:
+                    - /url: /search/detail/113679529
+                  - link [ref=e253] [cursor=pointer]:
+                    - /url: /search/detail/113679529
+                  - generic [ref=e254]:
+                    - link [ref=e256] [cursor=pointer]:
+                      - /url: /search/detail/113679529
+                    - link [ref=e258] [cursor=pointer]:
+                      - /url: /search/detail/113679529
+                    - link [ref=e260] [cursor=pointer]:
+                      - /url: /search/detail/113679529
+                  - text: +
+                - generic [ref=e261]:
+                  - link "[현대]그랜저 하이브리드 (GN7) 프리미엄" [ref=e263] [cursor=pointer]:
+                    - /url: /search/detail/113679529
+                  - list [ref=e264]:
+                    - listitem [ref=e265]: 2023-02
+                    - listitem [ref=e266]: 115,465km
+                    - listitem [ref=e267]: 휘발유 하이브리드
+                    - listitem [ref=e268]: 오토
+              - cell "115,465km" [ref=e269]
+              - cell "3,020 만원" [ref=e270]
+            - row "+ [르노코리아(삼성)]더뉴QM6 2.0 LPe RE 2WD 2019-07 127,008km LPG 오토 127,008km 1,370 만원" [ref=e271]:
+              - cell "+ [르노코리아(삼성)]더뉴QM6 2.0 LPe RE 2WD 2019-07 127,008km LPG 오토" [ref=e272]:
+                - generic [ref=e273]:
+                  - link [ref=e274] [cursor=pointer]:
+                    - /url: /search/detail/113680149
+                  - link [ref=e275] [cursor=pointer]:
+                    - /url: /search/detail/113680149
+                  - generic [ref=e276]:
+                    - link [ref=e278] [cursor=pointer]:
+                      - /url: /search/detail/113680149
+                    - link [ref=e280] [cursor=pointer]:
+                      - /url: /search/detail/113680149
+                    - link [ref=e282] [cursor=pointer]:
+                      - /url: /search/detail/113680149
+                  - text: +
+                - generic [ref=e283]:
+                  - link "[르노코리아(삼성)]더뉴QM6 2.0 LPe RE 2WD" [ref=e285] [cursor=pointer]:
+                    - /url: /search/detail/113680149
+                  - list [ref=e286]:
+                    - listitem [ref=e287]: 2019-07
+                    - listitem [ref=e288]: 127,008km
+                    - listitem [ref=e289]: LPG
+                    - listitem [ref=e290]: 오토
+              - cell "127,008km" [ref=e291]
+              - cell "1,370 만원" [ref=e292]
+            - row "+ [현대]엑센트신형 1.4VVT 모던 2014-03 110,000km 휘발유 오토 110,000km 450 만원" [ref=e293]:
+              - cell "+ [현대]엑센트신형 1.4VVT 모던 2014-03 110,000km 휘발유 오토" [ref=e294]:
+                - generic [ref=e295]:
+                  - link [ref=e296] [cursor=pointer]:
+                    - /url: /search/detail/113680922
+                  - link [ref=e297] [cursor=pointer]:
+                    - /url: /search/detail/113680922
+                  - generic [ref=e298]:
+                    - link [ref=e300] [cursor=pointer]:
+                      - /url: /search/detail/113680922
+                    - link [ref=e302] [cursor=pointer]:
+                      - /url: /search/detail/113680922
+                    - link [ref=e304] [cursor=pointer]:
+                      - /url: /search/detail/113680922
+                  - text: +
+                - generic [ref=e305]:
+                  - link "[현대]엑센트신형 1.4VVT 모던" [ref=e307] [cursor=pointer]:
+                    - /url: /search/detail/113680922
+                  - list [ref=e308]:
+                    - listitem [ref=e309]: 2014-03
+                    - listitem [ref=e310]: 110,000km
+                    - listitem [ref=e311]: 휘발유
+                    - listitem [ref=e312]: 오토
+              - cell "110,000km" [ref=e313]
+              - cell "450 만원" [ref=e314]
+            - row "+ [현대]싼타페 TM 디젤 2.0 4WD 프리미엄 2019-12 50,621km 경유 오토 50,621km 2,270 만원" [ref=e315]:
+              - cell "+ [현대]싼타페 TM 디젤 2.0 4WD 프리미엄 2019-12 50,621km 경유 오토" [ref=e316]:
+                - generic [ref=e317]:
+                  - link [ref=e318] [cursor=pointer]:
+                    - /url: /search/detail/113681519
+                  - link [ref=e319] [cursor=pointer]:
+                    - /url: /search/detail/113681519
+                  - generic [ref=e320]:
+                    - link [ref=e322] [cursor=pointer]:
+                      - /url: /search/detail/113681519
+                    - link [ref=e324] [cursor=pointer]:
+                      - /url: /search/detail/113681519
+                    - link [ref=e326] [cursor=pointer]:
+                      - /url: /search/detail/113681519
+                  - text: +
+                - generic [ref=e327]:
+                  - link "[현대]싼타페 TM 디젤 2.0 4WD 프리미엄" [ref=e329] [cursor=pointer]:
+                    - /url: /search/detail/113681519
+                  - list [ref=e330]:
+                    - listitem [ref=e331]: 2019-12
+                    - listitem [ref=e332]: 50,621km
+                    - listitem [ref=e333]: 경유
+                    - listitem [ref=e334]: 오토
+              - cell "50,621km" [ref=e335]
+              - cell "2,270 만원" [ref=e336]
+            - row "+ [기아]카니발R 그랜드 하이리무진 GLX 11인승 프리미엄 2013-05 142,182km 경유 오토 142,182km 770 만원" [ref=e337]:
+              - cell "+ [기아]카니발R 그랜드 하이리무진 GLX 11인승 프리미엄 2013-05 142,182km 경유 오토" [ref=e338]:
+                - generic [ref=e339]:
+                  - link [ref=e340] [cursor=pointer]:
+                    - /url: /search/detail/113681960
+                  - link [ref=e341] [cursor=pointer]:
+                    - /url: /search/detail/113681960
+                  - generic [ref=e342]:
+                    - link [ref=e344] [cursor=pointer]:
+                      - /url: /search/detail/113681960
+                    - link [ref=e346] [cursor=pointer]:
+                      - /url: /search/detail/113681960
+                    - link [ref=e348] [cursor=pointer]:
+                      - /url: /search/detail/113681960
+                  - text: +
+                - generic [ref=e349]:
+                  - link "[기아]카니발R 그랜드 하이리무진 GLX 11인승 프리미엄" [ref=e351] [cursor=pointer]:
+                    - /url: /search/detail/113681960
+                  - list [ref=e352]:
+                    - listitem [ref=e353]: 2013-05
+                    - listitem [ref=e354]: 142,182km
+                    - listitem [ref=e355]: 경유
+                    - listitem [ref=e356]: 오토
+              - cell "142,182km" [ref=e357]
+              - cell "770 만원" [ref=e358]
+            - row "+ [제네시스]G80(RG3) 3.5 가솔린 터보 AWD 기본형 2023-06 89,468km 휘발유 오토 89,468km 3,990 만원" [ref=e359]:
+              - cell "+ [제네시스]G80(RG3) 3.5 가솔린 터보 AWD 기본형 2023-06 89,468km 휘발유 오토" [ref=e360]:
+                - generic [ref=e361]:
+                  - link [ref=e362] [cursor=pointer]:
+                    - /url: /search/detail/113682351
+                  - link [ref=e363] [cursor=pointer]:
+                    - /url: /search/detail/113682351
+                  - generic [ref=e364]:
+                    - link [ref=e366] [cursor=pointer]:
+                      - /url: /search/detail/113682351
+                    - link [ref=e368] [cursor=pointer]:
+                      - /url: /search/detail/113682351
+                    - link [ref=e370] [cursor=pointer]:
+                      - /url: /search/detail/113682351
+                  - text: +
+                - generic [ref=e371]:
+                  - link "[제네시스]G80(RG3) 3.5 가솔린 터보 AWD 기본형" [ref=e373] [cursor=pointer]:
+                    - /url: /search/detail/113682351
+                  - list [ref=e374]:
+                    - listitem [ref=e375]: 2023-06
+                    - listitem [ref=e376]: 89,468km
+                    - listitem [ref=e377]: 휘발유
+                    - listitem [ref=e378]: 오토
+              - cell "89,468km" [ref=e379]
+              - cell "3,990 만원" [ref=e380]
+            - row "+ [현대]그랜저 IG 2.4 GDI 프리미엄 스페셜 2017-02 55,578km 휘발유 오토 55,578km 1,750 만원" [ref=e381]:
+              - cell "+ [현대]그랜저 IG 2.4 GDI 프리미엄 스페셜 2017-02 55,578km 휘발유 오토" [ref=e382]:
+                - generic [ref=e383]:
+                  - link [ref=e384] [cursor=pointer]:
+                    - /url: /search/detail/113685761
+                  - link [ref=e385] [cursor=pointer]:
+                    - /url: /search/detail/113685761
+                  - generic [ref=e386]:
+                    - link [ref=e388] [cursor=pointer]:
+                      - /url: /search/detail/113685761
+                    - link [ref=e390] [cursor=pointer]:
+                      - /url: /search/detail/113685761
+                    - link [ref=e392] [cursor=pointer]:
+                      - /url: /search/detail/113685761
+                  - text: +
+                - generic [ref=e393]:
+                  - link "[현대]그랜저 IG 2.4 GDI 프리미엄 스페셜" [ref=e395] [cursor=pointer]:
+                    - /url: /search/detail/113685761
+                  - list [ref=e396]:
+                    - listitem [ref=e397]: 2017-02
+                    - listitem [ref=e398]: 55,578km
+                    - listitem [ref=e399]: 휘발유
+                    - listitem [ref=e400]: 오토
+              - cell "55,578km" [ref=e401]
+              - cell "1,750 만원" [ref=e402]
+            - row "+ [기아]올 뉴 모닝 (JA) 럭셔리 2018-03 72,580km 휘발유 오토 72,580km 870 만원" [ref=e403]:
+              - cell "+ [기아]올 뉴 모닝 (JA) 럭셔리 2018-03 72,580km 휘발유 오토" [ref=e404]:
+                - generic [ref=e405]:
+                  - link [ref=e406] [cursor=pointer]:
+                    - /url: /search/detail/113687050
+                  - link [ref=e407] [cursor=pointer]:
+                    - /url: /search/detail/113687050
+                  - generic [ref=e408]:
+                    - link [ref=e410] [cursor=pointer]:
+                      - /url: /search/detail/113687050
+                    - link [ref=e412] [cursor=pointer]:
+                      - /url: /search/detail/113687050
+                    - link [ref=e414] [cursor=pointer]:
+                      - /url: /search/detail/113687050
+                  - text: +
+                - generic [ref=e415]:
+                  - link "[기아]올 뉴 모닝 (JA) 럭셔리" [ref=e417] [cursor=pointer]:
+                    - /url: /search/detail/113687050
+                  - list [ref=e418]:
+                    - listitem [ref=e419]: 2018-03
+                    - listitem [ref=e420]: 72,580km
+                    - listitem [ref=e421]: 휘발유
+                    - listitem [ref=e422]: 오토
+              - cell "72,580km" [ref=e423]
+              - cell "870 만원" [ref=e424]
+            - row "+ [현대]LF 쏘나타 2.0 스마트 스페셜 2016-04 127,815km 휘발유 오토 127,815km 900 만원" [ref=e425]:
+              - cell "+ [현대]LF 쏘나타 2.0 스마트 스페셜 2016-04 127,815km 휘발유 오토" [ref=e426]:
+                - generic [ref=e427]:
+                  - link [ref=e428] [cursor=pointer]:
+                    - /url: /search/detail/113688703
+                  - link [ref=e429] [cursor=pointer]:
+                    - /url: /search/detail/113688703
+                  - generic [ref=e430]:
+                    - link [ref=e432] [cursor=pointer]:
+                      - /url: /search/detail/113688703
+                    - link [ref=e434] [cursor=pointer]:
+                      - /url: /search/detail/113688703
+                    - link [ref=e436] [cursor=pointer]:
+                      - /url: /search/detail/113688703
+                  - text: +
+                - generic [ref=e437]:
+                  - link "[현대]LF 쏘나타 2.0 스마트 스페셜" [ref=e439] [cursor=pointer]:
+                    - /url: /search/detail/113688703
+                  - list [ref=e440]:
+                    - listitem [ref=e441]: 2016-04
+                    - listitem [ref=e442]: 127,815km
+                    - listitem [ref=e443]: 휘발유
+                    - listitem [ref=e444]: 오토
+              - cell "127,815km" [ref=e445]
+              - cell "900 만원" [ref=e446]
+            - row "+ [기아]디 올 뉴 니로 프레스티지 2022-02 50,014km 휘발유 하이브리드 오토 50,014km 2,580 만원" [ref=e447]:
+              - cell "+ [기아]디 올 뉴 니로 프레스티지 2022-02 50,014km 휘발유 하이브리드 오토" [ref=e448]:
+                - generic [ref=e449]:
+                  - link [ref=e450] [cursor=pointer]:
+                    - /url: /search/detail/113689760
+                  - link [ref=e451] [cursor=pointer]:
+                    - /url: /search/detail/113689760
+                  - generic [ref=e452]:
+                    - link [ref=e454] [cursor=pointer]:
+                      - /url: /search/detail/113689760
+                    - link [ref=e456] [cursor=pointer]:
+                      - /url: /search/detail/113689760
+                    - link [ref=e458] [cursor=pointer]:
+                      - /url: /search/detail/113689760
+                  - text: +
+                - generic [ref=e459]:
+                  - link "[기아]디 올 뉴 니로 프레스티지" [ref=e461] [cursor=pointer]:
+                    - /url: /search/detail/113689760
+                  - list [ref=e462]:
+                    - listitem [ref=e463]: 2022-02
+                    - listitem [ref=e464]: 50,014km
+                    - listitem [ref=e465]: 휘발유 하이브리드
+                    - listitem [ref=e466]: 오토
+              - cell "50,014km" [ref=e467]
+              - cell "2,580 만원" [ref=e468]
+            - row "+ [기아]더 뉴 레이 스탠다드 2021-10 19,821km 휘발유 오토 19,821km 1,150 만원" [ref=e469]:
+              - cell "+ [기아]더 뉴 레이 스탠다드 2021-10 19,821km 휘발유 오토" [ref=e470]:
+                - generic [ref=e471]:
+                  - link [ref=e472] [cursor=pointer]:
+                    - /url: /search/detail/113689874
+                  - link [ref=e473] [cursor=pointer]:
+                    - /url: /search/detail/113689874
+                  - generic [ref=e474]:
+                    - link [ref=e476] [cursor=pointer]:
+                      - /url: /search/detail/113689874
+                    - link [ref=e478] [cursor=pointer]:
+                      - /url: /search/detail/113689874
+                    - link [ref=e480] [cursor=pointer]:
+                      - /url: /search/detail/113689874
+                  - text: +
+                - generic [ref=e481]:
+                  - link "[기아]더 뉴 레이 스탠다드" [ref=e483] [cursor=pointer]:
+                    - /url: /search/detail/113689874
+                  - list [ref=e484]:
+                    - listitem [ref=e485]: 2021-10
+                    - listitem [ref=e486]: 19,821km
+                    - listitem [ref=e487]: 휘발유
+                    - listitem [ref=e488]: 오토
+              - cell "19,821km" [ref=e489]
+              - cell "1,150 만원" [ref=e490]
+            - row "+ [기아]올 뉴 카니발 디젤 9인승 하이리무진 프레스티지 2015-07 360,485km 경유 오토 360,485km 700 만원" [ref=e491]:
+              - cell "+ [기아]올 뉴 카니발 디젤 9인승 하이리무진 프레스티지 2015-07 360,485km 경유 오토" [ref=e492]:
+                - generic [ref=e493]:
+                  - link [ref=e494] [cursor=pointer]:
+                    - /url: /search/detail/113692672
+                  - link [ref=e495] [cursor=pointer]:
+                    - /url: /search/detail/113692672
+                  - generic [ref=e496]:
+                    - link [ref=e498] [cursor=pointer]:
+                      - /url: /search/detail/113692672
+                    - link [ref=e500] [cursor=pointer]:
+                      - /url: /search/detail/113692672
+                    - link [ref=e502] [cursor=pointer]:
+                      - /url: /search/detail/113692672
+                  - text: +
+                - generic [ref=e503]:
+                  - link "[기아]올 뉴 카니발 디젤 9인승 하이리무진 프레스티지" [ref=e505] [cursor=pointer]:
+                    - /url: /search/detail/113692672
+                  - list [ref=e506]:
+                    - listitem [ref=e507]: 2015-07
+                    - listitem [ref=e508]: 360,485km
+                    - listitem [ref=e509]: 경유
+                    - listitem [ref=e510]: 오토
+              - cell "360,485km" [ref=e511]
+              - cell "700 만원" [ref=e512]
+            - row "+ [현대]LF 쏘나타 2.0 스타일 2014-06 139,447km 휘발유 오토 139,447km 760 만원" [ref=e513]:
+              - cell "+ [현대]LF 쏘나타 2.0 스타일 2014-06 139,447km 휘발유 오토" [ref=e514]:
+                - generic [ref=e515]:
+                  - link [ref=e516] [cursor=pointer]:
+                    - /url: /search/detail/113692880
+                  - link [ref=e517] [cursor=pointer]:
+                    - /url: /search/detail/113692880
+                  - generic [ref=e518]:
+                    - link [ref=e520] [cursor=pointer]:
+                      - /url: /search/detail/113692880
+                    - link [ref=e522] [cursor=pointer]:
+                      - /url: /search/detail/113692880
+                    - link [ref=e524] [cursor=pointer]:
+                      - /url: /search/detail/113692880
+                  - text: +
+                - generic [ref=e525]:
+                  - link "[현대]LF 쏘나타 2.0 스타일" [ref=e527] [cursor=pointer]:
+                    - /url: /search/detail/113692880
+                  - list [ref=e528]:
+                    - listitem [ref=e529]: 2014-06
+                    - listitem [ref=e530]: 139,447km
+                    - listitem [ref=e531]: 휘발유
+                    - listitem [ref=e532]: 오토
+              - cell "139,447km" [ref=e533]
+              - cell "760 만원" [ref=e534]
+            - row "+ [현대]아이오닉 일렉트릭 Q 2017-07 193,372km 전기 오토 193,372km 850 만원" [ref=e535]:
+              - cell "+ [현대]아이오닉 일렉트릭 Q 2017-07 193,372km 전기 오토" [ref=e536]:
+                - generic [ref=e537]:
+                  - link [ref=e538] [cursor=pointer]:
+                    - /url: /search/detail/113695639
+                  - link [ref=e539] [cursor=pointer]:
+                    - /url: /search/detail/113695639
+                  - generic [ref=e540]:
+                    - link [ref=e542] [cursor=pointer]:
+                      - /url: /search/detail/113695639
+                    - link [ref=e544] [cursor=pointer]:
+                      - /url: /search/detail/113695639
+                    - link [ref=e546] [cursor=pointer]:
+                      - /url: /search/detail/113695639
+                  - text: +
+                - generic [ref=e547]:
+                  - link "[현대]아이오닉 일렉트릭 Q" [ref=e549] [cursor=pointer]:
+                    - /url: /search/detail/113695639
+                  - list [ref=e550]:
+                    - listitem [ref=e551]: 2017-07
+                    - listitem [ref=e552]: 193,372km
+                    - listitem [ref=e553]: 전기
+                    - listitem [ref=e554]: 오토
+              - cell "193,372km" [ref=e555]
+              - cell "850 만원" [ref=e556]
+            - row "+ [기아]더 뉴 기아 레이 프레스티지 2024-11 5,286km 휘발유 오토 5,286km 1,650 만원" [ref=e557]:
+              - cell "+ [기아]더 뉴 기아 레이 프레스티지 2024-11 5,286km 휘발유 오토" [ref=e558]:
+                - generic [ref=e559]:
+                  - link [ref=e560] [cursor=pointer]:
+                    - /url: /search/detail/113696267
+                  - link [ref=e561] [cursor=pointer]:
+                    - /url: /search/detail/113696267
+                  - generic [ref=e562]:
+                    - link [ref=e564] [cursor=pointer]:
+                      - /url: /search/detail/113696267
+                    - link [ref=e566] [cursor=pointer]:
+                      - /url: /search/detail/113696267
+                    - link [ref=e568] [cursor=pointer]:
+                      - /url: /search/detail/113696267
+                  - text: +
+                - generic [ref=e569]:
+                  - link "[기아]더 뉴 기아 레이 프레스티지" [ref=e571] [cursor=pointer]:
+                    - /url: /search/detail/113696267
+                  - list [ref=e572]:
+                    - listitem [ref=e573]: 2024-11
+                    - listitem [ref=e574]: 5,286km
+                    - listitem [ref=e575]: 휘발유
+                    - listitem [ref=e576]: 오토
+              - cell "5,286km" [ref=e577]
+              - cell "1,650 만원" [ref=e578]
+            - row "+ [현대]더 뉴 그랜저 IG LPI 3.0 익스클루시브(렌터카) 2020-03 58,269km LPG 오토 58,269km 2,750 만원" [ref=e579]:
+              - cell "+ [현대]더 뉴 그랜저 IG LPI 3.0 익스클루시브(렌터카) 2020-03 58,269km LPG 오토" [ref=e580]:
+                - generic [ref=e581]:
+                  - link [ref=e582] [cursor=pointer]:
+                    - /url: /search/detail/113696429
+                  - link [ref=e583] [cursor=pointer]:
+                    - /url: /search/detail/113696429
+                  - generic [ref=e584]:
+                    - link [ref=e586] [cursor=pointer]:
+                      - /url: /search/detail/113696429
+                    - link [ref=e588] [cursor=pointer]:
+                      - /url: /search/detail/113696429
+                    - link [ref=e590] [cursor=pointer]:
+                      - /url: /search/detail/113696429
+                  - text: +
+                - generic [ref=e591]:
+                  - link "[현대]더 뉴 그랜저 IG LPI 3.0 익스클루시브(렌터카)" [ref=e593] [cursor=pointer]:
+                    - /url: /search/detail/113696429
+                  - list [ref=e594]:
+                    - listitem [ref=e595]: 2020-03
+                    - listitem [ref=e596]: 58,269km
+                    - listitem [ref=e597]: LPG
+                    - listitem [ref=e598]: 오토
+              - cell "58,269km" [ref=e599]
+              - cell "2,750 만원" [ref=e600]
+            - row "+ [현대]투싼iX 2WD VGT X20 스패셜 팩 2012-11 210,644km 경유 오토 210,644km 519 만원" [ref=e601]:
+              - cell "+ [현대]투싼iX 2WD VGT X20 스패셜 팩 2012-11 210,644km 경유 오토" [ref=e602]:
+                - generic [ref=e603]:
+                  - link [ref=e604] [cursor=pointer]:
+                    - /url: /search/detail/113696476
+                  - link [ref=e605] [cursor=pointer]:
+                    - /url: /search/detail/113696476
+                  - generic [ref=e606]:
+                    - link [ref=e608] [cursor=pointer]:
+                      - /url: /search/detail/113696476
+                    - link [ref=e610] [cursor=pointer]:
+                      - /url: /search/detail/113696476
+                    - link [ref=e612] [cursor=pointer]:
+                      - /url: /search/detail/113696476
+                  - text: +
+                - generic [ref=e613]:
+                  - link "[현대]투싼iX 2WD VGT X20 스패셜 팩" [ref=e615] [cursor=pointer]:
+                    - /url: /search/detail/113696476
+                  - list [ref=e616]:
+                    - listitem [ref=e617]: 2012-11
+                    - listitem [ref=e618]: 210,644km
+                    - listitem [ref=e619]: 경유
+                    - listitem [ref=e620]: 오토
+              - cell "210,644km" [ref=e621]
+              - cell "519 만원" [ref=e622]
+            - row "+ [현대]더 뉴 그랜드 스타렉스 2WD 밴 3인승 스마트 2019-02 197,803km 경유 오토 197,803km 1,070 만원" [ref=e623]:
+              - cell "+ [현대]더 뉴 그랜드 스타렉스 2WD 밴 3인승 스마트 2019-02 197,803km 경유 오토" [ref=e624]:
+                - generic [ref=e625]:
+                  - link [ref=e626] [cursor=pointer]:
+                    - /url: /search/detail/113697699
+                  - link [ref=e627] [cursor=pointer]:
+                    - /url: /search/detail/113697699
+                  - generic [ref=e628]:
+                    - link [ref=e630] [cursor=pointer]:
+                      - /url: /search/detail/113697699
+                    - link [ref=e632] [cursor=pointer]:
+                      - /url: /search/detail/113697699
+                    - link [ref=e634] [cursor=pointer]:
+                      - /url: /search/detail/113697699
+                  - text: +
+                - generic [ref=e635]:
+                  - link "[현대]더 뉴 그랜드 스타렉스 2WD 밴 3인승 스마트" [ref=e637] [cursor=pointer]:
+                    - /url: /search/detail/113697699
+                  - list [ref=e638]:
+                    - listitem [ref=e639]: 2019-02
+                    - listitem [ref=e640]: 197,803km
+                    - listitem [ref=e641]: 경유
+                    - listitem [ref=e642]: 오토
+              - cell "197,803km" [ref=e643]
+              - cell "1,070 만원" [ref=e644]
+            - row "+ [KG모빌리티(쌍용) ]베리 뉴 티볼리 2WD 가솔린 1.5 V3 2020-12 28,998km 휘발유 오토 28,998km 1,470 만원" [ref=e645]:
+              - cell "+ [KG모빌리티(쌍용) ]베리 뉴 티볼리 2WD 가솔린 1.5 V3 2020-12 28,998km 휘발유 오토" [ref=e646]:
+                - generic [ref=e647]:
+                  - link [ref=e648] [cursor=pointer]:
+                    - /url: /search/detail/113698189
+                  - link [ref=e649] [cursor=pointer]:
+                    - /url: /search/detail/113698189
+                  - generic [ref=e650]:
+                    - link [ref=e652] [cursor=pointer]:
+                      - /url: /search/detail/113698189
+                    - link [ref=e654] [cursor=pointer]:
+                      - /url: /search/detail/113698189
+                    - link [ref=e656] [cursor=pointer]:
+                      - /url: /search/detail/113698189
+                  - text: +
+                - generic [ref=e657]:
+                  - link "[KG모빌리티(쌍용) ]베리 뉴 티볼리 2WD 가솔린 1.5 V3" [ref=e659] [cursor=pointer]:
+                    - /url: /search/detail/113698189
+                  - list [ref=e660]:
+                    - listitem [ref=e661]: 2020-12
+                    - listitem [ref=e662]: 28,998km
+                    - listitem [ref=e663]: 휘발유
+                    - listitem [ref=e664]: 오토
+              - cell "28,998km" [ref=e665]
+              - cell "1,470 만원" [ref=e666]
+        - list [ref=e669]:
+          - listitem [ref=e670] [cursor=pointer]:
+            - link "<" [ref=e671]:
+              - /url: /search/model/kor?order=&ascending=desc&view=image&customSelect=24&carName=&maker=&model=&dmodel=&grade=&dgrade=&price-min=&price-max=&year-min=&year-max=&usekm-min=&usekm-max=&fuel=&mission=&color=&country=kor&carNo=&carPlateNumber=&vehicle-model=&vehicle-dmodel=&vehicle-name=&tab=model&detailSearch=&type=
+          - listitem [ref=e672] [cursor=pointer]:
+            - link "1" [ref=e673]:
+              - /url: /search/model/kor?order=&ascending=desc&view=image&customSelect=24&carName=&maker=&model=&dmodel=&grade=&dgrade=&price-min=&price-max=&year-min=&year-max=&usekm-min=&usekm-max=&fuel=&mission=&color=&country=kor&carNo=&carPlateNumber=&vehicle-model=&vehicle-dmodel=&vehicle-name=&tab=model&detailSearch=&type=
+          - listitem [ref=e674] [cursor=pointer]: "2"
+          - listitem [ref=e675] [cursor=pointer]:
+            - link "3" [ref=e676]:
+              - /url: /search/model/kor/3?order=&ascending=desc&view=image&customSelect=24&carName=&maker=&model=&dmodel=&grade=&dgrade=&price-min=&price-max=&year-min=&year-max=&usekm-min=&usekm-max=&fuel=&mission=&color=&country=kor&carNo=&carPlateNumber=&vehicle-model=&vehicle-dmodel=&vehicle-name=&tab=model&detailSearch=&type=
+          - listitem [ref=e677] [cursor=pointer]:
+            - link "4" [ref=e678]:
+              - /url: /search/model/kor/4?order=&ascending=desc&view=image&customSelect=24&carName=&maker=&model=&dmodel=&grade=&dgrade=&price-min=&price-max=&year-min=&year-max=&usekm-min=&usekm-max=&fuel=&mission=&color=&country=kor&carNo=&carPlateNumber=&vehicle-model=&vehicle-dmodel=&vehicle-name=&tab=model&detailSearch=&type=
+          - listitem [ref=e679] [cursor=pointer]:
+            - link "5" [ref=e680]:
+              - /url: /search/model/kor/5?order=&ascending=desc&view=image&customSelect=24&carName=&maker=&model=&dmodel=&grade=&dgrade=&price-min=&price-max=&year-min=&year-max=&usekm-min=&usekm-max=&fuel=&mission=&color=&country=kor&carNo=&carPlateNumber=&vehicle-model=&vehicle-dmodel=&vehicle-name=&tab=model&detailSearch=&type=
+          - listitem [ref=e681] [cursor=pointer]:
+            - link "6" [ref=e682]:
+              - /url: /search/model/kor/6?order=&ascending=desc&view=image&customSelect=24&carName=&maker=&model=&dmodel=&grade=&dgrade=&price-min=&price-max=&year-min=&year-max=&usekm-min=&usekm-max=&fuel=&mission=&color=&country=kor&carNo=&carPlateNumber=&vehicle-model=&vehicle-dmodel=&vehicle-name=&tab=model&detailSearch=&type=
+          - listitem [ref=e683] [cursor=pointer]:
+            - link ">" [ref=e684]:
+              - /url: /search/model/kor/3?order=&ascending=desc&view=image&customSelect=24&carName=&maker=&model=&dmodel=&grade=&dgrade=&price-min=&price-max=&year-min=&year-max=&usekm-min=&usekm-max=&fuel=&mission=&color=&country=kor&carNo=&carPlateNumber=&vehicle-model=&vehicle-dmodel=&vehicle-name=&tab=model&detailSearch=&type=
+          - listitem [ref=e685] [cursor=pointer]:
+            - link ">>" [ref=e686]:
+              - /url: /search/model/kor/1246?order=&ascending=desc&view=image&customSelect=24&carName=&maker=&model=&dmodel=&grade=&dgrade=&price-min=&price-max=&year-min=&year-max=&usekm-min=&usekm-max=&fuel=&mission=&color=&country=kor&carNo=&carPlateNumber=&vehicle-model=&vehicle-dmodel=&vehicle-name=&tab=model&detailSearch=&type=
+  - contentinfo [ref=e687]:
+    - generic [ref=e688]:
+      - img "하단 로고" [ref=e689]
+      - generic [ref=e690]:
+        - generic [ref=e693]: 수원skv1모터스 차사인모터스입니다.
+        - generic [ref=e696]: 수원 평동로 79번길 45 수원skv1모터스 608,609호
+        - generic [ref=e699]: 저희는 다양한 중고차를 보유하고 있으며,
+        - generic [ref=e702]: 고객님의 예산과 필요에 맞는 차량을 추천해 드리고 있습니다.
+        - generic [ref=e704]: 늘 믿음과 정식으로 고객님을 모시겠습니다.
+        - generic [ref=e705]:
+          - generic [ref=e706]:
+            - text: 상호
+            - generic [ref=e707]:
+              - text: ": 수원skv1모터스"
+              - generic [ref=e708]: 차사인모터스
+          - generic [ref=e710]: "사업자번호 : 702-02-01701"
+        - paragraph
+        - generic [ref=e712]: "대표 : 제효창 (010-8239-7679)"
+        - generic [ref=e714]: "관리책임자 : 제효창 (010-8239-7679)"
+        - generic [ref=e716]: "수원본점 : 경기도 수원시 권선구 평동로 79번길 45 6층 수원skv1모터스 608,609호"
+        - generic [ref=e717]:
+          - generic [ref=e718]:
+            - generic [ref=e719]: 대표전화
+            - text: ": 031-278-4466"
+          - paragraph
+          - paragraph
+          - generic [ref=e720]: "팩스 : 031-278-4477"
+        - generic [ref=e721]:
+          - generic [ref=e722]: 허위,미끼,사기매물
+          - text: 취급하지않습니다.
+        - generic [ref=e724]: 전국으로 매입 출장가능합니다.
+  - generic [ref=e732]:
+    - paragraph [ref=e733]:
+      - img "5분안에 연락받는 빠른 상담신청" [ref=e734]
+    - generic [ref=e735]:
+      - term [ref=e736]: 이 름
+      - definition [ref=e737]:
+        - textbox "이름을 입력해주세요" [ref=e738]
+      - term [ref=e739]: 연락처
+      - definition [ref=e740]:
+        - textbox "전화번호(-제외 입력)" [ref=e741]
+    - link "빠른 상담신청" [ref=e742] [cursor=pointer]:
+      - /url: javascript:;

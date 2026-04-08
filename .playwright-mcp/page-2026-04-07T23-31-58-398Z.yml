@@ -1,0 +1,82 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e3]:
+      - link "AlexDrive" [ref=e4] [cursor=pointer]:
+        - /url: /
+        - generic [ref=e5]: AlexDrive
+      - link "WhatsApp" [ref=e6] [cursor=pointer]:
+        - /url: https://wa.me/821039086050
+        - img [ref=e7]
+        - text: WhatsApp
+  - generic [ref=e9]:
+    - complementary [ref=e10]:
+      - generic [ref=e11]:
+        - paragraph [ref=e12]: Меню
+        - button "Свернуть меню" [ref=e13]:
+          - img [ref=e14]
+      - navigation [ref=e16]:
+        - link "Каталог" [ref=e17] [cursor=pointer]:
+          - /url: /
+          - img [ref=e18]
+          - generic [ref=e20]: Каталог
+        - link "О нас" [ref=e21] [cursor=pointer]:
+          - /url: /about
+          - img [ref=e22]
+          - generic [ref=e24]: О нас
+        - link "Контакты" [ref=e25] [cursor=pointer]:
+          - /url: /contacts
+          - img [ref=e26]
+          - generic [ref=e28]: Контакты
+        - link "Калькулятор" [ref=e29] [cursor=pointer]:
+          - /url: /calculator
+          - img [ref=e30]
+          - generic [ref=e32]: Калькулятор
+      - generic [ref=e33]:
+        - link "WhatsApp" [ref=e34] [cursor=pointer]:
+          - /url: https://wa.me/821039086050
+          - img [ref=e35]
+          - generic [ref=e37]: WhatsApp
+        - generic [ref=e38]:
+          - paragraph [ref=e39]: Кан Алексей
+          - link "+82-10-3908-6050" [ref=e40] [cursor=pointer]:
+            - /url: tel:+821039086050
+    - generic [ref=e41]:
+      - main [ref=e42]
+      - contentinfo [ref=e96]:
+        - generic [ref=e97]:
+          - generic [ref=e98]:
+            - generic [ref=e99]:
+              - link "AlexDrive" [ref=e100] [cursor=pointer]:
+                - /url: /
+                - generic [ref=e101]: AlexDrive
+              - paragraph [ref=e102]:
+                - text: Автомобили в Южной Корее.
+                - text: Широкий выбор автомобилей в Сувоне
+            - generic [ref=e103]:
+              - heading "Навигация" [level=3] [ref=e104]
+              - navigation [ref=e105]:
+                - link "Каталог" [ref=e106] [cursor=pointer]:
+                  - /url: /
+                - link "О нас" [ref=e107] [cursor=pointer]:
+                  - /url: /about
+                - link "Контакты" [ref=e108] [cursor=pointer]:
+                  - /url: /contacts
+                - link "Калькулятор" [ref=e109] [cursor=pointer]:
+                  - /url: /calculator
+                - link "Конфиденциальность" [ref=e110] [cursor=pointer]:
+                  - /url: /privacy
+                - link "Условия использования" [ref=e111] [cursor=pointer]:
+                  - /url: /terms
+            - generic [ref=e112]:
+              - heading "Контакты" [level=3] [ref=e113]
+              - generic [ref=e114]:
+                - paragraph [ref=e115]: Кан Алексей
+                - link "+82-10-3908-6050" [ref=e116] [cursor=pointer]:
+                  - /url: tel:+821039086050
+                - link "WhatsApp" [ref=e117] [cursor=pointer]:
+                  - /url: https://wa.me/821039086050
+                  - img [ref=e118]
+                  - text: WhatsApp
+                - paragraph [ref=e120]: Кёнги, Сувон, Южная Корея
+          - generic [ref=e121]: © 2026 AlexDrive. Все права защищены.
+  - alert [ref=e122]

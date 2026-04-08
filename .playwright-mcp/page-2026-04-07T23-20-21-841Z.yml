@@ -1,0 +1,1034 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - generic [ref=e4]:
+      - heading "로고" [level=1] [ref=e5]:
+        - link "로고" [ref=e6] [cursor=pointer]:
+          - /url: /
+          - img "로고" [ref=e7]
+      - heading "세일카 메뉴" [level=2] [ref=e8]
+      - list [ref=e9]:
+        - listitem [ref=e10]:
+          - link "국산차" [ref=e11] [cursor=pointer]:
+            - /url: /search/get_search?fn=model&country=kor&tab=model
+        - listitem [ref=e12]:
+          - link "수입차" [ref=e13] [cursor=pointer]:
+            - /url: /search/get_search?fn=model&country=foreign&tab=model
+        - listitem [ref=e14]:
+          - link "화물차" [ref=e15] [cursor=pointer]:
+            - /url: /search/get_search?fn=model&country=freight&tab=model
+        - listitem [ref=e16]:
+          - link "내차팔기 · 구매상담" [ref=e17] [cursor=pointer]:
+            - /url: /consulting/sale
+        - listitem [ref=e18]:
+          - link "고객후기" [ref=e19] [cursor=pointer]:
+            - /url: /board/list/board/review?type=title&content=
+        - listitem [ref=e20]:
+          - link "오시는길" [ref=e21] [cursor=pointer]:
+            - /url: /common/map
+      - generic [ref=e24]:
+        - textbox "차량번호를 입력하세요" [ref=e25]
+        - button "검색" [ref=e26] [cursor=pointer]:
+          - generic [ref=e27]: 검색
+      - img "차량번호 대표번호" [ref=e29]
+    - list [ref=e32]:
+      - listitem [ref=e33]:
+        - link "홈" [ref=e34] [cursor=pointer]:
+          - /url: /
+      - listitem [ref=e35]:
+        - link "관리자로그인" [ref=e36] [cursor=pointer]:
+          - /url: http://admin.salecars.co.kr
+      - listitem [ref=e37]:
+        - link "찾아오시는길" [ref=e38] [cursor=pointer]:
+          - /url: /common/map
+  - generic [ref=e40]:
+    - generic [ref=e41]:
+      - link "세일카 카카오톡 상담" [ref=e43] [cursor=pointer]:
+        - /url: https://pf.kakao.com/_nvbxnj/chat
+        - img "세일카 카카오톡 상담" [ref=e44]
+      - link "세일카 유튜브채널" [ref=e46] [cursor=pointer]:
+        - /url: https://www.youtube.com/channel/UCK9ZZzqcCl6eVY8dPzW7YqA
+        - img "세일카 유튜브채널" [ref=e47]
+      - img "세일카 대표번호 365일 24시간 가능" [ref=e49]
+      - generic [ref=e50]:
+        - paragraph [ref=e51]: 최근본차량
+        - list [ref=e52]:
+          - listitem [ref=e53]:
+            - link "287나3682" [ref=e54] [cursor=pointer]:
+              - /url: javascript:;
+              - generic [ref=e56]: 287나3682
+          - listitem [ref=e57]:
+            - link "59도9450" [ref=e58] [cursor=pointer]:
+              - /url: javascript:;
+              - generic [ref=e60]: 59도9450
+          - listitem [ref=e61]:
+            - link "07고5855" [ref=e62] [cursor=pointer]:
+              - /url: javascript:;
+              - generic [ref=e64]: 07고5855
+        - link "TOP" [ref=e65] [cursor=pointer]:
+          - /url: "#"
+    - generic [ref=e66]:
+      - list [ref=e68]:
+        - listitem [ref=e69]:
+          - link "모델명 검색" [ref=e70] [cursor=pointer]:
+            - /url: /search/get_search?fn=model&country=kor&tab=model&type=
+        - listitem [ref=e71]:
+          - link "차종별 검색" [ref=e72] [cursor=pointer]:
+            - /url: /search/get_search?fn=vehicle&country=kor&tab=vehicle&type=
+      - generic [ref=e73]:
+        - listitem [ref=e74]:
+          - heading "제조사" [level=3] [ref=e75]
+          - list [ref=e76]:
+            - listitem [ref=e77] [cursor=pointer]: 현대
+            - listitem [ref=e78] [cursor=pointer]: 제네시스
+            - listitem [ref=e79] [cursor=pointer]: 기아
+            - listitem [ref=e80] [cursor=pointer]: 르노코리아(삼성)
+            - listitem [ref=e81] [cursor=pointer]: KG모빌리티(쌍용)
+            - listitem [ref=e82] [cursor=pointer]: 쉐보레
+            - listitem [ref=e83] [cursor=pointer]: 대우
+            - listitem [ref=e84] [cursor=pointer]: 기타제조사
+        - listitem [ref=e85]:
+          - heading "모델" [level=3] [ref=e86]
+          - list [ref=e87]:
+            - listitem [ref=e88] [cursor=pointer]: 그랜저
+            - listitem [ref=e89] [cursor=pointer]: 쏘나타
+            - listitem [ref=e90] [cursor=pointer]: 아반떼
+            - listitem [ref=e91] [cursor=pointer]: 스타렉스
+            - listitem [ref=e92] [cursor=pointer]: 싼타페
+            - listitem [ref=e93] [cursor=pointer]: 투싼
+            - listitem [ref=e94] [cursor=pointer]: 팰리세이드
+            - listitem [ref=e95] [cursor=pointer]: 스타리아
+            - listitem [ref=e96] [cursor=pointer]: 코나
+            - listitem [ref=e97] [cursor=pointer]: 제네시스
+            - listitem [ref=e98] [cursor=pointer]: i30
+            - listitem [ref=e99] [cursor=pointer]: i40
+            - listitem [ref=e100] [cursor=pointer]: 넥쏘
+            - listitem [ref=e101] [cursor=pointer]: 맥스크루즈
+            - listitem [ref=e102] [cursor=pointer]: 베뉴
+            - listitem [ref=e103] [cursor=pointer]: 베라쿠르즈
+            - listitem [ref=e104] [cursor=pointer]: 벨로스터
+            - listitem [ref=e105] [cursor=pointer]: 솔라티
+            - listitem [ref=e106] [cursor=pointer]: 아슬란
+            - listitem [ref=e107] [cursor=pointer]: 아이오닉 5
+            - listitem [ref=e108] [cursor=pointer]: 아이오닉 6
+            - listitem [ref=e109] [cursor=pointer]: 아이오닉 9
+            - listitem [ref=e110] [cursor=pointer]: 아이오닉
+            - listitem [ref=e111] [cursor=pointer]: 에쿠스
+            - listitem [ref=e112] [cursor=pointer]: 엑센트
+            - listitem [ref=e113] [cursor=pointer]: 캐스퍼
+            - listitem [ref=e114] [cursor=pointer]: 갤로퍼
+            - listitem [ref=e115] [cursor=pointer]: 그레이스
+            - listitem [ref=e116] [cursor=pointer]: 다이너스티
+            - listitem [ref=e117] [cursor=pointer]: 라비타
+            - listitem [ref=e118] [cursor=pointer]: 마르샤
+            - listitem [ref=e119] [cursor=pointer]: 베르나
+            - listitem [ref=e120] [cursor=pointer]: 아토스
+            - listitem [ref=e121] [cursor=pointer]: 엘란트라
+            - listitem [ref=e122] [cursor=pointer]: 싼타모
+            - listitem [ref=e123] [cursor=pointer]: 스텔라
+            - listitem [ref=e124] [cursor=pointer]: 스쿠프
+            - listitem [ref=e125] [cursor=pointer]: 엑셀
+            - listitem [ref=e126] [cursor=pointer]: 클릭
+            - listitem [ref=e127] [cursor=pointer]: 테라칸
+            - listitem [ref=e128] [cursor=pointer]: 투스카니
+            - listitem [ref=e129] [cursor=pointer]: 트라제XG
+            - listitem [ref=e130] [cursor=pointer]: 티뷰론
+            - listitem [ref=e131] [cursor=pointer]: 포니
+            - listitem [ref=e132] [cursor=pointer]: 리베로
+            - listitem [ref=e133] [cursor=pointer]: 프레스토
+            - listitem [ref=e134] [cursor=pointer]: 블루온
+        - listitem [ref=e135]:
+          - heading "세부모델" [level=3] [ref=e136]
+          - list [ref=e137]:
+            - listitem [ref=e138] [cursor=pointer]:
+              - generic [ref=e139]: 쏘나타
+            - listitem [ref=e140] [cursor=pointer]:
+              - generic [ref=e141]: 쏘나타 II
+            - listitem [ref=e142] [cursor=pointer]:
+              - generic [ref=e143]: 쏘나타 III
+            - listitem [ref=e144] [cursor=pointer]:
+              - generic [ref=e145]: EF 쏘나타
+            - listitem [ref=e146] [cursor=pointer]:
+              - generic [ref=e147]: 뉴 EF 쏘나타
+            - listitem [ref=e148] [cursor=pointer]:
+              - generic [ref=e149]: NF 쏘나타
+            - listitem [ref=e150] [cursor=pointer]:
+              - generic [ref=e151]: NF 쏘나타 트랜스폼
+            - listitem [ref=e152] [cursor=pointer]:
+              - generic [ref=e153]: YF 쏘나타
+            - listitem [ref=e154] [cursor=pointer]:
+              - generic [ref=e155]: 쏘나타 하이브리드
+            - listitem [ref=e156] [cursor=pointer]:
+              - generic [ref=e157]: 쏘나타 더 브릴리언트
+            - listitem [ref=e158] [cursor=pointer]:
+              - generic [ref=e159]: LF 쏘나타
+            - listitem [ref=e160] [cursor=pointer]:
+              - generic [ref=e161]: LF 쏘나타 하이브리드
+            - listitem [ref=e162] [cursor=pointer]:
+              - generic [ref=e163]: LF 쏘나타 PHEV
+            - listitem [ref=e164] [cursor=pointer]:
+              - generic [ref=e165]: 쏘나타 뉴 라이즈
+            - listitem [ref=e166] [cursor=pointer]:
+              - generic [ref=e167]: 쏘나타 뉴 라이즈 하이브리드
+            - listitem [ref=e168] [cursor=pointer]:
+              - generic [ref=e169]: 쏘나타 (DN8) ✓
+            - listitem [ref=e170] [cursor=pointer]:
+              - generic [ref=e171]: 쏘나타 하이브리드 (DN8)
+            - listitem [ref=e172] [cursor=pointer]:
+              - generic [ref=e173]: 쏘나타 디 엣지 (DN8)
+            - listitem [ref=e174] [cursor=pointer]:
+              - generic [ref=e175]: 쏘나타 디 엣지 하이브리드 (DN8)
+        - listitem [ref=e176]:
+          - heading "등급" [level=3] [ref=e177]
+          - list [ref=e178]:
+            - listitem [ref=e179] [cursor=pointer]:
+              - generic [ref=e180]: 1.6 터보 모던
+            - listitem [ref=e181] [cursor=pointer]:
+              - generic [ref=e182]: 1.6 터보 스마트
+            - listitem [ref=e183] [cursor=pointer]:
+              - generic [ref=e184]: 1.6 터보 프리미엄
+            - listitem [ref=e185] [cursor=pointer]:
+              - generic [ref=e186]: 1.6 터보 프리미엄 패밀리
+            - listitem [ref=e187] [cursor=pointer]:
+              - generic [ref=e188]: 1.6 터보 프리미엄 밀레니얼
+            - listitem [ref=e189] [cursor=pointer]:
+              - generic [ref=e190]: 1.6 터보 프리미엄 플러스
+            - listitem [ref=e191] [cursor=pointer]:
+              - generic [ref=e192]: 1.6 터보 인스퍼레이션
+            - listitem [ref=e193] [cursor=pointer]:
+              - generic [ref=e194]: 1.6 터보 N Line 디자인에디션
+            - listitem [ref=e195] [cursor=pointer]:
+              - generic [ref=e196]: 2.0 모던
+            - listitem [ref=e197] [cursor=pointer]:
+              - generic [ref=e198]: 2.0 스마트
+            - listitem [ref=e199] [cursor=pointer]:
+              - generic [ref=e200]: 2.0 프리미엄
+            - listitem [ref=e201] [cursor=pointer]:
+              - generic [ref=e202]: 2.0 프리미엄 패밀리
+            - listitem [ref=e203] [cursor=pointer]:
+              - generic [ref=e204]: 2.0 프리미엄 밀레니얼
+            - listitem [ref=e205] [cursor=pointer]:
+              - generic [ref=e206]: 2.0 프리미엄 플러스
+            - listitem [ref=e207] [cursor=pointer]:
+              - generic [ref=e208]: 2.0 인스퍼레이션
+            - listitem [ref=e209] [cursor=pointer]:
+              - generic [ref=e210]: 2.0 경찰용
+            - listitem [ref=e211] [cursor=pointer]:
+              - generic [ref=e212]: 2.0 N Line 디자인에디션
+            - listitem [ref=e213] [cursor=pointer]:
+              - generic [ref=e214]: 2.5 터보 N Line 프리미엄
+            - listitem [ref=e215] [cursor=pointer]:
+              - generic [ref=e216]: 2.5 터보 N Line 익스클루시브
+            - listitem [ref=e217] [cursor=pointer]:
+              - generic [ref=e218]: 2.5 터보 N Line 인스퍼레이션
+            - listitem [ref=e219] [cursor=pointer]:
+              - generic [ref=e220]: 2.5 터보 N Line 더 블랙
+            - listitem [ref=e221] [cursor=pointer]:
+              - generic [ref=e222]: LPI 스마트
+            - listitem [ref=e223] [cursor=pointer]:
+              - generic [ref=e224]: LPI 모던
+            - listitem [ref=e225] [cursor=pointer]:
+              - generic [ref=e226]: LPI 프리미엄
+            - listitem [ref=e227] [cursor=pointer]:
+              - generic [ref=e228]: LPI 프리미엄 패밀리
+            - listitem [ref=e229] [cursor=pointer]:
+              - generic [ref=e230]: LPI 프리미엄 밀레니얼
+            - listitem [ref=e231] [cursor=pointer]:
+              - generic [ref=e232]: LPI 프리미엄 플러스
+            - listitem [ref=e233] [cursor=pointer]:
+              - generic [ref=e234]: LPI 인스퍼레이션
+            - listitem [ref=e235] [cursor=pointer]:
+              - generic [ref=e236]: LPI 모던 (장애인)
+            - listitem [ref=e237] [cursor=pointer]:
+              - generic [ref=e238]: LPI 프리미엄 (장애인)
+            - listitem [ref=e239] [cursor=pointer]:
+              - generic [ref=e240]: LPI 인스퍼레이션 (장애인)
+            - listitem [ref=e241] [cursor=pointer]:
+              - generic [ref=e242]: LPI 스타일 (렌터카)
+            - listitem [ref=e243] [cursor=pointer]:
+              - generic [ref=e244]: LPI 스마트 (렌터카)
+            - listitem [ref=e245] [cursor=pointer]:
+              - generic [ref=e246]: LPI 프리미엄 (렌터카)
+        - listitem [ref=e247]:
+          - heading "세부등급" [level=3] [ref=e248]
+          - list [ref=e249]:
+            - paragraph [ref=e250]:
+              - text: 등급을
+              - text: 선택하세요
+      - button "상세검색열기" [ref=e251] [cursor=pointer]
+      - list [ref=e252]:
+        - listitem [ref=e253]:
+          - generic [ref=e254]: 차량가격
+          - combobox "가격" [ref=e255]:
+            - option "::::가격::::" [selected]
+            - option "100만원"
+            - option "200만원"
+            - option "300만원"
+            - option "400만원"
+            - option "500만원"
+            - option "600만원"
+            - option "700만원"
+            - option "800만원"
+            - option "900만원"
+            - option "1,000만원"
+            - option "1,100만원"
+            - option "1,200만원"
+            - option "1,300만원"
+            - option "1,400만원"
+            - option "1,500만원"
+            - option "1,600만원"
+            - option "1,700만원"
+            - option "1,800만원"
+            - option "1,900만원"
+            - option "2,000만원"
+            - option "2,100만원"
+            - option "2,200만원"
+            - option "2,300만원"
+            - option "2,400만원"
+            - option "2,500만원"
+            - option "2,600만원"
+            - option "2,700만원"
+            - option "2,800만원"
+            - option "2,900만원"
+            - option "3,000만원"
+            - option "3,100만원"
+            - option "3,200만원"
+            - option "3,300만원"
+            - option "3,400만원"
+            - option "3,500만원"
+            - option "3,600만원"
+            - option "3,700만원"
+            - option "3,800만원"
+            - option "3,900만원"
+            - option "4,000만원"
+            - option "4,500만원"
+            - option "5,000만원"
+            - option "6,000만원"
+            - option "7,000만원"
+            - option "8,000만원"
+            - option "9,000만원"
+            - option "1억원"
+            - option "1억5,000만원"
+            - option "2억원"
+          - text: ~
+          - combobox "가격" [ref=e256]:
+            - option "::::가격::::" [selected]
+            - option "100만원"
+            - option "200만원"
+            - option "300만원"
+            - option "400만원"
+            - option "500만원"
+            - option "600만원"
+            - option "700만원"
+            - option "800만원"
+            - option "900만원"
+            - option "1,000만원"
+            - option "1,100만원"
+            - option "1,200만원"
+            - option "1,300만원"
+            - option "1,400만원"
+            - option "1,500만원"
+            - option "1,600만원"
+            - option "1,700만원"
+            - option "1,800만원"
+            - option "1,900만원"
+            - option "2,000만원"
+            - option "2,100만원"
+            - option "2,200만원"
+            - option "2,300만원"
+            - option "2,400만원"
+            - option "2,500만원"
+            - option "2,600만원"
+            - option "2,700만원"
+            - option "2,800만원"
+            - option "2,900만원"
+            - option "3,000만원"
+            - option "3,100만원"
+            - option "3,200만원"
+            - option "3,300만원"
+            - option "3,400만원"
+            - option "3,500만원"
+            - option "3,600만원"
+            - option "3,700만원"
+            - option "3,800만원"
+            - option "3,900만원"
+            - option "4,000만원"
+            - option "4,500만원"
+            - option "5,000만원"
+            - option "6,000만원"
+            - option "7,000만원"
+            - option "8,000만원"
+            - option "9,000만원"
+            - option "1억원"
+            - option "1억5,000만원"
+            - option "2억원"
+          - generic [ref=e257]: 연료
+          - combobox "연료" [ref=e258]:
+            - option "::::연료::::" [selected]
+            - option "휘발유"
+            - option "경유"
+            - option "LPG"
+            - option "휘발유/LPG겸"
+            - option "휘발유/CNG겸"
+            - option "휘발유 하이브리드"
+            - option "LPG 하이브리드"
+            - option "경유 하이브리드"
+            - option "전기"
+            - option "CNG"
+            - option "수소"
+          - generic [ref=e259]: 색상
+          - combobox "색상" [ref=e260]:
+            - option "::::색상::::" [selected]
+            - option "검정색"
+            - option "흰색"
+            - option "회색"
+            - option "은색"
+            - option "진주색"
+            - option "파란색"
+            - option "하늘색"
+            - option "빨간색"
+            - option "노란색"
+            - option "주황색"
+            - option "갈색"
+            - option "금색"
+            - option "녹색"
+            - option "보라색"
+          - generic [ref=e261]: 차량번호
+          - textbox [ref=e262]
+        - listitem [ref=e263]:
+          - generic [ref=e264]: 차량연식
+          - combobox "차량연식" [ref=e265]:
+            - option "::::연식::::" [selected]
+            - option "2027년식"
+            - option "2026년식"
+            - option "2025년식"
+            - option "2024년식"
+            - option "2023년식"
+            - option "2022년식"
+            - option "2021년식"
+            - option "2020년식"
+            - option "2019년식"
+            - option "2018년식"
+            - option "2017년식"
+            - option "2016년식"
+            - option "2015년식"
+            - option "2014년식"
+            - option "2013년식"
+            - option "2012년식"
+            - option "2011년식"
+            - option "2010년식"
+            - option "2009년식"
+            - option "2008년식"
+            - option "2007년식"
+            - option "2006년식"
+            - option "2005년식"
+            - option "2004년식"
+            - option "2003년식"
+            - option "2002년식"
+            - option "2001년식"
+            - option "2000년식"
+            - option "1999년식"
+            - option "1998년식"
+            - option "1997년식"
+            - option "1996년식"
+            - option "1995년식"
+            - option "1994년식"
+            - option "1993년식"
+            - option "1992년식"
+            - option "1991년식"
+            - option "1990년식"
+            - option "1989년식"
+            - option "1988년식"
+          - text: ~
+          - combobox "차량연식" [ref=e266]:
+            - option "::::연식::::" [selected]
+            - option "2027년식"
+            - option "2026년식"
+            - option "2025년식"
+            - option "2024년식"
+            - option "2023년식"
+            - option "2022년식"
+            - option "2021년식"
+            - option "2020년식"
+            - option "2019년식"
+            - option "2018년식"
+            - option "2017년식"
+            - option "2016년식"
+            - option "2015년식"
+            - option "2014년식"
+            - option "2013년식"
+            - option "2012년식"
+            - option "2011년식"
+            - option "2010년식"
+            - option "2009년식"
+            - option "2008년식"
+            - option "2007년식"
+            - option "2006년식"
+            - option "2005년식"
+            - option "2004년식"
+            - option "2003년식"
+            - option "2002년식"
+            - option "2001년식"
+            - option "2000년식"
+            - option "1999년식"
+            - option "1998년식"
+            - option "1997년식"
+            - option "1996년식"
+            - option "1995년식"
+            - option "1994년식"
+            - option "1993년식"
+            - option "1992년식"
+            - option "1991년식"
+            - option "1990년식"
+            - option "1989년식"
+            - option "1988년식"
+          - generic [ref=e267]: 변속기
+          - combobox "변속기" [ref=e268]:
+            - option "::::변속기::::" [selected]
+            - option "오토"
+            - option "수동"
+            - option "세미오토"
+            - option "무단변속기"
+          - generic [ref=e269]: 차량명(모델명)
+          - textbox [ref=e270]
+        - listitem [ref=e271]:
+          - generic [ref=e272]: 주행거리
+          - combobox "주행거리" [ref=e273]:
+            - option "::::주행거리::::" [selected]
+            - option "1,000km"
+            - option "2,000km"
+            - option "4,000km"
+            - option "6,000km"
+            - option "8,000km"
+            - option "10,000km"
+            - option "20,000km"
+            - option "30,000km"
+            - option "40,000km"
+            - option "50,000km"
+            - option "60,000km"
+            - option "70,000km"
+            - option "80,000km"
+            - option "90,000km"
+            - option "100,000km"
+            - option "110,000km"
+            - option "120,000km"
+            - option "130,000km"
+            - option "140,000km"
+            - option "150,000km"
+            - option "160,000km"
+            - option "170,000km"
+            - option "180,000km"
+            - option "190,000km"
+            - option "200,000km"
+            - option "210,000km"
+            - option "220,000km"
+            - option "230,000km"
+            - option "240,000km"
+            - option "250,000km"
+            - option "260,000km"
+            - option "270,000km"
+            - option "280,000km"
+            - option "290,000km"
+            - option "300,000km"
+            - option "350,000km"
+            - option "400,000km"
+            - option "500,000km"
+          - text: ~
+          - combobox "주행거리" [ref=e274]:
+            - option "::::주행거리::::" [selected]
+            - option "1,000km"
+            - option "2,000km"
+            - option "4,000km"
+            - option "6,000km"
+            - option "8,000km"
+            - option "10,000km"
+            - option "20,000km"
+            - option "30,000km"
+            - option "40,000km"
+            - option "50,000km"
+            - option "60,000km"
+            - option "70,000km"
+            - option "80,000km"
+            - option "90,000km"
+            - option "100,000km"
+            - option "110,000km"
+            - option "120,000km"
+            - option "130,000km"
+            - option "140,000km"
+            - option "150,000km"
+            - option "160,000km"
+            - option "170,000km"
+            - option "180,000km"
+            - option "190,000km"
+            - option "200,000km"
+            - option "210,000km"
+            - option "220,000km"
+            - option "230,000km"
+            - option "240,000km"
+            - option "250,000km"
+            - option "260,000km"
+            - option "270,000km"
+            - option "280,000km"
+            - option "290,000km"
+            - option "300,000km"
+            - option "350,000km"
+            - option "400,000km"
+            - option "500,000km"
+      - generic [ref=e275]:
+        - button "검색하기" [ref=e276] [cursor=pointer]
+        - button "선택초기화" [ref=e277] [cursor=pointer]
+      - generic [ref=e279]:
+        - generic [ref=e281]: 전체 318대
+        - generic [ref=e283]:
+          - list [ref=e284]:
+            - listitem [ref=e285]:
+              - text: 최근등록매물
+              - button [ref=e286] [cursor=pointer]
+              - button [ref=e287] [cursor=pointer]
+            - listitem [ref=e288]:
+              - text: 가격순
+              - button [ref=e289] [cursor=pointer]
+              - button [ref=e290] [cursor=pointer]
+            - listitem [ref=e291]:
+              - text: 연식순
+              - button [ref=e292] [cursor=pointer]
+              - button [ref=e293] [cursor=pointer]
+            - listitem [ref=e294]:
+              - text: 주행거리순
+              - button [ref=e295] [cursor=pointer]
+              - button [ref=e296] [cursor=pointer]
+          - combobox [ref=e297]:
+            - option "8개씩"
+            - option "16개씩"
+            - option "24개씩" [selected]
+            - option "32개씩"
+            - option "40개씩"
+        - list [ref=e298]:
+          - listitem [ref=e299]:
+            - link [ref=e300] [cursor=pointer]:
+              - /url: /search/detail/113654927
+            - generic [ref=e303]:
+              - button "[현대]쏘나타 (DN8) LPI 모던" [ref=e304] [cursor=pointer]:
+                - link "[현대]쏘나타 (DN8) LPI 모던" [ref=e306]:
+                  - /url: /search/detail/113654927
+              - list [ref=e307]:
+                - listitem [ref=e308]: 2022-02
+                - listitem [ref=e309]: 69,340km
+                - listitem [ref=e310]: LPG
+                - listitem
+              - generic [ref=e311]:
+                - text: 월
+                - strong [ref=e312]: 23만원
+              - generic [ref=e313]: 1,890만원
+          - listitem [ref=e314]:
+            - link [ref=e315] [cursor=pointer]:
+              - /url: /search/detail/113656367
+            - generic [ref=e318]:
+              - button "[현대]쏘나타 (DN8) 2.0 인스퍼레이션" [ref=e319] [cursor=pointer]:
+                - link "[현대]쏘나타 (DN8) 2.0 인스퍼레이션" [ref=e321]:
+                  - /url: /search/detail/113656367
+              - list [ref=e322]:
+                - listitem [ref=e323]: 2023-01
+                - listitem [ref=e324]: 92,325km
+                - listitem [ref=e325]: 휘발유
+                - listitem
+              - generic [ref=e326]:
+                - text: 월
+                - strong [ref=e327]: 32만원
+              - generic [ref=e328]: 2,690만원
+          - listitem [ref=e329]:
+            - link [ref=e330] [cursor=pointer]:
+              - /url: /search/detail/113672596
+            - generic [ref=e333]:
+              - button "[현대]쏘나타 (DN8) 2.0 스마트" [ref=e334] [cursor=pointer]:
+                - link "[현대]쏘나타 (DN8) 2.0 스마트" [ref=e336]:
+                  - /url: /search/detail/113672596
+              - list [ref=e337]:
+                - listitem [ref=e338]: 2019-05
+                - listitem [ref=e339]: 77,080km
+                - listitem [ref=e340]: 휘발유
+                - listitem [ref=e341]: 검정색
+              - generic [ref=e342]:
+                - text: 월
+                - strong [ref=e343]: 18만원
+              - generic [ref=e344]: 1,540만원
+          - listitem [ref=e345]:
+            - link [ref=e346] [cursor=pointer]:
+              - /url: /search/detail/113675288
+            - generic [ref=e349]:
+              - button "[현대]쏘나타 (DN8) 2.0 스마트" [ref=e350] [cursor=pointer]:
+                - link "[현대]쏘나타 (DN8) 2.0 스마트" [ref=e352]:
+                  - /url: /search/detail/113675288
+              - list [ref=e353]:
+                - listitem [ref=e354]: 2019-09
+                - listitem [ref=e355]: 16,025km
+                - listitem [ref=e356]: 휘발유
+                - listitem [ref=e357]: 검정색
+              - generic [ref=e358]:
+                - text: 월
+                - strong [ref=e359]: 21만원
+              - generic [ref=e360]: 1,790만원
+          - listitem [ref=e361]:
+            - link [ref=e362] [cursor=pointer]:
+              - /url: /search/detail/113675325
+            - generic [ref=e365]:
+              - button "[현대]쏘나타 (DN8) 2.0 스마트" [ref=e366] [cursor=pointer]:
+                - link "[현대]쏘나타 (DN8) 2.0 스마트" [ref=e368]:
+                  - /url: /search/detail/113675325
+              - list [ref=e369]:
+                - listitem [ref=e370]: 2020-09
+                - listitem [ref=e371]: 25,581km
+                - listitem [ref=e372]: 휘발유
+                - listitem [ref=e373]: 검정색
+              - generic [ref=e374]:
+                - text: 월
+                - strong [ref=e375]: 21만원
+              - generic [ref=e376]: 1,750만원
+          - listitem [ref=e377]:
+            - link [ref=e378] [cursor=pointer]:
+              - /url: /search/detail/113678057
+            - generic [ref=e381]:
+              - button "[현대]쏘나타 (DN8) 2.0 인스퍼레이션" [ref=e382] [cursor=pointer]:
+                - link "[현대]쏘나타 (DN8) 2.0 인스퍼레이션" [ref=e384]:
+                  - /url: /search/detail/113678057
+              - list [ref=e385]:
+                - listitem [ref=e386]: 2021-08
+                - listitem [ref=e387]: 78,126km
+                - listitem [ref=e388]: 휘발유
+                - listitem
+              - generic [ref=e389]:
+                - text: 월
+                - strong [ref=e390]: 19만원
+              - generic [ref=e391]: 1,610만원
+          - listitem [ref=e392]:
+            - link [ref=e393] [cursor=pointer]:
+              - /url: /search/detail/113743873
+            - generic [ref=e396]:
+              - button "[현대]쏘나타 (DN8) 2.0 프리미엄" [ref=e397] [cursor=pointer]:
+                - link "[현대]쏘나타 (DN8) 2.0 프리미엄" [ref=e399]:
+                  - /url: /search/detail/113743873
+              - list [ref=e400]:
+                - listitem [ref=e401]: 2020-04
+                - listitem [ref=e402]: 99,480km
+                - listitem [ref=e403]: 휘발유
+                - listitem
+              - generic [ref=e404]:
+                - text: 월
+                - strong [ref=e405]: 19만원
+              - generic [ref=e406]: 1,590만원
+          - listitem [ref=e407]:
+            - link [ref=e408] [cursor=pointer]:
+              - /url: /search/detail/113275979
+            - generic [ref=e411]:
+              - button "[현대]쏘나타 (DN8) LPI 모던" [ref=e412] [cursor=pointer]:
+                - link "[현대]쏘나타 (DN8) LPI 모던" [ref=e414]:
+                  - /url: /search/detail/113275979
+              - list [ref=e415]:
+                - listitem [ref=e416]: 2021-10
+                - listitem [ref=e417]: 90,871km
+                - listitem [ref=e418]: LPG
+                - listitem
+              - generic [ref=e419]:
+                - text: 월
+                - strong [ref=e420]: 17만원
+              - generic [ref=e421]: 1,420만원
+          - listitem [ref=e422]:
+            - link [ref=e423] [cursor=pointer]:
+              - /url: /search/detail/113472221
+            - generic [ref=e426]:
+              - button "[현대]쏘나타 (DN8) LPI 스마트 (렌터카)" [ref=e427] [cursor=pointer]:
+                - link "[현대]쏘나타 (DN8) LPI 스마트 (렌터카)" [ref=e429]:
+                  - /url: /search/detail/113472221
+              - list [ref=e430]:
+                - listitem [ref=e431]: 2021-03
+                - listitem [ref=e432]: 80,460km
+                - listitem [ref=e433]: LPG
+                - listitem [ref=e434]: 검정색
+              - generic [ref=e435]:
+                - text: 월
+                - strong [ref=e436]: 18만원
+              - generic [ref=e437]: 1,470만원
+          - listitem [ref=e438]:
+            - link [ref=e439] [cursor=pointer]:
+              - /url: /search/detail/113509706
+            - generic [ref=e442]:
+              - button "[현대]쏘나타 (DN8) 2.0 프리미엄" [ref=e443] [cursor=pointer]:
+                - link "[현대]쏘나타 (DN8) 2.0 프리미엄" [ref=e445]:
+                  - /url: /search/detail/113509706
+              - list [ref=e446]:
+                - listitem [ref=e447]: 2021-03
+                - listitem [ref=e448]: 56,688km
+                - listitem [ref=e449]: 휘발유
+                - listitem [ref=e450]: 흰색
+              - generic [ref=e451]:
+                - text: 월
+                - strong [ref=e452]: 21만원
+              - generic [ref=e453]: 1,799만원
+          - listitem [ref=e454]:
+            - link [ref=e455] [cursor=pointer]:
+              - /url: /search/detail/113714741
+            - generic [ref=e458]:
+              - button "[현대]쏘나타 (DN8) 2.0 모던" [ref=e459] [cursor=pointer]:
+                - link "[현대]쏘나타 (DN8) 2.0 모던" [ref=e461]:
+                  - /url: /search/detail/113714741
+              - list [ref=e462]:
+                - listitem [ref=e463]: 2022-02
+                - listitem [ref=e464]: 42,880km
+                - listitem [ref=e465]: 휘발유
+                - listitem
+              - generic [ref=e466]:
+                - text: 월
+                - strong [ref=e467]: 28만원
+              - generic [ref=e468]: 2,390만원
+          - listitem [ref=e469]:
+            - link [ref=e470] [cursor=pointer]:
+              - /url: /search/detail/113739786
+            - generic [ref=e473]:
+              - button "[현대]쏘나타 (DN8) 1.6 터보 프리미엄 패밀리" [ref=e474] [cursor=pointer]:
+                - link "[현대]쏘나타 (DN8) 1.6 터보 프리미엄 패밀리" [ref=e476]:
+                  - /url: /search/detail/113739786
+              - list [ref=e477]:
+                - listitem [ref=e478]: 2019-10
+                - listitem [ref=e479]: 117,843km
+                - listitem [ref=e480]: 휘발유
+                - listitem
+              - generic [ref=e481]:
+                - text: 월
+                - strong [ref=e482]: 18만원
+              - generic [ref=e483]: 1,540만원
+          - listitem [ref=e484]:
+            - link [ref=e485] [cursor=pointer]:
+              - /url: /search/detail/113753560
+            - generic [ref=e488]:
+              - button "[현대]쏘나타 (DN8) 1.6 터보 프리미엄 플러스" [ref=e489] [cursor=pointer]:
+                - link "[현대]쏘나타 (DN8) 1.6 터보 프리미엄 플러스" [ref=e491]:
+                  - /url: /search/detail/113753560
+              - list [ref=e492]:
+                - listitem [ref=e493]: 2023-04
+                - listitem [ref=e494]: 60,952km
+                - listitem [ref=e495]: 휘발유
+                - listitem [ref=e496]: 흰색
+              - generic [ref=e497]:
+                - text: 월
+                - strong [ref=e498]: 28만원
+              - generic [ref=e499]: 2,370만원
+          - listitem [ref=e500]:
+            - link [ref=e501] [cursor=pointer]:
+              - /url: /search/detail/113756591
+            - generic [ref=e504]:
+              - button "[현대]쏘나타 (DN8) 2.0 프리미엄" [ref=e505] [cursor=pointer]:
+                - link "[현대]쏘나타 (DN8) 2.0 프리미엄" [ref=e507]:
+                  - /url: /search/detail/113756591
+              - list [ref=e508]:
+                - listitem [ref=e509]: 2019-06
+                - listitem [ref=e510]: 108,539km
+                - listitem [ref=e511]: 휘발유
+                - listitem
+              - generic [ref=e512]:
+                - text: 월
+                - strong [ref=e513]: 17만원
+              - generic [ref=e514]: 1,429만원
+          - listitem [ref=e515]:
+            - link [ref=e516] [cursor=pointer]:
+              - /url: /search/detail/113758821
+            - generic [ref=e519]:
+              - button "[현대]쏘나타 (DN8) 2.0 프리미엄" [ref=e520] [cursor=pointer]:
+                - link "[현대]쏘나타 (DN8) 2.0 프리미엄" [ref=e522]:
+                  - /url: /search/detail/113758821
+              - list [ref=e523]:
+                - listitem [ref=e524]: 2019-06
+                - listitem [ref=e525]: 88,651km
+                - listitem [ref=e526]: 휘발유
+                - listitem [ref=e527]: 흰색
+              - generic [ref=e528]:
+                - text: 월
+                - strong [ref=e529]: 20만원
+              - generic [ref=e530]: 1,690만원
+          - listitem [ref=e531]:
+            - link [ref=e532] [cursor=pointer]:
+              - /url: /search/detail/113767596
+            - generic [ref=e535]:
+              - button "[현대]쏘나타 (DN8) 2.0 프리미엄" [ref=e536] [cursor=pointer]:
+                - link "[현대]쏘나타 (DN8) 2.0 프리미엄" [ref=e538]:
+                  - /url: /search/detail/113767596
+              - list [ref=e539]:
+                - listitem [ref=e540]: 2020-08
+                - listitem [ref=e541]: 141,333km
+                - listitem [ref=e542]: 휘발유
+                - listitem [ref=e543]: 검정색
+              - generic [ref=e544]:
+                - text: 월
+                - strong [ref=e545]: 16만원
+              - generic [ref=e546]: 1,380만원
+          - listitem [ref=e547]:
+            - link [ref=e548] [cursor=pointer]:
+              - /url: /search/detail/113752713
+            - generic [ref=e551]:
+              - button "[현대]쏘나타 (DN8) 2.0 모던" [ref=e552] [cursor=pointer]:
+                - link "[현대]쏘나타 (DN8) 2.0 모던" [ref=e554]:
+                  - /url: /search/detail/113752713
+              - list [ref=e555]:
+                - listitem [ref=e556]: 2021-11
+                - listitem [ref=e557]: 56,919km
+                - listitem [ref=e558]: 휘발유
+                - listitem
+              - generic [ref=e559]:
+                - text: 월
+                - strong [ref=e560]: 31만원
+              - generic [ref=e561]: 2,600만원
+          - listitem [ref=e562]:
+            - link [ref=e563] [cursor=pointer]:
+              - /url: /search/detail/113755869
+            - generic [ref=e566]:
+              - button "[현대]쏘나타 (DN8) 2.0 프리미엄 패밀리" [ref=e567] [cursor=pointer]:
+                - link "[현대]쏘나타 (DN8) 2.0 프리미엄 패밀리" [ref=e569]:
+                  - /url: /search/detail/113755869
+              - list [ref=e570]:
+                - listitem [ref=e571]: 2019-12
+                - listitem [ref=e572]: 82,814km
+                - listitem [ref=e573]: 휘발유
+                - listitem [ref=e574]: 검정색
+              - generic [ref=e575]:
+                - text: 월
+                - strong [ref=e576]: 22만원
+              - generic [ref=e577]: 1,830만원
+          - listitem [ref=e578]:
+            - link [ref=e579] [cursor=pointer]:
+              - /url: /search/detail/113756618
+            - generic [ref=e582]:
+              - button "[현대]쏘나타 (DN8) 1.6 터보 프리미엄 패밀리" [ref=e583] [cursor=pointer]:
+                - link "[현대]쏘나타 (DN8) 1.6 터보 프리미엄 패밀리" [ref=e585]:
+                  - /url: /search/detail/113756618
+              - list [ref=e586]:
+                - listitem [ref=e587]: 2019-11
+                - listitem [ref=e588]: 122,026km
+                - listitem [ref=e589]: 휘발유
+                - listitem [ref=e590]: 흰색
+              - generic [ref=e591]:
+                - text: 월
+                - strong [ref=e592]: 20만원
+              - generic [ref=e593]: 1,650만원
+          - listitem [ref=e594]:
+            - link [ref=e595] [cursor=pointer]:
+              - /url: /search/detail/113758430
+            - generic [ref=e598]:
+              - button "[현대]쏘나타 (DN8) 2.5 터보 N Line 인스퍼레이션" [ref=e599] [cursor=pointer]:
+                - link "[현대]쏘나타 (DN8) 2.5 터보 N Line 인스퍼레이션" [ref=e601]:
+                  - /url: /search/detail/113758430
+              - list [ref=e602]:
+                - listitem [ref=e603]: 2021-02
+                - listitem [ref=e604]: 146,746km
+                - listitem [ref=e605]: 휘발유
+                - listitem [ref=e606]: 은색
+              - generic [ref=e607]:
+                - text: 월
+                - strong [ref=e608]: 21만원
+              - generic [ref=e609]: 1,799만원
+          - listitem [ref=e610]:
+            - link [ref=e611] [cursor=pointer]:
+              - /url: /search/detail/113689468
+            - generic [ref=e614]:
+              - button "[현대]쏘나타 (DN8) 2.0 프리미엄" [ref=e615] [cursor=pointer]:
+                - link "[현대]쏘나타 (DN8) 2.0 프리미엄" [ref=e617]:
+                  - /url: /search/detail/113689468
+              - list [ref=e618]:
+                - listitem [ref=e619]: 2021-03
+                - listitem [ref=e620]: 59,224km
+                - listitem [ref=e621]: 휘발유
+                - listitem [ref=e622]: 검정색
+              - generic [ref=e623]:
+                - text: 월
+                - strong [ref=e624]: 21만원
+              - generic [ref=e625]: 1,800만원
+          - listitem [ref=e626]:
+            - link [ref=e627] [cursor=pointer]:
+              - /url: /search/detail/113689477
+            - generic [ref=e630]:
+              - button "[현대]쏘나타 (DN8) 2.0 프리미엄 패밀리" [ref=e631] [cursor=pointer]:
+                - link "[현대]쏘나타 (DN8) 2.0 프리미엄 패밀리" [ref=e633]:
+                  - /url: /search/detail/113689477
+              - list [ref=e634]:
+                - listitem [ref=e635]: 2021-04
+                - listitem [ref=e636]: 81,667km
+                - listitem [ref=e637]: 휘발유
+                - listitem [ref=e638]: 회색
+              - generic [ref=e639]:
+                - text: 월
+                - strong [ref=e640]: 20만원
+              - generic [ref=e641]: 1,650만원
+          - listitem [ref=e642]:
+            - link [ref=e643] [cursor=pointer]:
+              - /url: /search/detail/113691388
+            - generic [ref=e646]:
+              - button "[현대]쏘나타 (DN8) 2.0 프리미엄" [ref=e647] [cursor=pointer]:
+                - link "[현대]쏘나타 (DN8) 2.0 프리미엄" [ref=e649]:
+                  - /url: /search/detail/113691388
+              - list [ref=e650]:
+                - listitem [ref=e651]: 2019-08
+                - listitem [ref=e652]: 109,245km
+                - listitem [ref=e653]: 휘발유
+                - listitem
+              - generic [ref=e654]:
+                - text: 월
+                - strong [ref=e655]: 19만원
+              - generic [ref=e656]: 1,580만원
+          - listitem [ref=e657]:
+            - link [ref=e658] [cursor=pointer]:
+              - /url: /search/detail/113704508
+            - generic [ref=e661]:
+              - button "[현대]쏘나타 (DN8) 2.0 프리미엄" [ref=e662] [cursor=pointer]:
+                - link "[현대]쏘나타 (DN8) 2.0 프리미엄" [ref=e664]:
+                  - /url: /search/detail/113704508
+              - list [ref=e665]:
+                - listitem [ref=e666]: 2021-04
+                - listitem [ref=e667]: 96,469km
+                - listitem [ref=e668]: 휘발유
+                - listitem [ref=e669]: 검정색
+              - generic [ref=e670]:
+                - text: 월
+                - strong [ref=e671]: 22만원
+              - generic [ref=e672]: 1,820만원
+          - listitem [ref=e673]
+        - list [ref=e676]:
+          - listitem [ref=e677] [cursor=pointer]: "1"
+          - listitem [ref=e678] [cursor=pointer]:
+            - link "2" [ref=e679]:
+              - /url: /search/model/kor/2?order=&ascending=desc&view=image&customSelect=24&carName=&maker=10055&model=100315&dmodel=1002627&grade=&dgrade=&price-min=&price-max=&year-min=&year-max=&usekm-min=&usekm-max=&fuel=&mission=&color=&country=kor&carNo=&carPlateNumber=&vehicle-model=&vehicle-dmodel=&vehicle-name=&tab=model&detailSearch=open&type=
+          - listitem [ref=e680] [cursor=pointer]:
+            - link "3" [ref=e681]:
+              - /url: /search/model/kor/3?order=&ascending=desc&view=image&customSelect=24&carName=&maker=10055&model=100315&dmodel=1002627&grade=&dgrade=&price-min=&price-max=&year-min=&year-max=&usekm-min=&usekm-max=&fuel=&mission=&color=&country=kor&carNo=&carPlateNumber=&vehicle-model=&vehicle-dmodel=&vehicle-name=&tab=model&detailSearch=open&type=
+          - listitem [ref=e682] [cursor=pointer]:
+            - link "4" [ref=e683]:
+              - /url: /search/model/kor/4?order=&ascending=desc&view=image&customSelect=24&carName=&maker=10055&model=100315&dmodel=1002627&grade=&dgrade=&price-min=&price-max=&year-min=&year-max=&usekm-min=&usekm-max=&fuel=&mission=&color=&country=kor&carNo=&carPlateNumber=&vehicle-model=&vehicle-dmodel=&vehicle-name=&tab=model&detailSearch=open&type=
+          - listitem [ref=e684] [cursor=pointer]:
+            - link "5" [ref=e685]:
+              - /url: /search/model/kor/5?order=&ascending=desc&view=image&customSelect=24&carName=&maker=10055&model=100315&dmodel=1002627&grade=&dgrade=&price-min=&price-max=&year-min=&year-max=&usekm-min=&usekm-max=&fuel=&mission=&color=&country=kor&carNo=&carPlateNumber=&vehicle-model=&vehicle-dmodel=&vehicle-name=&tab=model&detailSearch=open&type=
+          - listitem [ref=e686] [cursor=pointer]:
+            - link ">" [ref=e687]:
+              - /url: /search/model/kor/2?order=&ascending=desc&view=image&customSelect=24&carName=&maker=10055&model=100315&dmodel=1002627&grade=&dgrade=&price-min=&price-max=&year-min=&year-max=&usekm-min=&usekm-max=&fuel=&mission=&color=&country=kor&carNo=&carPlateNumber=&vehicle-model=&vehicle-dmodel=&vehicle-name=&tab=model&detailSearch=open&type=
+          - listitem [ref=e688] [cursor=pointer]:
+            - link ">>" [ref=e689]:
+              - /url: /search/model/kor/14?order=&ascending=desc&view=image&customSelect=24&carName=&maker=10055&model=100315&dmodel=1002627&grade=&dgrade=&price-min=&price-max=&year-min=&year-max=&usekm-min=&usekm-max=&fuel=&mission=&color=&country=kor&carNo=&carPlateNumber=&vehicle-model=&vehicle-dmodel=&vehicle-name=&tab=model&detailSearch=open&type=
+  - contentinfo [ref=e690]:
+    - generic [ref=e691]:
+      - img "하단 로고" [ref=e692]
+      - generic [ref=e694]:
+        - paragraph [ref=e695]: "관리책임자 : 엄만호 / 핸드폰번호 010-3333-4333 / E-mail : 76man1502 @naver.com"
+        - paragraph [ref=e696]: "대표번호 : 010-3333-4333 / 팩스 : 031-291-1044 / 사업자등록번호 634-86-00864 (주)세일카 / 대표이사 엄만호"
+        - paragraph [ref=e697]
+        - paragraph [ref=e698]: "수원본점 : 경기도 수원시 권선구 평동로 79번길 45 SK V1 모터스 315,316호"
+        - paragraph [ref=e699]:
+          - generic [ref=e700]: ▶
+          - generic [ref=e702]: 간혹 평균 매매시세보다 낮게 책정된 차량들은 리스. 렌트승계(인수금) 또는 계약중인 차량일 수 있으니 문의 주시면 상담 도와드리겠습니다
+          - generic [ref=e703]: ◀
+        - strong [ref=e705]: 전국 중고차 출장 매입 및 판매 가능합니다.
+        - paragraph [ref=e706]:
+          - generic:
+            - strong
+        - paragraph [ref=e707]:
+          - strong [ref=e709]:
+            - generic [ref=e710]:
+              - img "1713857462071006.jpg" [ref=e711]
+              - img "1713857462601215.png" [ref=e712]
+        - text: Copyrightsⓒ 2013 By
+        - strong [ref=e713]: 수원중고차 세일카
+        - text: All Rights Reserved

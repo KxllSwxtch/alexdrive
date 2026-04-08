@@ -18,6 +18,7 @@ from app.services.scraper import (
     LISTING_TTL,
     MIN_REQUEST_INTERVAL,
     MAX_REQUEST_JITTER,
+    ThrottleManager,
 )
 from app.parsers.listing_parser import parse_car_listings, parse_total_count
 from app.parsers.detail_parser import parse_car_detail
@@ -374,7 +375,7 @@ class TestGetRateLimitRetryAfter:
 class TestThrottle:
     @pytest.mark.asyncio
     async def test_throttle_enforces_minimum_interval(self):
-        sc_mod._last_request_time = time.time()
+        sc_mod._throttle._last_request_time = time.time()
         sleep_called_with = []
 
         async def mock_sleep(duration):
@@ -386,6 +387,60 @@ class TestThrottle:
         assert len(sleep_called_with) == 1
         assert sleep_called_with[0] > 0
         assert sleep_called_with[0] <= MIN_REQUEST_INTERVAL + MAX_REQUEST_JITTER
+
+    @pytest.mark.asyncio
+    async def test_foreground_proceeds_without_delay_when_idle(self):
+        """Foreground request should proceed quickly when no recent requests."""
+        throttle = ThrottleManager(min_interval=2.0, max_jitter=0.0, bg_extra_delay=1.0)
+        throttle._last_request_time = 0.0  # long ago
+        start = time.time()
+        await throttle.foreground()
+        elapsed = time.time() - start
+        assert elapsed < 0.5  # should be near-instant
+
+    @pytest.mark.asyncio
+    async def test_background_has_extra_delay(self):
+        """Background requests should include the extra delay."""
+        sleep_called_with = []
+
+        async def mock_sleep(duration):
+            sleep_called_with.append(duration)
+
+        throttle = ThrottleManager(min_interval=2.0, max_jitter=0.0, bg_extra_delay=1.0)
+        throttle._last_request_time = time.time()
+
+        with patch("app.services.scraper.asyncio.sleep", side_effect=mock_sleep):
+            await throttle.background()
+
+        assert len(sleep_called_with) == 1
+        # Should be at least min_interval + bg_extra_delay minus small elapsed
+        assert sleep_called_with[0] > 2.0
+
+    @pytest.mark.asyncio
+    async def test_background_yields_when_foreground_waiting(self):
+        """Background should wait while foreground requests are pending."""
+        import asyncio
+
+        throttle = ThrottleManager(min_interval=0.0, max_jitter=0.0, bg_extra_delay=0.0)
+        throttle._fg_waiting = 1  # simulate a foreground request waiting
+
+        bg_started = asyncio.Event()
+        bg_done = asyncio.Event()
+
+        async def bg_task():
+            bg_started.set()
+            await throttle.background()
+            bg_done.set()
+
+        task = asyncio.create_task(bg_task())
+        await bg_started.wait()
+        await asyncio.sleep(0.15)
+        assert not bg_done.is_set()  # background should still be waiting
+
+        throttle._fg_waiting = 0  # simulate foreground completing
+        await asyncio.sleep(0.25)
+        assert bg_done.is_set()  # background should proceed now
+        await task
 
 
 # ── Route: 429 on rate-limited ───────────────────────────────
@@ -463,7 +518,8 @@ class TestCachePoisoning:
     async def test_empty_response_not_cached(self):
         """Failed fetches (status=empty) should NOT be stored in the cache."""
         with patch("app.services.scraper.fetch_page", new_callable=AsyncMock, return_value=""), \
-             patch("app.services.scraper._throttle_request", new_callable=AsyncMock), \
+             patch.object(sc_mod._throttle, "foreground", new_callable=AsyncMock), \
+             patch.object(sc_mod._throttle, "background", new_callable=AsyncMock), \
              patch("app.services.scraper.is_rate_limited", return_value=False):
             result = await _fetch_and_cache_listings("test_empty", {"PageSize": 24})
             assert result["status"] == "empty"
@@ -485,7 +541,8 @@ class TestCachePoisoning:
           <div>전체 1대</div>'''
 
         with patch("app.services.scraper.fetch_page", new_callable=AsyncMock, return_value=html), \
-             patch("app.services.scraper._throttle_request", new_callable=AsyncMock), \
+             patch.object(sc_mod._throttle, "foreground", new_callable=AsyncMock), \
+             patch.object(sc_mod._throttle, "background", new_callable=AsyncMock), \
              patch("app.services.scraper.is_rate_limited", return_value=False):
             result = await _fetch_and_cache_listings("test_ok", {"PageSize": 24})
             assert result["status"] == "ok"
@@ -501,7 +558,8 @@ class TestCachePoisoning:
         }
 
         with patch("app.services.scraper.fetch_page", new_callable=AsyncMock, return_value=""), \
-             patch("app.services.scraper._throttle_request", new_callable=AsyncMock), \
+             patch.object(sc_mod._throttle, "foreground", new_callable=AsyncMock), \
+             patch.object(sc_mod._throttle, "background", new_callable=AsyncMock), \
              patch("app.services.scraper.is_rate_limited", return_value=False):
             result = await _fetch_and_cache_listings("test_stale", {"PageSize": 24})
             assert result["status"] == "ok"  # stale data served

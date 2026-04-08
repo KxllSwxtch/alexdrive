@@ -1,0 +1,893 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - generic [ref=e4]:
+      - heading "로고" [level=1] [ref=e5]:
+        - link "로고" [ref=e6] [cursor=pointer]:
+          - /url: /
+          - img "로고" [ref=e7]
+      - heading "수원skv1모터스 차사인모터스 메뉴" [level=2] [ref=e8]
+      - list [ref=e9]:
+        - listitem [ref=e10]:
+          - link "국산차" [ref=e11] [cursor=pointer]:
+            - /url: /search/get_search?fn=model&country=kor&tab=model
+        - listitem [ref=e12]:
+          - link "수입차" [ref=e13] [cursor=pointer]:
+            - /url: /search/get_search?fn=model&country=foreign&tab=model
+        - listitem [ref=e14]:
+          - link "화물차" [ref=e15] [cursor=pointer]:
+            - /url: /search/get_search?fn=model&country=freight&tab=model
+        - listitem [ref=e16]:
+          - link "판매/구입문의" [ref=e17] [cursor=pointer]:
+            - /url: /consulting/sale
+        - listitem [ref=e18]:
+          - link "커뮤니티" [ref=e19] [cursor=pointer]:
+            - /url: /board/list/community/community?type=title&content=
+        - listitem [ref=e20]:
+          - link "회사소개" [ref=e21] [cursor=pointer]:
+            - /url: /common/introduce
+        - listitem [ref=e22]:
+          - link "오시는길" [ref=e23] [cursor=pointer]:
+            - /url: /common/map
+    - generic [ref=e25]:
+      - heading "전체메뉴" [level=2] [ref=e26]
+      - list [ref=e27]:
+        - listitem [ref=e28]:
+          - link "유튜브" [ref=e29] [cursor=pointer]:
+            - /url: https://www.youtube.com/user/kaose67
+        - listitem [ref=e30]:
+          - link "페이스북" [ref=e31] [cursor=pointer]:
+            - /url: https://www.facebook.com/kaose67
+        - listitem [ref=e32]:
+          - link "블로그" [ref=e33] [cursor=pointer]:
+            - /url: https://blog.naver.com/kaose55
+        - listitem [ref=e34]:
+          - link "카카오톡" [ref=e35] [cursor=pointer]:
+            - /url: https://open.kakao.com/o/gL9bam9c
+      - list [ref=e36]:
+        - listitem [ref=e37]:
+          - link "홈" [ref=e38] [cursor=pointer]:
+            - /url: /
+        - listitem [ref=e39]:
+          - link "관리자로그인" [ref=e40] [cursor=pointer]:
+            - /url: http://admin.chasainmotors.com
+        - listitem [ref=e41]:
+          - link "찾아오시는길" [ref=e42] [cursor=pointer]:
+            - /url: /common/map
+  - generic [ref=e44]:
+    - generic [ref=e45]:
+      - generic [ref=e46]:
+        - generic [ref=e47]:
+          - generic [ref=e48]:
+            - radio "판매" [checked] [ref=e49] [cursor=pointer]
+            - generic [ref=e50]: 판매
+          - generic [ref=e51]:
+            - radio "구매" [ref=e52] [cursor=pointer]
+            - generic [ref=e53]: 구매
+        - textbox "차명" [ref=e55]
+        - textbox "연락처" [ref=e57]
+        - generic [ref=e58]:
+          - generic [ref=e59]: ✓ 개인정보 사용 수집에 동의합니다.
+          - button "전문보기" [ref=e60] [cursor=pointer]
+        - button "상담요청" [ref=e62] [cursor=pointer]
+      - link "카카오톡 상담" [ref=e64] [cursor=pointer]:
+        - /url: https://open.kakao.com/o/gL9bam9c
+        - img "카카오톡 상담" [ref=e65]
+      - generic [ref=e66]:
+        - paragraph [ref=e67]: 최근본차량
+        - list [ref=e68]:
+          - listitem [ref=e69]:
+            - link "37저0433" [ref=e70] [cursor=pointer]:
+              - /url: javascript:;
+              - generic [ref=e72]: 37저0433
+        - link "TOP" [ref=e73] [cursor=pointer]:
+          - /url: "#"
+    - generic [ref=e74]:
+      - list [ref=e76]:
+        - listitem [ref=e77]:
+          - link "모델명 검색" [ref=e78] [cursor=pointer]:
+            - /url: /search/get_search?fn=model&country=kor&tab=model&type=
+        - listitem [ref=e79]:
+          - link "차종별 검색" [ref=e80] [cursor=pointer]:
+            - /url: /search/get_search?fn=vehicle&country=kor&tab=vehicle&type=
+      - generic [ref=e81]:
+        - listitem [ref=e82]:
+          - heading "제조사" [level=3] [ref=e83]
+          - list [ref=e84]:
+            - listitem [ref=e85] [cursor=pointer]: 현대
+            - listitem [ref=e86] [cursor=pointer]: 제네시스
+            - listitem [ref=e87] [cursor=pointer]: 기아
+            - listitem [ref=e88] [cursor=pointer]: 르노코리아(삼성)
+            - listitem [ref=e89] [cursor=pointer]: KG모빌리티(쌍용)
+            - listitem [ref=e90] [cursor=pointer]: 쉐보레
+            - listitem [ref=e91] [cursor=pointer]: 대우
+            - listitem [ref=e92] [cursor=pointer]: 기타제조사
+        - listitem [ref=e93]:
+          - heading "모델" [level=3] [ref=e94]
+          - list [ref=e95]:
+            - listitem [ref=e96] [cursor=pointer]: 그랜저
+            - listitem [ref=e97] [cursor=pointer]: 쏘나타
+            - listitem [ref=e98] [cursor=pointer]: 아반떼
+            - listitem [ref=e99] [cursor=pointer]: 스타렉스
+            - listitem [ref=e100] [cursor=pointer]: 싼타페
+            - listitem [ref=e101] [cursor=pointer]: 투싼
+            - listitem [ref=e102] [cursor=pointer]: 팰리세이드
+            - listitem [ref=e103] [cursor=pointer]: 스타리아
+            - listitem [ref=e104] [cursor=pointer]: 코나
+            - listitem [ref=e105] [cursor=pointer]: 제네시스
+            - listitem [ref=e106] [cursor=pointer]: i30
+            - listitem [ref=e107] [cursor=pointer]: i40
+            - listitem [ref=e108] [cursor=pointer]: 넥쏘
+            - listitem [ref=e109] [cursor=pointer]: 맥스크루즈
+            - listitem [ref=e110] [cursor=pointer]: 베뉴
+            - listitem [ref=e111] [cursor=pointer]: 베라쿠르즈
+            - listitem [ref=e112] [cursor=pointer]: 벨로스터
+            - listitem [ref=e113] [cursor=pointer]: 솔라티
+            - listitem [ref=e114] [cursor=pointer]: 아슬란
+            - listitem [ref=e115] [cursor=pointer]: 아이오닉 5
+            - listitem [ref=e116] [cursor=pointer]: 아이오닉 6
+            - listitem [ref=e117] [cursor=pointer]: 아이오닉 9
+            - listitem [ref=e118] [cursor=pointer]: 아이오닉
+            - listitem [ref=e119] [cursor=pointer]: 에쿠스
+            - listitem [ref=e120] [cursor=pointer]: 엑센트
+            - listitem [ref=e121] [cursor=pointer]: 캐스퍼
+            - listitem [ref=e122] [cursor=pointer]: 갤로퍼
+            - listitem [ref=e123] [cursor=pointer]: 그레이스
+            - listitem [ref=e124] [cursor=pointer]: 다이너스티
+            - listitem [ref=e125] [cursor=pointer]: 라비타
+            - listitem [ref=e126] [cursor=pointer]: 마르샤
+            - listitem [ref=e127] [cursor=pointer]: 베르나
+            - listitem [ref=e128] [cursor=pointer]: 아토스
+            - listitem [ref=e129] [cursor=pointer]: 엘란트라
+            - listitem [ref=e130] [cursor=pointer]: 싼타모
+            - listitem [ref=e131] [cursor=pointer]: 스텔라
+            - listitem [ref=e132] [cursor=pointer]: 스쿠프
+            - listitem [ref=e133] [cursor=pointer]: 엑셀
+            - listitem [ref=e134] [cursor=pointer]: 클릭
+            - listitem [ref=e135] [cursor=pointer]: 테라칸
+            - listitem [ref=e136] [cursor=pointer]: 투스카니
+            - listitem [ref=e137] [cursor=pointer]: 트라제XG
+            - listitem [ref=e138] [cursor=pointer]: 티뷰론
+            - listitem [ref=e139] [cursor=pointer]: 포니
+            - listitem [ref=e140] [cursor=pointer]: 리베로
+            - listitem [ref=e141] [cursor=pointer]: 프레스토
+            - listitem [ref=e142] [cursor=pointer]: 블루온
+        - listitem [ref=e143]:
+          - heading "세부모델" [level=3] [ref=e144]
+          - list [ref=e145]:
+            - listitem [ref=e146] [cursor=pointer]:
+              - generic [ref=e147]: 그랜저
+            - listitem [ref=e148] [cursor=pointer]:
+              - generic [ref=e149]: 뉴 그랜저
+            - listitem [ref=e150] [cursor=pointer]:
+              - generic [ref=e151]: 그랜저 XG
+            - listitem [ref=e152] [cursor=pointer]:
+              - generic [ref=e153]: 뉴 그랜저 XG
+            - listitem [ref=e154] [cursor=pointer]:
+              - generic [ref=e155]: 그랜저 TG
+            - listitem [ref=e156] [cursor=pointer]:
+              - generic [ref=e157]: 그랜저 뉴 럭셔리
+            - listitem [ref=e158] [cursor=pointer]:
+              - generic [ref=e159]: 더 럭셔리 그랜저
+            - listitem [ref=e160] [cursor=pointer]:
+              - generic [ref=e161]: 그랜저 HG
+            - listitem [ref=e162] [cursor=pointer]:
+              - generic [ref=e163]: 그랜저 HG 하이브리드
+            - listitem [ref=e164] [cursor=pointer]:
+              - generic [ref=e165]: 그랜저 IG
+            - listitem [ref=e166] [cursor=pointer]:
+              - generic [ref=e167]: 그랜저 IG 하이브리드
+            - listitem [ref=e168] [cursor=pointer]:
+              - generic [ref=e169]: 더 뉴 그랜저 IG
+            - listitem [ref=e170] [cursor=pointer]:
+              - generic [ref=e171]: 더 뉴 그랜저 IG 하이브리드
+            - listitem [ref=e172] [cursor=pointer]:
+              - generic [ref=e173]: 그랜저 (GN7)
+            - listitem [ref=e174] [cursor=pointer]:
+              - generic [ref=e175]: 그랜저 하이브리드 (GN7)
+        - listitem [ref=e176]:
+          - heading "등급" [level=3] [ref=e177]
+          - list [ref=e178]:
+            - paragraph [ref=e179]:
+              - text: 세부모델을
+              - text: 선택하세요
+        - listitem [ref=e180]:
+          - heading "세부등급" [level=3] [ref=e181]
+          - list [ref=e182]:
+            - paragraph [ref=e183]:
+              - text: 등급을
+              - text: 선택하세요
+      - button "상세검색열기" [ref=e184] [cursor=pointer]
+      - generic [ref=e185]:
+        - button "검색하기" [ref=e186] [cursor=pointer]
+        - button "선택초기화" [ref=e187] [cursor=pointer]
+      - generic [ref=e189]:
+        - generic [ref=e191]: 전체 1,053대
+        - generic [ref=e193]:
+          - list [ref=e194]:
+            - listitem [ref=e195]:
+              - text: 최근등록매물
+              - button [ref=e196] [cursor=pointer]
+              - button [ref=e197] [cursor=pointer]
+            - listitem [ref=e198]:
+              - text: 가격순
+              - button [ref=e199] [cursor=pointer]
+              - button [ref=e200] [cursor=pointer]
+            - listitem [ref=e201]:
+              - text: 연식순
+              - button [ref=e202] [cursor=pointer]
+              - button [ref=e203] [cursor=pointer]
+            - listitem [ref=e204]:
+              - text: 주행거리순
+              - button [ref=e205] [cursor=pointer]
+              - button [ref=e206] [cursor=pointer]
+          - combobox [ref=e207]:
+            - option "8개씩"
+            - option "16개씩"
+            - option "24개씩" [selected]
+            - option "32개씩"
+            - option "40개씩"
+        - table [ref=e208]:
+          - rowgroup [ref=e213]:
+            - row "+ [현대]그랜저 하이브리드 (GN7) 프리미엄 2023-02 115,465km 휘발유 하이브리드 오토 115,465km 3,020 만원" [ref=e214]:
+              - cell "+ [현대]그랜저 하이브리드 (GN7) 프리미엄 2023-02 115,465km 휘발유 하이브리드 오토" [ref=e215]:
+                - generic [ref=e216]:
+                  - link [ref=e217] [cursor=pointer]:
+                    - /url: /search/detail/113679529
+                  - link [ref=e218] [cursor=pointer]:
+                    - /url: /search/detail/113679529
+                  - generic [ref=e219]:
+                    - link [ref=e221] [cursor=pointer]:
+                      - /url: /search/detail/113679529
+                    - link [ref=e223] [cursor=pointer]:
+                      - /url: /search/detail/113679529
+                    - link [ref=e225] [cursor=pointer]:
+                      - /url: /search/detail/113679529
+                  - text: +
+                - generic [ref=e226]:
+                  - link "[현대]그랜저 하이브리드 (GN7) 프리미엄" [ref=e228] [cursor=pointer]:
+                    - /url: /search/detail/113679529
+                  - list [ref=e229]:
+                    - listitem [ref=e230]: 2023-02
+                    - listitem [ref=e231]: 115,465km
+                    - listitem [ref=e232]: 휘발유 하이브리드
+                    - listitem [ref=e233]: 오토
+              - cell "115,465km" [ref=e234]
+              - cell "3,020 만원" [ref=e235]
+            - row "+ [현대]더 뉴 그랜저 IG LPI 3.0 익스클루시브(렌터카) 2020-03 58,269km LPG 오토 58,269km 2,750 만원" [ref=e236]:
+              - cell "+ [현대]더 뉴 그랜저 IG LPI 3.0 익스클루시브(렌터카) 2020-03 58,269km LPG 오토" [ref=e237]:
+                - generic [ref=e238]:
+                  - link [ref=e239] [cursor=pointer]:
+                    - /url: /search/detail/113696429
+                  - link [ref=e240] [cursor=pointer]:
+                    - /url: /search/detail/113696429
+                  - generic [ref=e241]:
+                    - link [ref=e243] [cursor=pointer]:
+                      - /url: /search/detail/113696429
+                    - link [ref=e245] [cursor=pointer]:
+                      - /url: /search/detail/113696429
+                    - link [ref=e247] [cursor=pointer]:
+                      - /url: /search/detail/113696429
+                  - text: +
+                - generic [ref=e248]:
+                  - link "[현대]더 뉴 그랜저 IG LPI 3.0 익스클루시브(렌터카)" [ref=e250] [cursor=pointer]:
+                    - /url: /search/detail/113696429
+                  - list [ref=e251]:
+                    - listitem [ref=e252]: 2020-03
+                    - listitem [ref=e253]: 58,269km
+                    - listitem [ref=e254]: LPG
+                    - listitem [ref=e255]: 오토
+              - cell "58,269km" [ref=e256]
+              - cell "2,750 만원" [ref=e257]
+            - row "+ [현대]더 뉴 그랜저 IG 3.3 캘리그래피 2020-03 73,820km 휘발유 오토 73,820km 2,770 만원" [ref=e258]:
+              - cell "+ [현대]더 뉴 그랜저 IG 3.3 캘리그래피 2020-03 73,820km 휘발유 오토" [ref=e259]:
+                - generic [ref=e260]:
+                  - link [ref=e261] [cursor=pointer]:
+                    - /url: /search/detail/113726649
+                  - link [ref=e262] [cursor=pointer]:
+                    - /url: /search/detail/113726649
+                  - generic [ref=e263]:
+                    - link [ref=e265] [cursor=pointer]:
+                      - /url: /search/detail/113726649
+                    - link [ref=e267] [cursor=pointer]:
+                      - /url: /search/detail/113726649
+                    - link [ref=e269] [cursor=pointer]:
+                      - /url: /search/detail/113726649
+                  - text: +
+                - generic [ref=e270]:
+                  - link "[현대]더 뉴 그랜저 IG 3.3 캘리그래피" [ref=e272] [cursor=pointer]:
+                    - /url: /search/detail/113726649
+                  - list [ref=e273]:
+                    - listitem [ref=e274]: 2020-03
+                    - listitem [ref=e275]: 73,820km
+                    - listitem [ref=e276]: 휘발유
+                    - listitem [ref=e277]: 오토
+              - cell "73,820km" [ref=e278]
+              - cell "2,770 만원" [ref=e279]
+            - row "+ [현대]더 뉴 그랜저 IG 하이브리드 프리미엄 초이스 2022-03 84,846km 휘발유 하이브리드 오토 84,846km 2,399 만원" [ref=e280]:
+              - cell "+ [현대]더 뉴 그랜저 IG 하이브리드 프리미엄 초이스 2022-03 84,846km 휘발유 하이브리드 오토" [ref=e281]:
+                - generic [ref=e282]:
+                  - link [ref=e283] [cursor=pointer]:
+                    - /url: /search/detail/113726729
+                  - link [ref=e284] [cursor=pointer]:
+                    - /url: /search/detail/113726729
+                  - generic [ref=e285]:
+                    - link [ref=e287] [cursor=pointer]:
+                      - /url: /search/detail/113726729
+                    - link [ref=e289] [cursor=pointer]:
+                      - /url: /search/detail/113726729
+                    - link [ref=e291] [cursor=pointer]:
+                      - /url: /search/detail/113726729
+                  - text: +
+                - generic [ref=e292]:
+                  - link "[현대]더 뉴 그랜저 IG 하이브리드 프리미엄 초이스" [ref=e294] [cursor=pointer]:
+                    - /url: /search/detail/113726729
+                  - list [ref=e295]:
+                    - listitem [ref=e296]: 2022-03
+                    - listitem [ref=e297]: 84,846km
+                    - listitem [ref=e298]: 휘발유 하이브리드
+                    - listitem [ref=e299]: 오토
+              - cell "84,846km" [ref=e300]
+              - cell "2,399 만원" [ref=e301]
+            - row "+ [현대]그랜저 하이브리드 (GN7) 캘리그래피 2023-04 77,145km 휘발유 하이브리드 오토 77,145km 3,749 만원" [ref=e302]:
+              - cell "+ [현대]그랜저 하이브리드 (GN7) 캘리그래피 2023-04 77,145km 휘발유 하이브리드 오토" [ref=e303]:
+                - generic [ref=e304]:
+                  - link [ref=e305] [cursor=pointer]:
+                    - /url: /search/detail/113738941
+                  - link [ref=e306] [cursor=pointer]:
+                    - /url: /search/detail/113738941
+                  - generic [ref=e307]:
+                    - link [ref=e309] [cursor=pointer]:
+                      - /url: /search/detail/113738941
+                    - link [ref=e311] [cursor=pointer]:
+                      - /url: /search/detail/113738941
+                    - link [ref=e313] [cursor=pointer]:
+                      - /url: /search/detail/113738941
+                  - text: +
+                - generic [ref=e314]:
+                  - link "[현대]그랜저 하이브리드 (GN7) 캘리그래피" [ref=e316] [cursor=pointer]:
+                    - /url: /search/detail/113738941
+                  - list [ref=e317]:
+                    - listitem [ref=e318]: 2023-04
+                    - listitem [ref=e319]: 77,145km
+                    - listitem [ref=e320]: 휘발유 하이브리드
+                    - listitem [ref=e321]: 오토
+              - cell "77,145km" [ref=e322]
+              - cell "3,749 만원" [ref=e323]
+            - row "+ [현대]더 뉴 그랜저 IG 3.3 캘리그래피 2021-10 93,000km 휘발유 오토 93,000km 2,839 만원" [ref=e324]:
+              - cell "+ [현대]더 뉴 그랜저 IG 3.3 캘리그래피 2021-10 93,000km 휘발유 오토" [ref=e325]:
+                - generic [ref=e326]:
+                  - link [ref=e327] [cursor=pointer]:
+                    - /url: /search/detail/113748981
+                  - link [ref=e328] [cursor=pointer]:
+                    - /url: /search/detail/113748981
+                  - generic [ref=e329]:
+                    - link [ref=e331] [cursor=pointer]:
+                      - /url: /search/detail/113748981
+                    - link [ref=e333] [cursor=pointer]:
+                      - /url: /search/detail/113748981
+                    - link [ref=e335] [cursor=pointer]:
+                      - /url: /search/detail/113748981
+                  - text: +
+                - generic [ref=e336]:
+                  - link "[현대]더 뉴 그랜저 IG 3.3 캘리그래피" [ref=e338] [cursor=pointer]:
+                    - /url: /search/detail/113748981
+                  - list [ref=e339]:
+                    - listitem [ref=e340]: 2021-10
+                    - listitem [ref=e341]: 93,000km
+                    - listitem [ref=e342]: 휘발유
+                    - listitem [ref=e343]: 오토
+              - cell "93,000km" [ref=e344]
+              - cell "2,839 만원" [ref=e345]
+            - row "+ [현대]그랜저 하이브리드 (GN7) 익스클루시브 2023-02 59,697km 휘발유 하이브리드 오토 59,697km 3,680 만원" [ref=e346]:
+              - cell "+ [현대]그랜저 하이브리드 (GN7) 익스클루시브 2023-02 59,697km 휘발유 하이브리드 오토" [ref=e347]:
+                - generic [ref=e348]:
+                  - link [ref=e349] [cursor=pointer]:
+                    - /url: /search/detail/113751226
+                  - link [ref=e350] [cursor=pointer]:
+                    - /url: /search/detail/113751226
+                  - generic [ref=e351]:
+                    - link [ref=e353] [cursor=pointer]:
+                      - /url: /search/detail/113751226
+                    - link [ref=e355] [cursor=pointer]:
+                      - /url: /search/detail/113751226
+                    - link [ref=e357] [cursor=pointer]:
+                      - /url: /search/detail/113751226
+                  - text: +
+                - generic [ref=e358]:
+                  - link "[현대]그랜저 하이브리드 (GN7) 익스클루시브" [ref=e360] [cursor=pointer]:
+                    - /url: /search/detail/113751226
+                  - list [ref=e361]:
+                    - listitem [ref=e362]: 2023-02
+                    - listitem [ref=e363]: 59,697km
+                    - listitem [ref=e364]: 휘발유 하이브리드
+                    - listitem [ref=e365]: 오토
+              - cell "59,697km" [ref=e366]
+              - cell "3,680 만원" [ref=e367]
+            - row "+ [현대]더 뉴 그랜저 IG 2.5 르블랑 2022-05 15,493km 휘발유 오토 15,493km 2,640 만원" [ref=e368]:
+              - cell "+ [현대]더 뉴 그랜저 IG 2.5 르블랑 2022-05 15,493km 휘발유 오토" [ref=e369]:
+                - generic [ref=e370]:
+                  - link [ref=e371] [cursor=pointer]:
+                    - /url: /search/detail/113751724
+                  - link [ref=e372] [cursor=pointer]:
+                    - /url: /search/detail/113751724
+                  - generic [ref=e373]:
+                    - link [ref=e375] [cursor=pointer]:
+                      - /url: /search/detail/113751724
+                    - link [ref=e377] [cursor=pointer]:
+                      - /url: /search/detail/113751724
+                    - link [ref=e379] [cursor=pointer]:
+                      - /url: /search/detail/113751724
+                  - text: +
+                - generic [ref=e380]:
+                  - link "[현대]더 뉴 그랜저 IG 2.5 르블랑" [ref=e382] [cursor=pointer]:
+                    - /url: /search/detail/113751724
+                  - list [ref=e383]:
+                    - listitem [ref=e384]: 2022-05
+                    - listitem [ref=e385]: 15,493km
+                    - listitem [ref=e386]: 휘발유
+                    - listitem [ref=e387]: 오토
+              - cell "15,493km" [ref=e388]
+              - cell "2,640 만원" [ref=e389]
+            - row "+ [현대]그랜저 하이브리드 (GN7) 익스클루시브 2025-07 31,164km 휘발유 하이브리드 오토 31,164km 4,169 만원" [ref=e390]:
+              - cell "+ [현대]그랜저 하이브리드 (GN7) 익스클루시브 2025-07 31,164km 휘발유 하이브리드 오토" [ref=e391]:
+                - generic [ref=e392]:
+                  - link [ref=e393] [cursor=pointer]:
+                    - /url: /search/detail/113754099
+                  - link [ref=e394] [cursor=pointer]:
+                    - /url: /search/detail/113754099
+                  - generic [ref=e395]:
+                    - link [ref=e397] [cursor=pointer]:
+                      - /url: /search/detail/113754099
+                    - link [ref=e399] [cursor=pointer]:
+                      - /url: /search/detail/113754099
+                    - link [ref=e401] [cursor=pointer]:
+                      - /url: /search/detail/113754099
+                  - text: +
+                - generic [ref=e402]:
+                  - link "[현대]그랜저 하이브리드 (GN7) 익스클루시브" [ref=e404] [cursor=pointer]:
+                    - /url: /search/detail/113754099
+                  - list [ref=e405]:
+                    - listitem [ref=e406]: 2025-07
+                    - listitem [ref=e407]: 31,164km
+                    - listitem [ref=e408]: 휘발유 하이브리드
+                    - listitem [ref=e409]: 오토
+              - cell "31,164km" [ref=e410]
+              - cell "4,169 만원" [ref=e411]
+            - row "+ [현대]더 뉴 그랜저 IG 3.3 프리미엄 2021-08 127,541km 휘발유 오토 127,541km 2,320 만원" [ref=e412]:
+              - cell "+ [현대]더 뉴 그랜저 IG 3.3 프리미엄 2021-08 127,541km 휘발유 오토" [ref=e413]:
+                - generic [ref=e414]:
+                  - link [ref=e415] [cursor=pointer]:
+                    - /url: /search/detail/113754221
+                  - link [ref=e416] [cursor=pointer]:
+                    - /url: /search/detail/113754221
+                  - generic [ref=e417]:
+                    - link [ref=e419] [cursor=pointer]:
+                      - /url: /search/detail/113754221
+                    - link [ref=e421] [cursor=pointer]:
+                      - /url: /search/detail/113754221
+                    - link [ref=e423] [cursor=pointer]:
+                      - /url: /search/detail/113754221
+                  - text: +
+                - generic [ref=e424]:
+                  - link "[현대]더 뉴 그랜저 IG 3.3 프리미엄" [ref=e426] [cursor=pointer]:
+                    - /url: /search/detail/113754221
+                  - list [ref=e427]:
+                    - listitem [ref=e428]: 2021-08
+                    - listitem [ref=e429]: 127,541km
+                    - listitem [ref=e430]: 휘발유
+                    - listitem [ref=e431]: 오토
+              - cell "127,541km" [ref=e432]
+              - cell "2,320 만원" [ref=e433]
+            - row "+ [현대]더 뉴 그랜저 IG 2.5 르블랑 2021-12 32,702km 휘발유 오토 32,702km 2,730 만원" [ref=e434]:
+              - cell "+ [현대]더 뉴 그랜저 IG 2.5 르블랑 2021-12 32,702km 휘발유 오토" [ref=e435]:
+                - generic [ref=e436]:
+                  - link [ref=e437] [cursor=pointer]:
+                    - /url: /search/detail/113758508
+                  - link [ref=e438] [cursor=pointer]:
+                    - /url: /search/detail/113758508
+                  - generic [ref=e439]:
+                    - link [ref=e441] [cursor=pointer]:
+                      - /url: /search/detail/113758508
+                    - link [ref=e443] [cursor=pointer]:
+                      - /url: /search/detail/113758508
+                    - link [ref=e445] [cursor=pointer]:
+                      - /url: /search/detail/113758508
+                  - text: +
+                - generic [ref=e446]:
+                  - link "[현대]더 뉴 그랜저 IG 2.5 르블랑" [ref=e448] [cursor=pointer]:
+                    - /url: /search/detail/113758508
+                  - list [ref=e449]:
+                    - listitem [ref=e450]: 2021-12
+                    - listitem [ref=e451]: 32,702km
+                    - listitem [ref=e452]: 휘발유
+                    - listitem [ref=e453]: 오토
+              - cell "32,702km" [ref=e454]
+              - cell "2,730 만원" [ref=e455]
+            - row "+ [현대]더 뉴 그랜저 IG 하이브리드 익스클루시브 2019-12 88,233km 휘발유 하이브리드 오토 88,233km 2,469 만원" [ref=e456]:
+              - cell "+ [현대]더 뉴 그랜저 IG 하이브리드 익스클루시브 2019-12 88,233km 휘발유 하이브리드 오토" [ref=e457]:
+                - generic [ref=e458]:
+                  - link [ref=e459] [cursor=pointer]:
+                    - /url: /search/detail/113758800
+                  - link [ref=e460] [cursor=pointer]:
+                    - /url: /search/detail/113758800
+                  - generic [ref=e461]:
+                    - link [ref=e463] [cursor=pointer]:
+                      - /url: /search/detail/113758800
+                    - link [ref=e465] [cursor=pointer]:
+                      - /url: /search/detail/113758800
+                    - link [ref=e467] [cursor=pointer]:
+                      - /url: /search/detail/113758800
+                  - text: +
+                - generic [ref=e468]:
+                  - link "[현대]더 뉴 그랜저 IG 하이브리드 익스클루시브" [ref=e470] [cursor=pointer]:
+                    - /url: /search/detail/113758800
+                  - list [ref=e471]:
+                    - listitem [ref=e472]: 2019-12
+                    - listitem [ref=e473]: 88,233km
+                    - listitem [ref=e474]: 휘발유 하이브리드
+                    - listitem [ref=e475]: 오토
+              - cell "88,233km" [ref=e476]
+              - cell "2,469 만원" [ref=e477]
+            - row "+ [현대]더 뉴 그랜저 IG 하이브리드 르블랑 2021-10 93,870km 휘발유 하이브리드 오토 93,870km 2,350 만원" [ref=e478]:
+              - cell "+ [현대]더 뉴 그랜저 IG 하이브리드 르블랑 2021-10 93,870km 휘발유 하이브리드 오토" [ref=e479]:
+                - generic [ref=e480]:
+                  - link [ref=e481] [cursor=pointer]:
+                    - /url: /search/detail/113760131
+                  - link [ref=e482] [cursor=pointer]:
+                    - /url: /search/detail/113760131
+                  - generic [ref=e483]:
+                    - link [ref=e485] [cursor=pointer]:
+                      - /url: /search/detail/113760131
+                    - link [ref=e487] [cursor=pointer]:
+                      - /url: /search/detail/113760131
+                    - link [ref=e489] [cursor=pointer]:
+                      - /url: /search/detail/113760131
+                  - text: +
+                - generic [ref=e490]:
+                  - link "[현대]더 뉴 그랜저 IG 하이브리드 르블랑" [ref=e492] [cursor=pointer]:
+                    - /url: /search/detail/113760131
+                  - list [ref=e493]:
+                    - listitem [ref=e494]: 2021-10
+                    - listitem [ref=e495]: 93,870km
+                    - listitem [ref=e496]: 휘발유 하이브리드
+                    - listitem [ref=e497]: 오토
+              - cell "93,870km" [ref=e498]
+              - cell "2,350 만원" [ref=e499]
+            - row "+ [현대]더 뉴 그랜저 IG 하이브리드 캘리그래피 2021-03 165,043km 휘발유 하이브리드 오토 165,043km 2,330 만원" [ref=e500]:
+              - cell "+ [현대]더 뉴 그랜저 IG 하이브리드 캘리그래피 2021-03 165,043km 휘발유 하이브리드 오토" [ref=e501]:
+                - generic [ref=e502]:
+                  - link [ref=e503] [cursor=pointer]:
+                    - /url: /search/detail/113760137
+                  - link [ref=e504] [cursor=pointer]:
+                    - /url: /search/detail/113760137
+                  - generic [ref=e505]:
+                    - link [ref=e507] [cursor=pointer]:
+                      - /url: /search/detail/113760137
+                    - link [ref=e509] [cursor=pointer]:
+                      - /url: /search/detail/113760137
+                    - link [ref=e511] [cursor=pointer]:
+                      - /url: /search/detail/113760137
+                  - text: +
+                - generic [ref=e512]:
+                  - link "[현대]더 뉴 그랜저 IG 하이브리드 캘리그래피" [ref=e514] [cursor=pointer]:
+                    - /url: /search/detail/113760137
+                  - list [ref=e515]:
+                    - listitem [ref=e516]: 2021-03
+                    - listitem [ref=e517]: 165,043km
+                    - listitem [ref=e518]: 휘발유 하이브리드
+                    - listitem [ref=e519]: 오토
+              - cell "165,043km" [ref=e520]
+              - cell "2,330 만원" [ref=e521]
+            - row "+ [현대]더 뉴 그랜저 IG LPI 3.0 프리미엄(장애인) 2022-11 142,360km LPG 오토 142,360km 1,620 만원" [ref=e522]:
+              - cell "+ [현대]더 뉴 그랜저 IG LPI 3.0 프리미엄(장애인) 2022-11 142,360km LPG 오토" [ref=e523]:
+                - generic [ref=e524]:
+                  - link [ref=e525] [cursor=pointer]:
+                    - /url: /search/detail/113760865
+                  - link [ref=e526] [cursor=pointer]:
+                    - /url: /search/detail/113760865
+                  - generic [ref=e527]:
+                    - link [ref=e529] [cursor=pointer]:
+                      - /url: /search/detail/113760865
+                    - link [ref=e531] [cursor=pointer]:
+                      - /url: /search/detail/113760865
+                    - link [ref=e533] [cursor=pointer]:
+                      - /url: /search/detail/113760865
+                  - text: +
+                - generic [ref=e534]:
+                  - link "[현대]더 뉴 그랜저 IG LPI 3.0 프리미엄(장애인)" [ref=e536] [cursor=pointer]:
+                    - /url: /search/detail/113760865
+                  - list [ref=e537]:
+                    - listitem [ref=e538]: 2022-11
+                    - listitem [ref=e539]: 142,360km
+                    - listitem [ref=e540]: LPG
+                    - listitem [ref=e541]: 오토
+              - cell "142,360km" [ref=e542]
+              - cell "1,620 만원" [ref=e543]
+            - row "+ [현대]더 뉴 그랜저 IG LPI 3.0 익스클루시브 2021-01 101,010km LPG 오토 101,010km 2,459 만원" [ref=e544]:
+              - cell "+ [현대]더 뉴 그랜저 IG LPI 3.0 익스클루시브 2021-01 101,010km LPG 오토" [ref=e545]:
+                - generic [ref=e546]:
+                  - link [ref=e547] [cursor=pointer]:
+                    - /url: /search/detail/113761100
+                  - link [ref=e548] [cursor=pointer]:
+                    - /url: /search/detail/113761100
+                  - generic [ref=e549]:
+                    - link [ref=e551] [cursor=pointer]:
+                      - /url: /search/detail/113761100
+                    - link [ref=e553] [cursor=pointer]:
+                      - /url: /search/detail/113761100
+                    - link [ref=e555] [cursor=pointer]:
+                      - /url: /search/detail/113761100
+                  - text: +
+                - generic [ref=e556]:
+                  - link "[현대]더 뉴 그랜저 IG LPI 3.0 익스클루시브" [ref=e558] [cursor=pointer]:
+                    - /url: /search/detail/113761100
+                  - list [ref=e559]:
+                    - listitem [ref=e560]: 2021-01
+                    - listitem [ref=e561]: 101,010km
+                    - listitem [ref=e562]: LPG
+                    - listitem [ref=e563]: 오토
+              - cell "101,010km" [ref=e564]
+              - cell "2,459 만원" [ref=e565]
+            - row "+ [현대]더 뉴 그랜저 IG 3.3 르블랑 2022-03 96,879km 휘발유 오토 96,879km 2,239 만원" [ref=e566]:
+              - cell "+ [현대]더 뉴 그랜저 IG 3.3 르블랑 2022-03 96,879km 휘발유 오토" [ref=e567]:
+                - generic [ref=e568]:
+                  - link [ref=e569] [cursor=pointer]:
+                    - /url: /search/detail/113761890
+                  - link [ref=e570] [cursor=pointer]:
+                    - /url: /search/detail/113761890
+                  - generic [ref=e571]:
+                    - link [ref=e573] [cursor=pointer]:
+                      - /url: /search/detail/113761890
+                    - link [ref=e575] [cursor=pointer]:
+                      - /url: /search/detail/113761890
+                    - link [ref=e577] [cursor=pointer]:
+                      - /url: /search/detail/113761890
+                  - text: +
+                - generic [ref=e578]:
+                  - link "[현대]더 뉴 그랜저 IG 3.3 르블랑" [ref=e580] [cursor=pointer]:
+                    - /url: /search/detail/113761890
+                  - list [ref=e581]:
+                    - listitem [ref=e582]: 2022-03
+                    - listitem [ref=e583]: 96,879km
+                    - listitem [ref=e584]: 휘발유
+                    - listitem [ref=e585]: 오토
+              - cell "96,879km" [ref=e586]
+              - cell "2,239 만원" [ref=e587]
+            - row "+ [현대]더 뉴 그랜저 IG LPI 3.0 프리미엄(렌터카) 2020-01 88,569km LPG 오토 88,569km 1,850 만원" [ref=e588]:
+              - cell "+ [현대]더 뉴 그랜저 IG LPI 3.0 프리미엄(렌터카) 2020-01 88,569km LPG 오토" [ref=e589]:
+                - generic [ref=e590]:
+                  - link [ref=e591] [cursor=pointer]:
+                    - /url: /search/detail/113762591
+                  - link [ref=e592] [cursor=pointer]:
+                    - /url: /search/detail/113762591
+                  - generic [ref=e593]:
+                    - link [ref=e595] [cursor=pointer]:
+                      - /url: /search/detail/113762591
+                    - link [ref=e597] [cursor=pointer]:
+                      - /url: /search/detail/113762591
+                    - link [ref=e599] [cursor=pointer]:
+                      - /url: /search/detail/113762591
+                  - text: +
+                - generic [ref=e600]:
+                  - link "[현대]더 뉴 그랜저 IG LPI 3.0 프리미엄(렌터카)" [ref=e602] [cursor=pointer]:
+                    - /url: /search/detail/113762591
+                  - list [ref=e603]:
+                    - listitem [ref=e604]: 2020-01
+                    - listitem [ref=e605]: 88,569km
+                    - listitem [ref=e606]: LPG
+                    - listitem [ref=e607]: 오토
+              - cell "88,569km" [ref=e608]
+              - cell "1,850 만원" [ref=e609]
+            - row "+ [현대]더 뉴 그랜저 IG 2.5 르블랑 2022-03 40,903km 휘발유 오토 40,903km 2,790 만원" [ref=e610]:
+              - cell "+ [현대]더 뉴 그랜저 IG 2.5 르블랑 2022-03 40,903km 휘발유 오토" [ref=e611]:
+                - generic [ref=e612]:
+                  - link [ref=e613] [cursor=pointer]:
+                    - /url: /search/detail/113763931
+                  - link [ref=e614] [cursor=pointer]:
+                    - /url: /search/detail/113763931
+                  - generic [ref=e615]:
+                    - link [ref=e617] [cursor=pointer]:
+                      - /url: /search/detail/113763931
+                    - link [ref=e619] [cursor=pointer]:
+                      - /url: /search/detail/113763931
+                    - link [ref=e621] [cursor=pointer]:
+                      - /url: /search/detail/113763931
+                  - text: +
+                - generic [ref=e622]:
+                  - link "[현대]더 뉴 그랜저 IG 2.5 르블랑" [ref=e624] [cursor=pointer]:
+                    - /url: /search/detail/113763931
+                  - list [ref=e625]:
+                    - listitem [ref=e626]: 2022-03
+                    - listitem [ref=e627]: 40,903km
+                    - listitem [ref=e628]: 휘발유
+                    - listitem [ref=e629]: 오토
+              - cell "40,903km" [ref=e630]
+              - cell "2,790 만원" [ref=e631]
+            - row "+ [현대]더 뉴 그랜저 IG 2.5 캘리그래피 2020-03 80,613km 휘발유 오토 80,613km 2,590 만원" [ref=e632]:
+              - cell "+ [현대]더 뉴 그랜저 IG 2.5 캘리그래피 2020-03 80,613km 휘발유 오토" [ref=e633]:
+                - generic [ref=e634]:
+                  - link [ref=e635] [cursor=pointer]:
+                    - /url: /search/detail/113764235
+                  - link [ref=e636] [cursor=pointer]:
+                    - /url: /search/detail/113764235
+                  - generic [ref=e637]:
+                    - link [ref=e639] [cursor=pointer]:
+                      - /url: /search/detail/113764235
+                    - link [ref=e641] [cursor=pointer]:
+                      - /url: /search/detail/113764235
+                    - link [ref=e643] [cursor=pointer]:
+                      - /url: /search/detail/113764235
+                  - text: +
+                - generic [ref=e644]:
+                  - link "[현대]더 뉴 그랜저 IG 2.5 캘리그래피" [ref=e646] [cursor=pointer]:
+                    - /url: /search/detail/113764235
+                  - list [ref=e647]:
+                    - listitem [ref=e648]: 2020-03
+                    - listitem [ref=e649]: 80,613km
+                    - listitem [ref=e650]: 휘발유
+                    - listitem [ref=e651]: 오토
+              - cell "80,613km" [ref=e652]
+              - cell "2,590 만원" [ref=e653]
+            - row "+ [현대]그랜저 (GN7) 가솔린 2.5 2WD 캘리그래피 2025-02 38,032km 휘발유 오토 38,032km 3,980 만원" [ref=e654]:
+              - cell "+ [현대]그랜저 (GN7) 가솔린 2.5 2WD 캘리그래피 2025-02 38,032km 휘발유 오토" [ref=e655]:
+                - generic [ref=e656]:
+                  - link [ref=e657] [cursor=pointer]:
+                    - /url: /search/detail/113765897
+                  - link [ref=e658] [cursor=pointer]:
+                    - /url: /search/detail/113765897
+                  - generic [ref=e659]:
+                    - link [ref=e661] [cursor=pointer]:
+                      - /url: /search/detail/113765897
+                    - link [ref=e663] [cursor=pointer]:
+                      - /url: /search/detail/113765897
+                    - link [ref=e665] [cursor=pointer]:
+                      - /url: /search/detail/113765897
+                  - text: +
+                - generic [ref=e666]:
+                  - link "[현대]그랜저 (GN7) 가솔린 2.5 2WD 캘리그래피" [ref=e668] [cursor=pointer]:
+                    - /url: /search/detail/113765897
+                  - list [ref=e669]:
+                    - listitem [ref=e670]: 2025-02
+                    - listitem [ref=e671]: 38,032km
+                    - listitem [ref=e672]: 휘발유
+                    - listitem [ref=e673]: 오토
+              - cell "38,032km" [ref=e674]
+              - cell "3,980 만원" [ref=e675]
+            - row "+ [현대]더 뉴 그랜저 IG 3.3 르블랑 2022-02 93,149km 휘발유 오토 93,149km 2,399 만원" [ref=e676]:
+              - cell "+ [현대]더 뉴 그랜저 IG 3.3 르블랑 2022-02 93,149km 휘발유 오토" [ref=e677]:
+                - generic [ref=e678]:
+                  - link [ref=e679] [cursor=pointer]:
+                    - /url: /search/detail/113767197
+                  - link [ref=e680] [cursor=pointer]:
+                    - /url: /search/detail/113767197
+                  - generic [ref=e681]:
+                    - link [ref=e683] [cursor=pointer]:
+                      - /url: /search/detail/113767197
+                    - link [ref=e685] [cursor=pointer]:
+                      - /url: /search/detail/113767197
+                    - link [ref=e687] [cursor=pointer]:
+                      - /url: /search/detail/113767197
+                  - text: +
+                - generic [ref=e688]:
+                  - link "[현대]더 뉴 그랜저 IG 3.3 르블랑" [ref=e690] [cursor=pointer]:
+                    - /url: /search/detail/113767197
+                  - list [ref=e691]:
+                    - listitem [ref=e692]: 2022-02
+                    - listitem [ref=e693]: 93,149km
+                    - listitem [ref=e694]: 휘발유
+                    - listitem [ref=e695]: 오토
+              - cell "93,149km" [ref=e696]
+              - cell "2,399 만원" [ref=e697]
+            - row "+ [현대]더 뉴 그랜저 IG 2.5 프리미엄 초이스 2020-11 99,551km 휘발유 오토 99,551km 1,990 만원" [ref=e698]:
+              - cell "+ [현대]더 뉴 그랜저 IG 2.5 프리미엄 초이스 2020-11 99,551km 휘발유 오토" [ref=e699]:
+                - generic [ref=e700]:
+                  - link [ref=e701] [cursor=pointer]:
+                    - /url: /search/detail/113767201
+                  - link [ref=e702] [cursor=pointer]:
+                    - /url: /search/detail/113767201
+                  - generic [ref=e703]:
+                    - link [ref=e705] [cursor=pointer]:
+                      - /url: /search/detail/113767201
+                    - link [ref=e707] [cursor=pointer]:
+                      - /url: /search/detail/113767201
+                    - link [ref=e709] [cursor=pointer]:
+                      - /url: /search/detail/113767201
+                  - text: +
+                - generic [ref=e710]:
+                  - link "[현대]더 뉴 그랜저 IG 2.5 프리미엄 초이스" [ref=e712] [cursor=pointer]:
+                    - /url: /search/detail/113767201
+                  - list [ref=e713]:
+                    - listitem [ref=e714]: 2020-11
+                    - listitem [ref=e715]: 99,551km
+                    - listitem [ref=e716]: 휘발유
+                    - listitem [ref=e717]: 오토
+              - cell "99,551km" [ref=e718]
+              - cell "1,990 만원" [ref=e719]
+            - row "+ [현대]그랜저 (GN7) LPG 3.5 2WD 프리미엄 2022-12 78,609km 휘발유 오토 78,609km 2,699 만원" [ref=e720]:
+              - cell "+ [현대]그랜저 (GN7) LPG 3.5 2WD 프리미엄 2022-12 78,609km 휘발유 오토" [ref=e721]:
+                - generic [ref=e722]:
+                  - link [ref=e723] [cursor=pointer]:
+                    - /url: /search/detail/113770139
+                  - link [ref=e724] [cursor=pointer]:
+                    - /url: /search/detail/113770139
+                  - generic [ref=e725]:
+                    - link [ref=e727] [cursor=pointer]:
+                      - /url: /search/detail/113770139
+                    - link [ref=e729] [cursor=pointer]:
+                      - /url: /search/detail/113770139
+                    - link [ref=e731] [cursor=pointer]:
+                      - /url: /search/detail/113770139
+                  - text: +
+                - generic [ref=e732]:
+                  - link "[현대]그랜저 (GN7) LPG 3.5 2WD 프리미엄" [ref=e734] [cursor=pointer]:
+                    - /url: /search/detail/113770139
+                  - list [ref=e735]:
+                    - listitem [ref=e736]: 2022-12
+                    - listitem [ref=e737]: 78,609km
+                    - listitem [ref=e738]: 휘발유
+                    - listitem [ref=e739]: 오토
+              - cell "78,609km" [ref=e740]
+              - cell "2,699 만원" [ref=e741]
+        - list [ref=e744]:
+          - listitem [ref=e745] [cursor=pointer]: "1"
+          - listitem [ref=e746] [cursor=pointer]:
+            - link "2" [ref=e747]:
+              - /url: /search/model/kor/2?order=&ascending=desc&view=image&customSelect=24&carName=&maker=10055&model=100217&dmodel=&grade=&dgrade=&price-min=&price-max=&year-min=2020&year-max=2026&usekm-min=&usekm-max=&fuel=&mission=&color=&country=kor&carNo=&carPlateNumber=&vehicle-model=&vehicle-dmodel=&vehicle-name=&tab=model&detailSearch=&type=
+          - listitem [ref=e748] [cursor=pointer]:
+            - link "3" [ref=e749]:
+              - /url: /search/model/kor/3?order=&ascending=desc&view=image&customSelect=24&carName=&maker=10055&model=100217&dmodel=&grade=&dgrade=&price-min=&price-max=&year-min=2020&year-max=2026&usekm-min=&usekm-max=&fuel=&mission=&color=&country=kor&carNo=&carPlateNumber=&vehicle-model=&vehicle-dmodel=&vehicle-name=&tab=model&detailSearch=&type=
+          - listitem [ref=e750] [cursor=pointer]:
+            - link "4" [ref=e751]:
+              - /url: /search/model/kor/4?order=&ascending=desc&view=image&customSelect=24&carName=&maker=10055&model=100217&dmodel=&grade=&dgrade=&price-min=&price-max=&year-min=2020&year-max=2026&usekm-min=&usekm-max=&fuel=&mission=&color=&country=kor&carNo=&carPlateNumber=&vehicle-model=&vehicle-dmodel=&vehicle-name=&tab=model&detailSearch=&type=
+          - listitem [ref=e752] [cursor=pointer]:
+            - link "5" [ref=e753]:
+              - /url: /search/model/kor/5?order=&ascending=desc&view=image&customSelect=24&carName=&maker=10055&model=100217&dmodel=&grade=&dgrade=&price-min=&price-max=&year-min=2020&year-max=2026&usekm-min=&usekm-max=&fuel=&mission=&color=&country=kor&carNo=&carPlateNumber=&vehicle-model=&vehicle-dmodel=&vehicle-name=&tab=model&detailSearch=&type=
+          - listitem [ref=e754] [cursor=pointer]:
+            - link ">" [ref=e755]:
+              - /url: /search/model/kor/2?order=&ascending=desc&view=image&customSelect=24&carName=&maker=10055&model=100217&dmodel=&grade=&dgrade=&price-min=&price-max=&year-min=2020&year-max=2026&usekm-min=&usekm-max=&fuel=&mission=&color=&country=kor&carNo=&carPlateNumber=&vehicle-model=&vehicle-dmodel=&vehicle-name=&tab=model&detailSearch=&type=
+          - listitem [ref=e756] [cursor=pointer]:
+            - link ">>" [ref=e757]:
+              - /url: /search/model/kor/44?order=&ascending=desc&view=image&customSelect=24&carName=&maker=10055&model=100217&dmodel=&grade=&dgrade=&price-min=&price-max=&year-min=2020&year-max=2026&usekm-min=&usekm-max=&fuel=&mission=&color=&country=kor&carNo=&carPlateNumber=&vehicle-model=&vehicle-dmodel=&vehicle-name=&tab=model&detailSearch=&type=
+  - contentinfo [ref=e758]:
+    - generic [ref=e759]:
+      - img "하단 로고" [ref=e760]
+      - generic [ref=e761]:
+        - generic [ref=e764]: 수원skv1모터스 차사인모터스입니다.
+        - generic [ref=e767]: 수원 평동로 79번길 45 수원skv1모터스 608,609호
+        - generic [ref=e770]: 저희는 다양한 중고차를 보유하고 있으며,
+        - generic [ref=e773]: 고객님의 예산과 필요에 맞는 차량을 추천해 드리고 있습니다.
+        - generic [ref=e775]: 늘 믿음과 정식으로 고객님을 모시겠습니다.
+        - generic [ref=e776]:
+          - generic [ref=e777]:
+            - text: 상호
+            - generic [ref=e778]:
+              - text: ": 수원skv1모터스"
+              - generic [ref=e779]: 차사인모터스
+          - generic [ref=e781]: "사업자번호 : 702-02-01701"
+        - paragraph
+        - generic [ref=e783]: "대표 : 제효창 (010-8239-7679)"
+        - generic [ref=e785]: "관리책임자 : 제효창 (010-8239-7679)"
+        - generic [ref=e787]: "수원본점 : 경기도 수원시 권선구 평동로 79번길 45 6층 수원skv1모터스 608,609호"
+        - generic [ref=e788]:
+          - generic [ref=e789]:
+            - generic [ref=e790]: 대표전화
+            - text: ": 031-278-4466"
+          - paragraph
+          - paragraph
+          - generic [ref=e791]: "팩스 : 031-278-4477"
+        - generic [ref=e792]:
+          - generic [ref=e793]: 허위,미끼,사기매물
+          - text: 취급하지않습니다.
+        - generic [ref=e795]: 전국으로 매입 출장가능합니다.
+  - generic [ref=e803]:
+    - paragraph [ref=e804]:
+      - img "5분안에 연락받는 빠른 상담신청" [ref=e805]
+    - generic [ref=e806]:
+      - term [ref=e807]: 이 름
+      - definition [ref=e808]:
+        - textbox "이름을 입력해주세요" [ref=e809]
+      - term [ref=e810]: 연락처
+      - definition [ref=e811]:
+        - textbox "전화번호(-제외 입력)" [ref=e812]
+    - link "빠른 상담신청" [ref=e813] [cursor=pointer]:
+      - /url: javascript:;

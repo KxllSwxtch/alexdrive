@@ -108,7 +108,11 @@ export function CatalogContent({ initialFilters, initialCars, initialTotal, init
 
   const fetchCars = useCallback(async (p: CarListingParams, signal?: AbortSignal): Promise<{ ok: boolean; retryAfter?: number }> => {
     const searchParams = buildSearchParams(p);
-    const res = await fetch(`${BACKEND_URL}/api/cars?${searchParams.toString()}`, { signal });
+    const timeoutSignal = AbortSignal.timeout(15_000);
+    const combinedSignal = signal
+      ? AbortSignal.any([signal, timeoutSignal])
+      : timeoutSignal;
+    const res = await fetch(`${BACKEND_URL}/api/cars?${searchParams.toString()}`, { signal: combinedSignal });
     const data = await res.json();
 
     if (res.status === 429 || res.status === 503 || data.status === "rate_limited") {
@@ -204,6 +208,11 @@ export function CatalogContent({ initialFilters, initialCars, initialTotal, init
       })
       .catch((error) => {
         if (abortController.signal.aborted) return;
+        if (error.name === "TimeoutError") {
+          console.warn("Search request timed out after 15s");
+          setLoading(false);
+          return;
+        }
         console.error("Failed to fetch cars:", error);
         setCars([]);
         setTotal(0);

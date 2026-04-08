@@ -1,0 +1,190 @@
+[GET] http://www.chasainmotors.com/search/model/kor?order=&ascending=desc&view=image&customSelect=24&carName=&maker=&model=&dmodel=&grade=&dgrade=&price-min=&price-max=&year-min=&year-max=&usekm-min=&usekm-max=&fuel=&mission=&color=&country=kor&carNo=&carPlateNumber=&vehicle-model=&vehicle-dmodel=&vehicle-name=&tab=model&detailSearch=&type= => [200] OK
+[GET] http://wcs.naver.net/wcslog.js => [307] Internal Redirect
+[GET] https://wcs.naver.net/wcslog.js => [200] 
+[GET] http://www.chasainmotors.com/assets/basic/css/common.css?v=1737515916 => [200] OK
+[GET] http://www.chasainmotors.com/assets/basic/css/common/rightSide.css?v=1655430143 => [200] OK
+[GET] http://www.chasainmotors.com/assets/basic/css/common/search.css?v=1774232311 => [200] OK
+[GET] http://www.chasainmotors.com/assets/custom/chaSignMotors/css/style.css?v=1659504868 => [200] OK
+[GET] http://www.chasainmotors.com/assets/custom/chaSignMotors/css/common.css?v=1741075286 => [200] OK
+[GET] http://www.chasainmotors.com/assets/basic/css/common/footer.css?v=1655430143 => [200] OK
+[GET] http://www.chasainmotors.com/assets/basic/js/v3/common-webStorage.js?v=1681787327 => [200] OK
+[GET] http://www.chasainmotors.com/assets/basic/js/v3/common/jquery-3.4.1.min.js?v=1655430148 => [200] OK
+[GET] http://www.chasainmotors.com/assets/basic/js/v3/common.js?v=1742288695 => [200] OK
+[GET] http://www.chasainmotors.com/assets/basic/js/v3/quickVehicleSearch.js?v=1681787327 => [200] OK
+[GET] http://www.chasainmotors.com/assets/basic/js/v3/common/slick.min.js?v=1681787327 => [200] OK
+[GET] http://www.chasainmotors.com/assets/basic/js/v3/common/headerMenu.js?v=1681787327 => [200] OK
+[GET] http://www.chasainmotors.com/assets/basic/js/v3/banner/banner.js?v=1755591543 => [200] OK
+[GET] http://www.chasainmotors.com/assets/basic/js/v3/common/jquery.vticker.min.js?v=1655430148 => [200] OK
+[GET] https://www.youtube.com/s/player/50e823fc/www-widgetapi.vflset/www-widgetapi.js => [200] 
+[GET] https://myshop-img2.carmanager.co.kr/myshop3/admin/images/logo/156/logo.png => [200] 
+[GET] https://myshop-img2.carmanager.co.kr/myshop3/custom/chaSignMotors/images/common/btn_kakao.jpg => [200] 
+[GET] https://myshop-img2.carmanager.co.kr/myshop3/basic/images/common/xbox.jpg => [200] 
+[GET] http://www.chasainmotors.com/assets/basic/js/v3/privateList/basic.js => [200] OK
+[GET] https://myshop-img.carmanager.co.kr/temp/photo/20260407/C0565FEF05E065E589E4751FF28A315A2BAC43A6088D0664D055C3BD3C83C124_TH.jpg => [200] 
+[GET] https://myshop-img.carmanager.co.kr/temp/photo/20260407/876568B38A3B43AD15E11003FA9DEB6A24AF18325DD81F7AF930D758FE28AFF4_TH.jpg => [200] 
+[GET] https://myshop-img.carmanager.co.kr/temp/photo/20260407/403E20B5F79DB780C6FB0FC81305A885859C348DE5D51520187830D08CBBFEC9_TH.jpg => [200] 
+[GET] https://img.carmanager.co.kr/temp/photo/20260407/A8731A32BAC91840406F03BEA24A4F58CEFB450FFD7096156FDBEB39C5879AEA_TH.jpg => [200] 
+[GET] https://img.carmanager.co.kr/temp/photo/20260407/9BA39E11785A336BA57811BD9C7F9AB5EEE3F2BB977A32EAE19E3C2C99256DAF_TH.jpg => [200] 
+[GET] https://myshop-img.carmanager.co.kr/temp/photo/2026/20260331/0E93DC5AB76FBB953FEA8FF5CAC2DD941BE74B9C60F272485018BCCD8826F9B8_TH.jpg => [200] 
+[GET] https://myshop-img.carmanager.co.kr/temp/photo/2026/20260331/FE74E2A800FCA757FF61173B6D394CEA7E66A9C503BAF6CF1959218773044409_TH.jpg => [200] 
+[GET] https://myshop-img.carmanager.co.kr/temp/photo/2026/20260331/308C175C457807943E84566FF02917FCFF839AD01CF1F4FC4D03631A884CC990_TH.jpg => [200] 
+[GET] https://img.carmanager.co.kr/temp/photo/2026/20260331/078894823495311DF82936278F74BE895437D131A25A9A36E5CD33352DC7B753_TH.jpg => [200] 
+[GET] https://img.carmanager.co.kr/temp/photo/2026/20260331/0BE0D389533E811F783CCC8FB6DF3E409810BEE11BBA24BD5DB54EA138C3D6AA_TH.jpg => [200] 
+[GET] https://myshop-img.carmanager.co.kr/temp/photo/20260407/40F7210BEA56AC95C50B2DA670D5BF4BD9683809CD10AF820E39BB9FD900705D_TH.jpg => [200] 
+[GET] https://myshop-img.carmanager.co.kr/temp/photo/20260407/3D4626589396ED40BBAB995E6E54D8A0AF623C502251FEF6A123897BFBD932E5_TH.jpg => [200] 
+[GET] https://myshop-img.carmanager.co.kr/temp/photo/20260407/08C6E550F320437B57957A4B45FE4F73E6C11573B8BE8FF98ED8CEA540C6C6BF_TH.jpg => [200] 
+[GET] https://img.carmanager.co.kr/temp/photo/20260407/F8B342339C4173341B006387CC7EFE0EF31505ACBBCCC645F711767E26168B2C_TH.jpg => [200] 
+[GET] https://img.carmanager.co.kr/temp/photo/20260407/54C5C814529060EE501A30B7250B104B54CF9AEE6211FA4CF8CA19B4BC3D84C1_TH.jpg => [200] 
+[GET] https://myshop-img.carmanager.co.kr/temp/photo/20260407/03C5F7A9CDF22CB73289134C1116A19333F620CBBBFC46EE7474662C7C923E0E_TH.jpg => [200] 
+[GET] https://myshop-img.carmanager.co.kr/temp/photo/20260407/4D4984064F58222550DD09DB75C5783ACA43B2956BB65461EC165F57E08B530F_TH.jpg => [200] 
+[GET] https://myshop-img.carmanager.co.kr/temp/photo/20260407/5CF7D5C02ECBFE07D7434CAE10923E3AC4BC84CC80B2DC2029F7B3C8C7A184F5_TH.jpg => [200] 
+[GET] https://img.carmanager.co.kr/temp/photo/20260407/47FD4C2B145E90BBCAE09ACF86B88C0DDFC3ECFCC2E3C7230496EFA028591241_TH.jpg => [200] 
+[GET] https://img.carmanager.co.kr/temp/photo/20260407/E80685723020EE7DA667DF180DD081904AD23DE77D6047EB6148550F86F3CB4F_TH.jpg => [200] 
+[GET] https://myshop-img.carmanager.co.kr/temp/photo/2026/20260407/215E6749F946B895F2953B899A53D4A6D754D9C5C754EDB264C703FDFD77A920_TH.jpg => [200] 
+[GET] https://myshop-img.carmanager.co.kr/temp/photo/2026/20260407/D2D45BD04CE02087DDA595A597A2A6545084FAA3E5933F889C25A99EC874F4F1_TH.jpg => [200] 
+[GET] https://myshop-img.carmanager.co.kr/temp/photo/2026/20260407/F7574793DF92CC4C756EBD9CE39137A09F4618C49A1B445337D49575C14D0EB3_TH.jpg => [200] 
+[GET] https://img.carmanager.co.kr/temp/photo/2026/20260407/B7A714225927EFDE0F0D7E68D32DA77F1D771960497B73C12C22A45CCE94DCE6_TH.jpg => [200] 
+[GET] https://img.carmanager.co.kr/temp/photo/2026/20260407/6F649EBC5B96805A78C9A406C0F27A62F99BC53DE632BF4E342976C64E31ACB8_TH.jpg => [200] 
+[GET] https://myshop-img.carmanager.co.kr/temp/photo/20260407/39415B7E7BB60FD40C337DFD657985C4C83666F6775DFC6C3444F0C2B9162764_TH.jpg => [200] 
+[GET] https://myshop-img.carmanager.co.kr/temp/photo/20260407/304259CC076C2D648586DBA55D30F8015B9AEA2C2FCB755DD8EC69BC0F3AF237_TH.jpg => [200] 
+[GET] https://myshop-img.carmanager.co.kr/temp/photo/20260407/5E2E718BE98A5AFA80858CE0EA86B98D909023DAF701BA95CD5D306BEEDA40EA_TH.jpg => [200] 
+[GET] https://img.carmanager.co.kr/temp/photo/20260407/7A44AD429C15515A2D784489A7CCAC04A96AF3111027998763F416DB8AECE84E_TH.jpg => [200] 
+[GET] https://img.carmanager.co.kr/temp/photo/20260407/4127727D5BD3CD937669DB29756E9E43D85A53A5F4EB045FAD0DB468DA84468C_TH.jpg => [200] 
+[GET] https://myshop-img.carmanager.co.kr/temp/photo/2026/20260407/2ED0AB6890DB20253A888BC23EF7A08F0436615CA3C692A6D6210F6F9C5006EB_TH.jpg => [200] 
+[GET] https://myshop-img.carmanager.co.kr/temp/photo/2026/20260407/11CBA20AC597EA13BC44CE6C7C1357E1BC435A27248F2BBACDB37E19E4AA5202_TH.jpg => [200] 
+[GET] https://myshop-img.carmanager.co.kr/temp/photo/2026/20260407/AEC551885F5A351E1FAA408D7EED094A3DE9B3FC2794B95EC8C0FE785F237590_TH.jpg => [200] 
+[GET] https://img.carmanager.co.kr/temp/photo/2026/20260407/AE8A4D084A36D865E1919AE5E0148BE1C7275B1D83CFB972BF9849352BA634E5_TH.jpg => [200] 
+[GET] https://img.carmanager.co.kr/temp/photo/2026/20260407/F20AA041CFEE5F3FF515410E702D8977438B26CD57A8B65CC8DB8E1C61B519F8_TH.jpg => [200] 
+[GET] https://myshop-img.carmanager.co.kr/temp/photo/2026/20260407/1A79DDC99F91ED84EE101DFBC13FB1185D0C334F7F30CE129E68178CD9EB7DB4_TH.jpg => [200] 
+[GET] https://myshop-img.carmanager.co.kr/temp/photo/2026/20260407/F4859C1FF3C634AB9EB0B6DD5DD64CE26D4B464029977201E8D6DE4047FD035A_TH.jpg => [200] 
+[GET] https://myshop-img.carmanager.co.kr/temp/photo/2026/20260407/B770A28DFA39DFFCCB5BC2764A93E2D1B2638B840F161634ECE2786BCA7F473D_TH.jpg => [200] 
+[GET] https://img.carmanager.co.kr/temp/photo/2026/20260407/CB173F0B3EC978BD611157C2CDD74BC536A90F6AE838B619F1A75E7575B30F94_TH.jpg => [200] 
+[GET] https://img.carmanager.co.kr/temp/photo/2026/20260407/FBC850B68374B432939F1756BAC956BD6731B48DCEEA11D2761121AA1489D948_TH.jpg => [200] 
+[GET] https://myshop-img.carmanager.co.kr/temp/photo/20260403/24ABE11A1F0965B614FACAF14A9DD365AD53D318613127568E10B06F5BD32F71_TH.jpg => [200] 
+[GET] https://myshop-img.carmanager.co.kr/temp/photo/20260403/6398E68F2DCFCD00C94247DB7BE21F3D8DCBA2FE83362992A08DFD83A22AF4D4_TH.jpg => [200] 
+[GET] https://myshop-img.carmanager.co.kr/temp/photo/20260403/62AE71D7B310AD7B4943B0668334D694EED78CC1F6BD587761008D20181C6846_TH.jpg => [200] 
+[GET] https://img.carmanager.co.kr/temp/photo/20260403/19F2F338372E9A0F2D2B226F8812E24A8CA5C740C322BE5366F6E976F9471A95_TH.jpg => [200] 
+[GET] https://img.carmanager.co.kr/temp/photo/20260403/985F33BA304E9AD150EFEB1B57CF0230438599A0D1D783403BCB3E440BADAC6F_TH.jpg => [200] 
+[GET] https://myshop-img.carmanager.co.kr/temp/photo/20260407/B1543C88D56C6A2E7A920022666B7FEC635C82D388038514008EC09D16FA5005_TH.jpg => [200] 
+[GET] https://myshop-img.carmanager.co.kr/temp/photo/20260407/CF063290FCFB07EDA870E21757FC8F6A2116E929B56ECFBE59096536EAF7D70A_TH.jpg => [200] 
+[GET] https://myshop-img.carmanager.co.kr/temp/photo/20260407/A63CC74501887EBD6251D70896B35A9ADF4D4B5F516187D1AC674589F88488B6_TH.jpg => [200] 
+[GET] https://img.carmanager.co.kr/temp/photo/20260407/D029FD825AE777AA680D4FB691D202B06F11B48240A4A8A4F6E2CBB835DDE070_TH.jpg => [200] 
+[GET] https://img.carmanager.co.kr/temp/photo/20260407/833E5DE54C3907CCFD3C53CF4C9DECCE09CDE92312BAFF3F6E98AF318C519C78_TH.jpg => [200] 
+[GET] https://myshop-img.carmanager.co.kr/temp/photo/20260407/5B43344BA6CAE453FEAA80D7890898ACB7EE2C7E2ACD07CEA1B767C442EF7F4E_TH.jpg => [200] 
+[GET] https://myshop-img.carmanager.co.kr/temp/photo/20260407/03DEEFC60C4707411409F21C01E08B5CE9E518A8FF2923865EEC9F14DA3B0664_TH.jpg => [200] 
+[GET] https://myshop-img.carmanager.co.kr/temp/photo/20260407/70357BDE14145D83D90A1415D58C60AB0FF45A672E065F381F1674782178E9CA_TH.jpg => [200] 
+[GET] https://img.carmanager.co.kr/temp/photo/20260407/210E349895C5B3D041AE6B61388876AB645DD9E87238DDB815DD4C8CDCDCFA9A_TH.jpg => [200] 
+[GET] https://img.carmanager.co.kr/temp/photo/20260407/95120CA257953798B3D2529416CFC1B782BE0548579DFF3E092E4971F5D8B054_TH.jpg => [200] 
+[GET] https://myshop-img.carmanager.co.kr/temp/photo/2026/20260407/CA11044B2AA047EB70E163EBD88BBEC7AC4B3296288BFC7E281C21E46B34618D_TH.jpg => [200] 
+[GET] https://myshop-img.carmanager.co.kr/temp/photo/2026/20260407/96DDBC38C54DB3F38B57F5DFF109D26FB0FE1A1B3434452A606F1B8BF99D2493_TH.jpg => [200] 
+[GET] https://myshop-img.carmanager.co.kr/temp/photo/2026/20260407/03259C0DC19A71E777143DF5956D82870010B639B15DA1C7E2598F1922CB4EFC_TH.jpg => [200] 
+[GET] https://img.carmanager.co.kr/temp/photo/2026/20260407/C81BD3D2FA563D6B683131C99A0A7503ADB3FB99C74261EBFDABB17BF85984BF_TH.jpg => [200] 
+[GET] https://img.carmanager.co.kr/temp/photo/2026/20260407/51333F6D478947F5966797EDFBBCEB885DE49AE2C10FE3EC364BB0D1030EB1D9_TH.jpg => [200] 
+[GET] https://myshop-img.carmanager.co.kr/temp/photo/20260407/B786CE6FCF3CB1731CD825A25BBF501DFCD0BE4A6DB339D2ADBF6D7227FF683D_TH.jpg => [200] 
+[GET] https://myshop-img.carmanager.co.kr/temp/photo/20260407/8A0CD67E6EB732E4B85BE06790F1ECFB0F2B918D15361229ED039C8A21B4877C_TH.jpg => [200] 
+[GET] https://myshop-img.carmanager.co.kr/temp/photo/20260407/F9A74FB4F95215A25EB4054F41F74AE012268158523C77FD8AB3FC878BF30CFF_TH.jpg => [200] 
+[GET] https://img.carmanager.co.kr/temp/photo/20260407/59A73FE2DC96E9877F03C8CD98FF54DBCF136E48B8A4FBA955687A509C43AE06_TH.jpg => [200] 
+[GET] https://img.carmanager.co.kr/temp/photo/20260407/981F799C64D69F2D995CFAE1BBD053C9C61F2D3CB78B9ACC7C1C50F70611429A_TH.jpg => [200] 
+[GET] https://myshop-img.carmanager.co.kr/temp/photo/2026/20260407/4E3F4A2B6E12A1CEFA06607CEDBFA4A0A4B151378BE2E988BF868BD4FB1CB34B_TH.jpg => [200] 
+[GET] https://myshop-img.carmanager.co.kr/temp/photo/2026/20260407/720480D3A9E142C4A44BB8D8F29DF127B023D3F1234C3AB5A7AEA9BEFFBE8509_TH.jpg => [200] 
+[GET] https://myshop-img.carmanager.co.kr/temp/photo/2026/20260407/5AF396AAE452F5D34E4A34DB4C1E7F5CCAC7F2C86990B6312F332EB7B49A36CD_TH.jpg => [200] 
+[GET] https://img.carmanager.co.kr/temp/photo/2026/20260407/D2FC1F267BFE0BEE99893BE76D119E5AA745C76654D77B2D6E5984141B7B939A_TH.jpg => [200] 
+[GET] https://img.carmanager.co.kr/temp/photo/2026/20260407/DDA0AD4D742748A62BCFF31C79594068D246CD476839B9898924A6D2385D4586_TH.jpg => [200] 
+[GET] https://myshop-img.carmanager.co.kr/temp/photo/20260408/9ABB6EB5872FAF2B7287A7C945D4CD59AC6ADCC5C3A842771CE74951A2F35B43_TH.jpg => [200] 
+[GET] https://myshop-img.carmanager.co.kr/temp/photo/20260408/D4545C0885A7451442C339B443E0B83F4968461DA9D62589068D092B01391DA9_TH.jpg => [200] 
+[GET] https://myshop-img.carmanager.co.kr/temp/photo/20260408/EA0B1E0EB5789F0307877AF060A7FE73FBC89CECF474F1FD21831C238D0E50FE_TH.jpg => [200] 
+[GET] https://img.carmanager.co.kr/temp/photo/20260408/623F27F1AD0C96672D34E67DEF296ADDC7A4CF0190246BAF1C13A2D05D996910_TH.jpg => [200] 
+[GET] https://img.carmanager.co.kr/temp/photo/20260408/414175E86A25A83A530EC13E63B0E72BC295AAD150C896D10C8AC3CD91BB7472_TH.jpg => [200] 
+[GET] https://myshop-img.carmanager.co.kr/temp/photo/20260402/E12622B2486CC9EEEC95B58055FB90D153297B98557635830DBAEBC6106CACF7_TH.jpg => [200] 
+[GET] https://myshop-img.carmanager.co.kr/temp/photo/20260402/E7926A523AE4331911EC8DD7AE29582634FAA1E2FA0FD0767AA9194B5E2F017B_TH.jpg => [200] 
+[GET] https://myshop-img.carmanager.co.kr/temp/photo/20260402/8A0B1B43DC265E0834755FDF224CE220BA5E057D6C34D8D724A7DCAE6FB396D3_TH.jpg => [200] 
+[GET] https://img.carmanager.co.kr/temp/photo/20260402/FC59A6F26E26B069F42ACDE97C38C477E6AD5A675424941A5902AF560E4EBA60_TH.jpg => [200] 
+[GET] https://img.carmanager.co.kr/temp/photo/20260402/CF02D2EAA2C7ADBC0F5B4EFDFD7909E73CC87A75E9C34BD22E33CFE928A77A1D_TH.jpg => [200] 
+[GET] https://myshop-img.carmanager.co.kr/temp/photo/20260407/2C9A6FE37F06D761C5B83BC0EACF06E793A78DC63BEBCC5492630126EA2AB9C8_TH.jpg => [200] 
+[GET] https://myshop-img.carmanager.co.kr/temp/photo/20260407/00D4522A8BC7B5C0F73296E8262137553696B30F4D0387452FA5F8E990020AE1_TH.jpg => [200] 
+[GET] https://myshop-img.carmanager.co.kr/temp/photo/20260407/B7BD5EF1526144E7B630014259462788B580E67E16ECE253E1FD3F7FA88F40CE_TH.jpg => [200] 
+[GET] https://img.carmanager.co.kr/temp/photo/20260407/DBA9C9C7B900C84600ECCD8DC45C91CC1DE0DC83CE8674F85B1DEB6109134E5D_TH.jpg => [200] 
+[GET] https://img.carmanager.co.kr/temp/photo/20260407/7C3D431810C8D68D3A0349A01B97D9B4367280D0D0E7424C801D5F6FCBD5AD20_TH.jpg => [200] 
+[GET] https://myshop-img.carmanager.co.kr/temp/photo/20260406/FD113308F6FBD99229F2ECB394A7A900823F9DCDEDFD1C210377540FB2D56783_TH.jpg => [200] 
+[GET] https://myshop-img.carmanager.co.kr/temp/photo/20260406/65E5E96214E794098329647149A60E72FBBBD9C45D40AA35189E621677BCE64C_TH.jpg => [200] 
+[GET] https://myshop-img.carmanager.co.kr/temp/photo/20260406/2E92B5DEE353529C8C1C19A6AB91E6A8AE5CBE3AB95251E0F4557D6F1E66999B_TH.jpg => [200] 
+[GET] https://img.carmanager.co.kr/temp/photo/20260406/83411B6E9109FEE0586556CEDF18071B16B1CD25EB846CE504304C7F1FF824A8_TH.jpg => [200] 
+[GET] https://img.carmanager.co.kr/temp/photo/20260406/ADE2DBFB8C0C1D0EBBF6E0E35B1D5984F2A3E9EB21EB649195F0C9C86A140E9F_TH.jpg => [200] 
+[GET] https://myshop-img.carmanager.co.kr/temp/photo/2026/20260407/4F348420027F754037602C73809E33815EF5351B1F713D2D350F37B3AAA6494E_TH.jpg => [200] 
+[GET] https://myshop-img.carmanager.co.kr/temp/photo/2026/20260407/00DBF1432BF259279DEC8846B602BF386567528E420C1FE80ECB6C86C1D18668_TH.jpg => [200] 
+[GET] https://myshop-img.carmanager.co.kr/temp/photo/2026/20260407/19C07A7BB4432215C351DEA1FEC8BC0975E50F81CC4DB0FA7B446DDF0B510832_TH.jpg => [200] 
+[GET] https://img.carmanager.co.kr/temp/photo/2026/20260407/6EDEEC95421CE3B860B88D12F1EC9AE71B2649204FDBFE33F0D4B96ED4FD8C43_TH.jpg => [200] 
+[GET] https://img.carmanager.co.kr/temp/photo/2026/20260407/B9A1F489ED672AF7A0F1A1D7BA9AE6314133D8E8CCBFC55183CE7C1B5AF5EF1E_TH.jpg => [200] 
+[GET] https://myshop-img.carmanager.co.kr/temp/photo/20260407/2A50CBB3EE97EC5B9329E5D457C5791477B781F76B4F8CA6B96158A0EB024425_TH.jpg => [200] 
+[GET] https://myshop-img.carmanager.co.kr/temp/photo/20260407/A6D78D47B816D901208F926E29D33A11D4D6E256F04077FA6248F69FDB8151C6_TH.jpg => [200] 
+[GET] https://myshop-img.carmanager.co.kr/temp/photo/20260407/5166BC3B5890590A95BF6EFE94C423E698801140ACFA2D50153945536375249D_TH.jpg => [200] 
+[GET] https://img.carmanager.co.kr/temp/photo/20260407/AADAC662C2205B2BCBEB23488661760B5595D5B10C60C7BA50D1ED8EABD2743F_TH.jpg => [200] 
+[GET] https://img.carmanager.co.kr/temp/photo/20260407/9109C9730EC3A9F5BA0FC23486716CBFDAE3DB76279A30A7CE22948BC256758D_TH.jpg => [200] 
+[GET] https://myshop-img.carmanager.co.kr/temp/photo/20260327/BF62223ED2FC64E9A21CC547E8A6AE85D0A47199B597ACC0C65051D04EA1D936_TH.jpg => [200] 
+[GET] https://myshop-img.carmanager.co.kr/temp/photo/20260327/BEED92050123863CBBC29F060EB87D490312B2764E75DFFF51A20558AA3B22A2_TH.jpg => [200] 
+[GET] https://myshop-img.carmanager.co.kr/temp/photo/20260327/F1899C7963758D55A33EBA490880F6CAB1505FB0682F60AB3944E5A537D5F4A1_TH.jpg => [200] 
+[GET] https://img.carmanager.co.kr/temp/photo/20260327/155AEE1609F3D7C6A1AC0FB015534CD3385F796D86C3AADFE54A1C5E40C7697D_TH.jpg => [200] 
+[GET] https://img.carmanager.co.kr/temp/photo/20260327/41A7524AEE62817E7F1308A151634CEAB99B430BC6D707A75B4801D9F913D132_TH.jpg => [200] 
+[GET] https://myshop-img.carmanager.co.kr/temp/photo/2026/20260407/4EC39DF8CA0B986E2BB3F90E66A9830984151BE08621EBA6530D451CCB5C4628_TH.jpg => [200] 
+[GET] https://myshop-img.carmanager.co.kr/temp/photo/2026/20260407/193C6554D711B0AA37EF3F88547766CB4D83DAF6F5D87ECD32639A8828874F7F_TH.jpg => [200] 
+[GET] https://myshop-img.carmanager.co.kr/temp/photo/2026/20260407/80701635DC65D704C88F2EF5820E0D2D7218077D665BF66E2A82EC91779290F3_TH.jpg => [200] 
+[GET] https://img.carmanager.co.kr/temp/photo/2026/20260407/C007490DCC819F14356050C7F11AC8564B90E254EE15F5B883E35B08BB3B28CE_TH.jpg => [200] 
+[GET] https://img.carmanager.co.kr/temp/photo/2026/20260407/B02570F8DCE70F113BBA14196787D32616155912D6B92A34CEBA2AC786333B8E_TH.jpg => [200] 
+[GET] https://myshop-img.carmanager.co.kr/temp/photo/2026/20260407/79DACE5A9F74305EFB5898646CF494FB5B233D9D57BD7F7C2181E4B80180923C_TH.jpg => [200] 
+[GET] https://myshop-img.carmanager.co.kr/temp/photo/2026/20260407/7C3B4FBFF3BBDD444AFAE12456F55B659DFC2750B7FBC8113E21B5F227E01E89_TH.jpg => [200] 
+[GET] https://myshop-img.carmanager.co.kr/temp/photo/2026/20260407/A976C1BE733AAD917D533AF8213BB52A2FACE17BCF9579343CB83492DDB9B7E2_TH.jpg => [200] 
+[GET] https://img.carmanager.co.kr/temp/photo/2026/20260407/447A324D1093E2328EEF9F79C1A65576C5E4D438CCAC98D00DD7E9916F53879D_TH.jpg => [200] 
+[GET] https://img.carmanager.co.kr/temp/photo/2026/20260407/9B1FC04FD545DFEFC3764804BEA87FC86898EDE40B7BE445826C5F3F455341FD_TH.jpg => [200] 
+[GET] https://myshop-img.carmanager.co.kr/temp/photo/20260407/B10BB7F285698A03ABCD7243AF95EC86DBB82771DD6BDDE350C4E009B427C72E_TH.jpg => [200] 
+[GET] https://myshop-img.carmanager.co.kr/temp/photo/20260407/6E6215361D67DD88C6EE22907A98066BEFC2C5EE88D3232E2C252C1FC3074768_TH.jpg => [200] 
+[GET] https://myshop-img.carmanager.co.kr/temp/photo/20260407/3AD1990D038AC60884C98F96D0CA42733D78CE94911D7275EEDE4B111A2AC861_TH.jpg => [200] 
+[GET] https://img.carmanager.co.kr/temp/photo/20260407/1A44D459BEE8560AAF0BF6AA1C36731C3334219CCC1D19149868F972819B7927_TH.jpg => [200] 
+[GET] https://img.carmanager.co.kr/temp/photo/20260407/19434AA642A838E0A217B9163AB6238EC7B45603DF2D781742308B945035641F_TH.jpg => [200] 
+[GET] http://www.chasainmotors.com/assets/basic/js/v3/search/search.js?v=1745227335 => [200] OK
+[GET] http://www.chasainmotors.com/assets/basic/js/v3/search/model.js?v=1728634808 => [200] OK
+[GET] http://www.chasainmotors.com/assets/basic/js/v3/common/sideBanner.js?v=1681787327 => [200] OK
+[GET] http://www.chasainmotors.com/assets/basic/js/v3/common/footer.js?v=1681787327 => [200] OK
+[GET] http://www.chasainmotors.com/assets/basic/js/v3/common/color.js?v=1681787327 => [200] OK
+[GET] http://www.chasainmotors.com/assets/custom/chaSignMotors/js/consulting/registration.js?v=1669013490 => [200] OK
+[GET] http://www.chasainmotors.com/assets/basic/js/v3/consulting/registration.js?v=1681787327 => [200] OK
+[GET] http://www.chasainmotors.com/assets/custom/chaSignMotors/js/footer/footer.js?v=1659504868 => [200] OK
+[GET] http://www.chasainmotors.com/assets/basic/js/v3/common/myshop_common.js?v=1681787327 => [200] OK
+[GET] https://myshop-img2.carmanager.co.kr/myshop3/admin/images/footer/156/pc/ft_logo.png => [200] 
+[GET] http://www.chasainmotors.com/assets/basic/images/common/loading.gif => [200] OK
+[GET] https://myshop-img2.carmanager.co.kr/myshop3/custom/chaSignMotors/images/common/txt_tel.png => [200] 
+[GET] https://cdn.jsdelivr.net/npm/sweetalert2@9 => [200] 
+[GET] https://ssl.pstatic.net/melona/libs/gfp-nac-module/synchronizer.js => [200] 
+[POST] https://wcs.naver.com/b => [204] 
+  Request body: {"wa":"13d5d1b3e5d0770","u":"http://www.chasainmotors.com/search/model/kor?order=&ascending=desc&view=image&customSelect=24&carName=&maker=&model=&dmodel=&grade=&dgrade=&price-min=&price-max=&year-min=&year-max=&usekm-min=&usekm-max=&fuel=&mission=&color=&country=kor&carNo=&carPlateNumber=&vehicle-model=&vehicle-dmodel=&vehicle-name=&tab=model&detailSearch=&type=","e":"","bt":-1,"os":"MacIntel","ln":"en-US","sr":"1512x982","bw":1512,"bh":805,"c":30,"j":"N","jv":"1.8","k":"Y","ct":"","cs":"UTF-8","tl":"%EC%88%98%EC%9B%90skv1%EB%AA%A8%ED%84%B0%EC%8A%A4%20%EC%B0%A8%EC%82%AC%EC%9D%B8%EB%AA%A8%ED%84%B0%EC%8A%A4","vs":"0.8.18","nt":1775617277957,"fwb":"48aXempYapADk8A68sms15.1775617277956","ext":"{\"wot\":530}"}
+[GET] https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400&display=swap => [200] 
+[GET] http://www.chasainmotors.com/assets/basic/js/v3/common.js => [200] OK
+[GET] http://www.chasainmotors.com/assets/basic/js/v3/common/color.js => [200] OK
+[GET] http://www.chasainmotors.com/assets/basic/images/common/ico_youtube.png => [200] OK
+[GET] http://www.chasainmotors.com/assets/basic/images/common/ico_fb.png => [200] OK
+[GET] http://www.chasainmotors.com/assets/basic/images/common/ico_blog.png => [200] OK
+[GET] http://www.chasainmotors.com/assets/basic/images/common/ico_kakao.png => [200] OK
+[GET] http://www.chasainmotors.com/assets/basic/images/common/infobg.jpg => [200] OK
+[GET] http://www.chasainmotors.com/assets/basic/images/privateList/icon/sort_arrow_down.png => [200] OK
+[GET] http://www.chasainmotors.com/assets/basic/images/privateList/icon/sort_arrow_up.png => [200] OK
+[GET] http://www.chasainmotors.com/assets/basic/fonts/NanumGothic-Regular.woff2 => [200] OK
+[GET] https://fonts.gstatic.com/s/notosanskr/v39/PbyxFmXiEBPT4ITbgNA5Cgms3VYcOA-vvnIzzuoyeLHq8H4gdeG6cl5G3CHlodySd_ke-3HNnn9yQA.118.woff2 => [200] 
+[GET] https://fonts.gstatic.com/s/notosanskr/v39/PbyxFmXiEBPT4ITbgNA5Cgms3VYcOA-vvnIzzuoySLPg8VwkbeDoYQ.woff2 => [200] 
+[GET] http://www.chasainmotors.com/assets/basic/fonts/NanumGothic-Bold.woff2 => [200] OK
+[GET] https://fonts.gstatic.com/s/notosanskr/v39/PbyxFmXiEBPT4ITbgNA5Cgms3VYcOA-vvnIzzuoyeLHq8H4gdeG6cl5G3CHlodySd_ke-3HNnn9yQA.117.woff2 => [200] 
+[GET] https://fonts.gstatic.com/s/notosanskr/v39/PbyxFmXiEBPT4ITbgNA5Cgms3VYcOA-vvnIzzuoyeLHq8H4gdeG6cl5G3CHlodySd_ke-3HNnn9yQA.116.woff2 => [200] 
+[GET] https://fonts.gstatic.com/s/notosanskr/v39/PbyxFmXiEBPT4ITbgNA5Cgms3VYcOA-vvnIzzuoyeLHq8H4gdeG6cl5G3CHlodySd_ke-3HNnn9yQA.114.woff2 => [200] 
+[GET] https://fonts.gstatic.com/s/notosanskr/v39/PbyxFmXiEBPT4ITbgNA5Cgms3VYcOA-vvnIzzuoyeLHq8H4gdeG6cl5G3CHlodySd_ke-3HNnn9yQA.119.woff2 => [200] 
+[GET] https://fonts.gstatic.com/s/notosanskr/v39/PbyxFmXiEBPT4ITbgNA5Cgms3VYcOA-vvnIzzuoyeLHq8H4gdeG6cl5G3CHlodySd_ke-3HNnn9yQA.112.woff2 => [200] 
+[GET] https://fonts.gstatic.com/s/notosanskr/v39/PbyxFmXiEBPT4ITbgNA5Cgms3VYcOA-vvnIzzuoyeLHq8H4gdeG6cl5G3CHlodySd_ke-3HNnn9yQA.111.woff2 => [200] 
+[GET] https://fonts.gstatic.com/s/notosanskr/v39/PbyxFmXiEBPT4ITbgNA5Cgms3VYcOA-vvnIzzuoyeLHq8H4gdeG6cl5G3CHlodySd_ke-3HNnn9yQA.115.woff2 => [200] 
+[GET] https://fonts.gstatic.com/s/notosanskr/v39/PbyxFmXiEBPT4ITbgNA5Cgms3VYcOA-vvnIzzuoyeLHq8H4gdeG6cl5G3CHlodySd_ke-3HNnn9yQA.109.woff2 => [200] 
+[GET] https://fonts.gstatic.com/s/notosanskr/v39/PbyxFmXiEBPT4ITbgNA5Cgms3VYcOA-vvnIzzuoyeLHq8H4gdeG6cl5G3CHlodySd_ke-3HNnn9yQA.108.woff2 => [200] 
+[GET] https://fonts.gstatic.com/s/notosanskr/v39/PbyxFmXiEBPT4ITbgNA5Cgms3VYcOA-vvnIzzuoyeLHq8H4gdeG6cl5G3CHlodySd_ke-3HNnn9yQA.113.woff2 => [200] 
+[GET] https://fonts.gstatic.com/s/notosanskr/v39/PbyxFmXiEBPT4ITbgNA5Cgms3VYcOA-vvnIzzuoyeLHq8H4gdeG6cl5G3CHlodySd_ke-3HNnn9yQA.110.woff2 => [200] 
+[POST] http://www.chasainmotors.com/search/getMissionList => [200] OK
+[POST] http://www.chasainmotors.com/search/getFuelList => [200] OK
+[POST] http://www.chasainmotors.com/search/getColorList => [200] OK
+[POST] http://www.chasainmotors.com/search/getMakerList => [200] OK
+  Request body: country=kor
+[GET] https://nam.veta.naver.com/nac/2 => [200] 
+[GET] http://www.chasainmotors.com/assets/custom/chaSignMotors/images/favicon/favicon-32x32.png => [200] OK

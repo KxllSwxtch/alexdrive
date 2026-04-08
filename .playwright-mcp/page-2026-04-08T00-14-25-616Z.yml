@@ -1,0 +1,237 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - generic [ref=e4]:
+      - heading "로고" [level=1] [ref=e5]:
+        - link "로고" [ref=e6] [cursor=pointer]:
+          - /url: /
+          - img "로고" [ref=e7]
+      - heading "세일카 메뉴" [level=2] [ref=e8]
+      - list [ref=e9]:
+        - listitem [ref=e10]:
+          - link "국산차" [ref=e11] [cursor=pointer]:
+            - /url: /search/get_search?fn=model&country=kor&tab=model
+        - listitem [ref=e12]:
+          - link "수입차" [ref=e13] [cursor=pointer]:
+            - /url: /search/get_search?fn=model&country=foreign&tab=model
+        - listitem [ref=e14]:
+          - link "화물차" [ref=e15] [cursor=pointer]:
+            - /url: /search/get_search?fn=model&country=freight&tab=model
+        - listitem [ref=e16]:
+          - link "내차팔기 · 구매상담" [ref=e17] [cursor=pointer]:
+            - /url: /consulting/sale
+        - listitem [ref=e18]:
+          - link "고객후기" [ref=e19] [cursor=pointer]:
+            - /url: /board/list/board/review?type=title&content=
+        - listitem [ref=e20]:
+          - link "오시는길" [ref=e21] [cursor=pointer]:
+            - /url: /common/map
+      - generic [ref=e24]:
+        - textbox "차량번호를 입력하세요" [ref=e25]
+        - button "검색" [ref=e26] [cursor=pointer]:
+          - generic [ref=e27]: 검색
+      - img "차량번호 대표번호" [ref=e29]
+    - list [ref=e32]:
+      - listitem [ref=e33]:
+        - link "홈" [ref=e34] [cursor=pointer]:
+          - /url: /
+      - listitem [ref=e35]:
+        - link "관리자로그인" [ref=e36] [cursor=pointer]:
+          - /url: http://admin.salecars.co.kr
+      - listitem [ref=e37]:
+        - link "찾아오시는길" [ref=e38] [cursor=pointer]:
+          - /url: /common/map
+  - generic [ref=e40]:
+    - generic [ref=e41]:
+      - link "세일카 카카오톡 상담" [ref=e43] [cursor=pointer]:
+        - /url: https://pf.kakao.com/_nvbxnj/chat
+        - img "세일카 카카오톡 상담" [ref=e44]
+      - link "세일카 유튜브채널" [ref=e46] [cursor=pointer]:
+        - /url: https://www.youtube.com/channel/UCK9ZZzqcCl6eVY8dPzW7YqA
+        - img "세일카 유튜브채널" [ref=e47]
+      - img "세일카 대표번호 365일 24시간 가능" [ref=e49]
+      - generic [ref=e50]:
+        - paragraph [ref=e51]: 최근본차량
+        - list [ref=e52]:
+          - listitem [ref=e53]:
+            - link "287나3682" [ref=e54] [cursor=pointer]:
+              - /url: javascript:;
+              - generic [ref=e56]: 287나3682
+          - listitem [ref=e57]:
+            - link "59도9450" [ref=e58] [cursor=pointer]:
+              - /url: javascript:;
+              - generic [ref=e60]: 59도9450
+          - listitem [ref=e61]:
+            - link "07고5855" [ref=e62] [cursor=pointer]:
+              - /url: javascript:;
+              - generic [ref=e64]: 07고5855
+        - link "TOP" [ref=e65] [cursor=pointer]:
+          - /url: "#"
+    - generic [ref=e66]:
+      - list [ref=e68]:
+        - listitem [ref=e69]:
+          - link "모델명 검색" [ref=e70] [cursor=pointer]:
+            - /url: /search/get_search?fn=model&country=all&tab=model&type=
+        - listitem [ref=e71]:
+          - link "차종별 검색" [ref=e72] [cursor=pointer]:
+            - /url: /search/get_search?fn=vehicle&country=all&tab=vehicle&type=
+      - generic [ref=e73]:
+        - listitem [ref=e74]:
+          - heading "제조사" [level=3] [ref=e75]
+          - list [ref=e76]:
+            - listitem [ref=e77] [cursor=pointer]: 현대
+            - listitem [ref=e78] [cursor=pointer]: 제네시스
+            - listitem [ref=e79] [cursor=pointer]: 기아
+            - listitem [ref=e80] [cursor=pointer]: 소형화물
+            - listitem [ref=e81] [cursor=pointer]: 르노코리아(삼성)
+            - listitem [ref=e82] [cursor=pointer]: KG모빌리티(쌍용)
+            - listitem [ref=e83] [cursor=pointer]: 쉐보레
+            - listitem [ref=e84] [cursor=pointer]: 대우
+            - listitem [ref=e85] [cursor=pointer]: 중대형화물
+            - listitem [ref=e86] [cursor=pointer]: 중대형버스
+            - listitem [ref=e87] [cursor=pointer]: 기타제조사
+            - listitem [ref=e88] [cursor=pointer]: 벤츠
+            - listitem [ref=e89] [cursor=pointer]: BMW
+            - listitem [ref=e90] [cursor=pointer]: 아우디
+            - listitem [ref=e91] [cursor=pointer]: 폭스바겐
+            - listitem [ref=e92] [cursor=pointer]: 미니
+            - listitem [ref=e93] [cursor=pointer]: 볼보
+            - listitem [ref=e94] [cursor=pointer]: 랜드로버
+            - listitem [ref=e95] [cursor=pointer]: 닛산
+            - listitem [ref=e96] [cursor=pointer]: 다이하쓰
+            - listitem [ref=e97] [cursor=pointer]: 다찌
+            - listitem [ref=e98] [cursor=pointer]: 동풍소콘
+            - listitem [ref=e99] [cursor=pointer]: 람보르기니
+            - listitem [ref=e100] [cursor=pointer]: 렉서스
+            - listitem [ref=e101] [cursor=pointer]: 로버
+            - listitem [ref=e102] [cursor=pointer]: 로터스
+            - listitem [ref=e103] [cursor=pointer]: 롤스로이스
+            - listitem [ref=e104] [cursor=pointer]: 르노
+            - listitem [ref=e105] [cursor=pointer]: 링컨
+            - listitem [ref=e106] [cursor=pointer]: 마세라티
+            - listitem [ref=e107] [cursor=pointer]: 마이바흐
+            - listitem [ref=e108] [cursor=pointer]: 마쯔다
+            - listitem [ref=e109] [cursor=pointer]: 맥라렌
+            - listitem [ref=e110] [cursor=pointer]: 미쯔비시
+            - listitem [ref=e111] [cursor=pointer]: 미쯔오카
+            - listitem [ref=e112] [cursor=pointer]: 벤틀리
+            - listitem [ref=e113] [cursor=pointer]: 부가티
+            - listitem [ref=e114] [cursor=pointer]: 북기은상
+            - listitem [ref=e115] [cursor=pointer]: 뷰익
+            - listitem [ref=e116] [cursor=pointer]: 사브
+            - listitem [ref=e117] [cursor=pointer]: 사이언
+            - listitem [ref=e118] [cursor=pointer]: 선롱버스
+            - listitem [ref=e119] [cursor=pointer]: 스마트
+            - listitem [ref=e120] [cursor=pointer]: 스바루
+            - listitem [ref=e121] [cursor=pointer]: 스즈키
+            - listitem [ref=e122] [cursor=pointer]: 시보레
+            - listitem [ref=e123] [cursor=pointer]: 시트로엥
+            - listitem [ref=e124] [cursor=pointer]: 알파로메오
+            - listitem [ref=e125] [cursor=pointer]: 애스턴마틴
+            - listitem [ref=e126] [cursor=pointer]: 어큐라
+            - listitem [ref=e127] [cursor=pointer]: 오펠
+            - listitem [ref=e128] [cursor=pointer]: 올즈모빌
+            - listitem [ref=e129] [cursor=pointer]: 이네오스
+            - listitem [ref=e130] [cursor=pointer]: 이베코
+            - listitem [ref=e131] [cursor=pointer]: 이스즈
+            - listitem [ref=e132] [cursor=pointer]: 인피니티
+            - listitem [ref=e133] [cursor=pointer]: 재규어
+            - listitem [ref=e134] [cursor=pointer]: 지리
+            - listitem [ref=e135] [cursor=pointer]: 지프
+            - listitem [ref=e136] [cursor=pointer]: 쯔더우
+            - listitem [ref=e137] [cursor=pointer]: 캐딜락
+            - listitem [ref=e138] [cursor=pointer]: 크라이슬러
+            - listitem [ref=e139] [cursor=pointer]: 테슬라
+            - listitem [ref=e140] [cursor=pointer]: 토요타
+            - listitem [ref=e141] [cursor=pointer]: 페라리
+            - listitem [ref=e142] [cursor=pointer]: 포드
+            - listitem [ref=e143] [cursor=pointer]: 포르쉐
+            - listitem [ref=e144] [cursor=pointer]: 포톤
+            - listitem [ref=e145] [cursor=pointer]: 폰티악
+            - listitem [ref=e146] [cursor=pointer]: 폴스타
+            - listitem [ref=e147] [cursor=pointer]: 푸조
+            - listitem [ref=e148] [cursor=pointer]: 피아트
+            - listitem [ref=e149] [cursor=pointer]: 허머
+            - listitem [ref=e150] [cursor=pointer]: 혼다
+            - listitem [ref=e151] [cursor=pointer]: BYD
+            - listitem [ref=e152] [cursor=pointer]: GMC
+            - listitem [ref=e153] [cursor=pointer]: LEVC
+        - listitem [ref=e154]:
+          - heading "모델" [level=3] [ref=e155]
+          - list [ref=e156]:
+            - paragraph [ref=e157]:
+              - text: 제조사를
+              - text: 선택하세요
+        - listitem [ref=e158]:
+          - heading "세부모델" [level=3] [ref=e159]
+          - list [ref=e160]:
+            - paragraph [ref=e161]:
+              - text: 모델을
+              - text: 선택하세요
+        - listitem [ref=e162]:
+          - heading "등급" [level=3] [ref=e163]
+          - list [ref=e164]:
+            - paragraph [ref=e165]:
+              - text: 세부모델을
+              - text: 선택하세요
+        - listitem [ref=e166]:
+          - heading "세부등급" [level=3] [ref=e167]
+          - list [ref=e168]:
+            - paragraph [ref=e169]:
+              - text: 등급을
+              - text: 선택하세요
+      - button "상세검색열기" [ref=e170] [cursor=pointer]
+      - generic [ref=e171]:
+        - button "검색하기" [ref=e172] [cursor=pointer]
+        - button "선택초기화" [ref=e173] [cursor=pointer]
+      - generic [ref=e175]:
+        - generic [ref=e177]: 전체 0대
+        - generic [ref=e179]:
+          - list [ref=e180]:
+            - listitem [ref=e181]:
+              - text: 최근등록매물
+              - button [ref=e182] [cursor=pointer]
+              - button [ref=e183] [cursor=pointer]
+            - listitem [ref=e184]:
+              - text: 가격순
+              - button [ref=e185] [cursor=pointer]
+              - button [ref=e186] [cursor=pointer]
+            - listitem [ref=e187]:
+              - text: 연식순
+              - button [ref=e188] [cursor=pointer]
+              - button [ref=e189] [cursor=pointer]
+            - listitem [ref=e190]:
+              - text: 주행거리순
+              - button [ref=e191] [cursor=pointer]
+              - button [ref=e192] [cursor=pointer]
+          - combobox [ref=e193]:
+            - option "8개씩"
+            - option "16개씩"
+            - option "24개씩" [selected]
+            - option "32개씩"
+            - option "40개씩"
+        - list [ref=e194]:
+          - listitem [ref=e195]
+  - contentinfo [ref=e196]:
+    - generic [ref=e197]:
+      - img "하단 로고" [ref=e198]
+      - generic [ref=e200]:
+        - paragraph [ref=e201]: "관리책임자 : 엄만호 / 핸드폰번호 010-3333-4333 / E-mail : 76man1502 @naver.com"
+        - paragraph [ref=e202]: "대표번호 : 010-3333-4333 / 팩스 : 031-291-1044 / 사업자등록번호 634-86-00864 (주)세일카 / 대표이사 엄만호"
+        - paragraph [ref=e203]
+        - paragraph [ref=e204]: "수원본점 : 경기도 수원시 권선구 평동로 79번길 45 SK V1 모터스 315,316호"
+        - paragraph [ref=e205]:
+          - generic [ref=e206]: ▶
+          - generic [ref=e208]: 간혹 평균 매매시세보다 낮게 책정된 차량들은 리스. 렌트승계(인수금) 또는 계약중인 차량일 수 있으니 문의 주시면 상담 도와드리겠습니다
+          - generic [ref=e209]: ◀
+        - strong [ref=e211]: 전국 중고차 출장 매입 및 판매 가능합니다.
+        - paragraph [ref=e212]:
+          - generic:
+            - strong
+        - paragraph [ref=e213]:
+          - strong [ref=e215]:
+            - generic [ref=e216]:
+              - img "1713857462071006.jpg" [ref=e217]
+              - img "1713857462601215.png" [ref=e218]
+        - text: Copyrightsⓒ 2013 By
+        - strong [ref=e219]: 수원중고차 세일카
+        - text: All Rights Reserved

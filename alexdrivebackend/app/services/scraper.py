@@ -17,7 +17,8 @@ _filter_cache: dict | None = None
 _filter_lock = asyncio.Lock()
 
 _listing_cache: dict[str, dict] = {}
-_listing_lock = asyncio.Lock()
+_listing_locks: dict[str, asyncio.Lock] = {}
+_listing_locks_guard = asyncio.Lock()
 LISTING_TTL = 600  # 10 minutes
 LISTING_REFRESH_AT = 480  # refresh after 80% of TTL (8 minutes)
 MAX_LISTING_CACHE_ENTRIES = 200
@@ -37,10 +38,66 @@ _last_successful_parse: float = 0.0
 _RATE_LIMIT_MARKER = "limits_box"
 
 # --- Global outbound request throttling ---
-_last_request_time: float = 0.0
-_throttle_lock = asyncio.Lock()
 MIN_REQUEST_INTERVAL = 2.0  # was 0.3 — too aggressive, caused IP ban
 MAX_REQUEST_JITTER = 1.0
+BG_EXTRA_DELAY = 1.0  # background requests wait an extra second
+
+
+class ThrottleManager:
+    """Two-priority-level outbound request throttle.
+
+    Maintains a single shared timestamp to enforce minimum intervals
+    (total outbound rate unchanged — no increased ban risk).
+    Foreground requests (user-facing) preempt background requests.
+    """
+
+    def __init__(
+        self,
+        min_interval: float = MIN_REQUEST_INTERVAL,
+        max_jitter: float = MAX_REQUEST_JITTER,
+        bg_extra_delay: float = BG_EXTRA_DELAY,
+    ):
+        self.min_interval = min_interval
+        self.max_jitter = max_jitter
+        self.bg_extra_delay = bg_extra_delay
+        self._last_request_time: float = 0.0
+        self._lock = asyncio.Lock()
+        self._fg_waiting: int = 0
+
+    async def foreground(self) -> None:
+        """Acquire throttle slot for a user-facing request (high priority)."""
+        self._fg_waiting += 1
+        try:
+            await self._acquire(extra_delay=0.0)
+        finally:
+            self._fg_waiting -= 1
+
+    async def background(self) -> None:
+        """Acquire throttle slot for a background request (low priority).
+
+        Yields if any foreground requests are waiting.
+        """
+        while self._fg_waiting > 0:
+            await asyncio.sleep(0.1)
+        await self._acquire(extra_delay=self.bg_extra_delay)
+
+    async def _acquire(self, extra_delay: float) -> None:
+        async with self._lock:
+            now = time.time()
+            interval = self.min_interval + random.uniform(0, self.max_jitter) + extra_delay
+            elapsed = now - self._last_request_time
+            if elapsed < interval:
+                await asyncio.sleep(interval - elapsed)
+            self._last_request_time = time.time()
+
+
+_throttle = ThrottleManager()
+
+
+async def _throttle_request() -> None:
+    """Legacy wrapper — defaults to foreground priority."""
+    await _throttle.foreground()
+
 
 # --- Rate-limit tracking ---
 _last_rate_limit_time: float = 0.0
@@ -96,18 +153,6 @@ STATIC_MISSIONS = [
 ]
 
 
-async def _throttle_request() -> None:
-    """Enforce minimum interval between outbound requests."""
-    global _last_request_time
-    async with _throttle_lock:
-        now = time.time()
-        interval = MIN_REQUEST_INTERVAL + random.uniform(0, MAX_REQUEST_JITTER)
-        elapsed = now - _last_request_time
-        if elapsed < interval:
-            await asyncio.sleep(interval - elapsed)
-        _last_request_time = time.time()
-
-
 def _record_rate_limit() -> None:
     global _last_rate_limit_time, _rate_limit_count
     _last_rate_limit_time = time.time()
@@ -157,6 +202,20 @@ async def _get_detail_lock(key: str) -> asyncio.Lock:
                 for k in stale:
                     del _detail_locks[k]
         return _detail_locks[key]
+
+
+async def _get_listing_lock(key: str) -> asyncio.Lock:
+    async with _listing_locks_guard:
+        if key not in _listing_locks:
+            _listing_locks[key] = asyncio.Lock()
+            if len(_listing_locks) > MAX_LISTING_CACHE_ENTRIES * 2:
+                stale = [
+                    k for k in _listing_locks
+                    if k not in _listing_cache and not _listing_locks[k].locked()
+                ]
+                for k in stale:
+                    del _listing_locks[k]
+        return _listing_locks[key]
 
 
 # --- Filter data ---
@@ -309,7 +368,7 @@ def _evict_oldest(cache: dict[str, dict], max_entries: int) -> None:
 # --- Listing fetch ---
 
 
-async def _fetch_and_cache_listings(cache_key: str, params: dict) -> dict:
+async def _fetch_and_cache_listings(cache_key: str, params: dict, *, _background: bool = False) -> dict:
     """Fetch listings, parse, cache, and return."""
     global _last_successful_parse
 
@@ -324,7 +383,10 @@ async def _fetch_and_cache_listings(cache_key: str, params: dict) -> dict:
         return {"listings": [], "total": 0, "status": "rate_limited", "retry_after": remaining}
 
     url = _build_listing_url(params)
-    await _throttle_request()
+    if _background:
+        await _throttle.background()
+    else:
+        await _throttle.foreground()
     html = await fetch_page(url)
 
     if _RATE_LIMIT_MARKER in html:
@@ -376,7 +438,7 @@ async def _fetch_and_cache_listings(cache_key: str, params: dict) -> dict:
 async def _refresh_listing_cache(cache_key: str, params: dict) -> None:
     _listing_refresh_keys.add(cache_key)
     try:
-        await _fetch_and_cache_listings(cache_key, params)
+        await _fetch_and_cache_listings(cache_key, params, _background=True)
         print(f"[scraper] Background refresh OK ({cache_key[:8]})")
     except Exception as e:
         print(f"[scraper] Background refresh failed ({cache_key[:8]}): {e}")
@@ -409,7 +471,7 @@ async def listing_refresh_loop() -> None:
                 if age < LISTING_REFRESH_AT:
                     continue
 
-            await _fetch_and_cache_listings(cache_key, default_params)
+            await _fetch_and_cache_listings(cache_key, default_params, _background=True)
             print("[scraper] Proactive default listing refresh OK")
         except Exception as e:
             print(f"[scraper] Proactive listing refresh failed: {e}")
@@ -433,7 +495,8 @@ async def get_car_listings(params: dict) -> dict:
         remaining = get_rate_limit_retry_after()
         return {"listings": [], "total": 0, "status": "rate_limited", "retry_after": remaining}
 
-    async with _listing_lock:
+    lock = await _get_listing_lock(cache_key)
+    async with lock:
         cached = _listing_cache.get(cache_key)
         if cached and time.time() < cached["expiry"]:
             return cached["data"]
@@ -508,7 +571,7 @@ async def _refresh_detail_cache(car_id: str) -> None:
     _detail_refresh_keys.add(car_id)
     try:
         url = f"{settings.source_base_url}/search/detail/{car_id}"
-        await _throttle_request()
+        await _throttle.background()
         html = await fetch_page(url)
         if _RATE_LIMIT_MARKER in html:
             _record_rate_limit()
@@ -534,7 +597,7 @@ async def _refresh_detail_cache(car_id: str) -> None:
         _detail_refresh_keys.discard(car_id)
 
 
-async def get_car_detail(car_id: str) -> dict:
+async def get_car_detail(car_id: str, *, _background: bool = False) -> dict:
     cached = _detail_cache.get(car_id)
     if cached:
         age = time.time() - (cached["expiry"] - DETAIL_TTL)
@@ -551,7 +614,10 @@ async def get_car_detail(car_id: str) -> dict:
             return cached["data"]
 
         url = f"{settings.source_base_url}/search/detail/{car_id}"
-        await _throttle_request()
+        if _background:
+            await _throttle.background()
+        else:
+            await _throttle.foreground()
         try:
             html = await fetch_page(url)
         except NetworkError:
@@ -635,7 +701,7 @@ async def detail_cache_persist_loop() -> None:
 
 # --- Detail cache warming ---
 
-DETAIL_WARMING_MAX = 24
+DETAIL_WARMING_MAX = 8
 
 
 async def warm_detail_cache_for_listings(listings: list[dict]) -> None:
@@ -656,7 +722,12 @@ async def warm_detail_cache_for_listings(listings: list[dict]) -> None:
         if is_rate_limited():
             print("[scraper] Stopping detail warming (rate-limited)")
             break
+        # Pause warming when foreground requests are waiting
+        if _throttle._fg_waiting > 0:
+            print("[scraper] Pausing detail warming (foreground request pending)")
+            while _throttle._fg_waiting > 0:
+                await asyncio.sleep(0.2)
         try:
-            await get_car_detail(cid)
+            await get_car_detail(cid, _background=True)
         except Exception:
             pass

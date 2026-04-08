@@ -1,0 +1,56 @@
+- generic [ref=e2]:
+  - generic [ref=e3]:
+    - heading "HTTP 오류 404.0 - Not Found" [level=3] [ref=e4]
+    - heading "찾고 있는 리소스가 제거되었거나, 이름이 바뀌었거나, 일시적으로 사용할 수 없는 상태입니다." [level=4] [ref=e5]
+  - group [ref=e7]:
+    - heading "가능성이 높은 원인:" [level=4] [ref=e8]
+    - list [ref=e9]:
+      - listitem [ref=e10]: 지정한 디렉터리 또는 파일이 웹 서버에 존재하지 않습니다.
+      - listitem [ref=e11]: URL을 잘못 입력했습니다.
+      - listitem [ref=e12]: URLScan 등의 사용자 지정 필터 또는 모듈에서 파일에 대한 액세스를 제한합니다.
+  - group [ref=e14]:
+    - heading "가능한 해결 방법:" [level=4] [ref=e15]
+    - list [ref=e16]:
+      - listitem [ref=e17]: 웹 서버에서 콘텐츠를 만드십시오.
+      - listitem [ref=e18]: 브라우저 URL을 검토해 보십시오.
+      - listitem [ref=e19]:
+        - text: 실패한 요청에서 이 HTTP 상태 코드를 추적하는 추적 규칙을 만드십시오. 실패한 요청에 대한 추적 규칙을 만드는 방법을 자세하게 보려면
+        - link "여기" [ref=e20] [cursor=pointer]:
+          - /url: http://go.microsoft.com/fwlink/?LinkID=66439
+        - text: 를 클릭하십시오.
+  - group [ref=e22]:
+    - heading "자세한 오류 정보:" [level=4] [ref=e23]
+    - table [ref=e25]:
+      - rowgroup [ref=e26]:
+        - row "모듈 IIS Web Core" [ref=e27]:
+          - rowheader "모듈" [ref=e28]
+          - cell "IIS Web Core" [ref=e29]
+        - row "알림 MapRequestHandler" [ref=e30]:
+          - rowheader "알림" [ref=e31]
+          - cell "MapRequestHandler" [ref=e32]
+        - row "처리기 StaticFile" [ref=e33]:
+          - rowheader "처리기" [ref=e34]
+          - cell "StaticFile" [ref=e35]
+        - row "오류 코드 0x80070002" [ref=e36]:
+          - rowheader "오류 코드" [ref=e37]
+          - cell "0x80070002" [ref=e38]
+    - table [ref=e40]:
+      - rowgroup [ref=e41]:
+        - row "요청한 URL https://www.carmanager.co.kr:443/common/js/searchData/CarBaseModel.js" [ref=e42]:
+          - rowheader "요청한 URL" [ref=e43]
+          - cell "https://www.carmanager.co.kr:443/common/js/searchData/CarBaseModel.js" [ref=e44]
+        - row "실제 경로 D:\\WEBSOURCE\\CARMANAGER\\common\\js\\searchData\\CarBaseModel.js" [ref=e45]:
+          - rowheader "실제 경로" [ref=e46]
+          - cell "D:\\WEBSOURCE\\CARMANAGER\\common\\js\\searchData\\CarBaseModel.js" [ref=e47]
+        - row "로그온 방법 익명" [ref=e48]:
+          - rowheader "로그온 방법" [ref=e49]
+          - cell "익명" [ref=e50]
+        - row "로그온 사용자 익명" [ref=e51]:
+          - rowheader "로그온 사용자" [ref=e52]
+          - cell "익명" [ref=e53]
+  - group [ref=e55]:
+    - heading "추가 정보:" [level=4] [ref=e56]
+    - text: 이 오류는 파일이나 디렉터리가 서버에 존재하지 않는다는 것을 의미합니다. 파일이나 디렉터리를 만든 다음 다시 요청해 보십시오.
+    - paragraph [ref=e57]:
+      - link "상세 정보 보기 »" [ref=e58] [cursor=pointer]:
+        - /url: https://go.microsoft.com/fwlink/?LinkID=62293&IIS70Error=404,0,0x80070002,17763

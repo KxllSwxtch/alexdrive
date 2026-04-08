@@ -1,0 +1,1756 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - generic [ref=e4]:
+      - heading "로고" [level=1] [ref=e5]:
+        - link "로고" [ref=e6] [cursor=pointer]:
+          - /url: /
+          - img "로고" [ref=e7]
+      - heading "수원skv1모터스 차사인모터스 메뉴" [level=2] [ref=e8]
+      - list [ref=e9]:
+        - listitem [ref=e10]:
+          - link "국산차" [ref=e11] [cursor=pointer]:
+            - /url: /search/get_search?fn=model&country=kor&tab=model
+        - listitem [ref=e12]:
+          - link "수입차" [ref=e13] [cursor=pointer]:
+            - /url: /search/get_search?fn=model&country=foreign&tab=model
+        - listitem [ref=e14]:
+          - link "화물차" [ref=e15] [cursor=pointer]:
+            - /url: /search/get_search?fn=model&country=freight&tab=model
+        - listitem [ref=e16]:
+          - link "판매/구입문의" [ref=e17] [cursor=pointer]:
+            - /url: /consulting/sale
+        - listitem [ref=e18]:
+          - link "커뮤니티" [ref=e19] [cursor=pointer]:
+            - /url: /board/list/community/community?type=title&content=
+        - listitem [ref=e20]:
+          - link "회사소개" [ref=e21] [cursor=pointer]:
+            - /url: /common/introduce
+        - listitem [ref=e22]:
+          - link "오시는길" [ref=e23] [cursor=pointer]:
+            - /url: /common/map
+    - generic [ref=e25]:
+      - heading "전체메뉴" [level=2] [ref=e26]
+      - list [ref=e27]:
+        - listitem [ref=e28]:
+          - link "유튜브" [ref=e29] [cursor=pointer]:
+            - /url: https://www.youtube.com/user/kaose67
+        - listitem [ref=e30]:
+          - link "페이스북" [ref=e31] [cursor=pointer]:
+            - /url: https://www.facebook.com/kaose67
+        - listitem [ref=e32]:
+          - link "블로그" [ref=e33] [cursor=pointer]:
+            - /url: https://blog.naver.com/kaose55
+        - listitem [ref=e34]:
+          - link "카카오톡" [ref=e35] [cursor=pointer]:
+            - /url: https://open.kakao.com/o/gL9bam9c
+      - list [ref=e36]:
+        - listitem [ref=e37]:
+          - link "홈" [ref=e38] [cursor=pointer]:
+            - /url: /
+        - listitem [ref=e39]:
+          - link "관리자로그인" [ref=e40] [cursor=pointer]:
+            - /url: http://admin.chasainmotors.com
+        - listitem [ref=e41]:
+          - link "찾아오시는길" [ref=e42] [cursor=pointer]:
+            - /url: /common/map
+  - generic [ref=e44]:
+    - generic [ref=e45]:
+      - generic [ref=e46]:
+        - generic [ref=e47]:
+          - generic [ref=e48]:
+            - radio "판매" [checked] [ref=e49] [cursor=pointer]
+            - generic [ref=e50]: 판매
+          - generic [ref=e51]:
+            - radio "구매" [ref=e52] [cursor=pointer]
+            - generic [ref=e53]: 구매
+        - textbox "차명" [ref=e55]
+        - textbox "연락처" [ref=e57]
+        - generic [ref=e58]:
+          - generic [ref=e59]: ✓ 개인정보 사용 수집에 동의합니다.
+          - button "전문보기" [ref=e60] [cursor=pointer]
+        - button "상담요청" [ref=e62] [cursor=pointer]
+      - link "카카오톡 상담" [ref=e64] [cursor=pointer]:
+        - /url: https://open.kakao.com/o/gL9bam9c
+        - img "카카오톡 상담" [ref=e65]
+      - generic [ref=e66]:
+        - paragraph [ref=e67]: 최근본차량
+        - list [ref=e68]:
+          - listitem [ref=e69]:
+            - link "37저0433" [ref=e70] [cursor=pointer]:
+              - /url: javascript:;
+              - generic [ref=e72]: 37저0433
+        - link "TOP" [ref=e73] [cursor=pointer]:
+          - /url: "#"
+    - generic [ref=e74]:
+      - generic [ref=e75]:
+        - generic [ref=e76]:
+          - paragraph [ref=e78]: "[제네시스]EQ900 3.8 GDI AWD 프리미엄 럭셔리"
+          - paragraph [ref=e80]: 차량번호 37저0433
+        - generic [ref=e81]:
+          - generic [ref=e82]: 판매가 1,370만원
+          - generic [ref=e83]:
+            - button "사고이력조회(유료)" [ref=e84] [cursor=pointer]
+            - button "성능점검기록부" [ref=e85] [cursor=pointer]
+      - generic [ref=e86]:
+        - list [ref=e87]:
+          - generic [ref=e89]:
+            - listitem [ref=e92]:
+              - img "자동차 모델 상세 이미지" [ref=e93]
+            - listitem [ref=e96]:
+              - img [ref=e97]
+            - listitem [ref=e100]:
+              - img [ref=e101]
+            - listitem [ref=e104]:
+              - img [ref=e105]
+            - listitem [ref=e108]:
+              - img [ref=e109]
+            - listitem [ref=e112]:
+              - img [ref=e113]
+            - listitem [ref=e116]:
+              - img [ref=e117]
+            - listitem [ref=e120]:
+              - img [ref=e121]
+            - listitem [ref=e124]:
+              - img [ref=e125]
+            - listitem [ref=e128]:
+              - img [ref=e129]
+            - listitem [ref=e132]:
+              - img [ref=e133]
+            - listitem [ref=e136]:
+              - img [ref=e137]
+            - listitem [ref=e140]:
+              - img [ref=e141]
+            - listitem [ref=e144]:
+              - img [ref=e145]
+            - listitem [ref=e148]:
+              - img [ref=e149]
+            - listitem [ref=e152]:
+              - img [ref=e153]
+            - listitem [ref=e156]:
+              - img [ref=e157]
+            - listitem [ref=e160]:
+              - img [ref=e161]
+            - listitem [ref=e164]:
+              - img [ref=e165]
+            - listitem [ref=e168]:
+              - img [ref=e169]
+        - list [ref=e170]:
+          - generic [ref=e172]:
+            - listitem [ref=e175]:
+              - img "자동차 모델 상세 이미지" [ref=e176]
+            - listitem [ref=e179]:
+              - img "자동차 모델 상세 이미지" [ref=e180]
+            - listitem [ref=e183]:
+              - img "자동차 모델 상세 이미지" [ref=e184]
+            - listitem [ref=e187]:
+              - img "자동차 모델 상세 이미지" [ref=e188]
+            - listitem [ref=e191]:
+              - img "자동차 모델 상세 이미지" [ref=e192]
+            - listitem [ref=e195]:
+              - img "자동차 모델 상세 이미지" [ref=e196]
+            - listitem [ref=e199]:
+              - img "자동차 모델 상세 이미지" [ref=e200]
+            - listitem [ref=e203]:
+              - img "자동차 모델 상세 이미지" [ref=e204]
+            - listitem [ref=e207]:
+              - img "자동차 모델 상세 이미지" [ref=e208]
+            - listitem [ref=e211]:
+              - img "자동차 모델 상세 이미지" [ref=e212]
+            - listitem [ref=e215]:
+              - img "자동차 모델 상세 이미지" [ref=e216]
+            - listitem [ref=e219]:
+              - img "자동차 모델 상세 이미지" [ref=e220]
+            - listitem [ref=e223]:
+              - img "자동차 모델 상세 이미지" [ref=e224]
+            - listitem [ref=e227]:
+              - img "자동차 모델 상세 이미지" [ref=e228]
+            - listitem [ref=e231]:
+              - img "자동차 모델 상세 이미지" [ref=e232]
+            - listitem [ref=e235]:
+              - img "자동차 모델 상세 이미지" [ref=e236]
+            - listitem [ref=e239]:
+              - img "자동차 모델 상세 이미지" [ref=e240]
+            - listitem [ref=e243]:
+              - img "자동차 모델 상세 이미지" [ref=e244]
+            - listitem [ref=e247]:
+              - img "자동차 모델 상세 이미지" [ref=e248]
+            - listitem [ref=e251]:
+              - img "자동차 모델 상세 이미지" [ref=e252]
+      - generic [ref=e253]:
+        - generic [ref=e254]:
+          - generic [ref=e255]:
+            - heading "기본정보" [level=4] [ref=e256]
+            - table [ref=e257]:
+              - rowgroup [ref=e263]:
+                - row "연식 2016 최초등록일 2016.03.09" [ref=e264]:
+                  - rowheader "연식" [ref=e265]
+                  - cell "2016" [ref=e266]
+                  - rowheader "최초등록일" [ref=e267]
+                  - cell "2016.03.09" [ref=e268]
+                - row "연료 휘발유 변속기 오토" [ref=e269]:
+                  - rowheader "연료" [ref=e270]
+                  - cell "휘발유" [ref=e271]
+                  - rowheader "변속기" [ref=e272]
+                  - cell "오토" [ref=e273]
+                - row "색상 회색 주행거리 248,220km" [ref=e274]:
+                  - rowheader "색상" [ref=e275]
+                  - cell "회색" [ref=e276]
+                  - rowheader "주행거리" [ref=e277]
+                  - cell "248,220km" [ref=e278]
+                - row "차량번호 37저0433 차대번호 KMHG241DDGU007557" [ref=e279]:
+                  - rowheader "차량번호" [ref=e280]
+                  - cell "37저0433" [ref=e281]
+                  - rowheader "차대번호" [ref=e282]
+                  - cell "KMHG241DDGU007557" [ref=e283]
+                - row "압류｜저당 0건｜0건 모델명 EQ900" [ref=e284]:
+                  - rowheader "압류｜저당" [ref=e285]
+                  - cell "0건｜0건" [ref=e286]
+                  - rowheader "모델명" [ref=e287]
+                  - cell "EQ900" [ref=e288]
+                - row "세금미납 없음 제시번호 20251600556" [ref=e289]:
+                  - rowheader "세금미납" [ref=e290]
+                  - cell "없음" [ref=e291]
+                  - rowheader "제시번호" [ref=e292]
+                  - cell "20251600556" [ref=e293]
+                - row "사고유무 사고이력조회(유료) 판매방식 알선판매 ?" [ref=e294]:
+                  - rowheader "사고유무" [ref=e295]
+                  - cell "사고이력조회(유료)" [ref=e296]:
+                    - button "사고이력조회(유료)" [ref=e297] [cursor=pointer]
+                  - rowheader "판매방식" [ref=e298]
+                  - cell "알선판매 ?" [ref=e299]:
+                    - text: 알선판매
+                    - generic [ref=e301]: "?"
+          - generic [ref=e302]:
+            - heading "판매자정보" [level=4] [ref=e303]
+            - table [ref=e304]:
+              - rowgroup [ref=e309]:
+                - row "이름 제효창" [ref=e310]:
+                  - columnheader [ref=e311]:
+                    - img [ref=e314]
+                  - rowheader "이름" [ref=e315]
+                  - cell "제효창" [ref=e316]
+                - row "연락처 010-8239-7679" [ref=e317]:
+                  - rowheader "연락처" [ref=e318]
+                  - cell "010-8239-7679" [ref=e319]
+                - row "사원증번호 GC20-01628 사원증조회" [ref=e320]:
+                  - rowheader "사원증번호" [ref=e321]
+                  - cell "GC20-01628 사원증조회" [ref=e322]:
+                    - text: GC20-01628
+                    - button "사원증조회" [ref=e323] [cursor=pointer]
+                - row "상사 차사인모터스｜031-278-4466" [ref=e324]:
+                  - rowheader "상사" [ref=e325]
+                  - cell "차사인모터스｜031-278-4466" [ref=e326]
+                - row "조합 한국자동차매매사업조합연합회" [ref=e327]:
+                  - rowheader "조합" [ref=e328]
+                  - cell "한국자동차매매사업조합연합회" [ref=e329]
+          - generic [ref=e330]:
+            - heading "무료문자상담하기" [level=4] [ref=e331]
+            - generic [ref=e332]:
+              - textbox [disabled] [ref=e334]: (37저0433)EQ900 금액:1,370만원
+              - textbox "이름" [ref=e336]
+              - textbox "연락처 (필수)" [ref=e338]
+              - generic [ref=e339]:
+                - checkbox "수집하는 개인정보 항목, 수집 / 이용목적, 개인정보 보유기간에 동의합니다." [checked] [ref=e340]
+                - generic [ref=e341]: 수집하는 개인정보 항목, 수집 / 이용목적, 개인정보 보유기간에 동의합니다.
+              - paragraph [ref=e342]:
+                - button "전문보기" [ref=e343] [cursor=pointer]
+              - button "문자상담" [ref=e344] [cursor=pointer]
+        - generic [ref=e345]:
+          - list [ref=e348]:
+            - listitem [ref=e349]:
+              - link "차량옵션 및 상세설명" [ref=e350] [cursor=pointer]:
+                - /url: "#tab-option-info"
+            - listitem [ref=e351]:
+              - link "사진정보" [ref=e352] [cursor=pointer]:
+                - /url: "#tab-image-info"
+            - listitem [ref=e353]:
+              - link "성능점검기록부" [ref=e354] [cursor=pointer]:
+                - /url: "#tab-add-option-info"
+            - listitem [ref=e355]:
+              - link "동급매물" [ref=e356] [cursor=pointer]:
+                - /url: "#tab-equivalent-info"
+          - heading "차량옵션 및 상세설명" [level=4] [ref=e357]
+          - paragraph [ref=e358]: ※아래의 옵션정보는 실제차량의 옵션과 다를 수 있습니다. 담당자와 꼭 확인하세요.
+          - list [ref=e359]:
+            - listitem [ref=e360]:
+              - heading "주요옵션" [level=5] [ref=e361]
+              - list [ref=e362]:
+                - listitem [ref=e363]:
+                  - generic [ref=e364]: 4륜구동
+                  - generic [ref=e365]: ECM룸미러
+                  - generic [ref=e366]: HUD 헤드 업 디스플레이
+                  - generic [ref=e367]: LDWS 차선이탈경보장치
+                  - generic [ref=e368]: 감지센서 전방
+                  - generic [ref=e369]: 감지센서 후방
+                  - generic [ref=e370]: 네비게이션
+                  - generic [ref=e371]: 블랙박스 ✓
+                  - generic [ref=e372]: 슈퍼비젼계기판
+                  - generic [ref=e373]: 스마트키
+                  - generic [ref=e374]: 스탑앤고
+                  - generic [ref=e375]: 썬루프
+                  - generic [ref=e376]: 에어컨
+                  - generic [ref=e377]: 오토도어록
+                  - generic [ref=e378]: 오토라이트
+                  - generic [ref=e379]: 원격시동장치
+                  - generic [ref=e380]: 자동주차시스템
+                  - generic [ref=e381]: 전동 조절 스티어링 휠
+                  - generic [ref=e382]: 전동접이식백미러
+                  - generic [ref=e383]: 카메라 후방
+                  - generic [ref=e384]: 크루즈 컨트롤 어뎁티드
+                  - generic [ref=e385]: 크루즈컨트롤 일반
+                  - generic [ref=e386]: 트립컴퓨터
+                  - generic [ref=e387]: 파워윈도우
+                  - generic [ref=e388]: 파워트렁크
+                  - generic [ref=e389]: 파워핸들
+                  - generic [ref=e390]: 하이패스
+                  - generic [ref=e391]: 핸들리모컨
+                  - generic [ref=e392]: 핸들 열선
+            - listitem [ref=e393]:
+              - heading "편의/안전" [level=5] [ref=e394]
+              - list [ref=e395]:
+                - listitem [ref=e396]:
+                  - generic [ref=e397]: ABS 브레이크 잠김 방지
+                  - generic [ref=e398]: DLR 주간주행등
+                  - generic [ref=e399]: ECS 전자제어서스펜션
+                  - generic [ref=e400]: EPB 전자주차브레이크
+                  - generic [ref=e401]: ESC 전자제어서스펜션
+                  - generic [ref=e402]: ESP 차체자세제어장치
+                  - generic [ref=e403]: GPS
+                  - generic [ref=e404]: LED리어램프
+                  - generic [ref=e405]: LSD 차동제한장치
+                  - generic [ref=e406]: TCS 미끄럼방지
+                  - generic [ref=e407]: TPMS 타이어 공기압센서
+                  - generic [ref=e408]: 경사로밀림방지
+                  - generic [ref=e409]: 고스트 도어 클로징
+                  - generic [ref=e410]: 공기청정기
+                  - generic [ref=e411]: 도난경보기
+                  - generic [ref=e412]: 레인센서와이퍼
+                  - generic [ref=e413]: 무선도어잠금장치
+                  - generic [ref=e414]: 무선충전
+                  - generic [ref=e415]: 어라운드뷰
+                  - generic [ref=e416]: 에어백 사이드
+                  - generic [ref=e417]: 에어백 승객감지
+                  - generic [ref=e418]: 에어백 운전석
+                  - generic [ref=e419]: 에어백 조수석
+                  - generic [ref=e420]: 에어백 커튼
+                  - generic [ref=e421]: 자동긴급제동
+                  - generic [ref=e422]: 자동도어잠금
+                  - generic [ref=e423]: 자동슬라이딩도어
+                  - generic [ref=e424]: 전동사이드미러
+                  - generic [ref=e425]: 전동사이드스탭
+                  - generic [ref=e426]: 카메라-전방
+                  - generic [ref=e427]: 파워도어록
+                  - generic [ref=e428]: 풀오토에어컨
+                  - generic [ref=e429]: 후측방 경보 시스템
+                  - generic [ref=e430]: 핸들리모컨
+            - listitem [ref=e431]:
+              - heading "영상/음향" [level=5] [ref=e432]
+              - list [ref=e433]:
+                - listitem [ref=e434]:
+                  - generic [ref=e435]: AUX 단자
+                  - generic [ref=e436]: AV시스템
+                  - generic [ref=e437]: CD플레이어
+                  - generic [ref=e438]: CD체인저
+                  - generic [ref=e439]: DMB
+                  - generic [ref=e440]: DVD플레이어
+                  - generic [ref=e441]: MP3플레이어
+                  - generic [ref=e442]: USB 단자
+                  - generic [ref=e443]: VCD플레이어
+                  - generic [ref=e444]: 모니터-뒷좌석
+                  - generic [ref=e445]: 모니터-앞좌석
+                  - generic [ref=e446]: 블루투스
+                  - generic [ref=e447]: 스마트폰미러링
+                  - generic [ref=e448]: 앰프
+                  - generic [ref=e449]: 우퍼
+                  - generic [ref=e450]: 튜닝스피커
+            - listitem [ref=e451]:
+              - heading "내/외장" [level=5] [ref=e452]
+              - list [ref=e453]:
+                - listitem [ref=e454]:
+                  - generic [ref=e455]: HID램프
+                  - generic [ref=e456]: LED램프
+                  - generic [ref=e457]: 가죽시트
+                  - generic [ref=e458]: 광폭타이어
+                  - generic [ref=e459]: 냉장고
+                  - generic [ref=e460]: 루프랙
+                  - generic [ref=e461]: 루프캐리어
+                  - generic [ref=e462]: 리어스포일러
+                  - generic [ref=e463]: 메모리시트
+                  - generic [ref=e464]: 메모리시트 동승석
+                  - generic [ref=e465]: 메탈그레인
+                  - generic [ref=e466]: 버켓시트
+                  - generic [ref=e467]: 범퍼가드
+                  - generic [ref=e468]: 스트럿바
+                  - generic [ref=e469]: 썬팅
+                  - generic [ref=e470]: 안마시트
+                  - generic [ref=e471]: 알루미늄휠
+                  - generic [ref=e472]: 어댑티드 헤드램프
+                  - generic [ref=e473]: 에어댐
+                  - generic [ref=e474]: 엠비언트라이트
+                  - generic [ref=e475]: 열선시트 뒷좌석
+                  - generic [ref=e476]: 열선시트 앞좌석
+                  - generic [ref=e477]: 우드그레인
+                  - generic [ref=e478]: 워크인시트
+                  - generic [ref=e479]: 전동시트 뒷좌석
+                  - generic [ref=e480]: 전동시트 앞좌석
+                  - generic [ref=e481]: 전동햇빛가리개
+                  - generic [ref=e482]: 제논램프
+                  - generic [ref=e483]: 크롬휠
+                  - generic [ref=e484]: 통풍시트 뒷좌석
+                  - generic [ref=e485]: 통풍시트 앞좌석
+                  - generic [ref=e486]: 파노라마썬루프
+                  - generic [ref=e487]: 패들 시프트
+                  - generic [ref=e488]: 하이빔어시스트
+        - generic [ref=e489]:
+          - list [ref=e492]:
+            - listitem [ref=e493]:
+              - link "차량옵션 및 상세설명" [ref=e494] [cursor=pointer]:
+                - /url: "#tab-option-info"
+            - listitem [ref=e495]:
+              - link "사진정보" [ref=e496] [cursor=pointer]:
+                - /url: "#tab-image-info"
+            - listitem [ref=e497]:
+              - link "성능점검기록부" [ref=e498] [cursor=pointer]:
+                - /url: "#tab-add-option-info"
+            - listitem [ref=e499]:
+              - link "동급매물" [ref=e500] [cursor=pointer]:
+                - /url: "#tab-equivalent-info"
+          - heading "사진정보" [level=4] [ref=e501]
+          - generic [ref=e502]:
+            - paragraph [ref=e503]:
+              - img "자동차 모델 상세 이미지" [ref=e504]
+            - paragraph [ref=e505]:
+              - img "자동차 모델 상세 이미지" [ref=e506]
+            - paragraph [ref=e507]:
+              - img "자동차 모델 상세 이미지" [ref=e508]
+            - paragraph [ref=e509]:
+              - img "자동차 모델 상세 이미지" [ref=e510]
+            - paragraph [ref=e511]:
+              - img "자동차 모델 상세 이미지" [ref=e512]
+            - paragraph [ref=e513]:
+              - img "자동차 모델 상세 이미지" [ref=e514]
+            - paragraph [ref=e515]:
+              - img "자동차 모델 상세 이미지" [ref=e516]
+            - paragraph [ref=e517]:
+              - img "자동차 모델 상세 이미지" [ref=e518]
+            - paragraph [ref=e519]:
+              - img "자동차 모델 상세 이미지" [ref=e520]
+            - paragraph [ref=e521]:
+              - img "자동차 모델 상세 이미지" [ref=e522]
+            - paragraph [ref=e523]:
+              - img "자동차 모델 상세 이미지" [ref=e524]
+            - paragraph [ref=e525]:
+              - img "자동차 모델 상세 이미지" [ref=e526]
+            - paragraph [ref=e527]:
+              - img "자동차 모델 상세 이미지" [ref=e528]
+            - paragraph [ref=e529]:
+              - img "자동차 모델 상세 이미지" [ref=e530]
+            - paragraph [ref=e531]:
+              - img "자동차 모델 상세 이미지" [ref=e532]
+            - paragraph [ref=e533]:
+              - img "자동차 모델 상세 이미지" [ref=e534]
+            - paragraph [ref=e535]:
+              - img "자동차 모델 상세 이미지" [ref=e536]
+            - paragraph [ref=e537]:
+              - img "자동차 모델 상세 이미지" [ref=e538]
+            - paragraph [ref=e539]:
+              - img "자동차 모델 상세 이미지" [ref=e540]
+            - paragraph [ref=e541]:
+              - img "자동차 모델 상세 이미지" [ref=e542]
+        - generic [ref=e543]:
+          - list [ref=e546]:
+            - listitem [ref=e547]:
+              - link "차량옵션 및 상세설명" [ref=e548] [cursor=pointer]:
+                - /url: "#tab-option-info"
+            - listitem [ref=e549]:
+              - link "사진정보" [ref=e550] [cursor=pointer]:
+                - /url: "#tab-image-info"
+            - listitem [ref=e551]:
+              - link "성능점검기록부" [ref=e552] [cursor=pointer]:
+                - /url: "#tab-add-option-info"
+            - listitem [ref=e553]:
+              - link "동급매물" [ref=e554] [cursor=pointer]:
+                - /url: "#tab-equivalent-info"
+          - heading "성능점검기록부" [level=4] [ref=e555]
+          - iframe [ref=e557]:
+            - main [ref=f1e2]:
+              - generic [ref=f1e6]:
+                - generic [ref=f1e7]:
+                  - generic [ref=f1e8]:
+                    - link "프린트화면이 안보일때 설치" [ref=f1e9] [cursor=pointer]:
+                      - /url: https://get.adobe.com/kr/reader/
+                    - button "인쇄하기" [ref=f1e10]
+                    - text: (1/4쪽)
+                  - generic [ref=f1e11]:
+                    - heading "자동차성능ㆍ상태점검기록부 ( 자동차가격조사ㆍ산정 선택 ) 제 45-01-038330 호 ※ 자동차가격조사ㆍ산정은 매수인이 원하는 경우 제공하는 서비스입니다." [level=4] [ref=f1e12]:
+                      - strong [ref=f1e13]: 자동차성능ㆍ상태점검기록부
+                      - generic [ref=f1e14]:
+                        - text: (
+                        - checkbox [ref=f1e15]
+                        - text: 자동차가격조사ㆍ산정 선택 )
+                      - generic [ref=f1e16]:
+                        - text: 제
+                        - textbox [ref=f1e17]: 45-01-038330
+                        - text: 호
+                      - text: ※ 자동차가격조사ㆍ산정은 매수인이 원하는 경우 제공하는 서비스입니다.
+                    - table [ref=f1e18]:
+                      - rowgroup [ref=f1e27]:
+                        - row "자동차 기본정보 (가격산정 기준가격은 매수인이 자동차가격조사ㆍ산정을 원하는 경우에만 적습니다)" [ref=f1e28]:
+                          - cell "자동차 기본정보 (가격산정 기준가격은 매수인이 자동차가격조사ㆍ산정을 원하는 경우에만 적습니다)" [ref=f1e29]:
+                            - heading "자동차 기본정보" [level=5] [ref=f1e30]
+                            - text: (가격산정 기준가격은 매수인이 자동차가격조사ㆍ산정을 원하는 경우에만 적습니다)
+                      - rowgroup [ref=f1e31]:
+                        - 'row "① 차명 EQ900 (세부모델 : ) ② 자동차등록번호 37저0433" [ref=f1e32]':
+                          - cell "① 차명" [ref=f1e33]
+                          - 'cell "EQ900 (세부모델 : )" [ref=f1e34]':
+                            - generic [ref=f1e35]:
+                              - textbox [ref=f1e36]: EQ900
+                              - generic [ref=f1e37]: "(세부모델 :"
+                              - textbox [ref=f1e38]
+                              - generic [ref=f1e39]: )
+                          - cell "② 자동차등록번호" [ref=f1e40]
+                          - cell "37저0433" [ref=f1e41]:
+                            - textbox [ref=f1e42]: 37저0433
+                        - row "③ 연식 2016 ④ 검사유효기간 2024년 03월 09일 ~ 2026년 03월 08일" [ref=f1e43]:
+                          - cell "③ 연식" [ref=f1e44]
+                          - cell "2016" [ref=f1e45]:
+                            - textbox [ref=f1e46]: "2016"
+                          - cell "④ 검사유효기간" [ref=f1e47]
+                          - cell "2024년 03월 09일 ~ 2026년 03월 08일" [ref=f1e48]:
+                            - generic [ref=f1e49]:
+                              - textbox [ref=f1e50]: 2024년 03월 09일
+                              - generic [ref=f1e51]: ~
+                              - textbox [ref=f1e52]: 2026년 03월 08일
+                        - row "⑤ 최초등록일 2016-03-09 ⑦ 변속기 종류 자동 수동 세미오토 무단변속기 기타 ( )" [ref=f1e53]:
+                          - cell "⑤ 최초등록일" [ref=f1e54]
+                          - cell "2016-03-09" [ref=f1e55]:
+                            - textbox [ref=f1e57]: 2016-03-09
+                          - cell "⑦ 변속기 종류" [ref=f1e58]
+                          - cell "자동 수동 세미오토 무단변속기 기타 ( )" [ref=f1e59]:
+                            - generic [ref=f1e60]:
+                              - checkbox "자동" [checked] [ref=f1e61]
+                              - text: 자동
+                            - generic [ref=f1e62]:
+                              - checkbox "수동" [ref=f1e63]
+                              - text: 수동
+                            - generic [ref=f1e64]:
+                              - checkbox "세미오토" [ref=f1e65]
+                              - text: 세미오토
+                            - generic [ref=f1e66]:
+                              - checkbox "무단변속기" [ref=f1e67]
+                              - text: 무단변속기
+                            - generic [ref=f1e68]:
+                              - checkbox "기타" [ref=f1e69]
+                              - text: 기타
+                            - text: (
+                            - textbox [ref=f1e70]
+                            - text: )
+                        - row "⑥ 차대번호 KMHG241DDGU007557" [ref=f1e71]:
+                          - cell "⑥ 차대번호" [ref=f1e72]
+                          - cell "KMHG241DDGU007557" [ref=f1e73]:
+                            - textbox [ref=f1e75]: KMHG241DDGU007557
+                        - row "⑧ 사용연료 가솔린 디젤 LPG 하이브리드 전기 수소전기 기타" [ref=f1e76]:
+                          - cell "⑧ 사용연료" [ref=f1e77]
+                          - cell "가솔린 디젤 LPG 하이브리드 전기 수소전기 기타" [ref=f1e78]:
+                            - generic [ref=f1e79]:
+                              - checkbox "가솔린" [checked] [ref=f1e80]
+                              - text: 가솔린
+                            - generic [ref=f1e81]:
+                              - checkbox "디젤" [ref=f1e82]
+                              - text: 디젤
+                            - generic [ref=f1e83]:
+                              - checkbox "LPG" [ref=f1e84]
+                              - text: LPG
+                            - generic [ref=f1e85]:
+                              - checkbox "하이브리드" [ref=f1e86]
+                              - text: 하이브리드
+                            - generic [ref=f1e87]:
+                              - checkbox "전기" [ref=f1e88]
+                              - text: 전기
+                            - generic [ref=f1e89]:
+                              - checkbox "수소전기" [ref=f1e90]
+                              - text: 수소전기
+                            - generic [ref=f1e91]:
+                              - checkbox "기타" [ref=f1e92]
+                              - text: 기타
+                        - row "⑨ 원동기형식 G6DN ⑩ 보증유형 자가보증 보험사보증 보험사[ ] 가격산정 기준가격 만원" [ref=f1e93]:
+                          - cell "⑨ 원동기형식" [ref=f1e94]
+                          - cell "G6DN" [ref=f1e95]:
+                            - textbox [ref=f1e97]: G6DN
+                          - cell "⑩ 보증유형" [ref=f1e98]
+                          - cell "자가보증 보험사보증 보험사[ ]" [ref=f1e99]:
+                            - generic [ref=f1e100]:
+                              - generic [ref=f1e101]:
+                                - checkbox "자가보증" [checked] [ref=f1e102]
+                                - text: 자가보증
+                              - generic [ref=f1e103]:
+                                - checkbox "보험사보증" [ref=f1e104]
+                                - text: 보험사보증
+                              - generic [ref=f1e105]: 보험사[
+                              - textbox [ref=f1e106]
+                              - generic [ref=f1e107]: "]"
+                          - cell "가격산정 기준가격" [ref=f1e108]
+                          - cell "만원" [ref=f1e109]
+                    - table [ref=f1e110]:
+                      - rowgroup [ref=f1e119]:
+                        - row "자동차 종합상태 (색상, 주요옵션, 가격조사ㆍ산정액 및 특기사항은 매수인이 자동차가격조사ㆍ산정을 원하는 경우에만 적습니다)" [ref=f1e120]:
+                          - cell "자동차 종합상태 (색상, 주요옵션, 가격조사ㆍ산정액 및 특기사항은 매수인이 자동차가격조사ㆍ산정을 원하는 경우에만 적습니다)" [ref=f1e121]:
+                            - heading "자동차 종합상태" [level=5] [ref=f1e122]
+                            - text: (색상, 주요옵션, 가격조사ㆍ산정액 및 특기사항은 매수인이 자동차가격조사ㆍ산정을 원하는 경우에만 적습니다)
+                      - rowgroup [ref=f1e123]:
+                        - row "⑪ 사용이력 상태 항목/해당부품 가격조사ㆍ산정액 및 특기사항" [ref=f1e124]:
+                          - cell "⑪ 사용이력" [ref=f1e125]
+                          - cell "상태" [ref=f1e126]
+                          - cell "항목/해당부품" [ref=f1e127]
+                          - cell "가격조사ㆍ산정액 및 특기사항" [ref=f1e128]
+                        - row "주행거리 및 계기상태 양호 불량 현재 주행거리 [ 248,220 km ] 만원" [ref=f1e129]:
+                          - cell "주행거리 및 계기상태" [ref=f1e130]:
+                            - text: 주행거리
+                            - text: 및 계기상태
+                          - cell "양호 불량" [ref=f1e131]:
+                            - generic [ref=f1e132]:
+                              - checkbox "양호" [checked] [ref=f1e133]
+                              - text: 양호
+                            - generic [ref=f1e134]:
+                              - checkbox "불량" [ref=f1e135]
+                              - text: 불량
+                          - cell "현재 주행거리 [ 248,220 km ]" [ref=f1e136]:
+                            - generic [ref=f1e137]:
+                              - generic [ref=f1e138]: 현재 주행거리 [
+                              - textbox [ref=f1e139]: 248,220 km
+                              - generic [ref=f1e140]: "]"
+                          - cell "만원" [ref=f1e141]
+                          - cell [ref=f1e142]
+                        - row "많음 보통 적음 만원" [ref=f1e143]:
+                          - cell "많음 보통 적음" [ref=f1e144]:
+                            - generic [ref=f1e145]:
+                              - checkbox "많음" [checked] [ref=f1e146]
+                              - text: 많음
+                            - generic [ref=f1e147]:
+                              - checkbox "보통" [ref=f1e148]
+                              - text: 보통
+                            - generic [ref=f1e149]:
+                              - checkbox "적음" [ref=f1e150]
+                              - text: 적음
+                          - cell "만원" [ref=f1e151]
+                          - cell [ref=f1e152]
+                        - row "차대번호 표기 양호 부식 훼손(오손) 상이 변조(변타) 도말 만원" [ref=f1e153]:
+                          - cell "차대번호 표기" [ref=f1e154]
+                          - cell "양호 부식 훼손(오손) 상이 변조(변타) 도말" [ref=f1e155]:
+                            - generic [ref=f1e156]:
+                              - checkbox "양호" [checked] [ref=f1e157]
+                              - text: 양호
+                            - generic [ref=f1e158]:
+                              - checkbox "부식" [ref=f1e159]
+                              - text: 부식
+                            - generic [ref=f1e160]:
+                              - checkbox "훼손(오손)" [ref=f1e161]
+                              - text: 훼손(오손)
+                            - generic [ref=f1e162]:
+                              - checkbox "상이" [ref=f1e163]
+                              - text: 상이
+                            - generic [ref=f1e164]:
+                              - checkbox "변조(변타)" [ref=f1e165]
+                              - text: 변조(변타)
+                            - generic [ref=f1e166]:
+                              - checkbox "도말" [ref=f1e167]
+                              - text: 도말
+                          - cell "만원" [ref=f1e168]
+                          - cell [ref=f1e169]
+                        - row "배출가스 일산화탄소 탄화수소 매연 0.03 %, 3 ppm, 0 % 만원" [ref=f1e170]:
+                          - cell "배출가스" [ref=f1e171]
+                          - cell "일산화탄소 탄화수소 매연" [ref=f1e172]:
+                            - generic [ref=f1e173]:
+                              - checkbox "일산화탄소" [checked] [ref=f1e174]
+                              - text: 일산화탄소
+                            - generic [ref=f1e175]:
+                              - checkbox "탄화수소" [checked] [ref=f1e176]
+                              - text: 탄화수소
+                            - generic [ref=f1e177]:
+                              - checkbox "매연" [ref=f1e178]
+                              - text: 매연
+                          - cell "0.03 %, 3 ppm, 0 %" [ref=f1e179]:
+                            - generic [ref=f1e180]:
+                              - textbox [ref=f1e181]: "0.03"
+                              - generic [ref=f1e182]: "%,"
+                              - textbox [ref=f1e183]: "3"
+                              - generic [ref=f1e184]: ppm,
+                              - textbox [ref=f1e185]: "0"
+                              - generic [ref=f1e186]: "%"
+                          - cell "만원" [ref=f1e187]
+                          - cell [ref=f1e188]
+                        - row "튜닝 없음 있음 적법 불법 구조 장치 만원" [ref=f1e189]:
+                          - cell "튜닝" [ref=f1e190]
+                          - cell "없음 있음" [ref=f1e191]:
+                            - generic [ref=f1e192]:
+                              - checkbox "없음" [checked] [ref=f1e193]
+                              - text: 없음
+                            - generic [ref=f1e194]:
+                              - checkbox "있음" [ref=f1e195]
+                              - text: 있음
+                          - cell "적법 불법" [ref=f1e196]:
+                            - generic [ref=f1e197]:
+                              - checkbox "적법" [ref=f1e198]
+                              - text: 적법
+                            - generic [ref=f1e199]:
+                              - checkbox "불법" [ref=f1e200]
+                              - text: 불법
+                          - cell "구조 장치" [ref=f1e201]:
+                            - generic [ref=f1e202]:
+                              - checkbox "구조" [ref=f1e203]
+                              - text: 구조
+                            - generic [ref=f1e204]:
+                              - checkbox "장치" [ref=f1e205]
+                              - text: 장치
+                          - cell "만원" [ref=f1e206]
+                          - cell [ref=f1e207]
+                        - row "특별이력 없음 있음 침수 화재 만원" [ref=f1e208]:
+                          - cell "특별이력" [ref=f1e209]
+                          - cell "없음 있음" [ref=f1e210]:
+                            - generic [ref=f1e211]:
+                              - checkbox "없음" [checked] [ref=f1e212]
+                              - text: 없음
+                            - generic [ref=f1e213]:
+                              - checkbox "있음" [ref=f1e214]
+                              - text: 있음
+                          - cell "침수 화재" [ref=f1e215]:
+                            - generic [ref=f1e216]:
+                              - checkbox "침수" [ref=f1e217]
+                              - text: 침수
+                            - generic [ref=f1e218]:
+                              - checkbox "화재" [ref=f1e219]
+                              - text: 화재
+                          - cell "만원" [ref=f1e220]
+                          - cell [ref=f1e221]
+                        - row "용도변경 없음 있음 렌트 영업용 만원" [ref=f1e222]:
+                          - cell "용도변경" [ref=f1e223]
+                          - cell "없음 있음" [ref=f1e224]:
+                            - generic [ref=f1e225]:
+                              - checkbox "없음" [checked] [ref=f1e226]
+                              - text: 없음
+                            - generic [ref=f1e227]:
+                              - checkbox "있음" [ref=f1e228]
+                              - text: 있음
+                          - cell "렌트 영업용" [ref=f1e229]:
+                            - generic [ref=f1e230]:
+                              - checkbox "렌트" [ref=f1e231]
+                              - text: 렌트
+                            - generic [ref=f1e232]:
+                              - checkbox "영업용" [ref=f1e233]
+                              - text: 영업용
+                          - cell "만원" [ref=f1e234]
+                          - cell [ref=f1e235]
+                        - row "색상 무채색 유채색 전체도색 색상변경 만원" [ref=f1e236]:
+                          - cell "색상" [ref=f1e237]
+                          - cell "무채색 유채색" [ref=f1e238]:
+                            - generic [ref=f1e239]:
+                              - checkbox "무채색" [ref=f1e240]
+                              - text: 무채색
+                            - generic [ref=f1e241]:
+                              - checkbox "유채색" [ref=f1e242]
+                              - text: 유채색
+                          - cell "전체도색 색상변경" [ref=f1e243]:
+                            - generic [ref=f1e244]:
+                              - checkbox "전체도색" [ref=f1e245]
+                              - text: 전체도색
+                            - generic [ref=f1e246]:
+                              - checkbox "색상변경" [ref=f1e247]
+                              - text: 색상변경
+                          - cell "만원" [ref=f1e248]
+                          - cell [ref=f1e249]
+                        - row "주요옵션 있음 없음 썬루프 네비게이션 기타 만원" [ref=f1e250]:
+                          - cell "주요옵션" [ref=f1e251]
+                          - cell "있음 없음" [ref=f1e252]:
+                            - generic [ref=f1e253]:
+                              - checkbox "있음" [ref=f1e254]
+                              - text: 있음
+                            - generic [ref=f1e255]:
+                              - checkbox "없음" [ref=f1e256]
+                              - text: 없음
+                          - cell "썬루프 네비게이션 기타" [ref=f1e257]:
+                            - generic [ref=f1e258]:
+                              - checkbox "썬루프" [ref=f1e259]
+                              - text: 썬루프
+                            - generic [ref=f1e260]:
+                              - checkbox "네비게이션" [ref=f1e261]
+                              - text: 네비게이션
+                            - generic [ref=f1e262]:
+                              - checkbox "기타" [ref=f1e263]
+                              - text: 기타
+                          - cell "만원" [ref=f1e264]
+                          - cell [ref=f1e265]
+                        - row "리콜대상 해당없음 해당 리콜 이행 리콜 미이행" [ref=f1e266]:
+                          - cell "리콜대상" [ref=f1e267]
+                          - cell "해당없음 해당" [ref=f1e268]:
+                            - generic [ref=f1e269]:
+                              - checkbox "해당없음" [ref=f1e270]
+                              - text: 해당없음
+                            - generic [ref=f1e271]:
+                              - checkbox "해당" [checked] [ref=f1e272]
+                              - text: 해당
+                          - cell "리콜 이행 리콜 미이행" [ref=f1e273]:
+                            - generic [ref=f1e274]:
+                              - checkbox "리콜 이행" [ref=f1e275]
+                              - text: 리콜 이행
+                            - generic [ref=f1e276]:
+                              - checkbox "리콜 미이행" [checked] [ref=f1e277]
+                              - text: 리콜 미이행
+                    - table [ref=f1e278]:
+                      - rowgroup [ref=f1e288]:
+                        - row "사고ㆍ교환ㆍ수리 등 이력 (가격조사ㆍ산정액 및 특기사항은 매수인이 자동차가격조사ㆍ산정을 원하는 경우에만 적습니다)" [ref=f1e289]:
+                          - cell "사고ㆍ교환ㆍ수리 등 이력 (가격조사ㆍ산정액 및 특기사항은 매수인이 자동차가격조사ㆍ산정을 원하는 경우에만 적습니다)" [ref=f1e290]:
+                            - heading "사고ㆍ교환ㆍ수리 등 이력" [level=5] [ref=f1e291]
+                            - text: (가격조사ㆍ산정액 및 특기사항은 매수인이 자동차가격조사ㆍ산정을 원하는 경우에만 적습니다)
+                      - rowgroup [ref=f1e292]:
+                        - 'row "※ 상태표시 부호 : X (교환), W (판금 또는 용접), A (흠집), U (요철), C (부식), T (손상) ※ 하단 항목은 승용차 기준이며, 기타 자동차는 승용차에 준하여 표시" [ref=f1e293]':
+                          - 'cell "※ 상태표시 부호 : X (교환), W (판금 또는 용접), A (흠집), U (요철), C (부식), T (손상) ※ 하단 항목은 승용차 기준이며, 기타 자동차는 승용차에 준하여 표시" [ref=f1e294]':
+                            - text: "※ 상태표시 부호 : X (교환), W (판금 또는 용접), A (흠집), U (요철), C (부식), T (손상)"
+                            - text: ※ 하단 항목은 승용차 기준이며, 기타 자동차는 승용차에 준하여 표시
+                        - row [ref=f1e295]:
+                          - cell [ref=f1e296]
+                        - row "⑫ 사고이력(유의사항 4.참조) 없음 있음 단순수리 없음 있음" [ref=f1e301]:
+                          - cell "⑫ 사고이력(유의사항 4.참조)" [ref=f1e302]
+                          - cell "없음 있음" [ref=f1e303]:
+                            - generic [ref=f1e304]:
+                              - checkbox "없음" [checked] [ref=f1e305]
+                              - text: 없음
+                            - generic [ref=f1e306]:
+                              - checkbox "있음" [ref=f1e307]
+                              - text: 있음
+                          - cell "단순수리" [ref=f1e308]
+                          - cell "없음 있음" [ref=f1e309]:
+                            - generic [ref=f1e310]:
+                              - checkbox "없음" [ref=f1e311]
+                              - text: 없음
+                            - generic [ref=f1e312]:
+                              - checkbox "있음" [checked] [ref=f1e313]
+                              - text: 있음
+                        - row "⑬ 교환, 판금 등 이상 부위 가격조사ㆍ산정액 및 특기사항" [ref=f1e314]:
+                          - cell "⑬ 교환, 판금 등 이상 부위" [ref=f1e315]
+                          - cell "가격조사ㆍ산정액 및 특기사항" [ref=f1e316]
+                        - row "외판 부위 1랭크 1.후드 2.프론트휀더 3.도어 4.트렁크리드 5.라디에이터 서포트(볼트체결부품) 만원" [ref=f1e317]:
+                          - cell "외판 부위" [ref=f1e318]:
+                            - text: 외판
+                            - text: 부위
+                          - cell "1랭크" [ref=f1e319]
+                          - cell "1.후드 2.프론트휀더 3.도어 4.트렁크리드 5.라디에이터 서포트(볼트체결부품)" [ref=f1e320]:
+                            - generic [ref=f1e321]:
+                              - checkbox "1.후드" [ref=f1e322]
+                              - text: 1.후드
+                            - generic [ref=f1e323]:
+                              - checkbox "2.프론트휀더" [checked] [ref=f1e324]
+                              - text: 2.프론트휀더
+                            - generic [ref=f1e325]:
+                              - checkbox "3.도어" [ref=f1e326]
+                              - text: 3.도어
+                            - generic [ref=f1e327]:
+                              - checkbox "4.트렁크리드" [ref=f1e328]
+                              - text: 4.트렁크리드
+                            - generic [ref=f1e329]:
+                              - checkbox "5.라디에이터 서포트(볼트체결부품)" [ref=f1e330]
+                              - text: 5.라디에이터 서포트(볼트체결부품)
+                          - cell "만원" [ref=f1e331]
+                          - cell [ref=f1e332]
+                        - row "2랭크 6.쿼터패널(리어휀다) 7.루프패널 8.사이드실 패널" [ref=f1e333]:
+                          - cell "2랭크" [ref=f1e334]
+                          - cell "6.쿼터패널(리어휀다) 7.루프패널 8.사이드실 패널" [ref=f1e335]:
+                            - generic [ref=f1e336]:
+                              - checkbox "6.쿼터패널(리어휀다)" [ref=f1e337]
+                              - text: 6.쿼터패널(리어휀다)
+                            - generic [ref=f1e338]:
+                              - checkbox "7.루프패널" [ref=f1e339]
+                              - text: 7.루프패널
+                            - generic [ref=f1e340]:
+                              - checkbox "8.사이드실 패널" [ref=f1e341]
+                              - text: 8.사이드실 패널
+                        - row "주요 골격 A랭크 9.프론트패널 10.크로스멤버 11.인사이드패널 17.트렁크플로어 18.리어패널" [ref=f1e342]:
+                          - cell "주요 골격" [ref=f1e343]:
+                            - text: 주요
+                            - text: 골격
+                          - cell "A랭크" [ref=f1e344]
+                          - cell "9.프론트패널 10.크로스멤버 11.인사이드패널 17.트렁크플로어 18.리어패널" [ref=f1e345]:
+                            - generic [ref=f1e346]:
+                              - checkbox "9.프론트패널" [ref=f1e347]
+                              - text: 9.프론트패널
+                            - generic [ref=f1e348]:
+                              - checkbox "10.크로스멤버" [ref=f1e349]
+                              - text: 10.크로스멤버
+                            - generic [ref=f1e350]:
+                              - checkbox "11.인사이드패널" [ref=f1e351]
+                              - text: 11.인사이드패널
+                            - generic [ref=f1e352]:
+                              - checkbox "17.트렁크플로어" [ref=f1e353]
+                              - text: 17.트렁크플로어
+                            - generic [ref=f1e354]:
+                              - checkbox "18.리어패널" [ref=f1e355]
+                              - text: 18.리어패널
+                        - row "B랭크 12.사이드멤버 13.휠하우스 14.필러패널 ( A , B , C ) 19.패키지트레이" [ref=f1e356]:
+                          - cell "B랭크" [ref=f1e357]
+                          - cell "12.사이드멤버 13.휠하우스 14.필러패널 ( A , B , C ) 19.패키지트레이" [ref=f1e358]:
+                            - generic [ref=f1e359]:
+                              - checkbox "12.사이드멤버" [ref=f1e360]
+                              - text: 12.사이드멤버
+                            - generic [ref=f1e361]:
+                              - checkbox "13.휠하우스" [ref=f1e362]
+                              - text: 13.휠하우스
+                            - generic [ref=f1e363]:
+                              - checkbox "14.필러패널" [ref=f1e364]
+                              - text: 14.필러패널
+                            - text: (
+                            - generic [ref=f1e365]:
+                              - checkbox "A" [ref=f1e366]
+                              - text: A
+                            - text: ","
+                            - generic [ref=f1e367]:
+                              - checkbox "B" [ref=f1e368]
+                              - text: B
+                            - text: ","
+                            - generic [ref=f1e369]:
+                              - checkbox "C" [ref=f1e370]
+                              - text: C
+                            - text: )
+                            - generic [ref=f1e371]:
+                              - checkbox "19.패키지트레이" [ref=f1e372]
+                              - text: 19.패키지트레이
+                        - row "C랭크 15.대쉬패널 16.플로어패널" [ref=f1e373]:
+                          - cell "C랭크" [ref=f1e374]
+                          - cell "15.대쉬패널 16.플로어패널" [ref=f1e375]:
+                            - generic [ref=f1e376]:
+                              - checkbox "15.대쉬패널" [ref=f1e377]
+                              - text: 15.대쉬패널
+                            - generic [ref=f1e378]:
+                              - checkbox "16.플로어패널" [ref=f1e379]
+                              - text: 16.플로어패널
+                - generic [ref=f1e380]:
+                  - generic [ref=f1e381]: (2/4쪽)
+                  - table [ref=f1e383]:
+                    - rowgroup [ref=f1e391]:
+                      - row "자동차 세부상태 (가격조사ㆍ산정액 및 특기사항은 매수인이 자동차가격조사ㆍ산정을 원하는 경우에만 적습니다)" [ref=f1e392]:
+                        - cell "자동차 세부상태 (가격조사ㆍ산정액 및 특기사항은 매수인이 자동차가격조사ㆍ산정을 원하는 경우에만 적습니다)" [ref=f1e393]:
+                          - heading "자동차 세부상태" [level=5] [ref=f1e394]
+                          - text: (가격조사ㆍ산정액 및 특기사항은 매수인이 자동차가격조사ㆍ산정을 원하는 경우에만 적습니다)
+                    - rowgroup [ref=f1e395]:
+                      - row "⑭ 주요장치 항목/해당부품 상태 가격조사ㆍ산정액" [ref=f1e396]:
+                        - cell "⑭ 주요장치" [ref=f1e397]
+                        - cell "항목/해당부품" [ref=f1e398]
+                        - cell "상태" [ref=f1e399]
+                        - cell "가격조사ㆍ산정액" [ref=f1e400]
+                      - row "자기진단 원동기 양호 불량 만원" [ref=f1e401]:
+                        - cell "자기진단" [ref=f1e402]
+                        - cell "원동기" [ref=f1e403]
+                        - cell "양호 불량" [ref=f1e404]:
+                          - generic [ref=f1e405]:
+                            - checkbox "양호" [checked] [ref=f1e406]
+                            - text: 양호
+                          - generic [ref=f1e407]:
+                            - checkbox "불량" [ref=f1e408]
+                            - text: 불량
+                        - cell "만원" [ref=f1e409]
+                        - cell [ref=f1e410]
+                      - row "변속기 양호 불량" [ref=f1e411]:
+                        - cell "변속기" [ref=f1e412]
+                        - cell "양호 불량" [ref=f1e413]:
+                          - generic [ref=f1e414]:
+                            - checkbox "양호" [checked] [ref=f1e415]
+                            - text: 양호
+                          - generic [ref=f1e416]:
+                            - checkbox "불량" [ref=f1e417]
+                            - text: 불량
+                        - cell [ref=f1e418]
+                      - row "원동기 작동상태(공회전) 양호 불량 만원" [ref=f1e419]:
+                        - cell "원동기" [ref=f1e420]
+                        - cell "작동상태(공회전)" [ref=f1e421]
+                        - cell "양호 불량" [ref=f1e422]:
+                          - generic [ref=f1e423]:
+                            - checkbox "양호" [checked] [ref=f1e424]
+                            - text: 양호
+                          - generic [ref=f1e425]:
+                            - checkbox "불량" [ref=f1e426]
+                            - text: 불량
+                        - cell "만원" [ref=f1e427]
+                        - cell [ref=f1e428]
+                      - row "오일 누유 실린더 커버(로커암 커버) 없음 미세누유 누유" [ref=f1e429]:
+                        - cell "오일 누유" [ref=f1e430]
+                        - cell "실린더 커버(로커암 커버)" [ref=f1e431]
+                        - cell "없음 미세누유 누유" [ref=f1e432]:
+                          - generic [ref=f1e433]:
+                            - checkbox "없음" [checked] [ref=f1e434]
+                            - text: 없음
+                          - generic [ref=f1e435]:
+                            - checkbox "미세누유" [ref=f1e436]
+                            - text: 미세누유
+                          - generic [ref=f1e437]:
+                            - checkbox "누유" [ref=f1e438]
+                            - text: 누유
+                        - cell [ref=f1e439]
+                      - row "실린더 헤드 / 개스킷 없음 미세누유 누유" [ref=f1e440]:
+                        - cell "실린더 헤드 / 개스킷" [ref=f1e441]
+                        - cell "없음 미세누유 누유" [ref=f1e442]:
+                          - generic [ref=f1e443]:
+                            - checkbox "없음" [checked] [ref=f1e444]
+                            - text: 없음
+                          - generic [ref=f1e445]:
+                            - checkbox "미세누유" [ref=f1e446]
+                            - text: 미세누유
+                          - generic [ref=f1e447]:
+                            - checkbox "누유" [ref=f1e448]
+                            - text: 누유
+                        - cell [ref=f1e449]
+                      - row "실린더 블록 / 오일팬 없음 미세누유 누유" [ref=f1e450]:
+                        - cell "실린더 블록 / 오일팬" [ref=f1e451]
+                        - cell "없음 미세누유 누유" [ref=f1e452]:
+                          - generic [ref=f1e453]:
+                            - checkbox "없음" [checked] [ref=f1e454]
+                            - text: 없음
+                          - generic [ref=f1e455]:
+                            - checkbox "미세누유" [ref=f1e456]
+                            - text: 미세누유
+                          - generic [ref=f1e457]:
+                            - checkbox "누유" [ref=f1e458]
+                            - text: 누유
+                        - cell [ref=f1e459]
+                      - row "오일 유량 적정 부족" [ref=f1e460]:
+                        - cell "오일 유량" [ref=f1e461]
+                        - cell "적정 부족" [ref=f1e462]:
+                          - generic [ref=f1e463]:
+                            - checkbox "적정" [checked] [ref=f1e464]
+                            - text: 적정
+                          - generic [ref=f1e465]:
+                            - checkbox "부족" [ref=f1e466]
+                            - text: 부족
+                        - cell [ref=f1e467]
+                      - row "냉각수 누수 실린더 헤드 / 개스킷 없음 미세누수 누수" [ref=f1e468]:
+                        - cell "냉각수 누수" [ref=f1e469]
+                        - cell "실린더 헤드 / 개스킷" [ref=f1e470]
+                        - cell "없음 미세누수 누수" [ref=f1e471]:
+                          - generic [ref=f1e472]:
+                            - checkbox "없음" [checked] [ref=f1e473]
+                            - text: 없음
+                          - generic [ref=f1e474]:
+                            - checkbox "미세누수" [ref=f1e475]
+                            - text: 미세누수
+                          - generic [ref=f1e476]:
+                            - checkbox "누수" [ref=f1e477]
+                            - text: 누수
+                        - cell [ref=f1e478]
+                      - row "워터펌프 없음 미세누수 누수" [ref=f1e479]:
+                        - cell "워터펌프" [ref=f1e480]
+                        - cell "없음 미세누수 누수" [ref=f1e481]:
+                          - generic [ref=f1e482]:
+                            - checkbox "없음" [checked] [ref=f1e483]
+                            - text: 없음
+                          - generic [ref=f1e484]:
+                            - checkbox "미세누수" [ref=f1e485]
+                            - text: 미세누수
+                          - generic [ref=f1e486]:
+                            - checkbox "누수" [ref=f1e487]
+                            - text: 누수
+                        - cell [ref=f1e488]
+                      - row "라디에이터 없음 미세누수 누수" [ref=f1e489]:
+                        - cell "라디에이터" [ref=f1e490]
+                        - cell "없음 미세누수 누수" [ref=f1e491]:
+                          - generic [ref=f1e492]:
+                            - checkbox "없음" [checked] [ref=f1e493]
+                            - text: 없음
+                          - generic [ref=f1e494]:
+                            - checkbox "미세누수" [ref=f1e495]
+                            - text: 미세누수
+                          - generic [ref=f1e496]:
+                            - checkbox "누수" [ref=f1e497]
+                            - text: 누수
+                        - cell [ref=f1e498]
+                      - row "냉각수 수량 적정 부족" [ref=f1e499]:
+                        - cell "냉각수 수량" [ref=f1e500]
+                        - cell "적정 부족" [ref=f1e501]:
+                          - generic [ref=f1e502]:
+                            - checkbox "적정" [checked] [ref=f1e503]
+                            - text: 적정
+                          - generic [ref=f1e504]:
+                            - checkbox "부족" [ref=f1e505]
+                            - text: 부족
+                        - cell [ref=f1e506]
+                      - row "커먼레일 양호 불량" [ref=f1e507]:
+                        - cell "커먼레일" [ref=f1e508]
+                        - cell "양호 불량" [ref=f1e509]:
+                          - generic [ref=f1e510]:
+                            - checkbox "양호" [ref=f1e511]
+                            - text: 양호
+                          - generic [ref=f1e512]:
+                            - checkbox "불량" [ref=f1e513]
+                            - text: 불량
+                        - cell [ref=f1e514]
+                      - row "변속기 자동변속기 (A/T) 오일누유 없음 미세누유 누유 만원" [ref=f1e515]:
+                        - cell "변속기" [ref=f1e516]
+                        - cell "자동변속기 (A/T)" [ref=f1e517]:
+                          - text: 자동변속기
+                          - text: (A/T)
+                        - cell "오일누유" [ref=f1e518]
+                        - cell "없음 미세누유 누유" [ref=f1e519]:
+                          - generic [ref=f1e520]:
+                            - checkbox "없음" [checked] [ref=f1e521]
+                            - text: 없음
+                          - generic [ref=f1e522]:
+                            - checkbox "미세누유" [ref=f1e523]
+                            - text: 미세누유
+                          - generic [ref=f1e524]:
+                            - checkbox "누유" [ref=f1e525]
+                            - text: 누유
+                        - cell "만원" [ref=f1e526]
+                        - cell [ref=f1e527]
+                      - row "오일유량 및 상태 적정 부족 과다" [ref=f1e528]:
+                        - cell "오일유량 및 상태" [ref=f1e529]
+                        - cell "적정 부족 과다" [ref=f1e530]:
+                          - generic [ref=f1e531]:
+                            - checkbox "적정" [ref=f1e532]
+                            - text: 적정
+                          - generic [ref=f1e533]:
+                            - checkbox "부족" [ref=f1e534]
+                            - text: 부족
+                          - generic [ref=f1e535]:
+                            - checkbox "과다" [ref=f1e536]
+                            - text: 과다
+                        - cell [ref=f1e537]
+                      - row "작동상태(공회전) 양호 불량" [ref=f1e538]:
+                        - cell "작동상태(공회전)" [ref=f1e539]
+                        - cell "양호 불량" [ref=f1e540]:
+                          - generic [ref=f1e541]:
+                            - checkbox "양호" [checked] [ref=f1e542]
+                            - text: 양호
+                          - generic [ref=f1e543]:
+                            - checkbox "불량" [ref=f1e544]
+                            - text: 불량
+                        - cell [ref=f1e545]
+                      - row "수동변속기 (M/T) 오일누유 없음 미세누유 누유" [ref=f1e546]:
+                        - cell "수동변속기 (M/T)" [ref=f1e547]:
+                          - text: 수동변속기
+                          - text: (M/T)
+                        - cell "오일누유" [ref=f1e548]
+                        - cell "없음 미세누유 누유" [ref=f1e549]:
+                          - generic [ref=f1e550]:
+                            - checkbox "없음" [ref=f1e551]
+                            - text: 없음
+                          - generic [ref=f1e552]:
+                            - checkbox "미세누유" [ref=f1e553]
+                            - text: 미세누유
+                          - generic [ref=f1e554]:
+                            - checkbox "누유" [ref=f1e555]
+                            - text: 누유
+                        - cell [ref=f1e556]
+                      - row "기어변속장치 양호 불량" [ref=f1e557]:
+                        - cell "기어변속장치" [ref=f1e558]
+                        - cell "양호 불량" [ref=f1e559]:
+                          - generic [ref=f1e560]:
+                            - checkbox "양호" [ref=f1e561]
+                            - text: 양호
+                          - generic [ref=f1e562]:
+                            - checkbox "불량" [ref=f1e563]
+                            - text: 불량
+                        - cell [ref=f1e564]
+                      - row "오일유량 및 상태 적정 부족 과다" [ref=f1e565]:
+                        - cell "오일유량 및 상태" [ref=f1e566]
+                        - cell "적정 부족 과다" [ref=f1e567]:
+                          - generic [ref=f1e568]:
+                            - checkbox "적정" [ref=f1e569]
+                            - text: 적정
+                          - generic [ref=f1e570]:
+                            - checkbox "부족" [ref=f1e571]
+                            - text: 부족
+                          - generic [ref=f1e572]:
+                            - checkbox "과다" [ref=f1e573]
+                            - text: 과다
+                        - cell [ref=f1e574]
+                      - row "작동상태(공회전) 양호 불량" [ref=f1e575]:
+                        - cell "작동상태(공회전)" [ref=f1e576]
+                        - cell "양호 불량" [ref=f1e577]:
+                          - generic [ref=f1e578]:
+                            - checkbox "양호" [ref=f1e579]
+                            - text: 양호
+                          - generic [ref=f1e580]:
+                            - checkbox "불량" [ref=f1e581]
+                            - text: 불량
+                        - cell [ref=f1e582]
+                      - row "동력전달 클러치 어셈블리 양호 불량 만원" [ref=f1e583]:
+                        - cell "동력전달" [ref=f1e584]
+                        - cell "클러치 어셈블리" [ref=f1e585]
+                        - cell "양호 불량" [ref=f1e586]:
+                          - generic [ref=f1e587]:
+                            - checkbox "양호" [ref=f1e588]
+                            - text: 양호
+                          - generic [ref=f1e589]:
+                            - checkbox "불량" [ref=f1e590]
+                            - text: 불량
+                        - cell "만원" [ref=f1e591]
+                        - cell [ref=f1e592]
+                      - row "등속죠인트 양호 불량" [ref=f1e593]:
+                        - cell "등속죠인트" [ref=f1e594]
+                        - cell "양호 불량" [ref=f1e595]:
+                          - generic [ref=f1e596]:
+                            - checkbox "양호" [checked] [ref=f1e597]
+                            - text: 양호
+                          - generic [ref=f1e598]:
+                            - checkbox "불량" [ref=f1e599]
+                            - text: 불량
+                        - cell [ref=f1e600]
+                      - row "추진축 및 베어링 양호 불량" [ref=f1e601]:
+                        - cell "추진축 및 베어링" [ref=f1e602]
+                        - cell "양호 불량" [ref=f1e603]:
+                          - generic [ref=f1e604]:
+                            - checkbox "양호" [checked] [ref=f1e605]
+                            - text: 양호
+                          - generic [ref=f1e606]:
+                            - checkbox "불량" [ref=f1e607]
+                            - text: 불량
+                        - cell [ref=f1e608]
+                      - row "디퍼렌셜 기어 양호 불량" [ref=f1e609]:
+                        - cell "디퍼렌셜 기어" [ref=f1e610]
+                        - cell "양호 불량" [ref=f1e611]:
+                          - generic [ref=f1e612]:
+                            - checkbox "양호" [checked] [ref=f1e613]
+                            - text: 양호
+                          - generic [ref=f1e614]:
+                            - checkbox "불량" [ref=f1e615]
+                            - text: 불량
+                        - cell [ref=f1e616]
+                      - row "조향 동력조향 작동 오일 누유 없음 미세누유 누유 만원" [ref=f1e617]:
+                        - cell "조향" [ref=f1e618]
+                        - cell "동력조향 작동 오일 누유" [ref=f1e619]
+                        - cell "없음 미세누유 누유" [ref=f1e620]:
+                          - generic [ref=f1e621]:
+                            - checkbox "없음" [checked] [ref=f1e622]
+                            - text: 없음
+                          - generic [ref=f1e623]:
+                            - checkbox "미세누유" [ref=f1e624]
+                            - text: 미세누유
+                          - generic [ref=f1e625]:
+                            - checkbox "누유" [ref=f1e626]
+                            - text: 누유
+                        - cell "만원" [ref=f1e627]
+                        - cell [ref=f1e628]
+                      - row "작동상태 스티어링 펌프 양호 불량" [ref=f1e629]:
+                        - cell "작동상태" [ref=f1e630]
+                        - cell "스티어링 펌프" [ref=f1e631]
+                        - cell "양호 불량" [ref=f1e632]:
+                          - generic [ref=f1e633]:
+                            - checkbox "양호" [checked] [ref=f1e634]
+                            - text: 양호
+                          - generic [ref=f1e635]:
+                            - checkbox "불량" [ref=f1e636]
+                            - text: 불량
+                        - cell [ref=f1e637]
+                      - row "스티어링 기어(MDPS포함) 양호 불량" [ref=f1e638]:
+                        - cell "스티어링 기어(MDPS포함)" [ref=f1e639]
+                        - cell "양호 불량" [ref=f1e640]:
+                          - generic [ref=f1e641]:
+                            - checkbox "양호" [checked] [ref=f1e642]
+                            - text: 양호
+                          - generic [ref=f1e643]:
+                            - checkbox "불량" [ref=f1e644]
+                            - text: 불량
+                        - cell [ref=f1e645]
+                      - row "스티어링조인트 양호 불량" [ref=f1e646]:
+                        - cell "스티어링조인트" [ref=f1e647]
+                        - cell "양호 불량" [ref=f1e648]:
+                          - generic [ref=f1e649]:
+                            - checkbox "양호" [checked] [ref=f1e650]
+                            - text: 양호
+                          - generic [ref=f1e651]:
+                            - checkbox "불량" [ref=f1e652]
+                            - text: 불량
+                        - cell [ref=f1e653]
+                      - row "파워고압호스 양호 불량" [ref=f1e654]:
+                        - cell "파워고압호스" [ref=f1e655]
+                        - cell "양호 불량" [ref=f1e656]:
+                          - generic [ref=f1e657]:
+                            - checkbox "양호" [checked] [ref=f1e658]
+                            - text: 양호
+                          - generic [ref=f1e659]:
+                            - checkbox "불량" [ref=f1e660]
+                            - text: 불량
+                        - cell [ref=f1e661]
+                      - row "타이로드엔드 및 볼 죠인트 양호 불량" [ref=f1e662]:
+                        - cell "타이로드엔드 및 볼 죠인트" [ref=f1e663]
+                        - cell "양호 불량" [ref=f1e664]:
+                          - generic [ref=f1e665]:
+                            - checkbox "양호" [checked] [ref=f1e666]
+                            - text: 양호
+                          - generic [ref=f1e667]:
+                            - checkbox "불량" [ref=f1e668]
+                            - text: 불량
+                        - cell [ref=f1e669]
+                      - row "제동 브레이크 마스터 실린더오일 누유 없음 미세누유 누유 만원" [ref=f1e670]:
+                        - cell "제동" [ref=f1e671]
+                        - cell "브레이크 마스터 실린더오일 누유" [ref=f1e672]
+                        - cell "없음 미세누유 누유" [ref=f1e673]:
+                          - generic [ref=f1e674]:
+                            - checkbox "없음" [checked] [ref=f1e675]
+                            - text: 없음
+                          - generic [ref=f1e676]:
+                            - checkbox "미세누유" [ref=f1e677]
+                            - text: 미세누유
+                          - generic [ref=f1e678]:
+                            - checkbox "누유" [ref=f1e679]
+                            - text: 누유
+                        - cell "만원" [ref=f1e680]
+                        - cell [ref=f1e681]
+                      - row "브레이크 오일 누유 없음 미세누유 누유" [ref=f1e682]:
+                        - cell "브레이크 오일 누유" [ref=f1e683]
+                        - cell "없음 미세누유 누유" [ref=f1e684]:
+                          - generic [ref=f1e685]:
+                            - checkbox "없음" [checked] [ref=f1e686]
+                            - text: 없음
+                          - generic [ref=f1e687]:
+                            - checkbox "미세누유" [ref=f1e688]
+                            - text: 미세누유
+                          - generic [ref=f1e689]:
+                            - checkbox "누유" [ref=f1e690]
+                            - text: 누유
+                        - cell [ref=f1e691]
+                      - row "배력장치 상태 양호 불량" [ref=f1e692]:
+                        - cell "배력장치 상태" [ref=f1e693]
+                        - cell "양호 불량" [ref=f1e694]:
+                          - generic [ref=f1e695]:
+                            - checkbox "양호" [checked] [ref=f1e696]
+                            - text: 양호
+                          - generic [ref=f1e697]:
+                            - checkbox "불량" [ref=f1e698]
+                            - text: 불량
+                        - cell [ref=f1e699]
+                      - row "전기 발전기 출력 양호 불량 만원" [ref=f1e700]:
+                        - cell "전기" [ref=f1e701]
+                        - cell "발전기 출력" [ref=f1e702]
+                        - cell "양호 불량" [ref=f1e703]:
+                          - generic [ref=f1e704]:
+                            - checkbox "양호" [checked] [ref=f1e705]
+                            - text: 양호
+                          - generic [ref=f1e706]:
+                            - checkbox "불량" [ref=f1e707]
+                            - text: 불량
+                        - cell "만원" [ref=f1e708]
+                        - cell [ref=f1e709]
+                      - row "시동 모터 양호 불량" [ref=f1e710]:
+                        - cell "시동 모터" [ref=f1e711]
+                        - cell "양호 불량" [ref=f1e712]:
+                          - generic [ref=f1e713]:
+                            - checkbox "양호" [checked] [ref=f1e714]
+                            - text: 양호
+                          - generic [ref=f1e715]:
+                            - checkbox "불량" [ref=f1e716]
+                            - text: 불량
+                        - cell [ref=f1e717]
+                      - row "와이퍼 모터 기능 양호 불량" [ref=f1e718]:
+                        - cell "와이퍼 모터 기능" [ref=f1e719]
+                        - cell "양호 불량" [ref=f1e720]:
+                          - generic [ref=f1e721]:
+                            - checkbox "양호" [checked] [ref=f1e722]
+                            - text: 양호
+                          - generic [ref=f1e723]:
+                            - checkbox "불량" [ref=f1e724]
+                            - text: 불량
+                        - cell [ref=f1e725]
+                      - row "실내송풍 모터 양호 불량" [ref=f1e726]:
+                        - cell "실내송풍 모터" [ref=f1e727]
+                        - cell "양호 불량" [ref=f1e728]:
+                          - generic [ref=f1e729]:
+                            - checkbox "양호" [checked] [ref=f1e730]
+                            - text: 양호
+                          - generic [ref=f1e731]:
+                            - checkbox "불량" [ref=f1e732]
+                            - text: 불량
+                        - cell [ref=f1e733]
+                      - row "라디에이터 팬 모터 양호 불량" [ref=f1e734]:
+                        - cell "라디에이터 팬 모터" [ref=f1e735]
+                        - cell "양호 불량" [ref=f1e736]:
+                          - generic [ref=f1e737]:
+                            - checkbox "양호" [checked] [ref=f1e738]
+                            - text: 양호
+                          - generic [ref=f1e739]:
+                            - checkbox "불량" [ref=f1e740]
+                            - text: 불량
+                        - cell [ref=f1e741]
+                      - row "윈도우 모터 양호 불량" [ref=f1e742]:
+                        - cell "윈도우 모터" [ref=f1e743]
+                        - cell "양호 불량" [ref=f1e744]:
+                          - generic [ref=f1e745]:
+                            - checkbox "양호" [checked] [ref=f1e746]
+                            - text: 양호
+                          - generic [ref=f1e747]:
+                            - checkbox "불량" [ref=f1e748]
+                            - text: 불량
+                        - cell [ref=f1e749]
+                      - row "고전원 전기장치 충전구 절연 상태 양호 불량 만원" [ref=f1e750]:
+                        - cell "고전원 전기장치" [ref=f1e751]:
+                          - text: 고전원
+                          - text: 전기장치
+                        - cell "충전구 절연 상태" [ref=f1e752]
+                        - cell "양호 불량" [ref=f1e753]:
+                          - generic [ref=f1e754]:
+                            - checkbox "양호" [ref=f1e755]
+                            - text: 양호
+                          - generic [ref=f1e756]:
+                            - checkbox "불량" [ref=f1e757]
+                            - text: 불량
+                        - cell "만원" [ref=f1e758]
+                        - cell [ref=f1e759]
+                      - row "구동축전지 격리 상태 양호 불량" [ref=f1e760]:
+                        - cell "구동축전지 격리 상태" [ref=f1e761]
+                        - cell "양호 불량" [ref=f1e762]:
+                          - generic [ref=f1e763]:
+                            - checkbox "양호" [ref=f1e764]
+                            - text: 양호
+                          - generic [ref=f1e765]:
+                            - checkbox "불량" [ref=f1e766]
+                            - text: 불량
+                        - cell [ref=f1e767]
+                      - row "고전원전기배선 상태(접속단자,피복,보호기구) 양호 불량" [ref=f1e768]:
+                        - cell "고전원전기배선 상태(접속단자,피복,보호기구)" [ref=f1e769]
+                        - cell "양호 불량" [ref=f1e770]:
+                          - generic [ref=f1e771]:
+                            - checkbox "양호" [ref=f1e772]
+                            - text: 양호
+                          - generic [ref=f1e773]:
+                            - checkbox "불량" [ref=f1e774]
+                            - text: 불량
+                        - cell [ref=f1e775]
+                      - row "연료 연료누출(LP가스포함) 없음 있음 만원" [ref=f1e776]:
+                        - cell "연료" [ref=f1e777]
+                        - cell "연료누출(LP가스포함)" [ref=f1e778]
+                        - cell "없음 있음" [ref=f1e779]:
+                          - generic [ref=f1e780]:
+                            - checkbox "없음" [checked] [ref=f1e781]
+                            - text: 없음
+                          - generic [ref=f1e782]:
+                            - checkbox "있음" [ref=f1e783]
+                            - text: 있음
+                        - cell "만원" [ref=f1e784]
+                        - cell [ref=f1e785]
+                - generic [ref=f1e786]:
+                  - generic [ref=f1e787]: (3/4쪽)
+                  - generic [ref=f1e788]:
+                    - table [ref=f1e789]:
+                      - rowgroup [ref=f1e799]:
+                        - row "자동차 기타정보 (이 항목은 매수인이 자동차가격조사ㆍ산정을 원하는 경우에만 적습니다)" [ref=f1e800]:
+                          - cell "자동차 기타정보 (이 항목은 매수인이 자동차가격조사ㆍ산정을 원하는 경우에만 적습니다)" [ref=f1e801]:
+                            - heading "자동차 기타정보" [level=5] [ref=f1e802]
+                            - text: (이 항목은 매수인이 자동차가격조사ㆍ산정을 원하는 경우에만 적습니다)
+                      - rowgroup [ref=f1e803]:
+                        - row "항목 가격조사ㆍ산정액" [ref=f1e804]:
+                          - cell [ref=f1e805]
+                          - cell "항목" [ref=f1e806]
+                          - cell "가격조사ㆍ산정액" [ref=f1e807]
+                        - row "수리필요 외장 양호 불량 내장 양호 불량 만원" [ref=f1e808]:
+                          - cell "수리필요" [ref=f1e809]
+                          - cell "외장" [ref=f1e810]
+                          - cell "양호 불량" [ref=f1e811]:
+                            - generic [ref=f1e812]:
+                              - checkbox "양호" [ref=f1e813]
+                              - text: 양호
+                            - generic [ref=f1e814]:
+                              - checkbox "불량" [ref=f1e815]
+                              - text: 불량
+                          - cell "내장" [ref=f1e816]
+                          - cell "양호 불량" [ref=f1e817]:
+                            - generic [ref=f1e818]:
+                              - checkbox "양호" [ref=f1e819]
+                              - text: 양호
+                            - generic [ref=f1e820]:
+                              - checkbox "불량" [ref=f1e821]
+                              - text: 불량
+                          - cell "만원" [ref=f1e822]
+                        - row "광택 양호 불량 룸 크리닝 양호 불량" [ref=f1e823]:
+                          - cell "광택" [ref=f1e824]
+                          - cell "양호 불량" [ref=f1e825]:
+                            - generic [ref=f1e826]:
+                              - checkbox "양호" [ref=f1e827]
+                              - text: 양호
+                            - generic [ref=f1e828]:
+                              - checkbox "불량" [ref=f1e829]
+                              - text: 불량
+                          - cell "룸 크리닝" [ref=f1e830]
+                          - cell "양호 불량" [ref=f1e831]:
+                            - generic [ref=f1e832]:
+                              - checkbox "양호" [ref=f1e833]
+                              - text: 양호
+                            - generic [ref=f1e834]:
+                              - checkbox "불량" [ref=f1e835]
+                              - text: 불량
+                        - row "휠 양호 불량 운전석 전 후 / 동반석 전 후 / 응급" [ref=f1e836]:
+                          - cell "휠" [ref=f1e837]
+                          - cell "양호 불량" [ref=f1e838]:
+                            - generic [ref=f1e839]:
+                              - checkbox "양호" [ref=f1e840]
+                              - text: 양호
+                            - generic [ref=f1e841]:
+                              - checkbox "불량" [ref=f1e842]
+                              - text: 불량
+                          - cell "운전석 전 후 / 동반석 전 후 / 응급" [ref=f1e843]:
+                            - text: 운전석
+                            - checkbox [ref=f1e844]
+                            - text: 전
+                            - checkbox [ref=f1e845]
+                            - text: 후 / 동반석
+                            - checkbox [ref=f1e846]
+                            - text: 전
+                            - checkbox [ref=f1e847]
+                            - text: 후 /
+                            - checkbox [ref=f1e848]
+                            - text: 응급
+                        - row "타이어 양호 불량 운전석 전 후 / 동반석 전 후 / 응급" [ref=f1e849]:
+                          - cell "타이어" [ref=f1e850]
+                          - cell "양호 불량" [ref=f1e851]:
+                            - generic [ref=f1e852]:
+                              - checkbox "양호" [ref=f1e853]
+                              - text: 양호
+                            - generic [ref=f1e854]:
+                              - checkbox "불량" [ref=f1e855]
+                              - text: 불량
+                          - cell "운전석 전 후 / 동반석 전 후 / 응급" [ref=f1e856]:
+                            - text: 운전석
+                            - checkbox [ref=f1e857]
+                            - text: 전
+                            - checkbox [ref=f1e858]
+                            - text: 후 / 동반석
+                            - checkbox [ref=f1e859]
+                            - text: 전
+                            - checkbox [ref=f1e860]
+                            - text: 후 /
+                            - checkbox [ref=f1e861]
+                            - text: 응급
+                        - row "유리 양호 불량" [ref=f1e862]:
+                          - cell "유리" [ref=f1e863]
+                          - cell "양호 불량" [ref=f1e864]:
+                            - generic [ref=f1e865]:
+                              - checkbox "양호" [ref=f1e866]
+                              - text: 양호
+                            - generic [ref=f1e867]:
+                              - checkbox "불량" [ref=f1e868]
+                              - text: 불량
+                        - row "기본품목 보유상태 없음 있음 ( 사용설명서 안전삼각대 잭 스패너 )" [ref=f1e869]:
+                          - cell "기본품목" [ref=f1e870]
+                          - cell "보유상태" [ref=f1e871]
+                          - cell "없음 있음 ( 사용설명서 안전삼각대 잭 스패너 )" [ref=f1e872]:
+                            - generic [ref=f1e873]:
+                              - checkbox "없음" [ref=f1e874]
+                              - text: 없음
+                            - generic [ref=f1e875]:
+                              - checkbox "있음" [ref=f1e876]
+                              - text: 있음
+                            - text: (
+                            - checkbox [ref=f1e877]
+                            - text: 사용설명서
+                            - checkbox [ref=f1e878]
+                            - text: 안전삼각대
+                            - checkbox [ref=f1e879]
+                            - text: 잭
+                            - checkbox [ref=f1e880]
+                            - text: 스패너 )
+                    - table [ref=f1e881]:
+                      - rowgroup [ref=f1e886]:
+                        - row "최종 가격조사ㆍ산정 금액 만원 이 가격조사ㆍ산정가격은 보험개발원의 차량기준가액을 바탕으로 한 기준가격과 ( 기술사회, 한국자동차진단보증협회) 기준서를 적용하였음" [ref=f1e887]:
+                          - cell "최종 가격조사ㆍ산정 금액 만원 이 가격조사ㆍ산정가격은 보험개발원의 차량기준가액을 바탕으로 한 기준가격과 ( 기술사회, 한국자동차진단보증협회) 기준서를 적용하였음" [ref=f1e888]:
+                            - generic [ref=f1e889]:
+                              - heading "최종 가격조사ㆍ산정 금액" [level=5] [ref=f1e891]
+                              - generic [ref=f1e892]: 만원
+                            - text: 이 가격조사ㆍ산정가격은 보험개발원의 차량기준가액을 바탕으로 한 기준가격과 (
+                            - checkbox [ref=f1e898]
+                            - text: 기술사회,
+                            - checkbox [ref=f1e899]
+                            - text: 한국자동차진단보증협회) 기준서를 적용하였음
+                      - rowgroup [ref=f1e900]:
+                        - row "특기사항 및 점검자의 의견 성능ㆍ상태점검자 비금속 또는 탈부착 가능 부품은 점검사항에서 제외되며 중고차 특성상 부분적인 판금, 도색, 부식은 있을 수 있습니다. / 내차피해4회 (6,956,920원) / 정비:전.후펜더, 휠하우스, 전.후패널" [ref=f1e901]:
+                          - cell "특기사항 및 점검자의 의견" [ref=f1e902]:
+                            - text: 특기사항 및
+                            - text: 점검자의 의견
+                          - cell "성능ㆍ상태점검자" [ref=f1e903]
+                          - cell "비금속 또는 탈부착 가능 부품은 점검사항에서 제외되며 중고차 특성상 부분적인 판금, 도색, 부식은 있을 수 있습니다. / 내차피해4회 (6,956,920원) / 정비:전.후펜더, 휠하우스, 전.후패널" [ref=f1e904]
+                        - row "가격ㆍ조사산정자" [ref=f1e905]:
+                          - cell "가격ㆍ조사산정자" [ref=f1e906]
+                          - cell [ref=f1e907]
+                    - table [ref=f1e908]:
+                      - rowgroup [ref=f1e909]:
+                        - row "유의사항" [ref=f1e910]:
+                          - cell "유의사항" [ref=f1e911]:
+                            - heading "유의사항" [level=5] [ref=f1e912]
+                      - rowgroup [ref=f1e913]:
+                        - row "※ 자동차성능ㆍ상태점검의 보증에 관한 사항 등" [ref=f1e914]:
+                          - cell "※ 자동차성능ㆍ상태점검의 보증에 관한 사항 등" [ref=f1e915]
+                        - row [ref=f1e916]:
+                          - cell [ref=f1e917]:
+                            - list [ref=f1e918]:
+                              - listitem [ref=f1e919]:
+                                - list [ref=f1e920]:
+                                  - listitem [ref=f1e921]: 자동차매매업자는 자동차성능ㆍ상태점검기록부(가격조사ㆍ산정 부분 제외)에 기재된 내용을 고지하지 아니하거나 거짓으로 고지함으로써 매수인에게 재산상 손해가 발생한 경우에는 그 손해를 배상할 책임을 집니다.
+                                  - listitem [ref=f1e922]: 자동차성능ㆍ상태점검자가 거짓 또는 오류가 있는 자동차성능ㆍ상태점검 내용을 제공하여 아래의 보증기간 또는 보증거리 이내에 자동차의 실제 성능ㆍ상태가 다른 경우, 자동차매매업자는 매수인의 재산상 손해를 배상할 책임을 지며, 자동차성능ㆍ상태점검자에게 이를 구상할 수 있습니다.(매수인이 자동차성능ㆍ상태점검자가 가입한 책임보험 등을 통해 별도로 배상받는 경우는 제외)
+                                  - listitem [ref=f1e923]: 자동차인도일부터 보증기간은 ( )일, 보증거리는 ( )킬로미터로 합니다. (보증기간은 30일 이상, 보증거리는 2천킬로미터 이상이어야 하며, 그 중 먼저 도래한 것을 적용)
+                                  - listitem [ref=f1e924]: 자동차매매업자는 자동차 자동차성능ㆍ상태점검기록부를 매수인에게 고지할 때 현행 자동차성능ㆍ상태점검자의 보증범위(국토교통부 고시)를 첨부하여 고지하여야 합니다. 동 보증범위는 ‘자동차성능ㆍ상태점검자의 보증범위’(국토교통부 고시)에 따르며, 법제처 국가법령정보센터 또는 국토교통부 홈페이지에서 확인할 수 있습니다.
+                                  - listitem [ref=f1e925]: 자동차의 리콜에 관한 사항은 자동차리콜센터(www.car.go.kr)에서 확인할 수 있습니다.
+                              - listitem [ref=f1e926]: 자동차의 구조ㆍ장치 등의 성능ㆍ상태를 고지하지 아니한 자나 점검한 내용을 거짓으로 고지한 자는 「자동차관리법」 제80조제6호 및 제7호에 따라 2년 이하의 징역 또는 2천만원 이하의 벌금에 처합니다.
+                              - listitem [ref=f1e927]: 자동차성능ㆍ상태점검자가 거짓으로 자동차성능ㆍ상태 점검을 하거나 실제 점검한 내용과 다른 내용을 제공한 경우 「자동차관리법」 제80조제9호의2에 따라 2년 이하의 징역 또는 2천만원 이하의 벌금에 처하며, 「자동차관리법 제21조제2항 등의 규정에 따른 행정처분의 기준과 절차에 관한 규칙」 제5조제1항에 따라 1차 사업정지 30일, 2차 사업정지 90일, 3차 사업장 폐쇄의 행정처분을 받습니다.
+                              - listitem [ref=f1e928]: ⑫ 사고이력 인정은 사고로 자동차 주요 골격 부위의 판금, 용접수리 및 교환이 있는 경우로 한정합니다. 단, 쿼터패널, 루프패널, 사이드실패널 부위는 절단, 용접 시에만 사고로 표기합니다. (후드, 프론트펜더, 도어, 트렁크리드 등 외판 부위 및 범퍼에 대한 판금, 용접수리 및 교환은 단순수리로서 사고에 포함되지 않습니다)
+                              - listitem [ref=f1e929]: 자동차성능ㆍ상태점검은 국토교통부장관이 정하는 자동차성능ㆍ상태점검 방법에 따라야 합니다.
+                              - listitem [ref=f1e930]: 「자동차관리법 시행규칙」 제120조제2항에 따라 자동차성능ㆍ상태점검기록부는 해당 기록부의 발급일을 기준으로 120일 이내에 이루어진 자동차 성능ㆍ상태점검으로 한정합니다
+                              - listitem [ref=f1e931]:
+                                - text: 체크항목 판단기준(예시)
+                                - list [ref=f1e932]:
+                                  - listitem [ref=f1e933]: "미세누유(미세누수): 해당부위에 오일(냉각수)이 비치는 정도로서 부품 노후로 인한 현상"
+                                  - listitem [ref=f1e934]: "누유(누수): 해당부위에서 오일(냉각수)이 맺혀서 떨어지는 상태"
+                                  - listitem [ref=f1e935]: "부식: 차량하부와 외판의 금속표면이 화학반응에 의해 금속이 아닌 상태로 상실되어 가는 현상(단순히 녹슬어 있는 상태는 제외합니다)"
+                                  - listitem [ref=f1e936]: "침수: 자동차의 원동기, 변속기 등 주요장치 일부가 물에 잠긴 흔적이 있는 상태"
+                                  - listitem [ref=f1e937]: "현재 주행거리: 자동차성능ㆍ상태점검 당시 해당 차량 주행거리계의 주행거리를 기록하되, 기록한 주행거리가 자동차전산정보처리조직(자동차관리정보시스템)으로부터 받은 주행거리(주행거리계 교체 정보 포함)보다 적은 경우 ‘특기사항 및 점검자의 의견’ 란에 이를 적어야 합니다."
+                        - row "※ 자동차가격조사ㆍ산정의 보증에 관한 사항 등" [ref=f1e938]:
+                          - cell "※ 자동차가격조사ㆍ산정의 보증에 관한 사항 등" [ref=f1e939]
+                        - row "가격조사ㆍ산정자는 아래의 보증기간 또는 보증거리 이내에 자동차성능ㆍ상태점검기록부(가격조사ㆍ산정 부분 한정)에 적힌 내용에 허위 또는 오류가 있는 경우 계약 또는 관계법령에 따라 매수인에 대하여 책임을 집니다. ㆍ 자동차인도일부터 보증기간은 ( )일, 보증거리는 ( )킬로미터로 합니다. (보증기간은 30일 이상, 보증거리는 2천킬로미터 이상이어야 하며, 그 중 먼저 도래한 것을 적용합니다) 자동차매매업자는 매수인이 가격조사ㆍ산정을 원할 경우 가격조사ㆍ산정자가 해당 자동차 가격을 조사ㆍ산정하여 결과를 이 서식에 적도록 한 후, 반드시 매매계약을 체결하기 전에 매수인에게 서면으로 고지하여야 합니다. 이 경우 자동차매매업자는 가격조사ㆍ산정자에게 가격조사ㆍ산정을 의뢰하기 전에 매수인에게 가격조사ㆍ산정 비용을 안내하여야 합니다. 자동차가격은 보험개발원이 정한 차량기준가액을 기준가격으로 조사ㆍ산정하되, 기준서는 「자동차관리법」 제58조의4제1호에 해당하는 자는 기술사회에서 발행한 기준서를, 제2호에 해당하는 자는 한국자동차진단보증협회에서 발행한 기준서를 각각 적용하여야 하며, 기준가격과 기준서는 산정일 기준 가장 최근에 발행된 것을 적용합니다. 특기사항란은 가격조사ㆍ산정자의 자동차 성능ㆍ상태에 대한 견해가 성능ㆍ상태점검자의 견해와 다를 경우 표시합니다." [ref=f1e940]:
+                          - cell "가격조사ㆍ산정자는 아래의 보증기간 또는 보증거리 이내에 자동차성능ㆍ상태점검기록부(가격조사ㆍ산정 부분 한정)에 적힌 내용에 허위 또는 오류가 있는 경우 계약 또는 관계법령에 따라 매수인에 대하여 책임을 집니다. ㆍ 자동차인도일부터 보증기간은 ( )일, 보증거리는 ( )킬로미터로 합니다. (보증기간은 30일 이상, 보증거리는 2천킬로미터 이상이어야 하며, 그 중 먼저 도래한 것을 적용합니다) 자동차매매업자는 매수인이 가격조사ㆍ산정을 원할 경우 가격조사ㆍ산정자가 해당 자동차 가격을 조사ㆍ산정하여 결과를 이 서식에 적도록 한 후, 반드시 매매계약을 체결하기 전에 매수인에게 서면으로 고지하여야 합니다. 이 경우 자동차매매업자는 가격조사ㆍ산정자에게 가격조사ㆍ산정을 의뢰하기 전에 매수인에게 가격조사ㆍ산정 비용을 안내하여야 합니다. 자동차가격은 보험개발원이 정한 차량기준가액을 기준가격으로 조사ㆍ산정하되, 기준서는 「자동차관리법」 제58조의4제1호에 해당하는 자는 기술사회에서 발행한 기준서를, 제2호에 해당하는 자는 한국자동차진단보증협회에서 발행한 기준서를 각각 적용하여야 하며, 기준가격과 기준서는 산정일 기준 가장 최근에 발행된 것을 적용합니다. 특기사항란은 가격조사ㆍ산정자의 자동차 성능ㆍ상태에 대한 견해가 성능ㆍ상태점검자의 견해와 다를 경우 표시합니다." [ref=f1e941]:
+                            - list [ref=f1e942]:
+                              - listitem [ref=f1e943]: 가격조사ㆍ산정자는 아래의 보증기간 또는 보증거리 이내에 자동차성능ㆍ상태점검기록부(가격조사ㆍ산정 부분 한정)에 적힌 내용에 허위 또는 오류가 있는 경우 계약 또는 관계법령에 따라 매수인에 대하여 책임을 집니다. ㆍ 자동차인도일부터 보증기간은 ( )일, 보증거리는 ( )킬로미터로 합니다. (보증기간은 30일 이상, 보증거리는 2천킬로미터 이상이어야 하며, 그 중 먼저 도래한 것을 적용합니다)
+                              - listitem [ref=f1e944]: 자동차매매업자는 매수인이 가격조사ㆍ산정을 원할 경우 가격조사ㆍ산정자가 해당 자동차 가격을 조사ㆍ산정하여 결과를 이 서식에 적도록 한 후, 반드시 매매계약을 체결하기 전에 매수인에게 서면으로 고지하여야 합니다. 이 경우 자동차매매업자는 가격조사ㆍ산정자에게 가격조사ㆍ산정을 의뢰하기 전에 매수인에게 가격조사ㆍ산정 비용을 안내하여야 합니다.
+                              - listitem [ref=f1e945]: 자동차가격은 보험개발원이 정한 차량기준가액을 기준가격으로 조사ㆍ산정하되, 기준서는 「자동차관리법」 제58조의4제1호에 해당하는 자는 기술사회에서 발행한 기준서를, 제2호에 해당하는 자는 한국자동차진단보증협회에서 발행한 기준서를 각각 적용하여야 하며, 기준가격과 기준서는 산정일 기준 가장 최근에 발행된 것을 적용합니다.
+                              - listitem [ref=f1e946]: 특기사항란은 가격조사ㆍ산정자의 자동차 성능ㆍ상태에 대한 견해가 성능ㆍ상태점검자의 견해와 다를 경우 표시합니다.
+                - generic [ref=f1e947]:
+                  - generic [ref=f1e948]: (4/4쪽)
+                  - generic [ref=f1e949]:
+                    - table [ref=f1e950]:
+                      - rowgroup [ref=f1e951]:
+                        - row "자동차가격조사ㆍ산정이란 ※ \"가격조사ㆍ산정\"은 소비자가 매매계약을 체결함에 있어 중고차 가격의 적절성 판단에 참고할 수 있도록 법령에 의한 절차와 기준에 따라 전문 가격조사ㆍ산정인이 객관적으로 제시한 가액입니다. 따라서 \"가격조사ㆍ산정\"은 소비자의 자율적 선택에 따른 서비스이며, 가격조사ㆍ산정 결과는 중고차 가격판단에 관하여 법적 구속력은 없고 소비자의 구매여부 결정에 참고자료로 활용됩니다." [ref=f1e952]:
+                          - cell "자동차가격조사ㆍ산정이란 ※ \"가격조사ㆍ산정\"은 소비자가 매매계약을 체결함에 있어 중고차 가격의 적절성 판단에 참고할 수 있도록 법령에 의한 절차와 기준에 따라 전문 가격조사ㆍ산정인이 객관적으로 제시한 가액입니다. 따라서 \"가격조사ㆍ산정\"은 소비자의 자율적 선택에 따른 서비스이며, 가격조사ㆍ산정 결과는 중고차 가격판단에 관하여 법적 구속력은 없고 소비자의 구매여부 결정에 참고자료로 활용됩니다." [ref=f1e953]:
+                            - generic [ref=f1e954]:
+                              - heading "자동차가격조사ㆍ산정이란" [level=5] [ref=f1e955]
+                              - paragraph [ref=f1e956]:
+                                - text: ※ "
+                                - strong [ref=f1e957]: 가격조사ㆍ산정
+                                - text: "\"은 소비자가 매매계약을 체결함에 있어"
+                                - strong [ref=f1e958]: 중고차 가격의 적절성 판단
+                                - text: 에 참고할 수 있도록 법령에 의한 절차와 기준에 따라
+                                - strong [ref=f1e959]: 전문 가격조사ㆍ산정인
+                                - text: 이
+                                - strong [ref=f1e960]: 객관적으로 제시한 가액
+                                - text: 입니다. 따라서 "가격조사ㆍ산정"은 소비자의
+                                - strong [ref=f1e961]: 자율적 선택에 따른 서비스
+                                - text: 이며, 가격조사ㆍ산정 결과는 중고차 가격판단에 관하여
+                                - strong [ref=f1e962]: 법적 구속력은 없고 소비자의 구매여부 결정에 참고자료로 활용
+                                - text: 됩니다.
+                        - row "점검 장면 촬영 사진" [ref=f1e963]:
+                          - cell "점검 장면 촬영 사진" [ref=f1e964]:
+                            - heading "점검 장면 촬영 사진" [level=5] [ref=f1e965]
+                      - rowgroup [ref=f1e966]:
+                        - row [ref=f1e967]:
+                          - cell [ref=f1e968]:
+                            - img [ref=f1e969]
+                        - row [ref=f1e970]:
+                          - cell [ref=f1e971]:
+                            - img [ref=f1e972]
+                    - table [ref=f1e973]:
+                      - rowgroup [ref=f1e974]:
+                        - row "서명" [ref=f1e975]:
+                          - cell "서명" [ref=f1e976]:
+                            - heading "서명" [level=4] [ref=f1e977]
+                      - rowgroup [ref=f1e978]:
+                        - row "「자동차관리법」 제58조 및 같은 법 시행규칙 제120조ㆍ제123조의5에 따라 ( 중고자동차성능ㆍ상태를 점검, 자동차가격조사 ㆍ 산정 ) 하였음을 확인합니다. 2025년 12월 08일 (사)한국자동차진단보증협회 인 자동차 성능ㆍ상태 점검자 오토컬렉션 플레이카 최현식 인 자동차가격조사 ㆍ 산정자 인 자동차 성능ㆍ상태 고지자 (주)엠모터스 인" [ref=f1e979]:
+                          - cell "「자동차관리법」 제58조 및 같은 법 시행규칙 제120조ㆍ제123조의5에 따라 ( 중고자동차성능ㆍ상태를 점검, 자동차가격조사 ㆍ 산정 ) 하였음을 확인합니다. 2025년 12월 08일 (사)한국자동차진단보증협회 인 자동차 성능ㆍ상태 점검자 오토컬렉션 플레이카 최현식 인 자동차가격조사 ㆍ 산정자 인 자동차 성능ㆍ상태 고지자 (주)엠모터스 인" [ref=f1e980]:
+                            - paragraph [ref=f1e981]:
+                              - text: 「자동차관리법」 제58조 및 같은 법 시행규칙 제120조ㆍ제123조의5에 따라
+                              - text: (
+                              - checkbox [checked] [ref=f1e982]
+                              - text: 중고자동차성능ㆍ상태를 점검,
+                              - checkbox [ref=f1e983]
+                              - text: 자동차가격조사 ㆍ 산정 ) 하였음을 확인합니다.
+                            - textbox [ref=f1e984]: 2025년 12월 08일
+                            - paragraph [ref=f1e985]:
+                              - textbox [ref=f1e986]: (사)한국자동차진단보증협회
+                              - img [ref=f1e987]
+                              - generic [ref=f1e988]: 인
+                            - generic [ref=f1e989]:
+                              - generic [ref=f1e990]: 자동차 성능ㆍ상태 점검자
+                              - textbox [ref=f1e993]: 오토컬렉션 플레이카 최현식
+                              - generic [ref=f1e994]:
+                                - img [ref=f1e995]
+                                - generic [ref=f1e996]: 인
+                            - generic [ref=f1e997]:
+                              - generic [ref=f1e998]: 자동차가격조사 ㆍ 산정자
+                              - generic [ref=f1e1000]:
+                                - img
+                                - generic [ref=f1e1001]: 인
+                            - generic [ref=f1e1002]:
+                              - generic [ref=f1e1003]: 자동차 성능ㆍ상태 고지자
+                              - textbox [ref=f1e1006]: (주)엠모터스
+                              - generic [ref=f1e1007]:
+                                - img
+                                - generic [ref=f1e1008]: 인
+                        - row "본인은 위 자동차성능 ㆍ 상태점검기록부([ ]자동차가격조사 ㆍ 산정 선택)를 발급받은 사실을 확인합니다. 년 월 일 매수인 (서명 또는 인) ※ 계약전 자동차365(www.car365.go.kr) 에서 실매물 조회 및 정비이력 확인 - 자동차 365 > 자동차 실매물 검색 > 차량번호 입력 - 자동차 365 > 자동차 이력조회 > 매매용차량조회 > 자동차등록번호 검색" [ref=f1e1009]:
+                          - cell "본인은 위 자동차성능 ㆍ 상태점검기록부([ ]자동차가격조사 ㆍ 산정 선택)를 발급받은 사실을 확인합니다. 년 월 일 매수인 (서명 또는 인) ※ 계약전 자동차365(www.car365.go.kr) 에서 실매물 조회 및 정비이력 확인 - 자동차 365 > 자동차 실매물 검색 > 차량번호 입력 - 자동차 365 > 자동차 이력조회 > 매매용차량조회 > 자동차등록번호 검색" [ref=f1e1010]:
+                            - strong [ref=f1e1011]: 본인은 위 자동차성능 ㆍ 상태점검기록부([ ]자동차가격조사 ㆍ 산정 선택)를 발급받은 사실을 확인합니다.
+                            - text: 년 월 일 매수인 (서명 또는 인)
+                            - generic [ref=f1e1013]:
+                              - text: ※ 계약전
+                              - strong [ref=f1e1014]: 자동차365(www.car365.go.kr)
+                              - text: 에서
+                              - strong [ref=f1e1015]: 실매물 조회
+                              - text: 및
+                              - strong [ref=f1e1016]: 정비이력
+                              - text: 확인
+                              - paragraph [ref=f1e1017]:
+                                - text: "- 자동차 365 >"
+                                - strong [ref=f1e1018]: 자동차 실매물 검색
+                                - text: "> 차량번호 입력"
+                                - text: "- 자동차 365 >"
+                                - strong [ref=f1e1019]: 자동차 이력조회
+                                - text: "> 매매용차량조회 > 자동차등록번호 검색"
+                            - generic:
+                              - paragraph
+        - generic [ref=e558]:
+          - list [ref=e561]:
+            - listitem [ref=e562]:
+              - link "차량옵션 및 상세설명" [ref=e563] [cursor=pointer]:
+                - /url: "#tab-option-info"
+            - listitem [ref=e564]:
+              - link "사진정보" [ref=e565] [cursor=pointer]:
+                - /url: "#tab-image-info"
+            - listitem [ref=e566]:
+              - link "성능점검기록부" [ref=e567] [cursor=pointer]:
+                - /url: "#tab-add-option-info"
+            - listitem [ref=e568]:
+              - link "동급매물" [ref=e569] [cursor=pointer]:
+                - /url: "#tab-equivalent-info"
+          - heading "동급매물" [level=4] [ref=e570]
+  - contentinfo [ref=e571]:
+    - generic [ref=e572]:
+      - img "하단 로고" [ref=e573]
+      - generic [ref=e574]:
+        - generic [ref=e577]: 수원skv1모터스 차사인모터스입니다.
+        - generic [ref=e580]: 수원 평동로 79번길 45 수원skv1모터스 608,609호
+        - generic [ref=e583]: 저희는 다양한 중고차를 보유하고 있으며,
+        - generic [ref=e586]: 고객님의 예산과 필요에 맞는 차량을 추천해 드리고 있습니다.
+        - generic [ref=e588]: 늘 믿음과 정식으로 고객님을 모시겠습니다.
+        - generic [ref=e589]:
+          - generic [ref=e590]:
+            - text: 상호
+            - generic [ref=e591]:
+              - text: ": 수원skv1모터스"
+              - generic [ref=e592]: 차사인모터스
+          - generic [ref=e594]: "사업자번호 : 702-02-01701"
+        - paragraph
+        - generic [ref=e596]: "대표 : 제효창 (010-8239-7679)"
+        - generic [ref=e598]: "관리책임자 : 제효창 (010-8239-7679)"
+        - generic [ref=e600]: "수원본점 : 경기도 수원시 권선구 평동로 79번길 45 6층 수원skv1모터스 608,609호"
+        - generic [ref=e601]:
+          - generic [ref=e602]:
+            - generic [ref=e603]: 대표전화
+            - text: ": 031-278-4466"
+          - paragraph
+          - paragraph
+          - generic [ref=e604]: "팩스 : 031-278-4477"
+        - generic [ref=e605]:
+          - generic [ref=e606]: 허위,미끼,사기매물
+          - text: 취급하지않습니다.
+        - generic [ref=e608]: 전국으로 매입 출장가능합니다.
+  - generic [ref=e616]:
+    - paragraph [ref=e617]:
+      - img "5분안에 연락받는 빠른 상담신청" [ref=e618]
+    - generic [ref=e619]:
+      - term [ref=e620]: 이 름
+      - definition [ref=e621]:
+        - textbox "이름을 입력해주세요" [ref=e622]
+      - term [ref=e623]: 연락처
+      - definition [ref=e624]:
+        - textbox "전화번호(-제외 입력)" [ref=e625]
+    - link "빠른 상담신청" [ref=e626] [cursor=pointer]:
+      - /url: javascript:;

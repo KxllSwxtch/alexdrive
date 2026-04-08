@@ -1,0 +1,486 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - generic [ref=e4]:
+      - heading "로고" [level=1] [ref=e5]:
+        - link "로고" [ref=e6] [cursor=pointer]:
+          - /url: /
+          - img "로고" [ref=e7]
+      - heading "세일카 메뉴" [level=2] [ref=e8]
+      - list [ref=e9]:
+        - listitem [ref=e10]:
+          - link "국산차" [ref=e11] [cursor=pointer]:
+            - /url: /search/get_search?fn=model&country=kor&tab=model
+        - listitem [ref=e12]:
+          - link "수입차" [ref=e13] [cursor=pointer]:
+            - /url: /search/get_search?fn=model&country=foreign&tab=model
+        - listitem [ref=e14]:
+          - link "화물차" [ref=e15] [cursor=pointer]:
+            - /url: /search/get_search?fn=model&country=freight&tab=model
+        - listitem [ref=e16]:
+          - link "내차팔기 · 구매상담" [ref=e17] [cursor=pointer]:
+            - /url: /consulting/sale
+        - listitem [ref=e18]:
+          - link "고객후기" [ref=e19] [cursor=pointer]:
+            - /url: /board/list/board/review?type=title&content=
+        - listitem [ref=e20]:
+          - link "오시는길" [ref=e21] [cursor=pointer]:
+            - /url: /common/map
+      - generic [ref=e24]:
+        - textbox "차량번호를 입력하세요" [ref=e25]
+        - button "검색" [ref=e26] [cursor=pointer]:
+          - generic [ref=e27]: 검색
+      - img "차량번호 대표번호" [ref=e29]
+    - list [ref=e32]:
+      - listitem [ref=e33]:
+        - link "홈" [ref=e34] [cursor=pointer]:
+          - /url: /
+      - listitem [ref=e35]:
+        - link "관리자로그인" [ref=e36] [cursor=pointer]:
+          - /url: http://admin.salecars.co.kr
+      - listitem [ref=e37]:
+        - link "찾아오시는길" [ref=e38] [cursor=pointer]:
+          - /url: /common/map
+  - generic [ref=e40]:
+    - generic [ref=e41]:
+      - link "세일카 카카오톡 상담" [ref=e43] [cursor=pointer]:
+        - /url: https://pf.kakao.com/_nvbxnj/chat
+        - img "세일카 카카오톡 상담" [ref=e44]
+      - link "세일카 유튜브채널" [ref=e46] [cursor=pointer]:
+        - /url: https://www.youtube.com/channel/UCK9ZZzqcCl6eVY8dPzW7YqA
+        - img "세일카 유튜브채널" [ref=e47]
+      - img "세일카 대표번호 365일 24시간 가능" [ref=e49]
+      - generic [ref=e50]:
+        - paragraph [ref=e51]: 최근본차량
+        - list [ref=e52]:
+          - listitem [ref=e53]:
+            - link "287나3682" [ref=e54] [cursor=pointer]:
+              - /url: javascript:;
+              - generic [ref=e56]: 287나3682
+          - listitem [ref=e57]:
+            - link "59도9450" [ref=e58] [cursor=pointer]:
+              - /url: javascript:;
+              - generic [ref=e60]: 59도9450
+          - listitem [ref=e61]:
+            - link "07고5855" [ref=e62] [cursor=pointer]:
+              - /url: javascript:;
+              - generic [ref=e64]: 07고5855
+        - link "TOP" [ref=e65] [cursor=pointer]:
+          - /url: "#"
+    - generic [ref=e66]:
+      - list [ref=e68]:
+        - listitem [ref=e69]:
+          - link "모델명 검색" [ref=e70] [cursor=pointer]:
+            - /url: /search/get_search?fn=model&country=all&tab=model&type=
+        - listitem [ref=e71]:
+          - link "차종별 검색" [ref=e72] [cursor=pointer]:
+            - /url: /search/get_search?fn=vehicle&country=all&tab=vehicle&type=
+      - generic [ref=e73]:
+        - listitem [ref=e74]:
+          - heading "제조사" [level=3] [ref=e75]
+          - list [ref=e76]:
+            - listitem [ref=e77] [cursor=pointer]: 현대
+            - listitem [ref=e78] [cursor=pointer]: 제네시스
+            - listitem [ref=e79] [cursor=pointer]: 기아
+            - listitem [ref=e80] [cursor=pointer]: 르노코리아(삼성)
+            - listitem [ref=e81] [cursor=pointer]: KG모빌리티(쌍용)
+            - listitem [ref=e82] [cursor=pointer]: 쉐보레
+            - listitem [ref=e83] [cursor=pointer]: 대우
+            - listitem [ref=e84] [cursor=pointer]: 기타제조사
+        - listitem [ref=e85]:
+          - heading "모델" [level=3] [ref=e86]
+          - list [ref=e87]:
+            - paragraph [ref=e88]:
+              - text: 제조사를
+              - text: 선택하세요
+        - listitem [ref=e89]:
+          - heading "세부모델" [level=3] [ref=e90]
+          - list [ref=e91]:
+            - paragraph [ref=e92]:
+              - text: 모델을
+              - text: 선택하세요
+        - listitem [ref=e93]:
+          - heading "등급" [level=3] [ref=e94]
+          - list [ref=e95]:
+            - paragraph [ref=e96]:
+              - text: 세부모델을
+              - text: 선택하세요
+        - listitem [ref=e97]:
+          - heading "세부등급" [level=3] [ref=e98]
+          - list [ref=e99]:
+            - paragraph [ref=e100]:
+              - text: 등급을
+              - text: 선택하세요
+      - button "상세검색열기" [ref=e101] [cursor=pointer]
+      - list [ref=e102]:
+        - listitem [ref=e103]:
+          - generic [ref=e104]: 차량가격
+          - combobox "가격" [ref=e105]:
+            - option "::::가격::::" [selected]
+            - option "100만원"
+            - option "200만원"
+            - option "300만원"
+            - option "400만원"
+            - option "500만원"
+            - option "600만원"
+            - option "700만원"
+            - option "800만원"
+            - option "900만원"
+            - option "1,000만원"
+            - option "1,100만원"
+            - option "1,200만원"
+            - option "1,300만원"
+            - option "1,400만원"
+            - option "1,500만원"
+            - option "1,600만원"
+            - option "1,700만원"
+            - option "1,800만원"
+            - option "1,900만원"
+            - option "2,000만원"
+            - option "2,100만원"
+            - option "2,200만원"
+            - option "2,300만원"
+            - option "2,400만원"
+            - option "2,500만원"
+            - option "2,600만원"
+            - option "2,700만원"
+            - option "2,800만원"
+            - option "2,900만원"
+            - option "3,000만원"
+            - option "3,100만원"
+            - option "3,200만원"
+            - option "3,300만원"
+            - option "3,400만원"
+            - option "3,500만원"
+            - option "3,600만원"
+            - option "3,700만원"
+            - option "3,800만원"
+            - option "3,900만원"
+            - option "4,000만원"
+            - option "4,500만원"
+            - option "5,000만원"
+            - option "6,000만원"
+            - option "7,000만원"
+            - option "8,000만원"
+            - option "9,000만원"
+            - option "1억원"
+            - option "1억5,000만원"
+            - option "2억원"
+          - text: ~
+          - combobox "가격" [ref=e106]:
+            - option "::::가격::::" [selected]
+            - option "100만원"
+            - option "200만원"
+            - option "300만원"
+            - option "400만원"
+            - option "500만원"
+            - option "600만원"
+            - option "700만원"
+            - option "800만원"
+            - option "900만원"
+            - option "1,000만원"
+            - option "1,100만원"
+            - option "1,200만원"
+            - option "1,300만원"
+            - option "1,400만원"
+            - option "1,500만원"
+            - option "1,600만원"
+            - option "1,700만원"
+            - option "1,800만원"
+            - option "1,900만원"
+            - option "2,000만원"
+            - option "2,100만원"
+            - option "2,200만원"
+            - option "2,300만원"
+            - option "2,400만원"
+            - option "2,500만원"
+            - option "2,600만원"
+            - option "2,700만원"
+            - option "2,800만원"
+            - option "2,900만원"
+            - option "3,000만원"
+            - option "3,100만원"
+            - option "3,200만원"
+            - option "3,300만원"
+            - option "3,400만원"
+            - option "3,500만원"
+            - option "3,600만원"
+            - option "3,700만원"
+            - option "3,800만원"
+            - option "3,900만원"
+            - option "4,000만원"
+            - option "4,500만원"
+            - option "5,000만원"
+            - option "6,000만원"
+            - option "7,000만원"
+            - option "8,000만원"
+            - option "9,000만원"
+            - option "1억원"
+            - option "1억5,000만원"
+            - option "2억원"
+          - generic [ref=e107]: 연료
+          - combobox "연료" [ref=e108]:
+            - option "::::연료::::" [selected]
+            - option "휘발유"
+            - option "경유"
+            - option "LPG"
+            - option "휘발유/LPG겸"
+            - option "휘발유/CNG겸"
+            - option "휘발유 하이브리드"
+            - option "LPG 하이브리드"
+            - option "경유 하이브리드"
+            - option "전기"
+            - option "CNG"
+            - option "수소"
+          - generic [ref=e109]: 색상
+          - combobox "색상" [ref=e110]:
+            - option "::::색상::::" [selected]
+            - option "검정색"
+            - option "흰색"
+            - option "회색"
+            - option "은색"
+            - option "진주색"
+            - option "파란색"
+            - option "하늘색"
+            - option "빨간색"
+            - option "노란색"
+            - option "주황색"
+            - option "갈색"
+            - option "금색"
+            - option "녹색"
+            - option "보라색"
+          - generic [ref=e111]: 차량번호
+          - textbox [ref=e112]
+        - listitem [ref=e113]:
+          - generic [ref=e114]: 차량연식
+          - combobox "차량연식" [ref=e115]:
+            - option "::::연식::::" [selected]
+            - option "2027년식"
+            - option "2026년식"
+            - option "2025년식"
+            - option "2024년식"
+            - option "2023년식"
+            - option "2022년식"
+            - option "2021년식"
+            - option "2020년식"
+            - option "2019년식"
+            - option "2018년식"
+            - option "2017년식"
+            - option "2016년식"
+            - option "2015년식"
+            - option "2014년식"
+            - option "2013년식"
+            - option "2012년식"
+            - option "2011년식"
+            - option "2010년식"
+            - option "2009년식"
+            - option "2008년식"
+            - option "2007년식"
+            - option "2006년식"
+            - option "2005년식"
+            - option "2004년식"
+            - option "2003년식"
+            - option "2002년식"
+            - option "2001년식"
+            - option "2000년식"
+            - option "1999년식"
+            - option "1998년식"
+            - option "1997년식"
+            - option "1996년식"
+            - option "1995년식"
+            - option "1994년식"
+            - option "1993년식"
+            - option "1992년식"
+            - option "1991년식"
+            - option "1990년식"
+            - option "1989년식"
+            - option "1988년식"
+          - text: ~
+          - combobox "차량연식" [ref=e116]:
+            - option "::::연식::::" [selected]
+            - option "2027년식"
+            - option "2026년식"
+            - option "2025년식"
+            - option "2024년식"
+            - option "2023년식"
+            - option "2022년식"
+            - option "2021년식"
+            - option "2020년식"
+            - option "2019년식"
+            - option "2018년식"
+            - option "2017년식"
+            - option "2016년식"
+            - option "2015년식"
+            - option "2014년식"
+            - option "2013년식"
+            - option "2012년식"
+            - option "2011년식"
+            - option "2010년식"
+            - option "2009년식"
+            - option "2008년식"
+            - option "2007년식"
+            - option "2006년식"
+            - option "2005년식"
+            - option "2004년식"
+            - option "2003년식"
+            - option "2002년식"
+            - option "2001년식"
+            - option "2000년식"
+            - option "1999년식"
+            - option "1998년식"
+            - option "1997년식"
+            - option "1996년식"
+            - option "1995년식"
+            - option "1994년식"
+            - option "1993년식"
+            - option "1992년식"
+            - option "1991년식"
+            - option "1990년식"
+            - option "1989년식"
+            - option "1988년식"
+          - generic [ref=e117]: 변속기
+          - combobox "변속기" [ref=e118]:
+            - option "::::변속기::::" [selected]
+            - option "오토"
+            - option "수동"
+            - option "세미오토"
+            - option "무단변속기"
+          - generic [ref=e119]: 차량명(모델명)
+          - textbox [ref=e120]
+        - listitem [ref=e121]:
+          - generic [ref=e122]: 주행거리
+          - combobox "주행거리" [ref=e123]:
+            - option "::::주행거리::::" [selected]
+            - option "1,000km"
+            - option "2,000km"
+            - option "4,000km"
+            - option "6,000km"
+            - option "8,000km"
+            - option "10,000km"
+            - option "20,000km"
+            - option "30,000km"
+            - option "40,000km"
+            - option "50,000km"
+            - option "60,000km"
+            - option "70,000km"
+            - option "80,000km"
+            - option "90,000km"
+            - option "100,000km"
+            - option "110,000km"
+            - option "120,000km"
+            - option "130,000km"
+            - option "140,000km"
+            - option "150,000km"
+            - option "160,000km"
+            - option "170,000km"
+            - option "180,000km"
+            - option "190,000km"
+            - option "200,000km"
+            - option "210,000km"
+            - option "220,000km"
+            - option "230,000km"
+            - option "240,000km"
+            - option "250,000km"
+            - option "260,000km"
+            - option "270,000km"
+            - option "280,000km"
+            - option "290,000km"
+            - option "300,000km"
+            - option "350,000km"
+            - option "400,000km"
+            - option "500,000km"
+          - text: ~
+          - combobox "주행거리" [ref=e124]:
+            - option "::::주행거리::::" [selected]
+            - option "1,000km"
+            - option "2,000km"
+            - option "4,000km"
+            - option "6,000km"
+            - option "8,000km"
+            - option "10,000km"
+            - option "20,000km"
+            - option "30,000km"
+            - option "40,000km"
+            - option "50,000km"
+            - option "60,000km"
+            - option "70,000km"
+            - option "80,000km"
+            - option "90,000km"
+            - option "100,000km"
+            - option "110,000km"
+            - option "120,000km"
+            - option "130,000km"
+            - option "140,000km"
+            - option "150,000km"
+            - option "160,000km"
+            - option "170,000km"
+            - option "180,000km"
+            - option "190,000km"
+            - option "200,000km"
+            - option "210,000km"
+            - option "220,000km"
+            - option "230,000km"
+            - option "240,000km"
+            - option "250,000km"
+            - option "260,000km"
+            - option "270,000km"
+            - option "280,000km"
+            - option "290,000km"
+            - option "300,000km"
+            - option "350,000km"
+            - option "400,000km"
+            - option "500,000km"
+      - generic [ref=e125]:
+        - button "검색하기" [ref=e126] [cursor=pointer]
+        - button "선택초기화" [ref=e127] [cursor=pointer]
+      - generic [ref=e129]:
+        - generic [ref=e131]: 전체 0대
+        - generic [ref=e133]:
+          - list [ref=e134]:
+            - listitem [ref=e135]:
+              - text: 최근등록매물
+              - button [ref=e136] [cursor=pointer]
+              - button [ref=e137] [cursor=pointer]
+            - listitem [ref=e138]:
+              - text: 가격순
+              - button [ref=e139] [cursor=pointer]
+              - button [ref=e140] [cursor=pointer]
+            - listitem [ref=e141]:
+              - text: 연식순
+              - button [ref=e142] [cursor=pointer]
+              - button [ref=e143] [cursor=pointer]
+            - listitem [ref=e144]:
+              - text: 주행거리순
+              - button [ref=e145] [cursor=pointer]
+              - button [ref=e146] [cursor=pointer]
+          - combobox [ref=e147]:
+            - option "8개씩"
+            - option "16개씩"
+            - option "24개씩" [selected]
+            - option "32개씩"
+            - option "40개씩"
+        - list [ref=e148]:
+          - listitem [ref=e149]
+  - contentinfo [ref=e150]:
+    - generic [ref=e151]:
+      - img "하단 로고" [ref=e152]
+      - generic [ref=e154]:
+        - paragraph [ref=e155]: "관리책임자 : 엄만호 / 핸드폰번호 010-3333-4333 / E-mail : 76man1502 @naver.com"
+        - paragraph [ref=e156]: "대표번호 : 010-3333-4333 / 팩스 : 031-291-1044 / 사업자등록번호 634-86-00864 (주)세일카 / 대표이사 엄만호"
+        - paragraph [ref=e157]
+        - paragraph [ref=e158]: "수원본점 : 경기도 수원시 권선구 평동로 79번길 45 SK V1 모터스 315,316호"
+        - paragraph [ref=e159]:
+          - generic [ref=e160]: ▶
+          - generic [ref=e162]: 간혹 평균 매매시세보다 낮게 책정된 차량들은 리스. 렌트승계(인수금) 또는 계약중인 차량일 수 있으니 문의 주시면 상담 도와드리겠습니다
+          - generic [ref=e163]: ◀
+        - strong [ref=e165]: 전국 중고차 출장 매입 및 판매 가능합니다.
+        - paragraph [ref=e166]:
+          - generic:
+            - strong
+        - paragraph [ref=e167]:
+          - strong [ref=e169]:
+            - generic [ref=e170]:
+              - img "1713857462071006.jpg" [ref=e171]
+              - img "1713857462601215.png" [ref=e172]
+        - text: Copyrightsⓒ 2013 By
+        - strong [ref=e173]: 수원중고차 세일카
+        - text: All Rights Reserved

@@ -1,0 +1,137 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e3]:
+      - link "AlexDrive" [ref=e4] [cursor=pointer]:
+        - /url: /
+        - generic [ref=e5]: AlexDrive
+      - link "WhatsApp" [ref=e6] [cursor=pointer]:
+        - /url: https://wa.me/821039086050
+        - img [ref=e7]
+        - text: WhatsApp
+  - generic [ref=e9]:
+    - complementary [ref=e10]:
+      - generic [ref=e11]:
+        - paragraph [ref=e12]: Меню
+        - button "Свернуть меню" [ref=e13]:
+          - img [ref=e14]
+      - navigation [ref=e16]:
+        - link "Каталог" [ref=e17] [cursor=pointer]:
+          - /url: /
+          - img [ref=e18]
+          - generic [ref=e20]: Каталог
+        - link "О нас" [ref=e21] [cursor=pointer]:
+          - /url: /about
+          - img [ref=e22]
+          - generic [ref=e24]: О нас
+        - link "Контакты" [ref=e25] [cursor=pointer]:
+          - /url: /contacts
+          - img [ref=e26]
+          - generic [ref=e28]: Контакты
+        - link "Калькулятор" [ref=e29] [cursor=pointer]:
+          - /url: /calculator
+          - img [ref=e30]
+          - generic [ref=e32]: Калькулятор
+      - generic [ref=e33]:
+        - link "WhatsApp" [ref=e34] [cursor=pointer]:
+          - /url: https://wa.me/821039086050
+          - img [ref=e35]
+          - generic [ref=e37]: WhatsApp
+        - generic [ref=e38]:
+          - paragraph [ref=e39]: Кан Алексей
+          - link "+82-10-3908-6050" [ref=e40] [cursor=pointer]:
+            - /url: tel:+821039086050
+    - generic [ref=e41]:
+      - main [ref=e42]:
+        - generic [ref=e43]:
+          - generic [ref=e44]:
+            - heading "Каталог автомобилей" [level=1] [ref=e45]
+            - paragraph [ref=e46]: загрузка...
+          - generic [ref=e48]:
+            - generic [ref=e49]:
+              - generic [ref=e50]:
+                - generic [ref=e51]: Марка
+                - button "Все марки" [ref=e52]:
+                  - generic [ref=e53]: Все марки
+                  - img [ref=e54]
+              - generic [ref=e57]:
+                - generic [ref=e58]: Модель
+                - button "Все модели" [ref=e59]:
+                  - generic [ref=e60]: Все модели
+                  - img [ref=e61]
+              - generic [ref=e64]:
+                - generic [ref=e65]: Модификация
+                - combobox [disabled] [ref=e66]:
+                  - generic [ref=e67]: Все
+                  - img: ▼
+                - textbox [disabled] [ref=e68]: __all__
+              - generic [ref=e69]:
+                - generic [ref=e70]: Комплектация
+                - combobox [disabled] [ref=e71]:
+                  - generic [ref=e72]: Все
+                  - img: ▼
+                - textbox [disabled] [ref=e73]: __all__
+              - generic [ref=e74]:
+                - generic [ref=e75]: Доп. комплектация
+                - combobox [disabled] [ref=e76]:
+                  - generic [ref=e77]: Все
+                  - img: ▼
+                - textbox [disabled] [ref=e78]: __all__
+              - generic [ref=e79]:
+                - generic [ref=e80]: Сортировка
+                - combobox [ref=e81]:
+                  - generic [ref=e82]: По дате
+                  - img: ▼
+                - textbox [ref=e83]: ModDt
+            - generic [ref=e84]:
+              - button "Все фильтры" [ref=e85]:
+                - img
+                - text: Все фильтры
+              - generic [ref=e86]:
+                - button "Найти" [ref=e87]:
+                  - img
+                  - text: Найти
+                - button "Сбросить" [ref=e88]:
+                  - img
+                  - text: Сбросить
+          - generic [ref=e90]:
+            - img [ref=e91]
+            - paragraph [ref=e93]: Автомобили не найдены
+            - paragraph [ref=e94]: Попробуйте изменить параметры поиска
+      - contentinfo [ref=e95]:
+        - generic [ref=e96]:
+          - generic [ref=e97]:
+            - generic [ref=e98]:
+              - link "AlexDrive" [ref=e99] [cursor=pointer]:
+                - /url: /
+                - generic [ref=e100]: AlexDrive
+              - paragraph [ref=e101]:
+                - text: Автомобили в Южной Корее.
+                - text: Широкий выбор автомобилей в Сувоне
+            - generic [ref=e102]:
+              - heading "Навигация" [level=3] [ref=e103]
+              - navigation [ref=e104]:
+                - link "Каталог" [ref=e105] [cursor=pointer]:
+                  - /url: /
+                - link "О нас" [ref=e106] [cursor=pointer]:
+                  - /url: /about
+                - link "Контакты" [ref=e107] [cursor=pointer]:
+                  - /url: /contacts
+                - link "Калькулятор" [ref=e108] [cursor=pointer]:
+                  - /url: /calculator
+                - link "Конфиденциальность" [ref=e109] [cursor=pointer]:
+                  - /url: /privacy
+                - link "Условия использования" [ref=e110] [cursor=pointer]:
+                  - /url: /terms
+            - generic [ref=e111]:
+              - heading "Контакты" [level=3] [ref=e112]
+              - generic [ref=e113]:
+                - paragraph [ref=e114]: Кан Алексей
+                - link "+82-10-3908-6050" [ref=e115] [cursor=pointer]:
+                  - /url: tel:+821039086050
+                - link "WhatsApp" [ref=e116] [cursor=pointer]:
+                  - /url: https://wa.me/821039086050
+                  - img [ref=e117]
+                  - text: WhatsApp
+                - paragraph [ref=e119]: Кёнги, Сувон, Южная Корея
+          - generic [ref=e120]: © 2026 AlexDrive. Все права защищены.
+  - alert [ref=e121]

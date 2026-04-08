@@ -1,0 +1,455 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e3]:
+      - link "AlexDrive" [ref=e4] [cursor=pointer]:
+        - /url: /
+        - generic [ref=e5]: AlexDrive
+      - link "WhatsApp" [ref=e6] [cursor=pointer]:
+        - /url: https://wa.me/821039086050
+        - img [ref=e7]
+        - text: WhatsApp
+  - generic [ref=e9]:
+    - complementary [ref=e10]:
+      - generic [ref=e11]:
+        - paragraph [ref=e12]: Меню
+        - button "Свернуть меню" [ref=e13]:
+          - img [ref=e14]
+      - navigation [ref=e16]:
+        - link "Каталог" [ref=e17] [cursor=pointer]:
+          - /url: /
+          - img [ref=e18]
+          - generic [ref=e20]: Каталог
+        - link "О нас" [ref=e21] [cursor=pointer]:
+          - /url: /about
+          - img [ref=e22]
+          - generic [ref=e24]: О нас
+        - link "Контакты" [ref=e25] [cursor=pointer]:
+          - /url: /contacts
+          - img [ref=e26]
+          - generic [ref=e28]: Контакты
+        - link "Калькулятор" [ref=e29] [cursor=pointer]:
+          - /url: /calculator
+          - img [ref=e30]
+          - generic [ref=e32]: Калькулятор
+      - generic [ref=e33]:
+        - link "WhatsApp" [ref=e34] [cursor=pointer]:
+          - /url: https://wa.me/821039086050
+          - img [ref=e35]
+          - generic [ref=e37]: WhatsApp
+        - generic [ref=e38]:
+          - paragraph [ref=e39]: Кан Алексей
+          - link "+82-10-3908-6050" [ref=e40] [cursor=pointer]:
+            - /url: tel:+821039086050
+    - generic [ref=e41]:
+      - main [ref=e42]:
+        - generic [ref=e43]:
+          - generic [ref=e44]:
+            - heading "Каталог автомобилей" [level=1] [ref=e45]
+            - paragraph [ref=e46]: 49 079 авто
+          - generic [ref=e48]:
+            - generic [ref=e49]:
+              - generic [ref=e50]:
+                - generic [ref=e51]: Марка
+                - button "Все марки" [ref=e52]:
+                  - generic [ref=e53]: Все марки
+                  - img [ref=e54]
+              - generic [ref=e57]:
+                - generic [ref=e58]: Модель
+                - button "Все модели" [ref=e59]:
+                  - generic [ref=e60]: Все модели
+                  - img [ref=e61]
+              - generic [ref=e64]:
+                - generic [ref=e65]: Модификация
+                - combobox [disabled] [ref=e66]:
+                  - generic [ref=e67]: Все
+                  - img: ▼
+                - textbox [disabled] [ref=e68]: __all__
+              - generic [ref=e69]:
+                - generic [ref=e70]: Комплектация
+                - combobox [disabled] [ref=e71]:
+                  - generic [ref=e72]: Все
+                  - img: ▼
+                - textbox [disabled] [ref=e73]: __all__
+              - generic [ref=e74]:
+                - generic [ref=e75]: Доп. комплектация
+                - combobox [disabled] [ref=e76]:
+                  - generic [ref=e77]: Все
+                  - img: ▼
+                - textbox [disabled] [ref=e78]: __all__
+              - generic [ref=e79]:
+                - generic [ref=e80]: Сортировка
+                - combobox [ref=e81]:
+                  - generic [ref=e82]: По дате
+                  - img: ▼
+                - textbox [ref=e83]: ModDt
+            - generic [ref=e84]:
+              - button "Все фильтры" [ref=e85]:
+                - img
+                - text: Все фильтры
+              - generic [ref=e86]:
+                - button "Найти" [ref=e87]:
+                  - img
+                  - text: Найти
+                - button "Сбросить" [ref=e88]:
+                  - img
+                  - text: Сбросить
+          - generic [ref=e90]:
+            - link "[폭스바겐]뉴티구안 2.0 TDI 프리미엄 ₩11,500,000 [Volkswagen]NewTiguan 2.0 TDI Premium 2015-08 57,642 km" [ref=e91] [cursor=pointer]:
+              - /url: /car/2-0-tdi-2015/113763019
+              - img "[폭스바겐]뉴티구안 2.0 TDI 프리미엄" [ref=e93]
+              - generic [ref=e94]:
+                - paragraph [ref=e95]: ₩11,500,000
+                - heading "[Volkswagen]NewTiguan 2.0 TDI Premium" [level=3] [ref=e96]
+                - generic [ref=e97]:
+                  - generic [ref=e98]:
+                    - img [ref=e99]
+                    - text: 2015-08
+                  - generic [ref=e101]:
+                    - img [ref=e102]
+                    - text: 57,642 km
+            - link "[쉐보레]더뉴스파크 프리미어 ₩11,200,000 [Chevrolet]TheNewSpark Premium 2021-08 33,273 km" [ref=e105] [cursor=pointer]:
+              - /url: /car/-2021/113763084
+              - img "[쉐보레]더뉴스파크 프리미어" [ref=e107]
+              - generic [ref=e108]:
+                - paragraph [ref=e109]: ₩11,200,000
+                - heading "[Chevrolet]TheNewSpark Premium" [level=3] [ref=e110]
+                - generic [ref=e111]:
+                  - generic [ref=e112]:
+                    - img [ref=e113]
+                    - text: 2021-08
+                  - generic [ref=e115]:
+                    - img [ref=e116]
+                    - text: 33,273 km
+            - link "[제네시스]G80 3.3 GDI AWD 프레스티지 ₩15,800,000 [Genesis]G80 3.3 GDI AWD Prestige 2017-12 192,488 km" [ref=e119] [cursor=pointer]:
+              - /url: /car/g80-3-3-gdi-awd-2017/113763979
+              - img "[제네시스]G80 3.3 GDI AWD 프레스티지" [ref=e121]
+              - generic [ref=e122]:
+                - paragraph [ref=e123]: ₩15,800,000
+                - heading "[Genesis]G80 3.3 GDI AWD Prestige" [level=3] [ref=e124]
+                - generic [ref=e125]:
+                  - generic [ref=e126]:
+                    - img [ref=e127]
+                    - text: 2017-12
+                  - generic [ref=e129]:
+                    - img [ref=e130]
+                    - text: 192,488 km
+            - link "[현대]더 뉴 싼타페 하이브리드 1.6 4WD 프레스티지 ₩29,500,000 [Hyundai]The New Santa Fe Hybrid 1.6 4WD Prestige 2021-08 66,840 km" [ref=e133] [cursor=pointer]:
+              - /url: /car/1-6-4wd-2021/113764056
+              - img "[현대]더 뉴 싼타페 하이브리드 1.6 4WD 프레스티지" [ref=e135]
+              - generic [ref=e136]:
+                - paragraph [ref=e137]: ₩29,500,000
+                - heading "[Hyundai]The New Santa Fe Hybrid 1.6 4WD Prestige" [level=3] [ref=e138]
+                - generic [ref=e139]:
+                  - generic [ref=e140]:
+                    - img [ref=e141]
+                    - text: 2021-08
+                  - generic [ref=e143]:
+                    - img [ref=e144]
+                    - text: 66,840 km
+            - link "[제네시스]더 뉴 G70 가솔린 2.0T 2WD ₩34,000,000 [Genesis]The New G70 Бензин 2.0T 2WD 2022-09 56,861 km" [ref=e147] [cursor=pointer]:
+              - /url: /car/g70-2-0t-2wd-2022/113764071
+              - img "[제네시스]더 뉴 G70 가솔린 2.0T 2WD" [ref=e149]
+              - generic [ref=e150]:
+                - paragraph [ref=e151]: ₩34,000,000
+                - heading "[Genesis]The New G70 Бензин 2.0T 2WD" [level=3] [ref=e152]
+                - generic [ref=e153]:
+                  - generic [ref=e154]:
+                    - img [ref=e155]
+                    - text: 2022-09
+                  - generic [ref=e157]:
+                    - img [ref=e158]
+                    - text: 56,861 km
+            - link "[마세라티]르반떼 3.0 AWD ₩42,900,000 [Maserati]Levante 3.0 AWD 2019-04 59,138 km" [ref=e161] [cursor=pointer]:
+              - /url: /car/3-0-awd-2019/113764206
+              - img "[마세라티]르반떼 3.0 AWD" [ref=e163]
+              - generic [ref=e164]:
+                - paragraph [ref=e165]: ₩42,900,000
+                - heading "[Maserati]Levante 3.0 AWD" [level=3] [ref=e166]
+                - generic [ref=e167]:
+                  - generic [ref=e168]:
+                    - img [ref=e169]
+                    - text: 2019-04
+                  - generic [ref=e171]:
+                    - img [ref=e172]
+                    - text: 59,138 km
+            - link "[벤츠]E-클래스 W213 E200 아방가르드 ₩23,200,000 [Mercedes-Benz]E-Class W213 E200 Avangard 2017-03 52,282 km" [ref=e175] [cursor=pointer]:
+              - /url: /car/e-w213-e200-2017/113764269
+              - img "[벤츠]E-클래스 W213 E200 아방가르드" [ref=e177]
+              - generic [ref=e178]:
+                - paragraph [ref=e179]: ₩23,200,000
+                - heading "[Mercedes-Benz]E-Class W213 E200 Avangard" [level=3] [ref=e180]
+                - generic [ref=e181]:
+                  - generic [ref=e182]:
+                    - img [ref=e183]
+                    - text: 2017-03
+                  - generic [ref=e185]:
+                    - img [ref=e186]
+                    - text: 52,282 km
+            - link "[벤츠]S클래스-W223 S580L 4MATIC ₩73,700,000 [Mercedes-Benz]S Класс-W223 S580L 4MATIC 2021-05 128,779 km" [ref=e189] [cursor=pointer]:
+              - /url: /car/s-w223-s580l-4matic-2021/113764271
+              - img "[벤츠]S클래스-W223 S580L 4MATIC" [ref=e191]
+              - generic [ref=e192]:
+                - paragraph [ref=e193]: ₩73,700,000
+                - heading "[Mercedes-Benz]S Класс-W223 S580L 4MATIC" [level=3] [ref=e194]
+                - generic [ref=e195]:
+                  - generic [ref=e196]:
+                    - img [ref=e197]
+                    - text: 2021-05
+                  - generic [ref=e199]:
+                    - img [ref=e200]
+                    - text: 128,779 km
+            - link "[르노코리아(삼성)]뉴SM5플래티넘 2.0 SE PLUS ₩3,600,000 [Renault Korea (Samsung)]NewSM5Platinum 2.0 SE PLUS 2013-03 87,191 km" [ref=e203] [cursor=pointer]:
+              - /url: /car/sm5-2-0-se-plus-2013/113764275
+              - img "[르노코리아(삼성)]뉴SM5플래티넘 2.0 SE PLUS" [ref=e205]
+              - generic [ref=e206]:
+                - paragraph [ref=e207]: ₩3,600,000
+                - heading "[Renault Korea (Samsung)]NewSM5Platinum 2.0 SE PLUS" [level=3] [ref=e208]
+                - generic [ref=e209]:
+                  - generic [ref=e210]:
+                    - img [ref=e211]
+                    - text: 2013-03
+                  - generic [ref=e213]:
+                    - img [ref=e214]
+                    - text: 87,191 km
+            - link "[아우디]A4 (B9) 40 TFSI 프리미엄 ₩15,600,000 [Audi]A4 (B9) 40 TFSI Premium 2020-02 113,074 km" [ref=e217] [cursor=pointer]:
+              - /url: /car/a4-b9-40-tfsi-2020/113764401
+              - img "[아우디]A4 (B9) 40 TFSI 프리미엄" [ref=e219]
+              - generic [ref=e220]:
+                - paragraph [ref=e221]: ₩15,600,000
+                - heading "[Audi]A4 (B9) 40 TFSI Premium" [level=3] [ref=e222]
+                - generic [ref=e223]:
+                  - generic [ref=e224]:
+                    - img [ref=e225]
+                    - text: 2020-02
+                  - generic [ref=e227]:
+                    - img [ref=e228]
+                    - text: 113,074 km
+            - link "[기아]더 뉴 레이 1인승 밴 프레스티지 ₩8,080,000 [Kia]The New Ray 1 мест Van Prestige 2021-12 85,474 km" [ref=e231] [cursor=pointer]:
+              - /url: /car/1-2021/113764419
+              - img "[기아]더 뉴 레이 1인승 밴 프레스티지" [ref=e233]
+              - generic [ref=e234]:
+                - paragraph [ref=e235]: ₩8,080,000
+                - heading "[Kia]The New Ray 1 мест Van Prestige" [level=3] [ref=e236]
+                - generic [ref=e237]:
+                  - generic [ref=e238]:
+                    - img [ref=e239]
+                    - text: 2021-12
+                  - generic [ref=e241]:
+                    - img [ref=e242]
+                    - text: 85,474 km
+            - link "[기아]디 올 뉴 니로 EV 어스 ₩17,990,000 [Kia]The All New Niro EV Earth 2022-06 255,077 km" [ref=e245] [cursor=pointer]:
+              - /url: /car/ev-2022/113764432
+              - img "[기아]디 올 뉴 니로 EV 어스" [ref=e247]
+              - generic [ref=e248]:
+                - paragraph [ref=e249]: ₩17,990,000
+                - heading "[Kia]The All New Niro EV Earth" [level=3] [ref=e250]
+                - generic [ref=e251]:
+                  - generic [ref=e252]:
+                    - img [ref=e253]
+                    - text: 2022-06
+                  - generic [ref=e255]:
+                    - img [ref=e256]
+                    - text: 255,077 km
+            - link "[제네시스]GV70 2.5T 가솔린 2WD ₩45,900,000 [Genesis]GV70 2.5T Бензин 2WD 2022-09 45,882 km" [ref=e259] [cursor=pointer]:
+              - /url: /car/gv70-2-5t-2wd-2022/113764473
+              - img "[제네시스]GV70 2.5T 가솔린 2WD" [ref=e261]
+              - generic [ref=e262]:
+                - paragraph [ref=e263]: ₩45,900,000
+                - heading "[Genesis]GV70 2.5T Бензин 2WD" [level=3] [ref=e264]
+                - generic [ref=e265]:
+                  - generic [ref=e266]:
+                    - img [ref=e267]
+                    - text: 2022-09
+                  - generic [ref=e269]:
+                    - img [ref=e270]
+                    - text: 45,882 km
+            - link "[벤츠]S클래스-W222 S 350 d 4MATIC ₩19,400,000 [Mercedes-Benz]S Класс-W222 S 350 d 4MATIC 2016-12 262,796 km" [ref=e273] [cursor=pointer]:
+              - /url: /car/s-w222-s-350-d-4matic-2016/113764491
+              - img "[벤츠]S클래스-W222 S 350 d 4MATIC" [ref=e275]
+              - generic [ref=e276]:
+                - paragraph [ref=e277]: ₩19,400,000
+                - heading "[Mercedes-Benz]S Класс-W222 S 350 d 4MATIC" [level=3] [ref=e278]
+                - generic [ref=e279]:
+                  - generic [ref=e280]:
+                    - img [ref=e281]
+                    - text: 2016-12
+                  - generic [ref=e283]:
+                    - img [ref=e284]
+                    - text: 262,796 km
+            - link "[포드]익스플로러 2.3 에코부스트 리미티드 4WD ₩10,700,000 [Ford]Explorer 2.3 EcoBoost Limited 4WD 2015-10 137,298 km" [ref=e287] [cursor=pointer]:
+              - /url: /car/2-3-4wd-2015/113764501
+              - img "[포드]익스플로러 2.3 에코부스트 리미티드 4WD" [ref=e289]
+              - generic [ref=e290]:
+                - paragraph [ref=e291]: ₩10,700,000
+                - heading "[Ford]Explorer 2.3 EcoBoost Limited 4WD" [level=3] [ref=e292]
+                - generic [ref=e293]:
+                  - generic [ref=e294]:
+                    - img [ref=e295]
+                    - text: 2015-10
+                  - generic [ref=e297]:
+                    - img [ref=e298]
+                    - text: 137,298 km
+            - link "[소형화물][내장탑]포터2 슈퍼캡/초장축/(CRDi) 스타일 ₩24,900,000 [Грузовые][Interior Box]Porter2 Super Cab/Длинный/(CRDi) Style 2022-03 30,504 km" [ref=e301] [cursor=pointer]:
+              - /url: /car/2-crdi-2022/113767217
+              - img "[소형화물][내장탑]포터2 슈퍼캡/초장축/(CRDi) 스타일" [ref=e303]
+              - generic [ref=e304]:
+                - paragraph [ref=e305]: ₩24,900,000
+                - heading "[Грузовые][Interior Box]Porter2 Super Cab/Длинный/(CRDi) Style" [level=3] [ref=e306]
+                - generic [ref=e307]:
+                  - generic [ref=e308]:
+                    - img [ref=e309]
+                    - text: 2022-03
+                  - generic [ref=e311]:
+                    - img [ref=e312]
+                    - text: 30,504 km
+            - link "[기아]모하비 디젤 2WD KV300 ₩5,300,000 [Kia]Mohave Дизель 2WD KV300 2012-05 239,583 km" [ref=e315] [cursor=pointer]:
+              - /url: /car/2wd-kv300-2012/113770652
+              - img "[기아]모하비 디젤 2WD KV300" [ref=e317]
+              - generic [ref=e318]:
+                - paragraph [ref=e319]: ₩5,300,000
+                - heading "[Kia]Mohave Дизель 2WD KV300" [level=3] [ref=e320]
+                - generic [ref=e321]:
+                  - generic [ref=e322]:
+                    - img [ref=e323]
+                    - text: 2012-05
+                  - generic [ref=e325]:
+                    - img [ref=e326]
+                    - text: 239,583 km
+            - link "[기아]더 뉴 기아 레이 프레스티지 ₩14,900,000 [Kia]The New Kia Ray Prestige 2023-06 21,966 km" [ref=e329] [cursor=pointer]:
+              - /url: /car/-2023/113770653
+              - img "[기아]더 뉴 기아 레이 프레스티지" [ref=e331]
+              - generic [ref=e332]:
+                - paragraph [ref=e333]: ₩14,900,000
+                - heading "[Kia]The New Kia Ray Prestige" [level=3] [ref=e334]
+                - generic [ref=e335]:
+                  - generic [ref=e336]:
+                    - img [ref=e337]
+                    - text: 2023-06
+                  - generic [ref=e339]:
+                    - img [ref=e340]
+                    - text: 21,966 km
+            - link "[르노코리아(삼성)]SM7노바 2.5 RE ₩3,900,000 [Renault Korea (Samsung)]SM7Nova 2.5 RE 2015-03 144,220 km" [ref=e343] [cursor=pointer]:
+              - /url: /car/sm7-2-5-re-2015/113770655
+              - img "[르노코리아(삼성)]SM7노바 2.5 RE" [ref=e345]
+              - generic [ref=e346]:
+                - paragraph [ref=e347]: ₩3,900,000
+                - heading "[Renault Korea (Samsung)]SM7Nova 2.5 RE" [level=3] [ref=e348]
+                - generic [ref=e349]:
+                  - generic [ref=e350]:
+                    - img [ref=e351]
+                    - text: 2015-03
+                  - generic [ref=e353]:
+                    - img [ref=e354]
+                    - text: 144,220 km
+            - link "[소형화물][냉동탑]포터2 슈퍼캡/초장축/(CRDi) 디럭스 ₩2,900,000 [Грузовые][Reefer Box]Porter2 Super Cab/Длинный/(CRDi) Deluxe 2008-05 229,985 km" [ref=e357] [cursor=pointer]:
+              - /url: /car/2-crdi-2008/113770656
+              - img "[소형화물][냉동탑]포터2 슈퍼캡/초장축/(CRDi) 디럭스" [ref=e359]
+              - generic [ref=e360]:
+                - paragraph [ref=e361]: ₩2,900,000
+                - heading "[Грузовые][Reefer Box]Porter2 Super Cab/Длинный/(CRDi) Deluxe" [level=3] [ref=e362]
+                - generic [ref=e363]:
+                  - generic [ref=e364]:
+                    - img [ref=e365]
+                    - text: 2008-05
+                  - generic [ref=e367]:
+                    - img [ref=e368]
+                    - text: 229,985 km
+            - link "[기아]카니발 4세대 디젤 9인승 노블레스 ₩28,700,000 [Kia]Carnival 4-е Поколение Дизель 9-местный Noblesse 2022-11 63,861 km" [ref=e371] [cursor=pointer]:
+              - /url: /car/4-9-2022/113768637
+              - img "[기아]카니발 4세대 디젤 9인승 노블레스" [ref=e373]
+              - generic [ref=e374]:
+                - paragraph [ref=e375]: ₩28,700,000
+                - heading "[Kia]Carnival 4-е Поколение Дизель 9-местный Noblesse" [level=3] [ref=e376]
+                - generic [ref=e377]:
+                  - generic [ref=e378]:
+                    - img [ref=e379]
+                    - text: 2022-11
+                  - generic [ref=e381]:
+                    - img [ref=e382]
+                    - text: 63,861 km
+            - link "[기아]니로 1.6 하이브리드 프레스티지 ₩9,490,000 [Kia]Niro 1.6 Hybrid Prestige 2016-09 156,544 km" [ref=e385] [cursor=pointer]:
+              - /url: /car/1-6-2016/113764907
+              - img "[기아]니로 1.6 하이브리드 프레스티지" [ref=e387]
+              - generic [ref=e388]:
+                - paragraph [ref=e389]: ₩9,490,000
+                - heading "[Kia]Niro 1.6 Hybrid Prestige" [level=3] [ref=e390]
+                - generic [ref=e391]:
+                  - generic [ref=e392]:
+                    - img [ref=e393]
+                    - text: 2016-09
+                  - generic [ref=e395]:
+                    - img [ref=e396]
+                    - text: 156,544 km
+            - link "[현대]더 뉴 그랜드 스타렉스 2WD 밴 5인승 모던 ₩14,200,000 [Hyundai]The New Grand Starex 2WD Van 5 мест Modern 2018-11 101,635 km" [ref=e399] [cursor=pointer]:
+              - /url: /car/2wd-5-2018/113764992
+              - img "[현대]더 뉴 그랜드 스타렉스 2WD 밴 5인승 모던" [ref=e401]
+              - generic [ref=e402]:
+                - paragraph [ref=e403]: ₩14,200,000
+                - heading "[Hyundai]The New Grand Starex 2WD Van 5 мест Modern" [level=3] [ref=e404]
+                - generic [ref=e405]:
+                  - generic [ref=e406]:
+                    - img [ref=e407]
+                    - text: 2018-11
+                  - generic [ref=e409]:
+                    - img [ref=e410]
+                    - text: 101,635 km
+            - link "[현대]그랜저 IG 하이브리드 익스클루시브 스페셜 ₩25,300,000 [Hyundai]Grandeur IG Hybrid Exclusive Special 2018-06 97,522 km" [ref=e413] [cursor=pointer]:
+              - /url: /car/ig-2018/113765041
+              - img "[현대]그랜저 IG 하이브리드 익스클루시브 스페셜" [ref=e415]
+              - generic [ref=e416]:
+                - paragraph [ref=e417]: ₩25,300,000
+                - heading "[Hyundai]Grandeur IG Hybrid Exclusive Special" [level=3] [ref=e418]
+                - generic [ref=e419]:
+                  - generic [ref=e420]:
+                    - img [ref=e421]
+                    - text: 2018-06
+                  - generic [ref=e423]:
+                    - img [ref=e424]
+                    - text: 97,522 km
+          - generic [ref=e427]:
+            - button "Предыдущая" [disabled] [ref=e428]:
+              - img [ref=e429]
+            - button "1" [ref=e431]
+            - button "2" [ref=e432]
+            - generic [ref=e433]: ...
+            - button "2045" [ref=e434]
+            - button "Следующая" [ref=e435]:
+              - img [ref=e436]
+      - contentinfo [ref=e438]:
+        - generic [ref=e439]:
+          - generic [ref=e440]:
+            - generic [ref=e441]:
+              - link "AlexDrive" [ref=e442] [cursor=pointer]:
+                - /url: /
+                - generic [ref=e443]: AlexDrive
+              - paragraph [ref=e444]:
+                - text: Автомобили в Южной Корее.
+                - text: Широкий выбор автомобилей в Сувоне
+            - generic [ref=e445]:
+              - heading "Навигация" [level=3] [ref=e446]
+              - navigation [ref=e447]:
+                - link "Каталог" [ref=e448] [cursor=pointer]:
+                  - /url: /
+                - link "О нас" [ref=e449] [cursor=pointer]:
+                  - /url: /about
+                - link "Контакты" [ref=e450] [cursor=pointer]:
+                  - /url: /contacts
+                - link "Калькулятор" [ref=e451] [cursor=pointer]:
+                  - /url: /calculator
+                - link "Конфиденциальность" [ref=e452] [cursor=pointer]:
+                  - /url: /privacy
+                - link "Условия использования" [ref=e453] [cursor=pointer]:
+                  - /url: /terms
+            - generic [ref=e454]:
+              - heading "Контакты" [level=3] [ref=e455]
+              - generic [ref=e456]:
+                - paragraph [ref=e457]: Кан Алексей
+                - link "+82-10-3908-6050" [ref=e458] [cursor=pointer]:
+                  - /url: tel:+821039086050
+                - link "WhatsApp" [ref=e459] [cursor=pointer]:
+                  - /url: https://wa.me/821039086050
+                  - img [ref=e460]
+                  - text: WhatsApp
+                - paragraph [ref=e462]: Кёнги, Сувон, Южная Корея
+          - generic [ref=e463]: © 2026 AlexDrive. Все права защищены.
+  - alert [ref=e464]
