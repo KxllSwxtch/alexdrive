@@ -33,15 +33,27 @@ _detail_refresh_keys: set[str] = set()
 
 _last_successful_parse: float = 0.0
 
-# --- Location-based exclusion (progressive Suwon filter) ---
+# --- Location-based filtering (strict Suwon whitelist) ---
 ALLOWED_LOCATIONS: set[str] = {"수원"}
 _excluded_car_ids: dict[str, float] = {}  # car_id → timestamp when excluded
+_verified_suwon_ids: set[str] = set()  # car IDs confirmed in ALLOWED_LOCATIONS
 EXCLUSION_SET_PATH = "/tmp/alexdrive_excluded_ids.json"
 EXCLUSION_TTL = 7 * 24 * 60 * 60  # 7 days
 
 # --- Location cache (for scanner — tracks ALL checked cars) ---
 _location_cache: dict[str, tuple[str, float]] = {}  # car_id → (location, timestamp)
 LOCATION_CACHE_PATH = "/tmp/alexdrive_location_cache.json"
+
+
+def _update_location_tracking(car_id: str, location: str) -> None:
+    """Update all location-tracking data structures after learning a car's location."""
+    _location_cache[car_id] = (location, time.time())
+    if location in ALLOWED_LOCATIONS:
+        _verified_suwon_ids.add(car_id)
+        _excluded_car_ids.pop(car_id, None)
+    else:
+        _excluded_car_ids[car_id] = time.time()
+        _verified_suwon_ids.discard(car_id)
 
 # --- Background location scanner ---
 SCANNER_EXTRA_DELAY = 1.0  # extra sleep between scanner requests (yield to users)
@@ -387,17 +399,45 @@ async def listing_refresh_loop() -> None:
             print(f"[salecars] Proactive listing refresh failed: {e}")
 
 
+async def _check_unknown_locations(car_ids: list[str]) -> None:
+    """Check locations of unknown cars in background so they appear on next request if Suwon."""
+    for car_id in car_ids:
+        if car_id in _location_cache:
+            continue
+        if is_rate_limited():
+            return
+        try:
+            await _check_car_location(car_id)
+        except Exception as e:
+            print(f"[salecars] Failed to check location for {car_id}: {e}")
+
+
 def _filter_excluded_listings(data: dict) -> dict:
-    """Remove cars confirmed as non-Suwon from listing results."""
-    if not _excluded_car_ids or not data.get("listings"):
+    """Strict whitelist: only keep cars verified as Suwon."""
+    listings = data.get("listings")
+    if not listings:
         return data
-    listings = data["listings"]
-    filtered = [car for car in listings if car["id"] not in _excluded_car_ids]
-    if len(filtered) < len(listings):
-        removed = len(listings) - len(filtered)
-        print(f"[salecars] Filtered {removed} non-Suwon cars from listings")
-        return {**data, "listings": filtered, "total": max(0, data["total"] - removed)}
-    return data
+
+    verified = []
+    unknown_ids = []
+    for car in listings:
+        car_id = car["id"]
+        if car_id in _verified_suwon_ids:
+            verified.append(car)
+        elif car_id not in _location_cache:
+            unknown_ids.append(car_id)
+        # else: in _location_cache but not Suwon — drop
+
+    if unknown_ids:
+        asyncio.ensure_future(_check_unknown_locations(unknown_ids))
+
+    removed = len(listings) - len(verified)
+    if removed > 0:
+        print(
+            f"[salecars] Strict filter: kept {len(verified)}/{len(listings)} "
+            f"({len(unknown_ids)} unknown, {removed - len(unknown_ids)} non-Suwon)"
+        )
+    return {**data, "listings": verified, "total": len(_verified_suwon_ids)}
 
 
 async def get_car_listings(params: dict) -> dict:
@@ -511,9 +551,7 @@ async def _refresh_detail_cache(car_id: str) -> None:
 
         location = result.get("location", "")
         if location:
-            _location_cache[car_id] = (location, time.time())
-        if location and location not in ALLOWED_LOCATIONS:
-            _excluded_car_ids[car_id] = time.time()
+            _update_location_tracking(car_id, location)
 
         _detail_cache[car_id] = {"data": result, "expiry": time.time() + DETAIL_TTL}
         _evict_oldest(_detail_cache, MAX_DETAIL_CACHE_ENTRIES)
@@ -572,12 +610,10 @@ async def get_car_detail(car_id: str) -> dict:
         if options:
             result["options"] = options
 
-        # Track location for progressive listing filter
+        # Track location for strict Suwon whitelist filter
         location = result.get("location", "")
         if location:
-            _location_cache[car_id] = (location, time.time())
-        if location and location not in ALLOWED_LOCATIONS:
-            _excluded_car_ids[car_id] = time.time()
+            _update_location_tracking(car_id, location)
 
         _detail_cache[car_id] = {"data": result, "expiry": time.time() + DETAIL_TTL}
         _evict_oldest(_detail_cache, MAX_DETAIL_CACHE_ENTRIES)
@@ -705,8 +741,10 @@ def _load_location_cache_from_disk() -> int:
         loc, ts = entry[0], entry[1]
         if now - ts < EXCLUSION_TTL and car_id not in _location_cache:
             _location_cache[car_id] = (loc, ts)
-            # Rebuild exclusion set from loaded locations
-            if loc and loc not in ALLOWED_LOCATIONS and car_id not in _excluded_car_ids:
+            # Rebuild whitelist and exclusion set from loaded locations
+            if loc and loc in ALLOWED_LOCATIONS:
+                _verified_suwon_ids.add(car_id)
+            elif loc and loc not in ALLOWED_LOCATIONS and car_id not in _excluded_car_ids:
                 _excluded_car_ids[car_id] = ts
             loaded += 1
     if loaded:
@@ -750,9 +788,10 @@ async def _check_car_location(car_id: str) -> str | None:
     parser = LexborHTMLParser(html)
     location = _extract_location(parser)
 
-    _location_cache[car_id] = (location, time.time())
-    if location and location not in ALLOWED_LOCATIONS:
-        _excluded_car_ids[car_id] = time.time()
+    if location:
+        _update_location_tracking(car_id, location)
+    else:
+        _location_cache[car_id] = ("", time.time())
 
     _clear_rate_limit()
     return location
@@ -860,8 +899,9 @@ async def location_scanner_loop() -> None:
 
             print(
                 f"[scanner] Full pass complete: checked {total_checked} new cars, "
-                f"{len(_excluded_car_ids)} total excluded, "
-                f"{len(_location_cache)} total in location cache"
+                f"{len(_verified_suwon_ids)} verified Suwon, "
+                f"{len(_excluded_car_ids)} excluded, "
+                f"{len(_location_cache)} in location cache"
             )
 
             # Clean expired entries
@@ -869,6 +909,8 @@ async def location_scanner_loop() -> None:
             expired = [k for k, (_, ts) in _location_cache.items() if now - ts >= EXCLUSION_TTL]
             for k in expired:
                 del _location_cache[k]
+                _verified_suwon_ids.discard(k)
+                _excluded_car_ids.pop(k, None)
             if expired:
                 print(f"[scanner] Cleaned {len(expired)} expired location cache entries")
 

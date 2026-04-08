@@ -206,48 +206,74 @@ class TestExtractLocation:
 class TestFilterExcludedListings:
     def setup_method(self):
         from app.services import salecars
-        self._original = dict(salecars._excluded_car_ids)
+        self._orig_exc = dict(salecars._excluded_car_ids)
+        self._orig_ver = set(salecars._verified_suwon_ids)
+        self._orig_loc = dict(salecars._location_cache)
         salecars._excluded_car_ids.clear()
+        salecars._verified_suwon_ids.clear()
+        salecars._location_cache.clear()
 
     def teardown_method(self):
         from app.services import salecars
         salecars._excluded_car_ids.clear()
-        salecars._excluded_car_ids.update(self._original)
+        salecars._excluded_car_ids.update(self._orig_exc)
+        salecars._verified_suwon_ids.clear()
+        salecars._verified_suwon_ids.update(self._orig_ver)
+        salecars._location_cache.clear()
+        salecars._location_cache.update(self._orig_loc)
 
-    def test_total_adjusted_by_page_removed_not_global(self):
-        """total should subtract per-page removed count, not global exclusion size."""
+    def test_only_verified_suwon_shown(self):
+        """Only cars in _verified_suwon_ids pass through the filter."""
         import time
-        from app.services.salecars import _filter_excluded_listings, _excluded_car_ids
-        # Simulate 100 globally excluded IDs
-        for i in range(100):
-            _excluded_car_ids[f"other_{i}"] = time.time()
-        # Only 2 of them are on this page
-        _excluded_car_ids["car_A"] = time.time()
+        from app.services.salecars import _filter_excluded_listings, _verified_suwon_ids, _location_cache, _excluded_car_ids
+        _verified_suwon_ids.add("car_A")
+        _location_cache["car_A"] = ("수원", time.time())
         _excluded_car_ids["car_B"] = time.time()
+        _location_cache["car_B"] = ("안산", time.time())
+        # car_C is unknown (not in any cache)
 
         data = {
-            "listings": [
-                {"id": "car_A"}, {"id": "car_C"}, {"id": "car_B"}, {"id": "car_D"},
-            ],
+            "listings": [{"id": "car_A"}, {"id": "car_B"}, {"id": "car_C"}],
             "total": 50,
             "status": "ok",
         }
         result = _filter_excluded_listings(data)
-        assert len(result["listings"]) == 2  # car_C, car_D remain
-        assert result["total"] == 48  # 50 - 2 (not 50 - 102)
+        assert len(result["listings"]) == 1
+        assert result["listings"][0]["id"] == "car_A"
 
-    def test_no_exclusions_passes_through(self):
-        from app.services.salecars import _filter_excluded_listings
-        data = {"listings": [{"id": "x"}], "total": 10, "status": "ok"}
-        assert _filter_excluded_listings(data) is data
-
-    def test_no_overlap_passes_through(self):
+    def test_total_reflects_verified_count(self):
+        """total should equal len(_verified_suwon_ids)."""
         import time
-        from app.services.salecars import _filter_excluded_listings, _excluded_car_ids
-        _excluded_car_ids["other"] = time.time()
-        data = {"listings": [{"id": "x"}], "total": 10, "status": "ok"}
+        from app.services.salecars import _filter_excluded_listings, _verified_suwon_ids, _location_cache
+        _verified_suwon_ids.update({"s1", "s2", "s3"})
+        _location_cache["s1"] = ("수원", time.time())
+        _location_cache["car_A"] = ("수원", time.time())
+        _verified_suwon_ids.add("car_A")
+
+        data = {
+            "listings": [{"id": "car_A"}],
+            "total": 100,
+            "status": "ok",
+        }
         result = _filter_excluded_listings(data)
-        assert result["total"] == 10  # unchanged
+        assert result["total"] == 4  # s1, s2, s3, car_A
+
+    def test_empty_listings_passes_through(self):
+        from app.services.salecars import _filter_excluded_listings
+        data = {"listings": [], "total": 0, "status": "ok"}
+        result = _filter_excluded_listings(data)
+        assert result["listings"] == []
+
+    def test_all_unknown_returns_empty(self):
+        """Cars with unknown location should be filtered out."""
+        from app.services.salecars import _filter_excluded_listings
+        data = {
+            "listings": [{"id": "x"}, {"id": "y"}],
+            "total": 10,
+            "status": "ok",
+        }
+        result = _filter_excluded_listings(data)
+        assert len(result["listings"]) == 0
 
 
 # ── Location cache ───────────────────────────────────────────
@@ -258,8 +284,10 @@ class TestLocationCache:
         from app.services import salecars
         self._orig_loc = dict(salecars._location_cache)
         self._orig_exc = dict(salecars._excluded_car_ids)
+        self._orig_ver = set(salecars._verified_suwon_ids)
         salecars._location_cache.clear()
         salecars._excluded_car_ids.clear()
+        salecars._verified_suwon_ids.clear()
 
     def teardown_method(self):
         from app.services import salecars
@@ -267,6 +295,8 @@ class TestLocationCache:
         salecars._location_cache.update(self._orig_loc)
         salecars._excluded_car_ids.clear()
         salecars._excluded_car_ids.update(self._orig_exc)
+        salecars._verified_suwon_ids.clear()
+        salecars._verified_suwon_ids.update(self._orig_ver)
 
     def test_check_car_location_caches_result(self):
         """_check_car_location stores result in _location_cache."""
@@ -280,7 +310,7 @@ class TestLocationCache:
         assert loc == "수원"
 
     def test_location_cache_persistence_roundtrip(self):
-        """Save and load location cache preserves data."""
+        """Save and load location cache preserves data and rebuilds whitelist."""
         import time as t
         import tempfile, os
         from app.services import salecars
@@ -297,6 +327,7 @@ class TestLocationCache:
 
             salecars._location_cache.clear()
             salecars._excluded_car_ids.clear()
+            salecars._verified_suwon_ids.clear()
             loaded = salecars._load_location_cache_from_disk()
             assert loaded == 2
             assert salecars._location_cache["car1"][0] == "수원"
@@ -304,10 +335,59 @@ class TestLocationCache:
             # Non-suwon car should be in exclusion set
             assert "car2" in salecars._excluded_car_ids
             assert "car1" not in salecars._excluded_car_ids
+            # Suwon car should be in verified set
+            assert "car1" in salecars._verified_suwon_ids
+            assert "car2" not in salecars._verified_suwon_ids
         finally:
             salecars.LOCATION_CACHE_PATH = orig_path
             if os.path.exists(tmp):
                 os.unlink(tmp)
+
+
+# ── Location tracking helper ─────────────────────────────────
+
+
+class TestUpdateLocationTracking:
+    def setup_method(self):
+        from app.services import salecars
+        self._orig_loc = dict(salecars._location_cache)
+        self._orig_exc = dict(salecars._excluded_car_ids)
+        self._orig_ver = set(salecars._verified_suwon_ids)
+        salecars._location_cache.clear()
+        salecars._excluded_car_ids.clear()
+        salecars._verified_suwon_ids.clear()
+
+    def teardown_method(self):
+        from app.services import salecars
+        salecars._location_cache.clear()
+        salecars._location_cache.update(self._orig_loc)
+        salecars._excluded_car_ids.clear()
+        salecars._excluded_car_ids.update(self._orig_exc)
+        salecars._verified_suwon_ids.clear()
+        salecars._verified_suwon_ids.update(self._orig_ver)
+
+    def test_suwon_adds_to_verified(self):
+        from app.services.salecars import _update_location_tracking, _verified_suwon_ids, _excluded_car_ids, _location_cache
+        _update_location_tracking("car1", "수원")
+        assert "car1" in _verified_suwon_ids
+        assert "car1" not in _excluded_car_ids
+        assert _location_cache["car1"][0] == "수원"
+
+    def test_non_suwon_adds_to_excluded(self):
+        from app.services.salecars import _update_location_tracking, _verified_suwon_ids, _excluded_car_ids, _location_cache
+        _update_location_tracking("car2", "안산")
+        assert "car2" not in _verified_suwon_ids
+        assert "car2" in _excluded_car_ids
+        assert _location_cache["car2"][0] == "안산"
+
+    def test_location_change_updates_sets(self):
+        """If a car's location changes, it moves between sets."""
+        from app.services.salecars import _update_location_tracking, _verified_suwon_ids, _excluded_car_ids
+        _update_location_tracking("car1", "수원")
+        assert "car1" in _verified_suwon_ids
+        _update_location_tracking("car1", "안산")
+        assert "car1" not in _verified_suwon_ids
+        assert "car1" in _excluded_car_ids
 
 
 # ── Cache eviction ────────────────────────────────────────────

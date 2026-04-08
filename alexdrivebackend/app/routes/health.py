@@ -3,7 +3,7 @@ import time
 from fastapi import APIRouter
 
 from app.config import settings
-from app.services.salecars import get_last_successful_parse, is_rate_limited, _location_cache, _excluded_car_ids, _listing_cache
+from app.services.salecars import get_last_successful_parse, is_rate_limited, _location_cache, _excluded_car_ids, _verified_suwon_ids, _listing_cache
 
 router = APIRouter(prefix="/api")
 
@@ -20,6 +20,7 @@ async def health():
         "rate_limited": rate_limited,
         "proxy_configured": bool(settings.proxy_url),
         "location_cache_size": len(_location_cache),
+        "verified_suwon_count": len(_verified_suwon_ids),
         "excluded_car_ids": len(_excluded_car_ids),
         "listing_cache_entries": len(_listing_cache),
     }
