@@ -18,7 +18,6 @@ Create a comprehensive plan, ultrathink of each detail for the best solution pos
 Are you 100% sure everything is done properly and without any issues?
 
 
-
 ===
 FOR THIS PROJECT
 ===
