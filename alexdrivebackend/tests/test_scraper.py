@@ -348,6 +348,50 @@ class TestRateLimitHandling:
             assert result["status"] == "rate_limited"
 
 
+class TestCrossPageFallback:
+    """When page >1 has no cache and the scrape fails, fall back to default-page total."""
+
+    @pytest.mark.asyncio
+    async def test_page2_scrape_failure_uses_default_total(self):
+        import hashlib
+        import json
+
+        # Prime the default-page-1 cache so the fallback path can find it.
+        default_params = {
+            "PageNow": 1, "PageSize": 24,
+            "PageSort": "ModDt", "PageAscDesc": "DESC",
+        }
+        default_key = hashlib.md5(json.dumps(default_params, sort_keys=True).encode()).hexdigest()
+        sc_mod._listing_cache[default_key] = {
+            "data": {"listings": [{"id": "a"}], "total": 99, "status": "ok"},
+            "expiry": time.time() + 600,
+        }
+
+        # Simulate origin returning a 42-byte body (status="empty"). The cache miss for the
+        # page-2-with-filter key should be rescued by the default-page-1 total.
+        with patch("app.services.scraper.fetch_page", new_callable=AsyncMock, return_value="x" * 10):
+            result = await _fetch_and_cache_listings(
+                "page2_filter_key",
+                {"PageNow": 2, "CarMakerNo": "10056"},
+            )
+
+        assert result["status"] == "scrape_failed"
+        assert result["total"] == 99
+        assert result["listings"] == []
+
+    @pytest.mark.asyncio
+    async def test_page1_scrape_failure_no_fallback(self):
+        # On page 1 the cross-page fallback should NOT engage — there's nothing to fall
+        # back to. We get the original "empty" status.
+        with patch("app.services.scraper.fetch_page", new_callable=AsyncMock, return_value=""):
+            result = await _fetch_and_cache_listings(
+                "page1_key",
+                {"PageNow": 1, "PageSize": 24, "PageSort": "ModDt", "PageAscDesc": "DESC"},
+            )
+
+        assert result["status"] == "empty"
+
+
 class TestScopeAwareClearing:
     def test_clear_decrements(self):
         sc_mod._rate_limit_count = 3
@@ -486,7 +530,7 @@ class TestCarsRoute429:
             async with AsyncClient(transport=transport, base_url="http://test") as client:
                 resp = await client.get("/api/cars")
                 assert resp.status_code == 503
-                assert resp.headers["retry-after"] == "30"
+                assert resp.headers["retry-after"] == "10"
                 assert resp.headers["cache-control"] == "no-cache"
 
     @pytest.mark.asyncio
@@ -500,6 +544,20 @@ class TestCarsRoute429:
             async with AsyncClient(transport=transport, base_url="http://test") as client:
                 resp = await client.get("/api/cars")
                 assert resp.status_code == 503
+
+    @pytest.mark.asyncio
+    async def test_returns_503_short_retry_on_scrape_failed(self):
+        from app.main import app
+
+        soft_failure = {"listings": [], "total": 42, "status": "scrape_failed"}
+
+        with patch("app.routes.cars.get_car_listings", new_callable=AsyncMock, return_value=soft_failure):
+            transport = ASGITransport(app=app, raise_app_exceptions=False)
+            async with AsyncClient(transport=transport, base_url="http://test") as client:
+                resp = await client.get("/api/cars")
+                assert resp.status_code == 503
+                assert resp.headers["retry-after"] == "5"
+                assert resp.json()["total"] == 42
 
 
 # ── Cache poisoning prevention ──────────────────────────────

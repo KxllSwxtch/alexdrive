@@ -64,7 +64,7 @@ interface CatalogContentProps {
 }
 
 const MAX_CLIENT_RETRIES = 1;
-const MAX_RETRY_COUNTDOWN_SECS = 120;
+const MAX_RETRY_COUNTDOWN_SECS = 30;
 
 export function CatalogContent({ initialFilters, initialCars, initialTotal, initialHasNext }: CatalogContentProps) {
   const isInitialMount = useRef(true);
@@ -76,6 +76,7 @@ export function CatalogContent({ initialFilters, initialCars, initialTotal, init
   const [loading, setLoading] = useState(false);
   const [rateLimited, setRateLimited] = useState(false);
   const [retryCountdown, setRetryCountdown] = useState(0);
+  const [retryExhausted, setRetryExhausted] = useState(false);
   const [params, setParams] = useState<CarListingParams>(() => {
     if (typeof window !== "undefined") {
       return parseParamsFromURL(new URLSearchParams(window.location.search));
@@ -89,6 +90,7 @@ export function CatalogContent({ initialFilters, initialCars, initialTotal, init
   const clearRetryState = useCallback(() => {
     setRateLimited(false);
     setRetryCountdown(0);
+    setRetryExhausted(false);
     retryCountRef.current = 0;
     if (countdownTimerRef.current) {
       clearInterval(countdownTimerRef.current);
@@ -161,10 +163,8 @@ export function CatalogContent({ initialFilters, initialCars, initialTotal, init
 
         retryCountRef.current++;
         if (retryCountRef.current > MAX_CLIENT_RETRIES) {
-          setRateLimited(false);
+          setRetryExhausted(true);
           setLoading(false);
-          setCars([]);
-          setTotal(0);
           return;
         }
 
@@ -275,11 +275,21 @@ export function CatalogContent({ initialFilters, initialCars, initialTotal, init
       />
 
       {/* Results */}
-      <div className={`mt-6 ${loading && !rateLimited && cars.length > 0 ? "opacity-50 pointer-events-none" : ""}`}>
-        {rateLimited ? (
-          <RateLimitMessage countdown={retryCountdown} />
-        ) : loading && cars.length === 0 ? (
+      {rateLimited && (
+        <RateLimitBanner
+          countdown={retryCountdown}
+          exhausted={retryExhausted}
+          onRetry={() => {
+            clearRetryState();
+            setParams((p) => ({ ...p }));
+          }}
+        />
+      )}
+      <div className={`mt-6 ${loading && cars.length > 0 ? "opacity-60 pointer-events-none" : ""}`}>
+        {!rateLimited && loading && cars.length === 0 ? (
           <LoadingSkeleton />
+        ) : rateLimited && cars.length === 0 ? (
+          <RateLimitFullPage countdown={retryCountdown} exhausted={retryExhausted} />
         ) : (
           <CarGrid cars={cars} />
         )}
@@ -303,25 +313,73 @@ export function CatalogContent({ initialFilters, initialCars, initialTotal, init
   );
 }
 
-function RateLimitMessage({ countdown }: { countdown: number }) {
+function RateLimitBanner({
+  countdown,
+  exhausted,
+  onRetry,
+}: {
+  countdown: number;
+  exhausted: boolean;
+  onRetry: () => void;
+}) {
+  return (
+    <div className="mt-4 flex items-center justify-between gap-3 rounded-lg border border-accent/30 bg-accent/10 px-4 py-3 text-sm">
+      <div className="flex items-center gap-3">
+        {!exhausted && (
+          <svg
+            className="h-5 w-5 animate-spin text-accent"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+          >
+            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+          </svg>
+        )}
+        <span className="text-text-primary">
+          {exhausted
+            ? "Не удалось загрузить страницу."
+            : countdown > 0
+              ? `Сервер временно перегружен. Повторная попытка через ${countdown} сек...`
+              : "Повторная попытка..."}
+        </span>
+      </div>
+      {exhausted && (
+        <button
+          type="button"
+          onClick={onRetry}
+          className="rounded-md border border-accent bg-accent/10 px-3 py-1 text-xs font-medium text-accent hover:bg-accent/20"
+        >
+          Обновить
+        </button>
+      )}
+    </div>
+  );
+}
+
+function RateLimitFullPage({ countdown, exhausted }: { countdown: number; exhausted: boolean }) {
   return (
     <div className="flex flex-col items-center justify-center py-16 text-center">
-      <svg
-        className="mb-4 h-10 w-10 animate-spin text-accent"
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 24 24"
-      >
-        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
-      </svg>
+      {!exhausted && (
+        <svg
+          className="mb-4 h-10 w-10 animate-spin text-accent"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+        >
+          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+        </svg>
+      )}
       <p className="text-lg font-medium text-text-primary">
-        Сервер временно перегружен
+        {exhausted ? "Не удалось загрузить" : "Сервер временно перегружен"}
       </p>
       <p className="mt-2 text-sm text-text-secondary">
-        {countdown > 0
-          ? `Повторная попытка через ${countdown} сек...`
-          : "Повторная попытка..."}
+        {exhausted
+          ? "Попробуйте обновить страницу."
+          : countdown > 0
+            ? `Повторная попытка через ${countdown} сек...`
+            : "Повторная попытка..."}
       </p>
     </div>
   );

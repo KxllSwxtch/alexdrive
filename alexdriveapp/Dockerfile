@@ -42,8 +42,12 @@ USER appuser
 
 EXPOSE 3000
 
-HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
-  CMD wget -qO- http://localhost:3000/ || exit 1
+# Bind Next.js standalone to all interfaces so the healthcheck (127.0.0.1) works.
+ENV HOSTNAME=0.0.0.0
+ENV PORT=3000
+
+HEALTHCHECK --interval=30s --timeout=5s --start-period=20s --retries=3 \
+  CMD wget --spider -q http://127.0.0.1:3000/ || exit 1
 
 # BACKEND_URL is set at runtime for SSR (points to backend via Docker DNS)
 CMD ["node", "server.js"]

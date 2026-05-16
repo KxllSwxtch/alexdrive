@@ -432,7 +432,29 @@ async def _fetch_and_cache_listings(cache_key: str, params: dict, *, _background
         print(f"[scraper] Serving stale cache after {status} ({cache_key[:8]})")
         return existing["data"]
 
+    # No stale cache for this exact key. If the user is paginating (PageNow > 1) and we
+    # have fresh default-page-1 data, surface that total so the frontend can keep its
+    # pagination/filter UI rendered instead of flipping the whole catalog into an
+    # "overloaded" state for one transient scrape miss.
+    fallback_total = _default_page_total()
+    if fallback_total is not None and int(params.get("PageNow") or 1) > 1:
+        print(f"[scraper] {status} on page>1 with no per-key cache; returning soft failure with default total={fallback_total}")
+        return {"listings": [], "total": fallback_total, "status": "scrape_failed"}
+
     return result
+
+
+def _default_page_total() -> int | None:
+    """Return the cached total from the default page-1 query, if fresh."""
+    default_params = {
+        "PageNow": 1, "PageSize": 24,
+        "PageSort": "ModDt", "PageAscDesc": "DESC",
+    }
+    key = hashlib.md5(json.dumps(default_params, sort_keys=True).encode()).hexdigest()
+    cached = _listing_cache.get(key)
+    if cached and time.time() < cached["expiry"]:
+        return cached["data"].get("total")
+    return None
 
 
 async def _refresh_listing_cache(cache_key: str, params: dict) -> None:

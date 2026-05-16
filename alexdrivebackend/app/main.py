@@ -19,7 +19,7 @@ from app.services.scraper import (
     _save_detail_cache_to_disk,
     detail_cache_persist_loop,
 )
-from app.services.client import NetworkError, set_http_client
+from app.services.client import NetworkError, set_direct_client, set_http_client
 
 
 async def _prewarm_caches():
@@ -42,7 +42,7 @@ async def _prewarm_caches():
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    client_kwargs: dict = {
+    base_kwargs: dict = {
         "timeout": httpx.Timeout(30.0, connect=10.0),
         "follow_redirects": True,
         "limits": httpx.Limits(
@@ -51,13 +51,25 @@ async def lifespan(app: FastAPI):
             keepalive_expiry=30.0,
         ),
     }
+    primary_kwargs = dict(base_kwargs)
     if settings.proxy_url:
-        client_kwargs["proxy"] = settings.proxy_url
+        primary_kwargs["proxy"] = settings.proxy_url
         masked = settings.proxy_url.split("@")[-1] if "@" in settings.proxy_url else settings.proxy_url
-        print(f"[server] Using proxy: {masked}")
+        print(f"[server] Using proxy: {masked} (with direct fallback on proxy failure)")
+    else:
+        print("[server] No proxy configured — direct outbound connections")
 
-    async with httpx.AsyncClient(**client_kwargs) as client:
+    async with httpx.AsyncClient(**primary_kwargs) as client:
         set_http_client(client)
+
+        # When a proxy is configured, also build a sibling direct client that can be used
+        # if the proxy starts returning auth-fail / 6xx / ProxyError responses.
+        direct_client: httpx.AsyncClient | None = None
+        if settings.proxy_url:
+            direct_client = httpx.AsyncClient(**base_kwargs)
+            set_direct_client(direct_client)
+        else:
+            set_direct_client(None)
 
         # Load detail cache from disk (instant, no network)
         loaded = _load_detail_cache_from_disk()
@@ -86,6 +98,10 @@ async def lifespan(app: FastAPI):
 
         # Final save on shutdown
         _save_detail_cache_to_disk()
+
+        if direct_client is not None:
+            await direct_client.aclose()
+            set_direct_client(None)
 
 
 app = FastAPI(lifespan=lifespan)

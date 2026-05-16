@@ -72,11 +72,21 @@ async def get_cars(
             headers={"Retry-After": str(retry_after), "Cache-Control": "no-cache"},
         )
 
+    # Soft failure: we couldn't fetch this page, but we returned the default-page total
+    # so the frontend has enough to render its UI. Tell the client to retry quickly.
+    if data.get("status") == "scrape_failed":
+        return JSONResponse(
+            status_code=503,
+            content=data,
+            headers={"Retry-After": "5", "Cache-Control": "no-cache"},
+        )
+
+    # Hard failure: empty/unparseable origin response and no fallback data available.
     if data.get("status") in ("empty", "parse_failure") and not data.get("listings"):
         return JSONResponse(
             status_code=503,
             content=data,
-            headers={"Retry-After": "30", "Cache-Control": "no-cache"},
+            headers={"Retry-After": "10", "Cache-Control": "no-cache"},
         )
 
     if data.get("listings"):
