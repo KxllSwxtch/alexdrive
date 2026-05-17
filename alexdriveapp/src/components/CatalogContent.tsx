@@ -77,6 +77,7 @@ export function CatalogContent({ initialFilters, initialCars, initialTotal, init
   const [rateLimited, setRateLimited] = useState(false);
   const [retryCountdown, setRetryCountdown] = useState(0);
   const [retryExhausted, setRetryExhausted] = useState(false);
+  const [hardFailure, setHardFailure] = useState(false);
   const [params, setParams] = useState<CarListingParams>(() => {
     if (typeof window !== "undefined") {
       return parseParamsFromURL(new URLSearchParams(window.location.search));
@@ -91,6 +92,7 @@ export function CatalogContent({ initialFilters, initialCars, initialTotal, init
     setRateLimited(false);
     setRetryCountdown(0);
     setRetryExhausted(false);
+    setHardFailure(false);
     retryCountRef.current = 0;
     if (countdownTimerRef.current) {
       clearInterval(countdownTimerRef.current);
@@ -120,7 +122,7 @@ export function CatalogContent({ initialFilters, initialCars, initialTotal, init
     }).catch(() => {}); // fire-and-forget, ignore errors
   }, [buildSearchParams]);
 
-  const fetchCars = useCallback(async (p: CarListingParams, signal?: AbortSignal): Promise<{ ok: boolean; retryAfter?: number }> => {
+  const fetchCars = useCallback(async (p: CarListingParams, signal?: AbortSignal): Promise<{ ok: boolean; retryAfter?: number; hardFailure?: boolean }> => {
     const searchParams = buildSearchParams(p);
     const timeoutSignal = AbortSignal.timeout(15_000);
     const combinedSignal = signal
@@ -129,11 +131,30 @@ export function CatalogContent({ initialFilters, initialCars, initialTotal, init
     const res = await fetch(`${BACKEND_URL}/api/cars?${searchParams.toString()}`, { signal: combinedSignal });
     const data = await res.json();
 
-    if (res.status === 429 || res.status === 503 || data.status === "rate_limited") {
+    // Rate-limit / transient overload — keep auto-retrying with the countdown banner.
+    if (res.status === 429 || data.status === "rate_limited") {
       const retryAfter = parseInt(res.headers.get("Retry-After") || "0", 10)
                          || data.retry_after || 30;
       return { ok: false, retryAfter };
     }
+
+    // Pagination soft-fail: empty page but pagination/UI still valid via fallback total.
+    if (data.status === "scrape_failed") {
+      setCars([]);
+      setTotal(data.total || 0);
+      setHasNext(false);
+      const retryAfter = parseInt(res.headers.get("Retry-After") || "0", 10) || 5;
+      return { ok: false, retryAfter };
+    }
+
+    // Deterministic parser/empty failure — auto-retry would just fail the same way.
+    if (data.status === "parse_failure" || data.status === "empty" || (res.status === 503 && !data.listings?.length)) {
+      setCars([]);
+      setTotal(0);
+      setHasNext(false);
+      return { ok: false, hardFailure: true };
+    }
+
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
 
     setCars(data.listings || []);
@@ -212,6 +233,11 @@ export function CatalogContent({ initialFilters, initialCars, initialTotal, init
     fetchCars(params, abortController.signal)
       .then((result) => {
         if (abortController.signal.aborted) return;
+        if (result.hardFailure) {
+          setHardFailure(true);
+          setLoading(false);
+          return;
+        }
         if (!result.ok) {
           startRetryCountdown(params, abortController, result.retryAfter ?? 60);
         } else {
@@ -285,8 +311,17 @@ export function CatalogContent({ initialFilters, initialCars, initialTotal, init
           }}
         />
       )}
+      {hardFailure && !rateLimited && (
+        <HardFailureBanner
+          onRetry={() => {
+            clearRetryState();
+            setLoading(true);
+            setParams((p) => ({ ...p }));
+          }}
+        />
+      )}
       <div className={`mt-6 ${loading && cars.length > 0 ? "opacity-60 pointer-events-none" : ""}`}>
-        {!rateLimited && loading && cars.length === 0 ? (
+        {!rateLimited && !hardFailure && loading && cars.length === 0 ? (
           <LoadingSkeleton />
         ) : rateLimited && cars.length === 0 ? (
           <RateLimitFullPage countdown={retryCountdown} exhausted={retryExhausted} />
@@ -381,6 +416,23 @@ function RateLimitFullPage({ countdown, exhausted }: { countdown: number; exhaus
             ? `Повторная попытка через ${countdown} сек...`
             : "Повторная попытка..."}
       </p>
+    </div>
+  );
+}
+
+function HardFailureBanner({ onRetry }: { onRetry: () => void }) {
+  return (
+    <div className="mt-4 flex items-center justify-between gap-3 rounded-lg border border-border bg-bg-surface px-4 py-3 text-sm">
+      <span className="text-text-primary">
+        Не удалось загрузить эту категорию. Попробуйте другой фильтр или повторите попытку.
+      </span>
+      <button
+        type="button"
+        onClick={onRetry}
+        className="rounded-md border border-accent bg-accent/10 px-3 py-1 text-xs font-medium text-accent hover:bg-accent/20"
+      >
+        Попробовать снова
+      </button>
     </div>
   );
 }

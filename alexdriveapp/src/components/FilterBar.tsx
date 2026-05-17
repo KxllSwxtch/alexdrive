@@ -101,14 +101,16 @@ export function FilterBar({
     );
   }, [draftParams, appliedParams]);
 
-  // Prefetch: warm backend cache when filters change (before user clicks "Найти")
+  // Prefetch: warm backend cache when filters change (before user clicks "Найти").
+  // Debounce is intentionally long (1.2 s) so rapid filter tweaks don't generate a backend
+  // request per keystroke and pile up behind the global throttle.
   const preloadTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   useEffect(() => {
     if (!onPreload || !hasUnappliedChanges) return;
     if (preloadTimerRef.current) clearTimeout(preloadTimerRef.current);
     preloadTimerRef.current = setTimeout(() => {
       onPreload({ ...draftParams, PageNow: 1 });
-    }, 500);
+    }, 1200);
     return () => {
       if (preloadTimerRef.current) clearTimeout(preloadTimerRef.current);
     };

@@ -25,6 +25,17 @@ MAX_LISTING_CACHE_ENTRIES = 200
 _listing_refresh_keys: set[str] = set()
 LISTING_REFRESH_INTERVAL = 30 * 60  # 30 minutes — proactive refresh
 
+# Short-lived negative cache: stops the frontend retry storm from re-paying throttle + fetch
+# + parse for a deterministic parse_failure. TTL is short so a transient upstream blip self-heals.
+_listing_neg_cache: dict[str, dict] = {}
+NEG_CACHE_TTL = int(os.environ.get("NEG_CACHE_TTL", "30"))
+MAX_NEG_CACHE_ENTRIES = 200
+
+# Forensic capture of failing upstream HTML — populated when the parser returns 0 listings.
+PARSE_FAILURE_CAPTURE_DIR = "/tmp/alexdrive_parse_failures"
+PARSE_FAILURE_CAPTURE_MAX = 50
+PARSE_FAILURE_CAPTURE_BYTES = 30_000
+
 _detail_cache: dict[str, dict] = {}
 _detail_locks: dict[str, asyncio.Lock] = {}
 _detail_locks_guard = asyncio.Lock()
@@ -365,6 +376,34 @@ def _evict_oldest(cache: dict[str, dict], max_entries: int) -> None:
     del cache[oldest_key]
 
 
+def _persist_parse_failure_html(url: str, html: str) -> None:
+    try:
+        os.makedirs(PARSE_FAILURE_CAPTURE_DIR, exist_ok=True)
+        url_hash = hashlib.md5(url.encode()).hexdigest()[:12]
+        path = os.path.join(
+            PARSE_FAILURE_CAPTURE_DIR, f"{url_hash}-{int(time.time())}.html"
+        )
+        with open(path, "w", encoding="utf-8") as f:
+            f.write(f"<!-- url: {url} -->\n")
+            f.write(html[:PARSE_FAILURE_CAPTURE_BYTES])
+
+        files = sorted(
+            (
+                os.path.join(PARSE_FAILURE_CAPTURE_DIR, n)
+                for n in os.listdir(PARSE_FAILURE_CAPTURE_DIR)
+                if n.endswith(".html")
+            ),
+            key=os.path.getmtime,
+        )
+        for old in files[:-PARSE_FAILURE_CAPTURE_MAX]:
+            try:
+                os.remove(old)
+            except OSError:
+                pass
+    except Exception as e:
+        print(f"[scraper] Failed to persist parse_failure HTML: {e}")
+
+
 # --- Listing fetch ---
 
 
@@ -383,15 +422,24 @@ async def _fetch_and_cache_listings(cache_key: str, params: dict, *, _background
         return {"listings": [], "total": 0, "status": "rate_limited", "retry_after": remaining}
 
     url = _build_listing_url(params)
+    t_start = time.perf_counter()
     if _background:
         await _throttle.background()
     else:
         await _throttle.foreground()
+    throttle_ms = int((time.perf_counter() - t_start) * 1000)
+
+    t_fetch = time.perf_counter()
     html = await fetch_page(url)
+    fetch_ms = int((time.perf_counter() - t_fetch) * 1000)
 
     if _RATE_LIMIT_MARKER in html:
         _record_rate_limit()
-        print("[scraper] Rate-limited (limits_box detected)")
+        print(
+            f"[scraper.timing] key={cache_key[:8]} throttle_ms={throttle_ms} "
+            f"fetch_ms={fetch_ms} parse_ms=0 total_ms={int((time.perf_counter() - t_start) * 1000)} "
+            f"status=rate_limited bytes={len(html)}"
+        )
 
         existing = _listing_cache.get(cache_key)
         if existing and existing["data"].get("listings"):
@@ -402,10 +450,11 @@ async def _fetch_and_cache_listings(cache_key: str, params: dict, *, _background
         remaining = get_rate_limit_retry_after()
         return {"listings": [], "total": 0, "status": "rate_limited", "retry_after": remaining}
 
+    t_parse = time.perf_counter()
     listings = parse_car_listings(html)
     total = parse_total_count(html)
-
-    print(f"[scraper] Listings: {len(listings)}/{total}, HTML length: {len(html)}")
+    parse_ms = int((time.perf_counter() - t_parse) * 1000)
+    total_ms = int((time.perf_counter() - t_start) * 1000)
 
     if len(listings) > 0:
         status = "ok"
@@ -413,16 +462,25 @@ async def _fetch_and_cache_listings(cache_key: str, params: dict, *, _background
         _clear_rate_limit()
     elif len(html) <= 50:
         status = "empty"
-        print(f"[scraper] WARNING: Empty response ({len(html)} bytes) for {url}")
     else:
         status = "parse_failure"
-        print(f"[scraper] WARNING: Parse failure for {url}, HTML start: {html[:300]!r}")
+
+    print(
+        f"[scraper.timing] key={cache_key[:8]} throttle_ms={throttle_ms} fetch_ms={fetch_ms} "
+        f"parse_ms={parse_ms} total_ms={total_ms} status={status} bytes={len(html)} "
+        f"listings={len(listings)} total={total}"
+    )
+
+    if status != "ok":
+        print(f"[scraper] WARNING: {status} for {url}, HTML start: {html[:300]!r}")
+        _persist_parse_failure_html(url, html)
 
     result = {"listings": listings, "total": total, "status": status}
 
     if status == "ok":
         _listing_cache[cache_key] = {"data": result, "expiry": time.time() + LISTING_TTL}
         _evict_oldest(_listing_cache, MAX_LISTING_CACHE_ENTRIES)
+        _listing_neg_cache.pop(cache_key, None)
         return result
 
     # Fetch failed — serve stale cache if available, do NOT cache the failure
@@ -440,6 +498,15 @@ async def _fetch_and_cache_listings(cache_key: str, params: dict, *, _background
     if fallback_total is not None and int(params.get("PageNow") or 1) > 1:
         print(f"[scraper] {status} on page>1 with no per-key cache; returning soft failure with default total={fallback_total}")
         return {"listings": [], "total": fallback_total, "status": "scrape_failed"}
+
+    # Negative-cache the failure briefly so the next click for the same key doesn't
+    # re-pay throttle + fetch + parse cost.
+    if NEG_CACHE_TTL > 0:
+        _listing_neg_cache[cache_key] = {
+            "data": result,
+            "expiry": time.time() + NEG_CACHE_TTL,
+        }
+        _evict_oldest(_listing_neg_cache, MAX_NEG_CACHE_ENTRIES)
 
     return result
 
@@ -512,6 +579,11 @@ async def get_car_listings(params: dict) -> dict:
                     asyncio.create_task(_refresh_listing_cache(cache_key, params))
             print(f"[scraper] Listing cache hit ({cache_key[:8]})")
             return cached["data"]
+
+    neg = _listing_neg_cache.get(cache_key)
+    if neg and time.time() < neg["expiry"]:
+        print(f"[scraper] Listing neg-cache hit ({cache_key[:8]}, status={neg['data'].get('status')})")
+        return neg["data"]
 
     if is_rate_limited():
         remaining = get_rate_limit_retry_after()
