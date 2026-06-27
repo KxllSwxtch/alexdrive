@@ -1,17 +1,7 @@
 import { backendFetch, fetchFiltersCached } from "@/lib/api";
 import { CatalogContent } from "@/components/CatalogContent";
 import type { FilterData, CarListing } from "@/lib/types";
-
-const PAGE_SIZE = 24;
-
-const VALID_PARAM_KEYS = new Set([
-  "CarMakerNo", "CarModelNo", "CarModelDetailNo", "CarGradeNo", "CarGradeDetailNo",
-  "CarYearFrom", "CarYearTo", "CarMileageFrom", "CarMileageTo", "CarPriceFrom", "CarPriceTo",
-  "CarMissionNo", "CarFuelNo", "CarColorNo", "DanjiNo",
-  "CarLpg", "CarInspection", "CarPhoto", "CarSalePrice", "CarLease",
-  "SearchName", "SearchCarNo",
-  "PageNow", "PageSize", "PageSort", "PageAscDesc",
-]);
+import { PAGE_SIZE, VALID_PARAM_KEYS, parseParamsFromRecord } from "@/lib/catalogParams";
 
 interface PageProps {
   searchParams: Promise<Record<string, string | string[] | undefined>>;
@@ -19,6 +9,11 @@ interface PageProps {
 
 export default async function CatalogPage({ searchParams }: PageProps) {
   const rawParams = await searchParams;
+
+  // Parse initial params from the URL on the server so CatalogContent hydrates
+  // with the exact same params the client would derive — prevents a hydration
+  // mismatch when a filtered URL is loaded directly or restored via back/forward.
+  const initialParams = parseParamsFromRecord(rawParams);
 
   // Build backend query params from URL search params
   const backendParams = new URLSearchParams();
@@ -55,6 +50,7 @@ export default async function CatalogPage({ searchParams }: PageProps) {
       initialCars={cars}
       initialTotal={total}
       initialHasNext={hasNext}
+      initialParams={initialParams}
     />
   );
 }

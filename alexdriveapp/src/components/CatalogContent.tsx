@@ -5,41 +5,9 @@ import { FilterBar } from "@/components/FilterBar";
 import { CarGrid } from "@/components/CarGrid";
 import { Pagination } from "@/components/Pagination";
 import type { FilterData, CarListing, CarListingParams } from "@/lib/types";
+import { PAGE_SIZE, parseParamsFromURL } from "@/lib/catalogParams";
 
-const PAGE_SIZE = 24;
 const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:3001";
-
-const VALID_PARAM_KEYS = new Set([
-  "CarMakerNo", "CarModelNo", "CarModelDetailNo", "CarGradeNo", "CarGradeDetailNo",
-  "CarYearFrom", "CarYearTo", "CarMileageFrom", "CarMileageTo", "CarPriceFrom", "CarPriceTo",
-  "CarMissionNo", "CarFuelNo", "CarColorNo", "DanjiNo",
-  "CarLpg", "CarInspection", "CarPhoto", "CarSalePrice", "CarLease",
-  "SearchName", "SearchCarNo",
-  "PageNow", "PageSize", "PageSort", "PageAscDesc",
-]);
-
-const NUMBER_KEYS = new Set(["PageNow", "PageSize"]);
-
-const DEFAULT_PARAMS: CarListingParams = {
-  PageNow: 1,
-  PageSize: PAGE_SIZE,
-  PageSort: "ModDt",
-  PageAscDesc: "DESC",
-};
-
-function parseParamsFromURL(searchParams: URLSearchParams): CarListingParams {
-  const parsed: CarListingParams = { ...DEFAULT_PARAMS };
-  searchParams.forEach((value, key) => {
-    if (!VALID_PARAM_KEYS.has(key) || !value) return;
-    if (NUMBER_KEYS.has(key)) {
-      const num = parseInt(value, 10);
-      if (!isNaN(num)) (parsed as Record<string, unknown>)[key] = num;
-    } else {
-      (parsed as Record<string, unknown>)[key] = value;
-    }
-  });
-  return parsed;
-}
 
 // Pure: build the canonical catalog URL (default params omitted). No side effects.
 function buildCanonicalUrl(params: CarListingParams): string {
@@ -61,12 +29,13 @@ interface CatalogContentProps {
   initialCars: CarListing[];
   initialTotal: number;
   initialHasNext?: boolean;
+  initialParams: CarListingParams;
 }
 
 const MAX_CLIENT_RETRIES = 1;
 const MAX_RETRY_COUNTDOWN_SECS = 30;
 
-export function CatalogContent({ initialFilters, initialCars, initialTotal, initialHasNext }: CatalogContentProps) {
+export function CatalogContent({ initialFilters, initialCars, initialTotal, initialHasNext, initialParams }: CatalogContentProps) {
   const isInitialMount = useRef(true);
 
   const [filters, setFilters] = useState<FilterData | null>(initialFilters);
@@ -78,12 +47,10 @@ export function CatalogContent({ initialFilters, initialCars, initialTotal, init
   const [retryCountdown, setRetryCountdown] = useState(0);
   const [retryExhausted, setRetryExhausted] = useState(false);
   const [hardFailure, setHardFailure] = useState(false);
-  const [params, setParams] = useState<CarListingParams>(() => {
-    if (typeof window !== "undefined") {
-      return parseParamsFromURL(new URLSearchParams(window.location.search));
-    }
-    return DEFAULT_PARAMS;
-  });
+  // Initialize from server-provided params (parsed from the same URL the server
+  // rendered for) so SSR and client hydration agree — no hydration mismatch on
+  // direct loads of filtered URLs. Back/forward updates this via the popstate effect.
+  const [params, setParams] = useState<CarListingParams>(initialParams);
 
   const retryCountRef = useRef(0);
   const countdownTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
