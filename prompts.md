@@ -1,8 +1,6 @@
 ===
 COMMON PROMPTS
 ===
-/superpowers:using-superpowers
-
 Identify the root cause and Create a comprehensive plan, think of each detail for the best solution possible. use context7
 Identify the root cause and Create a comprehensive plan, ultrathink of each detail for the best solution possible. use context7
 

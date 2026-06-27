@@ -41,7 +41,8 @@ function parseParamsFromURL(searchParams: URLSearchParams): CarListingParams {
   return parsed;
 }
 
-function syncParamsToURL(params: CarListingParams) {
+// Pure: build the canonical catalog URL (default params omitted). No side effects.
+function buildCanonicalUrl(params: CarListingParams): string {
   const urlParams = new URLSearchParams();
   for (const [key, value] of Object.entries(params)) {
     if (value === undefined || value === "") continue;
@@ -52,8 +53,7 @@ function syncParamsToURL(params: CarListingParams) {
     urlParams.set(key, String(value));
   }
   const qs = urlParams.toString();
-  const newUrl = qs ? `${window.location.pathname}?${qs}` : window.location.pathname;
-  window.history.replaceState(null, "", newUrl);
+  return qs ? `${window.location.pathname}?${qs}` : window.location.pathname;
 }
 
 interface CatalogContentProps {
@@ -108,6 +108,18 @@ export function CatalogContent({ initialFilters, initialCars, initialTotal, init
       }
     }
     return searchParams;
+  }, []);
+
+  // Forward navigation: create ONE real history entry per filter/page state.
+  // Next.js patches history.pushState so this updates the router URL WITHOUT a
+  // server round-trip or re-render (this component does not read useSearchParams).
+  // The equality guard avoids a dead duplicate entry (e.g. re-clicking "Найти"
+  // with unchanged filters), which would make one BACK press appear to do nothing.
+  const pushParamsToURL = useCallback((p: CarListingParams) => {
+    const url = buildCanonicalUrl(p);
+    if (url !== window.location.pathname + window.location.search) {
+      window.history.pushState(null, "", url);
+    }
   }, []);
 
   // Prefetch: warm backend cache before user clicks "Найти"
@@ -222,7 +234,9 @@ export function CatalogContent({ initialFilters, initialCars, initialTotal, init
   useEffect(() => {
     if (isInitialMount.current) {
       isInitialMount.current = false;
-      syncParamsToURL(params);
+      // Normalize the landing URL in place — no new history entry, no fetch
+      // (initial cars came from the server render).
+      window.history.replaceState(null, "", buildCanonicalUrl(params));
       return;
     }
 
@@ -266,12 +280,18 @@ export function CatalogContent({ initialFilters, initialCars, initialTotal, init
     };
   }, [params, fetchCars, clearRetryState, startRetryCountdown]);
 
-  // Sync params to URL on subsequent changes
+  // Browser back/forward: re-sync params from the URL so the displayed results
+  // match the address bar. This path only READS history (forward pushes live in
+  // the user-action handlers below), so the history stack stays intact; the fetch
+  // effect above then re-fetches for the restored params (aborting any in-flight
+  // request via its cleanup). parseParamsFromURL + setParams are stable → [] deps.
   useEffect(() => {
-    if (!isInitialMount.current) {
-      syncParamsToURL(params);
+    function handlePopState() {
+      setParams(parseParamsFromURL(new URLSearchParams(window.location.search)));
     }
-  }, [params]);
+    window.addEventListener("popstate", handlePopState);
+    return () => window.removeEventListener("popstate", handlePopState);
+  }, []);
 
   const totalPages = Math.ceil(total / PAGE_SIZE);
 
@@ -293,6 +313,7 @@ export function CatalogContent({ initialFilters, initialCars, initialTotal, init
         appliedParams={params}
         onApplyFilters={(newParams) => {
           if (preloadAbortRef.current) preloadAbortRef.current.abort();
+          pushParamsToURL(newParams);
           window.scrollTo({ top: 0, behavior: "instant" });
           setParams(newParams);
         }}
@@ -337,9 +358,11 @@ export function CatalogContent({ initialFilters, initialCars, initialTotal, init
           totalPages={totalPages}
           onPageChange={(page) => {
             if (page === (params.PageNow || 1)) return;
+            const next = { ...params, PageNow: page };
+            pushParamsToURL(next);
             window.scrollTo({ top: 0, behavior: "instant" });
             setLoading(true);
-            setParams((prev) => ({ ...prev, PageNow: page }));
+            setParams(next);
           }}
           disabled={loading}
         />

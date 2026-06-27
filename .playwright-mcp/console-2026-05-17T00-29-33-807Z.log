@@ -1,0 +1,21 @@
+[    2208ms] Error: Minified React error #418; visit https://react.dev/errors/418?args[]=text&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings.
+    at rK (https://alexdrive.kr/_next/static/chunks/aee6c7720838f8a2.js:1:46764)
+    at rX (https://alexdrive.kr/_next/static/chunks/aee6c7720838f8a2.js:1:47797)
+    at https://alexdrive.kr/_next/static/chunks/aee6c7720838f8a2.js:1:141516
+    at sp (https://alexdrive.kr/_next/static/chunks/aee6c7720838f8a2.js:1:146677)
+    at sc (https://alexdrive.kr/_next/static/chunks/aee6c7720838f8a2.js:1:138017)
+    at https://alexdrive.kr/_next/static/chunks/aee6c7720838f8a2.js:1:132846
+    at u9 (https://alexdrive.kr/_next/static/chunks/aee6c7720838f8a2.js:1:132947)
+    at sV (https://alexdrive.kr/_next/static/chunks/aee6c7720838f8a2.js:1:159329)
+    at MessagePort.O (https://alexdrive.kr/_next/static/chunks/aee6c7720838f8a2.js:1:8295)
+[   45394ms] [ERROR] Failed to load resource: the server responded with a status of 503 (Service Unavailable) @ https://alexdrive.kr/api/cars?CarMakerNo=10002&CarPriceFrom=777&CarPriceTo=888&carnation=1&PageNow=1:0
+[   47156ms] [ERROR] Failed to load resource: the server responded with a status of 503 (Service Unavailable) @ https://alexdrive.kr/api/cars?CarMakerNo=10001&CarMileageFrom=57&CarMileageTo=63&carnation=1&PageNow=1:0
+[   48716ms] [ERROR] Failed to load resource: the server responded with a status of 503 (Service Unavailable) @ https://alexdrive.kr/api/cars?CarMakerNo=10009&CarYearFrom=2017&CarYearTo=2019&carnation=1&PageNow=1:0
+[   64253ms] [ERROR] Failed to load resource: the server responded with a status of 503 (Service Unavailable) @ https://alexdrive.kr/api/cars?CarMakerNo=10001&CarModelNo=100015&carnation=1&PageNow=1:0
+[   65784ms] [ERROR] Failed to load resource: the server responded with a status of 503 (Service Unavailable) @ https://alexdrive.kr/api/cars?CarMakerNo=10002&carnation=1&PageNow=1:0
+[  107218ms] [ERROR] Failed to load resource: the server responded with a status of 503 (Service Unavailable) @ https://alexdrive.kr/api/cars?CarMakerNo=10004&carnation=1&PageNow=1:0
+[  119513ms] [ERROR] Failed to load resource: the server responded with a status of 503 (Service Unavailable) @ https://alexdrive.kr/api/cars?CarMakerNo=10004&carnation=1&PageNow=1:0
+[  130000ms] [ERROR] Failed to load resource: the server responded with a status of 503 (Service Unavailable) @ https://alexdrive.kr/api/cars?CarMakerNo=10005&carnation=1&PageNow=2:0
+[  148199ms] [ERROR] Failed to load resource: the server responded with a status of 503 (Service Unavailable) @ https://alexdrive.kr/api/cars?CarMakerNo=10055&CarModelNo=100315&CarModelDetailNo=1002627&CarGradeNo=10013221&carnation=2&PageNow=1:0
+[  161538ms] [ERROR] Failed to load resource: the server responded with a status of 503 (Service Unavailable) @ https://alexdrive.kr/api/cars?CarMakerNo=10055&carnation=2&PageNow=1:0
+[  166211ms] [ERROR] Failed to load resource: the server responded with a status of 503 (Service Unavailable) @ https://alexdrive.kr/api/cars?CarMakerNo=10001&carnation=1&PageNow=1:0
