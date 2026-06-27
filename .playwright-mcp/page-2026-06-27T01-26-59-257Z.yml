@@ -1,0 +1,102 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e3]:
+      - link "AlexDrive" [ref=e4] [cursor=pointer]:
+        - /url: /
+        - generic [ref=e5]: AlexDrive
+      - button "Меню" [ref=e6]:
+        - img [ref=e7]
+  - generic [ref=e10]:
+    - main [ref=e11]:
+      - generic [ref=e12]:
+        - heading "Условия использования" [level=1] [ref=e13]
+        - generic [ref=e14]:
+          - paragraph [ref=e15]: Используя сайт AlexDrive, вы соглашаетесь с настоящими Условиями использования. Пожалуйста, внимательно ознакомьтесь с ними перед использованием сайта.
+          - generic [ref=e16]:
+            - heading "1. Общие положения" [level=2] [ref=e17]
+            - paragraph [ref=e18]: AlexDrive — автомобильный дилер, расположенный в городе Сувон, провинция Кёнги, Южная Корея. Сайт предоставляет каталог подержанных автомобилей, доступных на корейском рынке, а также справочную информацию и инструменты для расчёта стоимости.
+          - generic [ref=e19]:
+            - heading "2. Информация на сайте" [level=2] [ref=e20]
+            - list [ref=e21]:
+              - listitem [ref=e22]: Информация о транспортных средствах (цены, характеристики, фотографии) получена из открытых источников и может отличаться от актуальных данных
+              - listitem [ref=e23]: Цены указаны в южнокорейских вонах (KRW) и носят информационный характер
+              - listitem [ref=e24]: Кредитный калькулятор предоставляет приблизительные расчёты и не является финансовым предложением
+              - listitem [ref=e25]: Наличие, состояние и окончательная стоимость автомобиля уточняются при личном обращении
+          - generic [ref=e26]:
+            - heading "3. Использование сайта" [level=2] [ref=e27]
+            - paragraph [ref=e28]: "Запрещается:"
+            - list [ref=e29]:
+              - listitem [ref=e30]: Использовать сайт для незаконных целей или в нарушение применимого законодательства
+              - listitem [ref=e31]: Осуществлять автоматизированный сбор данных (скрапинг) без предварительного письменного согласия
+              - listitem [ref=e32]: Предпринимать попытки несанкционированного доступа к системам сайта
+              - listitem [ref=e33]: Распространять вредоносное программное обеспечение через сайт
+          - generic [ref=e34]:
+            - heading "4. Интеллектуальная собственность" [level=2] [ref=e35]
+            - paragraph [ref=e36]: Все материалы, размещённые на сайте (тексты, дизайн, логотип), являются собственностью AlexDrive или используются с разрешения правообладателей. Фотографии автомобилей предоставлены площадкой carmanager.co.kr.
+          - generic [ref=e37]:
+            - heading "5. Ограничение ответственности" [level=2] [ref=e38]
+            - list [ref=e39]:
+              - listitem [ref=e40]: Сайт предоставляется «как есть». Мы не гарантируем бесперебойную или безошибочную работу
+              - listitem [ref=e41]: AlexDrive не несёт ответственности за убытки, возникшие в результате использования информации с сайта
+              - listitem [ref=e42]: Мы не несём ответственности за содержание сторонних ресурсов, на которые ведут ссылки с нашего сайта
+          - generic [ref=e43]:
+            - heading "6. Применимое право" [level=2] [ref=e44]
+            - paragraph [ref=e45]: Настоящие Условия регулируются законодательством Республики Корея. Все споры подлежат разрешению в судах города Сувон.
+          - generic [ref=e46]:
+            - heading "7. Изменения условий" [level=2] [ref=e47]
+            - paragraph [ref=e48]: Мы оставляем за собой право обновлять настоящие Условия. Продолжая использовать сайт после публикации изменений, вы соглашаетесь с обновлёнными Условиями.
+          - generic [ref=e49]:
+            - heading "8. Контакты" [level=2] [ref=e50]
+            - paragraph [ref=e51]: "По всем вопросам обращайтесь:"
+            - generic [ref=e52]:
+              - paragraph [ref=e53]: Кан Алексей
+              - paragraph [ref=e54]:
+                - text: "Телефон:"
+                - link "+82-10-3908-6050" [ref=e55] [cursor=pointer]:
+                  - /url: tel:+821039086050
+              - paragraph [ref=e56]:
+                - text: "WhatsApp:"
+                - link "wa.me/821039086050" [ref=e57] [cursor=pointer]:
+                  - /url: https://wa.me/821039086050
+              - paragraph [ref=e58]: "Адрес: Кёнги, Сувон, Южная Корея"
+          - paragraph [ref=e59]: "Дата последнего обновления: 27.06.2026"
+          - link "Политика конфиденциальности →" [ref=e61] [cursor=pointer]:
+            - /url: /privacy
+    - contentinfo [ref=e62]:
+      - generic [ref=e63]:
+        - generic [ref=e64]:
+          - generic [ref=e65]:
+            - link "AlexDrive" [ref=e66] [cursor=pointer]:
+              - /url: /
+              - generic [ref=e67]: AlexDrive
+            - paragraph [ref=e68]:
+              - text: Автомобили в Южной Корее.
+              - text: Широкий выбор автомобилей в Сувоне
+          - generic [ref=e69]:
+            - heading "Навигация" [level=3] [ref=e70]
+            - navigation [ref=e71]:
+              - link "Каталог" [ref=e72] [cursor=pointer]:
+                - /url: /
+              - link "О нас" [ref=e73] [cursor=pointer]:
+                - /url: /about
+              - link "Контакты" [ref=e74] [cursor=pointer]:
+                - /url: /contacts
+              - link "Калькулятор" [ref=e75] [cursor=pointer]:
+                - /url: /calculator
+              - link "Конфиденциальность" [ref=e76] [cursor=pointer]:
+                - /url: /privacy
+              - link "Условия использования" [ref=e77] [cursor=pointer]:
+                - /url: /terms
+          - generic [ref=e78]:
+            - heading "Контакты" [level=3] [ref=e79]
+            - generic [ref=e80]:
+              - paragraph [ref=e81]: Кан Алексей
+              - link "+82-10-3908-6050" [ref=e82] [cursor=pointer]:
+                - /url: tel:+821039086050
+              - link "WhatsApp" [ref=e83] [cursor=pointer]:
+                - /url: https://wa.me/821039086050
+                - img [ref=e84]
+                - text: WhatsApp
+              - paragraph [ref=e86]: Кёнги, Сувон, Южная Корея
+        - generic [ref=e87]: © 2026 AlexDrive. Все права защищены.
+  - alert [ref=e88]

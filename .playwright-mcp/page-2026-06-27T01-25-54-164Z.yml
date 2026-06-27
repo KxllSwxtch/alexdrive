@@ -1,0 +1,164 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e3]:
+      - link "AlexDrive" [ref=e4] [cursor=pointer]:
+        - /url: /
+        - generic [ref=e5]: AlexDrive
+      - button "Меню" [ref=e6]:
+        - img [ref=e7]
+  - generic [ref=e10]:
+    - main [ref=e11]:
+      - generic [ref=e608]:
+        - link "Назад в каталог" [ref=e609] [cursor=pointer]:
+          - /url: /
+          - img [ref=e610]
+          - text: Назад в каталог
+        - generic [ref=e612]:
+          - generic [ref=e613]:
+            - generic [ref=e614]:
+              - generic [ref=e615]:
+                - img "[기아]K5 3세대 2.0 노블레스 - фото 1" [ref=e616]
+                - button "Предыдущее фото" [ref=e617]:
+                  - img [ref=e618]
+                - button "Следующее фото" [ref=e620]:
+                  - img [ref=e621]
+                - generic [ref=e623]: 1 / 20
+              - generic [ref=e624]:
+                - button "[기아]K5 3세대 2.0 노블레스 - миниатюра 1" [ref=e625]:
+                  - img "[기아]K5 3세대 2.0 노블레스 - миниатюра 1" [ref=e626]
+                - button "[기아]K5 3세대 2.0 노블레스 - миниатюра 2" [ref=e627]:
+                  - img "[기아]K5 3세대 2.0 노블레스 - миниатюра 2" [ref=e628]
+                - button "[기아]K5 3세대 2.0 노블레스 - миниатюра 3" [ref=e629]:
+                  - img "[기아]K5 3세대 2.0 노블레스 - миниатюра 3" [ref=e630]
+                - button "[기아]K5 3세대 2.0 노블레스 - миниатюра 4" [ref=e631]:
+                  - img "[기아]K5 3세대 2.0 노블레스 - миниатюра 4" [ref=e632]
+                - button "[기아]K5 3세대 2.0 노블레스 - миниатюра 5" [ref=e633]:
+                  - img "[기아]K5 3세대 2.0 노블레스 - миниатюра 5" [ref=e634]
+                - button "[기아]K5 3세대 2.0 노블레스 - миниатюра 6" [ref=e635]:
+                  - img "[기아]K5 3세대 2.0 노블레스 - миниатюра 6" [ref=e636]
+                - button "[기아]K5 3세대 2.0 노블레스 - миниатюра 7" [ref=e637]:
+                  - img "[기아]K5 3세대 2.0 노블레스 - миниатюра 7" [ref=e638]
+                - button "[기아]K5 3세대 2.0 노블레스 - миниатюра 8" [ref=e639]:
+                  - img "[기아]K5 3세대 2.0 노블레스 - миниатюра 8" [ref=e640]
+                - button "[기아]K5 3세대 2.0 노블레스 - миниатюра 9" [ref=e641]:
+                  - img "[기아]K5 3세대 2.0 노블레스 - миниатюра 9" [ref=e642]
+                - button "[기아]K5 3세대 2.0 노블레스 - миниатюра 10" [ref=e643]:
+                  - img "[기아]K5 3세대 2.0 노블레스 - миниатюра 10" [ref=e644]
+                - button "[기아]K5 3세대 2.0 노블레스 - миниатюра 11" [ref=e645]:
+                  - img "[기아]K5 3세대 2.0 노블레스 - миниатюра 11" [ref=e646]
+                - button "[기아]K5 3세대 2.0 노블레스 - миниатюра 12" [ref=e647]:
+                  - img "[기아]K5 3세대 2.0 노블레스 - миниатюра 12" [ref=e648]
+                - button "[기아]K5 3세대 2.0 노블레스 - миниатюра 13" [ref=e649]:
+                  - img "[기아]K5 3세대 2.0 노블레스 - миниатюра 13" [ref=e650]
+                - button "[기아]K5 3세대 2.0 노블레스 - миниатюра 14" [ref=e651]:
+                  - img "[기아]K5 3세대 2.0 노블레스 - миниатюра 14" [ref=e652]
+                - button "[기아]K5 3세대 2.0 노블레스 - миниатюра 15" [ref=e653]:
+                  - img "[기아]K5 3세대 2.0 노블레스 - миниатюра 15" [ref=e654]
+                - button "[기아]K5 3세대 2.0 노블레스 - миниатюра 16" [ref=e655]:
+                  - img "[기아]K5 3세대 2.0 노블레스 - миниатюра 16" [ref=e656]
+                - button "[기아]K5 3세대 2.0 노블레스 - миниатюра 17" [ref=e657]:
+                  - img "[기아]K5 3세대 2.0 노블레스 - миниатюра 17" [ref=e658]
+                - button "[기아]K5 3세대 2.0 노블레스 - миниатюра 18" [ref=e659]:
+                  - img "[기아]K5 3세대 2.0 노블레스 - миниатюра 18" [ref=e660]
+                - button "[기아]K5 3세대 2.0 노블레스 - миниатюра 19" [ref=e661]:
+                  - img "[기아]K5 3세대 2.0 노블레스 - миниатюра 19" [ref=e662]
+                - button "[기아]K5 3세대 2.0 노블레스 - миниатюра 20" [ref=e663]:
+                  - img "[기아]K5 3세대 2.0 노블레스 - миниатюра 20" [ref=e664]
+            - generic [ref=e665]:
+              - generic [ref=e666]:
+                - heading "[Kia]K5 3-е Поколение 2.0 Noblesse" [level=1] [ref=e667]
+                - paragraph [ref=e668]: ₩19,500,000
+              - button "Поделиться" [ref=e670]:
+                - img [ref=e671]
+            - generic [ref=e674]:
+              - heading "Характеристики" [level=2] [ref=e675]
+              - generic [ref=e676]:
+                - generic [ref=e677]:
+                  - paragraph [ref=e678]: Год выпуска
+                  - paragraph [ref=e679]: "2020"
+                - generic [ref=e680]:
+                  - paragraph [ref=e681]: Год модели
+                  - paragraph [ref=e682]: "2020"
+                - generic [ref=e683]:
+                  - paragraph [ref=e684]: Дата регистрации
+                  - paragraph [ref=e685]: 2020.05.29
+                - generic [ref=e686]:
+                  - paragraph [ref=e687]: Пробег
+                  - paragraph [ref=e688]: 78,991km
+                - generic [ref=e689]:
+                  - paragraph [ref=e690]: Топливо
+                  - paragraph [ref=e691]: Бензин
+                - generic [ref=e692]:
+                  - paragraph [ref=e693]: КПП
+                  - paragraph [ref=e694]: Автомат
+                - generic [ref=e695]:
+                  - paragraph [ref=e696]: Цвет
+                  - paragraph [ref=e697]: Чёрный
+                - generic [ref=e698]:
+                  - paragraph [ref=e699]: Гос. номер
+                  - paragraph [ref=e700]: 136루5206
+                - generic [ref=e701]:
+                  - paragraph [ref=e702]: Местоположение
+                  - paragraph [ref=e703]: 수원
+            - link "Посмотреть отчёт техосмотра" [ref=e704] [cursor=pointer]:
+              - /url: http://autocafe.co.kr/ASSO/CarCheck_Form_my.asp?OnCarNo=2026300194916
+              - img [ref=e705]
+              - text: Посмотреть отчёт техосмотра
+            - button "Кредитный калькулятор" [ref=e710]:
+              - generic [ref=e711]: Кредитный калькулятор
+              - img [ref=e712]
+            - generic [ref=e714]:
+              - heading "Опции и комплектация" [level=2] [ref=e715]
+              - region [ref=e716]:
+                - heading "Опции" [level=3] [ref=e718]:
+                  - button "Опции" [ref=e719] [cursor=pointer]:
+                    - text: Опции
+                    - img [ref=e720]
+          - generic [ref=e722]:
+            - link "Позвонить" [ref=e723] [cursor=pointer]:
+              - /url: tel:+821039086050
+              - img [ref=e724]
+            - button "Поделиться" [ref=e727]:
+              - img [ref=e728]
+            - link "Написать в WhatsApp" [ref=e731] [cursor=pointer]:
+              - /url: https://wa.me/821039086050
+              - img [ref=e732]
+              - text: Написать в WhatsApp
+    - contentinfo [ref=e65]:
+      - generic [ref=e66]:
+        - generic [ref=e67]:
+          - generic [ref=e68]:
+            - link "AlexDrive" [ref=e69] [cursor=pointer]:
+              - /url: /
+              - generic [ref=e70]: AlexDrive
+            - paragraph [ref=e71]:
+              - text: Автомобили в Южной Корее.
+              - text: Широкий выбор автомобилей в Сувоне
+          - generic [ref=e72]:
+            - heading "Навигация" [level=3] [ref=e73]
+            - navigation [ref=e74]:
+              - link "Каталог" [ref=e75] [cursor=pointer]:
+                - /url: /
+              - link "О нас" [ref=e76] [cursor=pointer]:
+                - /url: /about
+              - link "Контакты" [ref=e77] [cursor=pointer]:
+                - /url: /contacts
+              - link "Калькулятор" [ref=e78] [cursor=pointer]:
+                - /url: /calculator
+              - link "Конфиденциальность" [ref=e79] [cursor=pointer]:
+                - /url: /privacy
+              - link "Условия использования" [ref=e80] [cursor=pointer]:
+                - /url: /terms
+          - generic [ref=e81]:
+            - heading "Контакты" [level=3] [ref=e82]
+            - generic [ref=e83]:
+              - paragraph [ref=e84]: Кан Алексей
+              - link "+82-10-3908-6050" [ref=e85] [cursor=pointer]:
+                - /url: tel:+821039086050
+              - link "WhatsApp" [ref=e86] [cursor=pointer]:
+                - /url: https://wa.me/821039086050
+                - img [ref=e87]
+                - text: WhatsApp
+              - paragraph [ref=e89]: Кёнги, Сувон, Южная Корея
+        - generic [ref=e90]: © 2026 AlexDrive. Все права защищены.
+  - alert [ref=e91]: "[기아]K5 3세대 2.0 노블레스 2020 - AlexDrive"

@@ -1,0 +1,496 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e3]:
+      - link "AlexDrive" [ref=e4] [cursor=pointer]:
+        - /url: /
+        - generic [ref=e5]: AlexDrive
+      - button "Меню" [ref=e6]:
+        - img [ref=e7]
+  - generic [ref=e10]:
+    - main [ref=e11]:
+      - generic [ref=e101]:
+        - generic [ref=e102]:
+          - heading "Каталог автомобилей" [level=1] [ref=e103]
+          - paragraph [ref=e104]: 44 131 авто
+        - generic [ref=e106]:
+          - generic [ref=e107]:
+            - generic [ref=e108]:
+              - generic [ref=e109]: Марка
+              - button "Все марки" [ref=e110]:
+                - generic [ref=e111]: Все марки
+                - img [ref=e112]
+            - generic [ref=e115]:
+              - generic [ref=e116]: Модель
+              - button "Все модели" [ref=e117]:
+                - generic [ref=e118]: Все модели
+                - img [ref=e119]
+            - generic [ref=e122]:
+              - generic [ref=e123]: Модификация
+              - combobox [disabled] [ref=e124]:
+                - generic [ref=e125]: Все
+                - img: ▼
+              - textbox [disabled] [ref=e126]: __all__
+            - generic [ref=e127]:
+              - generic [ref=e128]: Комплектация
+              - combobox [disabled] [ref=e129]:
+                - generic [ref=e130]: Все
+                - img: ▼
+              - textbox [disabled] [ref=e131]: __all__
+            - generic [ref=e132]:
+              - generic [ref=e133]: Доп. комплектация
+              - combobox [disabled] [ref=e134]:
+                - generic [ref=e135]: Все
+                - img: ▼
+              - textbox [disabled] [ref=e136]: __all__
+            - generic [ref=e137]:
+              - generic [ref=e138]: Сортировка
+              - combobox [ref=e139]:
+                - generic [ref=e140]: По дате
+                - img: ▼
+              - textbox [ref=e141]: ModDt
+          - generic [ref=e142]:
+            - button "Все фильтры" [ref=e143]:
+              - img
+              - text: Все фильтры
+            - generic [ref=e144]:
+              - button "Найти" [ref=e145]:
+                - img
+                - text: Найти
+              - button "Сбросить" [ref=e146]:
+                - img
+                - text: Сбросить
+        - generic [ref=e148]:
+          - link "[테슬라]모델 Y L ₩75,000,000 [Tesla]Model Y L 2026-05 704 km Автомат" [ref=e1535] [cursor=pointer]:
+            - /url: /car/y-l-2026/113956176
+            - img "[테슬라]모델 Y L" [ref=e1537]
+            - generic [ref=e1538]:
+              - paragraph [ref=e1539]: ₩75,000,000
+              - heading "[Tesla]Model Y L" [level=3] [ref=e1540]
+              - generic [ref=e1541]:
+                - generic [ref=e1542]:
+                  - img [ref=e1543]
+                  - text: 2026-05
+                - generic [ref=e1545]:
+                  - img [ref=e1546]
+                  - text: 704 km
+                - generic [ref=e1549]:
+                  - img [ref=e1550]
+                  - text: Автомат
+          - link "[제네시스]GV80 가솔린 2.5T AWD ₩77,500,000 [Genesis]GV80 Бензин 2.5T AWD 2026-05 8 km Автомат" [ref=e1554] [cursor=pointer]:
+            - /url: /car/gv80-2-5t-awd-2026/113873743
+            - img "[제네시스]GV80 가솔린 2.5T AWD" [ref=e1556]
+            - generic [ref=e1557]:
+              - paragraph [ref=e1558]: ₩77,500,000
+              - heading "[Genesis]GV80 Бензин 2.5T AWD" [level=3] [ref=e1559]
+              - generic [ref=e1560]:
+                - generic [ref=e1561]:
+                  - img [ref=e1562]
+                  - text: 2026-05
+                - generic [ref=e1564]:
+                  - img [ref=e1565]
+                  - text: 8 km
+                - generic [ref=e1568]:
+                  - img [ref=e1569]
+                  - text: Автомат
+          - link "[르노코리아(삼성)]필랑트 아이코닉 ₩49,000,000 [Renault Korea (Samsung)]Обязательно랑트 Iconic 2026-04 1,753 km Автомат" [ref=e1573] [cursor=pointer]:
+            - /url: /car/-2026/113987869
+            - img "[르노코리아(삼성)]필랑트 아이코닉" [ref=e1575]
+            - generic [ref=e1576]:
+              - paragraph [ref=e1577]: ₩49,000,000
+              - heading "[Renault Korea (Samsung)]Обязательно랑트 Iconic" [level=3] [ref=e1578]
+              - generic [ref=e1579]:
+                - generic [ref=e1580]:
+                  - img [ref=e1581]
+                  - text: 2026-04
+                - generic [ref=e1583]:
+                  - img [ref=e1584]
+                  - text: 1,753 km
+                - generic [ref=e1587]:
+                  - img [ref=e1588]
+                  - text: Автомат
+          - link "[기아]더 뉴 쏘렌토 4세대 가솔린 2.5T 4WD 노블레스 ₩41,200,000 [Kia]The New Sorento 4-е Поколение Бензин 2.5T 4WD Noblesse 2026-04 57 km Автомат" [ref=e1592] [cursor=pointer]:
+            - /url: /car/4-2-5t-4wd-2026/113848276
+            - img "[기아]더 뉴 쏘렌토 4세대 가솔린 2.5T 4WD 노블레스" [ref=e1594]
+            - generic [ref=e1595]:
+              - paragraph [ref=e1596]: ₩41,200,000
+              - heading "[Kia]The New Sorento 4-е Поколение Бензин 2.5T 4WD Noblesse" [level=3] [ref=e1597]
+              - generic [ref=e1598]:
+                - generic [ref=e1599]:
+                  - img [ref=e1600]
+                  - text: 2026-04
+                - generic [ref=e1602]:
+                  - img [ref=e1603]
+                  - text: 57 km
+                - generic [ref=e1606]:
+                  - img [ref=e1607]
+                  - text: Автомат
+          - link "[BYD]SEAL 다이내믹 AWD ₩39,200,000 [BYD]SEAL Dynamic AWD 2026-04 5,038 km Автомат" [ref=e1611] [cursor=pointer]:
+            - /url: /car/byd-seal-awd-2026/113980750
+            - img "[BYD]SEAL 다이내믹 AWD" [ref=e1613]
+            - generic [ref=e1614]:
+              - paragraph [ref=e1615]: ₩39,200,000
+              - heading "[BYD]SEAL Dynamic AWD" [level=3] [ref=e1616]
+              - generic [ref=e1617]:
+                - generic [ref=e1618]:
+                  - img [ref=e1619]
+                  - text: 2026-04
+                - generic [ref=e1621]:
+                  - img [ref=e1622]
+                  - text: 5,038 km
+                - generic [ref=e1625]:
+                  - img [ref=e1626]
+                  - text: Автомат
+          - link "[제네시스]G80(RG3) 2.5 가솔린 터보 AWD 블랙 ₩77,800,000 [Genesis]G80(RG3) 2.5 Бензин Turbo AWD Black 2026-04 11 km Автомат" [ref=e1630] [cursor=pointer]:
+            - /url: /car/g80-rg3-2-5-awd-2026/113846398
+            - img "[제네시스]G80(RG3) 2.5 가솔린 터보 AWD 블랙" [ref=e1632]
+            - generic [ref=e1633]:
+              - paragraph [ref=e1634]: ₩77,800,000
+              - heading "[Genesis]G80(RG3) 2.5 Бензин Turbo AWD Black" [level=3] [ref=e1635]
+              - generic [ref=e1636]:
+                - generic [ref=e1637]:
+                  - img [ref=e1638]
+                  - text: 2026-04
+                - generic [ref=e1640]:
+                  - img [ref=e1641]
+                  - text: 11 km
+                - generic [ref=e1644]:
+                  - img [ref=e1645]
+                  - text: Автомат
+          - link "[기아]더 뉴 K5 하이브리드 3세대 노블레스 ₩31,200,000 [Kia]The New K5 Hybrid 3-е Поколение Noblesse 2026-04 1,089 km Автомат" [ref=e1649] [cursor=pointer]:
+            - /url: /car/k5-3-2026/114010214
+            - img "[기아]더 뉴 K5 하이브리드 3세대 노블레스" [ref=e1651]
+            - generic [ref=e1652]:
+              - paragraph [ref=e1653]: ₩31,200,000
+              - heading "[Kia]The New K5 Hybrid 3-е Поколение Noblesse" [level=3] [ref=e1654]
+              - generic [ref=e1655]:
+                - generic [ref=e1656]:
+                  - img [ref=e1657]
+                  - text: 2026-04
+                - generic [ref=e1659]:
+                  - img [ref=e1660]
+                  - text: 1,089 km
+                - generic [ref=e1663]:
+                  - img [ref=e1664]
+                  - text: Автомат
+          - link "[기아]셀토스 하이브리드(SP3) 시그니처 ₩43,990,000 [Kia]Seltos Hybrid(SP3) Signature 2026-04 243 km Автомат" [ref=e1668] [cursor=pointer]:
+            - /url: /car/sp3-2026/113894830
+            - img "[기아]셀토스 하이브리드(SP3) 시그니처" [ref=e1670]
+            - generic [ref=e1671]:
+              - paragraph [ref=e1672]: ₩43,990,000
+              - heading "[Kia]Seltos Hybrid(SP3) Signature" [level=3] [ref=e1673]
+              - generic [ref=e1674]:
+                - generic [ref=e1675]:
+                  - img [ref=e1676]
+                  - text: 2026-04
+                - generic [ref=e1678]:
+                  - img [ref=e1679]
+                  - text: 243 km
+                - generic [ref=e1682]:
+                  - img [ref=e1683]
+                  - text: Автомат
+          - link "[테슬라]모델 Y 프리미엄 RWD ₩99,990,000 [Tesla]Model Y Premium RWD 2026-04 2,462 km Автомат" [ref=e1687] [cursor=pointer]:
+            - /url: /car/y-rwd-2026/114046328
+            - img "[테슬라]모델 Y 프리미엄 RWD" [ref=e1689]
+            - generic [ref=e1690]:
+              - paragraph [ref=e1691]: ₩99,990,000
+              - heading "[Tesla]Model Y Premium RWD" [level=3] [ref=e1692]
+              - generic [ref=e1693]:
+                - generic [ref=e1694]:
+                  - img [ref=e1695]
+                  - text: 2026-04
+                - generic [ref=e1697]:
+                  - img [ref=e1698]
+                  - text: 2,462 km
+                - generic [ref=e1701]:
+                  - img [ref=e1702]
+                  - text: Автомат
+          - link "[소형화물][하이내장탑]봉고3 (LPG2.5터보) 킹캡/초장축(고급형) ... ₩23,700,000 [Грузовые][HighInterior Box]Bongo3 (Газ2.5Turbo) King Cab/Длинный(Premium) ... 2026-04 1,616 km Автомат" [ref=e1706] [cursor=pointer]:
+            - /url: /car/3-lpg2-5-2026/113930233
+            - img "[소형화물][하이내장탑]봉고3 (LPG2.5터보) 킹캡/초장축(고급형) ..." [ref=e1708]
+            - generic [ref=e1709]:
+              - paragraph [ref=e1710]: ₩23,700,000
+              - heading "[Грузовые][HighInterior Box]Bongo3 (Газ2.5Turbo) King Cab/Длинный(Premium) ..." [level=3] [ref=e1711]
+              - generic [ref=e1712]:
+                - generic [ref=e1713]:
+                  - img [ref=e1714]
+                  - text: 2026-04
+                - generic [ref=e1716]:
+                  - img [ref=e1717]
+                  - text: 1,616 km
+                - generic [ref=e1720]:
+                  - img [ref=e1721]
+                  - text: Автомат
+          - link "[기아]뉴 K8 2.5 2WD 노블레스 ₩37,900,000 [Kia]New K8 2.5 2WD Noblesse 2026-04 120 km Автомат" [ref=e1725] [cursor=pointer]:
+            - /url: /car/k8-2-5-2wd-2026/113821165
+            - img "[기아]뉴 K8 2.5 2WD 노블레스" [ref=e1727]
+            - generic [ref=e1728]:
+              - paragraph [ref=e1729]: ₩37,900,000
+              - heading "[Kia]New K8 2.5 2WD Noblesse" [level=3] [ref=e1730]
+              - generic [ref=e1731]:
+                - generic [ref=e1732]:
+                  - img [ref=e1733]
+                  - text: 2026-04
+                - generic [ref=e1735]:
+                  - img [ref=e1736]
+                  - text: 120 km
+                - generic [ref=e1739]:
+                  - img [ref=e1740]
+                  - text: Автомат
+          - link "[BMW]i5 eDrive 40 M 스포츠 ₩81,000,000 [BMW]i5 eDrive 40 M Sports 2026-04 478 km Автомат" [ref=e1744] [cursor=pointer]:
+            - /url: /car/bmw-i5-edrive-40-m-2026/113823410
+            - img "[BMW]i5 eDrive 40 M 스포츠" [ref=e1746]
+            - generic [ref=e1747]:
+              - paragraph [ref=e1748]: ₩81,000,000
+              - heading "[BMW]i5 eDrive 40 M Sports" [level=3] [ref=e1749]
+              - generic [ref=e1750]:
+                - generic [ref=e1751]:
+                  - img [ref=e1752]
+                  - text: 2026-04
+                - generic [ref=e1754]:
+                  - img [ref=e1755]
+                  - text: 478 km
+                - generic [ref=e1758]:
+                  - img [ref=e1759]
+                  - text: Автомат
+          - link "[소형화물][카고]봉고3 (LPG2.5터보) 킹캡/초장축/2WD L ₩20,900,000 [Грузовые][Cargo]Bongo3 (Газ2.5Turbo) King Cab/Длинный/2WD L 2026-04 2,004 km Автомат" [ref=e1763] [cursor=pointer]:
+            - /url: /car/3-lpg2-5-2wd-l-2026/113985887
+            - img "[소형화물][카고]봉고3 (LPG2.5터보) 킹캡/초장축/2WD L" [ref=e1765]
+            - generic [ref=e1766]:
+              - paragraph [ref=e1767]: ₩20,900,000
+              - heading "[Грузовые][Cargo]Bongo3 (Газ2.5Turbo) King Cab/Длинный/2WD L" [level=3] [ref=e1768]
+              - generic [ref=e1769]:
+                - generic [ref=e1770]:
+                  - img [ref=e1771]
+                  - text: 2026-04
+                - generic [ref=e1773]:
+                  - img [ref=e1774]
+                  - text: 2,004 km
+                - generic [ref=e1777]:
+                  - img [ref=e1778]
+                  - text: Автомат
+          - link "[랜드로버]레인지로버 5세대 4.4 P530 LWB 오토바이오그래피 ₩285,000,000 [Land Rover]Range Rover 5-е Поколение 4.4 P530 LWB Автомат바이오그래피 2026-03 15 km Автомат" [ref=e1782] [cursor=pointer]:
+            - /url: /car/5-4-4-p530-lwb-2026/113918098
+            - img "[랜드로버]레인지로버 5세대 4.4 P530 LWB 오토바이오그래피" [ref=e1784]
+            - generic [ref=e1785]:
+              - paragraph [ref=e1786]: ₩285,000,000
+              - heading "[Land Rover]Range Rover 5-е Поколение 4.4 P530 LWB Автомат바이오그래피" [level=3] [ref=e1787]
+              - generic [ref=e1788]:
+                - generic [ref=e1789]:
+                  - img [ref=e1790]
+                  - text: 2026-03
+                - generic [ref=e1792]:
+                  - img [ref=e1793]
+                  - text: 15 km
+                - generic [ref=e1796]:
+                  - img [ref=e1797]
+                  - text: Автомат
+          - link "[랜드로버]레인지로버 스포츠 3세대 P360 HSE 다이나믹 ₩175,000,000 [Land Rover]Range Rover Sport 3-е Поколение P360 HSE Dynamic 2026-03 15 km Автомат" [ref=e1801] [cursor=pointer]:
+            - /url: /car/3-p360-hse-2026/113918099
+            - img "[랜드로버]레인지로버 스포츠 3세대 P360 HSE 다이나믹" [ref=e1803]
+            - generic [ref=e1804]:
+              - paragraph [ref=e1805]: ₩175,000,000
+              - heading "[Land Rover]Range Rover Sport 3-е Поколение P360 HSE Dynamic" [level=3] [ref=e1806]
+              - generic [ref=e1807]:
+                - generic [ref=e1808]:
+                  - img [ref=e1809]
+                  - text: 2026-03
+                - generic [ref=e1811]:
+                  - img [ref=e1812]
+                  - text: 15 km
+                - generic [ref=e1815]:
+                  - img [ref=e1816]
+                  - text: Автомат
+          - link "[랜드로버]레인지로버 스포츠 3세대 P360 HSE 다이나믹 ₩170,000,000 [Land Rover]Range Rover Sport 3-е Поколение P360 HSE Dynamic 2026-03 29 km Автомат" [ref=e1820] [cursor=pointer]:
+            - /url: /car/3-p360-hse-2026/113918109
+            - img "[랜드로버]레인지로버 스포츠 3세대 P360 HSE 다이나믹" [ref=e1822]
+            - generic [ref=e1823]:
+              - paragraph [ref=e1824]: ₩170,000,000
+              - heading "[Land Rover]Range Rover Sport 3-е Поколение P360 HSE Dynamic" [level=3] [ref=e1825]
+              - generic [ref=e1826]:
+                - generic [ref=e1827]:
+                  - img [ref=e1828]
+                  - text: 2026-03
+                - generic [ref=e1830]:
+                  - img [ref=e1831]
+                  - text: 29 km
+                - generic [ref=e1834]:
+                  - img [ref=e1835]
+                  - text: Автомат
+          - link "[미니]쿠퍼 S 4세대 페이버드 ₩41,200,000 [Mini]Cooper S 4-е Поколение Favored 2026-03 3,525 km Автомат" [ref=e1839] [cursor=pointer]:
+            - /url: /car/s-4-2026/113812644
+            - img "[미니]쿠퍼 S 4세대 페이버드" [ref=e1841]
+            - generic [ref=e1842]:
+              - paragraph [ref=e1843]: ₩41,200,000
+              - heading "[Mini]Cooper S 4-е Поколение Favored" [level=3] [ref=e1844]
+              - generic [ref=e1845]:
+                - generic [ref=e1846]:
+                  - img [ref=e1847]
+                  - text: 2026-03
+                - generic [ref=e1849]:
+                  - img [ref=e1850]
+                  - text: 3,525 km
+                - generic [ref=e1853]:
+                  - img [ref=e1854]
+                  - text: Автомат
+          - link "[미니]쿠퍼 S 4세대 페이버드 ₩41,500,000 [Mini]Cooper S 4-е Поколение Favored 2026-03 4,350 km Автомат" [ref=e1858] [cursor=pointer]:
+            - /url: /car/s-4-2026/113813015
+            - img "[미니]쿠퍼 S 4세대 페이버드" [ref=e1860]
+            - generic [ref=e1861]:
+              - paragraph [ref=e1862]: ₩41,500,000
+              - heading "[Mini]Cooper S 4-е Поколение Favored" [level=3] [ref=e1863]
+              - generic [ref=e1864]:
+                - generic [ref=e1865]:
+                  - img [ref=e1866]
+                  - text: 2026-03
+                - generic [ref=e1868]:
+                  - img [ref=e1869]
+                  - text: 4,350 km
+                - generic [ref=e1872]:
+                  - img [ref=e1873]
+                  - text: Автомат
+          - link "[미니]쿠퍼 S 4세대 페이버드 ₩41,000,000 [Mini]Cooper S 4-е Поколение Favored 2026-03 75 km Автомат" [ref=e1877] [cursor=pointer]:
+            - /url: /car/s-4-2026/113776276
+            - img "[미니]쿠퍼 S 4세대 페이버드" [ref=e1879]
+            - generic [ref=e1880]:
+              - paragraph [ref=e1881]: ₩41,000,000
+              - heading "[Mini]Cooper S 4-е Поколение Favored" [level=3] [ref=e1882]
+              - generic [ref=e1883]:
+                - generic [ref=e1884]:
+                  - img [ref=e1885]
+                  - text: 2026-03
+                - generic [ref=e1887]:
+                  - img [ref=e1888]
+                  - text: 75 km
+                - generic [ref=e1891]:
+                  - img [ref=e1892]
+                  - text: Автомат
+          - link "[아우디]Q5 (80A) 40 TDI 콰트로 S-라인 블랙 에디션 ₩83,000,000 [Audi]Q5 (80A) 40 TDI Quattro S-Line Black Edition 2026-03 51 km Автомат" [ref=e1896] [cursor=pointer]:
+            - /url: /car/q5-80a-40-tdi-s-2026/113759448
+            - img "[아우디]Q5 (80A) 40 TDI 콰트로 S-라인 블랙 에디션" [ref=e1898]
+            - generic [ref=e1899]:
+              - paragraph [ref=e1900]: ₩83,000,000
+              - heading "[Audi]Q5 (80A) 40 TDI Quattro S-Line Black Edition" [level=3] [ref=e1901]
+              - generic [ref=e1902]:
+                - generic [ref=e1903]:
+                  - img [ref=e1904]
+                  - text: 2026-03
+                - generic [ref=e1906]:
+                  - img [ref=e1907]
+                  - text: 51 km
+                - generic [ref=e1910]:
+                  - img [ref=e1911]
+                  - text: Автомат
+          - link "[소형화물][하이내장탑]봉고3 (LPG2.5터보) 킹캡/초장축 L ₩23,900,000 [Грузовые][HighInterior Box]Bongo3 (Газ2.5Turbo) King Cab/Длинный L 2026-03 4,250 km Автомат" [ref=e1915] [cursor=pointer]:
+            - /url: /car/3-lpg2-5-l-2026/114038912
+            - img "[소형화물][하이내장탑]봉고3 (LPG2.5터보) 킹캡/초장축 L" [ref=e1917]
+            - generic [ref=e1918]:
+              - paragraph [ref=e1919]: ₩23,900,000
+              - heading "[Грузовые][HighInterior Box]Bongo3 (Газ2.5Turbo) King Cab/Длинный L" [level=3] [ref=e1920]
+              - generic [ref=e1921]:
+                - generic [ref=e1922]:
+                  - img [ref=e1923]
+                  - text: 2026-03
+                - generic [ref=e1925]:
+                  - img [ref=e1926]
+                  - text: 4,250 km
+                - generic [ref=e1929]:
+                  - img [ref=e1930]
+                  - text: Автомат
+          - link "[제네시스]G80(RG3) 일렉트리파이드 ₩84,900,000 [Genesis]G80(RG3) Electric 2026-03 5,817 km Автомат" [ref=e1934] [cursor=pointer]:
+            - /url: /car/g80-rg3-2026/113976466
+            - img "[제네시스]G80(RG3) 일렉트리파이드" [ref=e1936]
+            - generic [ref=e1937]:
+              - paragraph [ref=e1938]: ₩84,900,000
+              - heading "[Genesis]G80(RG3) Electric" [level=3] [ref=e1939]
+              - generic [ref=e1940]:
+                - generic [ref=e1941]:
+                  - img [ref=e1942]
+                  - text: 2026-03
+                - generic [ref=e1944]:
+                  - img [ref=e1945]
+                  - text: 5,817 km
+                - generic [ref=e1948]:
+                  - img [ref=e1949]
+                  - text: Автомат
+          - link "[기아]뉴 K8 하이브리드 베스트 셀렉션 ₩42,700,000 [Kia]New K8 Hybrid Best Selection 2026-03 3,938 km Автомат" [ref=e1953] [cursor=pointer]:
+            - /url: /car/k8-2026/113972535
+            - img "[기아]뉴 K8 하이브리드 베스트 셀렉션" [ref=e1955]
+            - generic [ref=e1956]:
+              - paragraph [ref=e1957]: ₩42,700,000
+              - heading "[Kia]New K8 Hybrid Best Selection" [level=3] [ref=e1958]
+              - generic [ref=e1959]:
+                - generic [ref=e1960]:
+                  - img [ref=e1961]
+                  - text: 2026-03
+                - generic [ref=e1963]:
+                  - img [ref=e1964]
+                  - text: 3,938 km
+                - generic [ref=e1967]:
+                  - img [ref=e1968]
+                  - text: Автомат
+          - link "[제네시스]GV70 3.5T 가솔린 2WD 기본형 ₩54,000,000 [Genesis]GV70 3.5T Бензин 2WD Basic 2026-03 449 km Автомат" [ref=e1972] [cursor=pointer]:
+            - /url: /car/gv70-3-5t-2wd-2026/113823726
+            - img "[제네시스]GV70 3.5T 가솔린 2WD 기본형" [ref=e1974]
+            - generic [ref=e1975]:
+              - paragraph [ref=e1976]: ₩54,000,000
+              - heading "[Genesis]GV70 3.5T Бензин 2WD Basic" [level=3] [ref=e1977]
+              - generic [ref=e1978]:
+                - generic [ref=e1979]:
+                  - img [ref=e1980]
+                  - text: 2026-03
+                - generic [ref=e1982]:
+                  - img [ref=e1983]
+                  - text: 449 km
+                - generic [ref=e1986]:
+                  - img [ref=e1987]
+                  - text: Автомат
+        - generic [ref=e605]:
+          - button "Предыдущая" [ref=e606]:
+            - img [ref=e607]
+          - button "1" [ref=e609]
+          - button "2" [ref=e610]
+          - button "3" [ref=e1072]
+          - generic [ref=e1534]: ...
+          - button "1839" [ref=e612]
+          - button "Следующая" [ref=e613]:
+            - img [ref=e614]
+    - contentinfo [ref=e65]:
+      - generic [ref=e66]:
+        - generic [ref=e67]:
+          - generic [ref=e68]:
+            - link "AlexDrive" [ref=e69] [cursor=pointer]:
+              - /url: /
+              - generic [ref=e70]: AlexDrive
+            - paragraph [ref=e71]:
+              - text: Автомобили в Южной Корее.
+              - text: Широкий выбор автомобилей в Сувоне
+          - generic [ref=e72]:
+            - heading "Навигация" [level=3] [ref=e73]
+            - navigation [ref=e74]:
+              - link "Каталог" [ref=e75] [cursor=pointer]:
+                - /url: /
+              - link "О нас" [ref=e76] [cursor=pointer]:
+                - /url: /about
+              - link "Контакты" [ref=e77] [cursor=pointer]:
+                - /url: /contacts
+              - link "Калькулятор" [ref=e78] [cursor=pointer]:
+                - /url: /calculator
+              - link "Конфиденциальность" [ref=e79] [cursor=pointer]:
+                - /url: /privacy
+              - link "Условия использования" [ref=e80] [cursor=pointer]:
+                - /url: /terms
+          - generic [ref=e81]:
+            - heading "Контакты" [level=3] [ref=e82]
+            - generic [ref=e83]:
+              - paragraph [ref=e84]: Кан Алексей
+              - link "+82-10-3908-6050" [ref=e85] [cursor=pointer]:
+                - /url: tel:+821039086050
+              - link "WhatsApp" [ref=e86] [cursor=pointer]:
+                - /url: https://wa.me/821039086050
+                - img [ref=e87]
+                - text: WhatsApp
+              - paragraph [ref=e89]: Кёнги, Сувон, Южная Корея
+        - generic [ref=e90]: © 2026 AlexDrive. Все права защищены.
+  - button "Open Next.js Dev Tools" [ref=e96] [cursor=pointer]:
+    - img [ref=e97]
+  - alert [ref=e100]

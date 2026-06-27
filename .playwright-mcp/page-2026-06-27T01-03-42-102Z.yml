@@ -1,0 +1,50 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e3]:
+      - link "AlexDrive" [ref=e4] [cursor=pointer]:
+        - /url: /
+        - generic [ref=e5]: AlexDrive
+      - button "Меню" [ref=e6]:
+        - img [ref=e7]
+  - generic [ref=e10]:
+    - main [ref=e11]
+    - contentinfo [ref=e65]:
+      - generic [ref=e66]:
+        - generic [ref=e67]:
+          - generic [ref=e68]:
+            - link "AlexDrive" [ref=e69] [cursor=pointer]:
+              - /url: /
+              - generic [ref=e70]: AlexDrive
+            - paragraph [ref=e71]:
+              - text: Автомобили в Южной Корее.
+              - text: Широкий выбор автомобилей в Сувоне
+          - generic [ref=e72]:
+            - heading "Навигация" [level=3] [ref=e73]
+            - navigation [ref=e74]:
+              - link "Каталог" [ref=e75] [cursor=pointer]:
+                - /url: /
+              - link "О нас" [ref=e76] [cursor=pointer]:
+                - /url: /about
+              - link "Контакты" [ref=e77] [cursor=pointer]:
+                - /url: /contacts
+              - link "Калькулятор" [ref=e78] [cursor=pointer]:
+                - /url: /calculator
+              - link "Конфиденциальность" [ref=e79] [cursor=pointer]:
+                - /url: /privacy
+              - link "Условия использования" [ref=e80] [cursor=pointer]:
+                - /url: /terms
+          - generic [ref=e81]:
+            - heading "Контакты" [level=3] [ref=e82]
+            - generic [ref=e83]:
+              - paragraph [ref=e84]: Кан Алексей
+              - link "+82-10-3908-6050" [ref=e85] [cursor=pointer]:
+                - /url: tel:+821039086050
+              - link "WhatsApp" [ref=e86] [cursor=pointer]:
+                - /url: https://wa.me/821039086050
+                - img [ref=e87]
+                - text: WhatsApp
+              - paragraph [ref=e89]: Кёнги, Сувон, Южная Корея
+        - generic [ref=e90]: © 2026 AlexDrive. Все права защищены.
+  - button "Open Next.js Dev Tools" [ref=e96] [cursor=pointer]:
+    - img [ref=e97]
+  - alert [ref=e100]

@@ -1,0 +1,554 @@
+- generic:
+  - banner:
+    - generic:
+      - link:
+        - /url: /
+        - generic: AlexDrive
+      - button [active]:
+        - img
+  - generic:
+    - generic:
+      - main:
+        - generic:
+          - generic:
+            - heading [level=1]: Каталог автомобилей
+            - paragraph: 44 131 авто
+          - generic:
+            - generic:
+              - generic:
+                - generic:
+                  - generic: Марка
+                  - button:
+                    - generic: Все марки
+                    - img
+                - generic:
+                  - generic: Модель
+                  - button:
+                    - generic: Все модели
+                    - img
+                - generic:
+                  - generic: Модификация
+                  - combobox [disabled]:
+                    - generic: Все
+                    - img: ▼
+                  - textbox [disabled]: __all__
+                - generic:
+                  - generic: Комплектация
+                  - combobox [disabled]:
+                    - generic: Все
+                    - img: ▼
+                  - textbox [disabled]: __all__
+                - generic:
+                  - generic: Доп. комплектация
+                  - combobox [disabled]:
+                    - generic: Все
+                    - img: ▼
+                  - textbox [disabled]: __all__
+                - generic:
+                  - generic: Сортировка
+                  - combobox:
+                    - generic: По дате
+                    - img: ▼
+                  - textbox: ModDt
+              - generic:
+                - button:
+                  - img
+                  - text: Все фильтры
+                - generic:
+                  - button:
+                    - img
+                    - text: Найти
+                  - button:
+                    - img
+                    - text: Сбросить
+          - generic:
+            - generic:
+              - link:
+                - /url: /car/k8-2021/112771863
+                - generic:
+                  - img
+                - generic:
+                  - paragraph: ₩20,900,000
+                  - heading [level=3]: "[Kia]K8 Hybrid Signature"
+                  - generic:
+                    - generic:
+                      - img
+                      - text: 2021-07
+                    - generic:
+                      - img
+                      - text: 169,366 km
+                    - generic:
+                      - img
+                      - text: Автомат
+              - link:
+                - /url: /car/g70-2-2d-4wd-2021/113131444
+                - generic:
+                  - img
+                - generic:
+                  - paragraph: ₩18,490,000
+                  - heading [level=3]: "[Genesis]The New G70 Дизель 2.2D 4WD Basic"
+                  - generic:
+                    - generic:
+                      - img
+                      - text: 2021-02
+                    - generic:
+                      - img
+                      - text: 189,000 km
+                    - generic:
+                      - img
+                      - text: Автомат
+              - link:
+                - /url: /car/4-mq4-2-2-4wd-2020/113165919
+                - generic:
+                  - img
+                - generic:
+                  - paragraph: ₩22,500,000
+                  - heading [level=3]: "[Kia]Sorento 4-е Поколение(MQ4) Дизель 2.2 4WD Signature"
+                  - generic:
+                    - generic:
+                      - img
+                      - text: 2020-04
+                    - generic:
+                      - img
+                      - text: 222,167 km
+                    - generic:
+                      - img
+                      - text: Автомат
+              - link:
+                - /url: /car/2-2-2wd-2021/113203104
+                - generic:
+                  - img
+                - generic:
+                  - paragraph: ₩23,990,000
+                  - heading [level=3]: "[Hyundai]Palisade Дизель 2.2 2WD Prestige"
+                  - generic:
+                    - generic:
+                      - img
+                      - text: 2021-12
+                    - generic:
+                      - img
+                      - text: 83,240 km
+                    - generic:
+                      - img
+                      - text: Автомат
+              - link:
+                - /url: /car/911-992-gts-2023/113267144
+                - generic:
+                  - img
+                - generic:
+                  - paragraph: ₩210,000,000
+                  - heading [level=3]: "[Porsche]911(992) Carrera GTS Cabriolet"
+                  - generic:
+                    - generic:
+                      - img
+                      - text: 2023-04
+                    - generic:
+                      - img
+                      - text: 6,670 km
+                    - generic:
+                      - img
+                      - text: Автомат
+              - link:
+                - /url: /car/a5-f5-40-tfsi-2021/113293123
+                - generic:
+                  - img
+                - generic:
+                  - paragraph: ₩25,500,000
+                  - heading [level=3]: "[Audi]A5 (F5) 40 TFSI Quattro Premium Sportback"
+                  - generic:
+                    - generic:
+                      - img
+                      - text: 2021-10
+                    - generic:
+                      - img
+                      - text: 56,120 km
+                    - generic:
+                      - img
+                      - text: Автомат
+              - link:
+                - /url: /car/g37-2009/113321994
+                - generic:
+                  - img
+                - generic:
+                  - paragraph: ₩5,390,000
+                  - heading [level=3]: "[Infiniti]G37 Convertible"
+                  - generic:
+                    - generic:
+                      - img
+                      - text: 2009-12
+                    - generic:
+                      - img
+                      - text: 96,585 km
+                    - generic:
+                      - img
+                      - text: Автомат
+              - link:
+                - /url: /car/4-9-2020/113472282
+                - generic:
+                  - img
+                - generic:
+                  - paragraph: ₩23,990,000
+                  - heading [level=3]: "[Kia]Carnival 4-е Поколение Дизель 9-местный Noblesse"
+                  - generic:
+                    - generic:
+                      - img
+                      - text: 2020-11
+                    - generic:
+                      - img
+                      - text: 45,000 km
+                    - generic:
+                      - img
+                      - text: Автомат
+              - link:
+                - /url: /car/2-0-lt-2015/113540290
+                - generic:
+                  - img
+                - generic:
+                  - paragraph: ₩3,550,000
+                  - heading [level=3]: "[Chevrolet]Malibu Дизель 2.0 LT Deluxe Pack"
+                  - generic:
+                    - generic:
+                      - img
+                      - text: 2015-06
+                    - generic:
+                      - img
+                      - text: 145,037 km
+                    - generic:
+                      - img
+                      - text: Автомат
+              - link:
+                - /url: /car/3-1-0-crdi-2019/113615068
+                - generic:
+                  - img
+                - generic:
+                  - paragraph: ₩12,700,000
+                  - heading [level=3]: "[Грузовые][Cargo]Bongo3 1.0 тонна/King Cab/Длинный/(CRDi) Luxury"
+                  - generic:
+                    - generic:
+                      - img
+                      - text: 2019-08
+                    - generic:
+                      - img
+                      - text: 80,785 km
+                    - generic:
+                      - img
+                      - text: Автомат
+              - link:
+                - /url: /car/1-6-2wd-2020/113788563
+                - generic:
+                  - img
+                - generic:
+                  - paragraph: ₩16,200,000
+                  - heading [level=3]: "[Hyundai]Kona Дизель 1.6 2WD ModernChoice"
+                  - generic:
+                    - generic:
+                      - img
+                      - text: 2020-04
+                    - generic:
+                      - img
+                      - text: 64,215 km
+                    - generic:
+                      - img
+                      - text: Автомат
+              - link:
+                - /url: /car/lt-2016/113794072
+                - generic:
+                  - img
+                - generic:
+                  - paragraph: ₩4,300,000
+                  - heading [level=3]: "[Chevrolet]The Next Spark LT Plus"
+                  - generic:
+                    - generic:
+                      - img
+                      - text: 2016-01
+                    - generic:
+                      - img
+                      - text: 114,803 km
+                    - generic:
+                      - img
+                      - text: Автомат
+              - link:
+                - /url: /car/gls-x167-gls-450-4matic-2025/113837475
+                - generic:
+                  - img
+                - generic:
+                  - paragraph: ₩121,900,000
+                  - heading [level=3]: "[Mercedes-Benz]GLS Класс X167 GLS 450 4MATIC"
+                  - generic:
+                    - generic:
+                      - img
+                      - text: 2025-01
+                    - generic:
+                      - img
+                      - text: 26,986 km
+                    - generic:
+                      - img
+                      - text: Автомат
+              - link:
+                - /url: /car/b-my-b-b200-d-2018/113844121
+                - generic:
+                  - img
+                - generic:
+                  - paragraph: ₩10,800,000
+                  - heading [level=3]: "[Mercedes-Benz]B Класс (MY B) B200 d"
+                  - generic:
+                    - generic:
+                      - img
+                      - text: 2018-02
+                    - generic:
+                      - img
+                      - text: 113,275 km
+                    - generic:
+                      - img
+                      - text: Автомат
+              - link:
+                - /url: /car/qm6-2-0-lpe-le-2wd-2022/113909414
+                - generic:
+                  - img
+                - generic:
+                  - paragraph: ₩9,200,000
+                  - heading [level=3]: "[Renault Korea (Samsung)]TheNewQM6 2.0 LPe LE 2WD"
+                  - generic:
+                    - generic:
+                      - img
+                      - text: 2022-11
+                    - generic:
+                      - img
+                      - text: 218,510 km
+                    - generic:
+                      - img
+                      - text: Автомат
+              - link:
+                - /url: /car/2-lpg2-5-2wd-2024/113909461
+                - generic:
+                  - img
+                - generic:
+                  - paragraph: ₩21,900,000
+                  - heading [level=3]: "[Грузовые][Cargo]Porter2 (Газ2.5Turbo) Super Cab/Длинный/2WD 프리미..."
+                  - generic:
+                    - generic:
+                      - img
+                      - text: 2024-09
+                    - generic:
+                      - img
+                      - text: 16,782 km
+                    - generic:
+                      - img
+                      - text: Автомат
+              - link:
+                - /url: /car/cn7-2-0-n-2021/113926879
+                - generic:
+                  - img
+                - generic:
+                  - paragraph: ₩16,790,000
+                  - heading [level=3]: "[Hyundai]Avante (CN7) 2.0 N"
+                  - generic:
+                    - generic:
+                      - img
+                      - text: 2021-12
+                    - generic:
+                      - img
+                      - text: 119,522 km
+                    - generic:
+                      - img
+                      - text: Механика
+              - link:
+                - /url: /car/2-crdi-2019/113927045
+                - generic:
+                  - img
+                - generic:
+                  - paragraph: ₩17,800,000
+                  - heading [level=3]: "[Грузовые][HighReefer Box]Porter2 Super Cab/Длинный(CRDi)"
+                  - generic:
+                    - generic:
+                      - img
+                      - text: 2019-11
+                    - generic:
+                      - img
+                      - text: 313,776 km
+                    - generic:
+                      - img
+                      - text: Автомат
+              - link:
+                - /url: /car/g70-2-0t-2wd-2021/114049699
+                - generic:
+                  - img
+                - generic:
+                  - paragraph: ₩26,990,000
+                  - heading [level=3]: "[Genesis]The New G70 Бензин 2.0T 2WD"
+                  - generic:
+                    - generic:
+                      - img
+                      - text: 2021-11
+                    - generic:
+                      - img
+                      - text: 88,648 km
+                    - generic:
+                      - img
+                      - text: Автомат
+              - link:
+                - /url: /car/2-2-2wd-2024/113936778
+                - generic:
+                  - img
+                - generic:
+                  - paragraph: ₩41,500,000
+                  - heading [level=3]: "[Hyundai]The New Palisade Дизель 2.2 2WD 캘리그라피"
+                  - generic:
+                    - generic:
+                      - img
+                      - text: 2024-12
+                    - generic:
+                      - img
+                      - text: 18,715 km
+                    - generic:
+                      - img
+                      - text: Автомат
+              - link:
+                - /url: /car/4wd-5-2022/113948472
+                - generic:
+                  - img
+                - generic:
+                  - paragraph: ₩31,500,000
+                  - heading [level=3]: "[Kia]Mohave The Master 4WD Master’s 5 мест"
+                  - generic:
+                    - generic:
+                      - img
+                      - text: 2022-07
+                    - generic:
+                      - img
+                      - text: 89,822 km
+                    - generic:
+                      - img
+                      - text: Автомат
+              - link:
+                - /url: /car/7-vip-2018/113951237
+                - generic:
+                  - img
+                - generic:
+                  - paragraph: ₩10,690,000
+                  - heading [level=3]: "[Kia]The New Carnival Дизель 7-местный Limousine VIP"
+                  - generic:
+                    - generic:
+                      - img
+                      - text: 2018-04
+                    - generic:
+                      - img
+                      - text: 199,547 km
+                    - generic:
+                      - img
+                      - text: Автомат
+              - link:
+                - /url: /car/bmw-6-f12-640-d-xdrive-2014/113958044
+                - generic:
+                  - img
+                - generic:
+                  - paragraph: ₩8,900,000
+                  - heading [level=3]: "[BMW]6 Series (F12) 640 Gran Coupe d xDrive Gran Coupe"
+                  - generic:
+                    - generic:
+                      - img
+                      - text: 2014-05
+                    - generic:
+                      - img
+                      - text: 192,860 km
+                    - generic:
+                      - img
+                      - text: Автомат
+              - link:
+                - /url: /car/2-1-0-crdi-2019/113960088
+                - generic:
+                  - img
+                - generic:
+                  - paragraph: ₩12,900,000
+                  - heading [level=3]: "[Грузовые][Cargo]Porter2 1.0 тонна/Super Cab/Длинный/(CRDi) Smart"
+                  - generic:
+                    - generic:
+                      - img
+                      - text: 2019-01
+                    - generic:
+                      - img
+                      - text: 93,104 km
+                    - generic:
+                      - img
+                      - text: Автомат
+          - generic:
+            - button [disabled]:
+              - img
+            - button: "1"
+            - button: "2"
+            - generic: ...
+            - button: "1839"
+            - button:
+              - img
+      - contentinfo:
+        - generic:
+          - generic:
+            - generic:
+              - link:
+                - /url: /
+                - generic: AlexDrive
+              - paragraph: Автомобили в Южной Корее. Широкий выбор автомобилей в Сувоне
+            - generic:
+              - heading [level=3]: Навигация
+              - navigation:
+                - link:
+                  - /url: /
+                  - text: Каталог
+                - link:
+                  - /url: /about
+                  - text: О нас
+                - link:
+                  - /url: /contacts
+                  - text: Контакты
+                - link:
+                  - /url: /calculator
+                  - text: Калькулятор
+                - link:
+                  - /url: /privacy
+                  - text: Конфиденциальность
+                - link:
+                  - /url: /terms
+                  - text: Условия использования
+            - generic:
+              - heading [level=3]: Контакты
+              - generic:
+                - paragraph: Кан Алексей
+                - link:
+                  - /url: tel:+821039086050
+                  - text: +82-10-3908-6050
+                - link:
+                  - /url: https://wa.me/821039086050
+                  - img
+                  - text: WhatsApp
+                - paragraph: Кёнги, Сувон, Южная Корея
+          - generic: © 2026 AlexDrive. Все права защищены.
+  - alert
+  - dialog "Меню навигации" [ref=e555]:
+    - heading "Меню навигации" [level=2] [ref=e557]
+    - generic [ref=e558]:
+      - generic [ref=e560]: AlexDrive
+      - navigation [ref=e561]:
+        - link "Каталог" [ref=e562] [cursor=pointer]:
+          - /url: /
+          - img [ref=e563]
+          - generic [ref=e565]: Каталог
+        - link "О нас" [ref=e566] [cursor=pointer]:
+          - /url: /about
+          - img [ref=e567]
+          - generic [ref=e569]: О нас
+        - link "Контакты" [ref=e570] [cursor=pointer]:
+          - /url: /contacts
+          - img [ref=e571]
+          - generic [ref=e573]: Контакты
+        - link "Калькулятор" [ref=e574] [cursor=pointer]:
+          - /url: /calculator
+          - img [ref=e575]
+          - generic [ref=e577]: Калькулятор
+      - link "Написать в WhatsApp" [ref=e578] [cursor=pointer]:
+        - /url: https://wa.me/821039086050
+        - img [ref=e579]
+        - text: Написать в WhatsApp
+      - generic [ref=e581]:
+        - paragraph [ref=e582]: Кан Алексей
+        - link "+82-10-3908-6050" [ref=e583] [cursor=pointer]:
+          - /url: tel:+821039086050

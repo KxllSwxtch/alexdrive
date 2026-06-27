@@ -1,0 +1,68 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e3]:
+      - link "AlexDrive" [ref=e4] [cursor=pointer]:
+        - /url: /
+        - generic [ref=e5]: AlexDrive
+      - button "Меню" [ref=e6]:
+        - img [ref=e7]
+  - generic [ref=e10]:
+    - main [ref=e11]:
+      - generic [ref=e13]:
+        - heading "Кредитный калькулятор" [level=1] [ref=e14]
+        - paragraph [ref=e15]: Рассчитайте ежемесячный платёж по автокредиту
+        - generic [ref=e18]:
+          - generic [ref=e19]:
+            - generic [ref=e20]: Сумма кредита
+            - group [ref=e21]:
+              - group [ref=e22]: ₩
+              - textbox "10,000,000" [ref=e23]
+          - generic [ref=e24]:
+            - generic [ref=e25]: Срок кредита
+            - combobox [ref=e26]:
+              - generic [ref=e27]: "36"
+              - img: ▼
+            - textbox [ref=e28]: "36"
+          - generic [ref=e29]:
+            - generic [ref=e30]: Процентная ставка
+            - group [ref=e31]:
+              - textbox "5.9" [ref=e32]
+              - group [ref=e33]: "%"
+    - contentinfo [ref=e34]:
+      - generic [ref=e35]:
+        - generic [ref=e36]:
+          - generic [ref=e37]:
+            - link "AlexDrive" [ref=e38] [cursor=pointer]:
+              - /url: /
+              - generic [ref=e39]: AlexDrive
+            - paragraph [ref=e40]:
+              - text: Автомобили в Южной Корее.
+              - text: Широкий выбор автомобилей в Сувоне
+          - generic [ref=e41]:
+            - heading "Навигация" [level=3] [ref=e42]
+            - navigation [ref=e43]:
+              - link "Каталог" [ref=e44] [cursor=pointer]:
+                - /url: /
+              - link "О нас" [ref=e45] [cursor=pointer]:
+                - /url: /about
+              - link "Контакты" [ref=e46] [cursor=pointer]:
+                - /url: /contacts
+              - link "Калькулятор" [ref=e47] [cursor=pointer]:
+                - /url: /calculator
+              - link "Конфиденциальность" [ref=e48] [cursor=pointer]:
+                - /url: /privacy
+              - link "Условия использования" [ref=e49] [cursor=pointer]:
+                - /url: /terms
+          - generic [ref=e50]:
+            - heading "Контакты" [level=3] [ref=e51]
+            - generic [ref=e52]:
+              - paragraph [ref=e53]: Кан Алексей
+              - link "+82-10-3908-6050" [ref=e54] [cursor=pointer]:
+                - /url: tel:+821039086050
+              - link "WhatsApp" [ref=e55] [cursor=pointer]:
+                - /url: https://wa.me/821039086050
+                - img [ref=e56]
+                - text: WhatsApp
+              - paragraph [ref=e58]: Кёнги, Сувон, Южная Корея
+        - generic [ref=e59]: © 2026 AlexDrive. Все права защищены.
+  - alert [ref=e60]

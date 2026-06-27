@@ -1,0 +1,95 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e3]:
+      - link "AlexDrive" [ref=e4] [cursor=pointer]:
+        - /url: /
+        - generic [ref=e5]: AlexDrive
+      - button "Меню" [ref=e6]:
+        - img [ref=e7]
+  - generic [ref=e10]:
+    - main [ref=e11]:
+      - generic [ref=e12]:
+        - heading "Политика конфиденциальности" [level=1] [ref=e13]
+        - generic [ref=e14]:
+          - paragraph [ref=e15]: Настоящая Политика конфиденциальности описывает, как AlexDrive (далее — «мы», «нас») собирает, использует и защищает информацию, которую вы предоставляете при использовании нашего веб-сайта.
+          - generic [ref=e16]:
+            - heading "1. Какую информацию мы собираем" [level=2] [ref=e17]
+            - paragraph [ref=e18]: "Наш сайт является каталогом автомобилей и не требует регистрации. Мы можем собирать следующую информацию:"
+            - list [ref=e19]:
+              - listitem [ref=e20]: "Техническая информация: IP-адрес, тип браузера, операционная система, время посещения"
+              - listitem [ref=e21]: "Данные об использовании сайта: просмотренные страницы, взаимодействие с каталогом"
+              - listitem [ref=e22]: Контактные данные, если вы сами обращаетесь к нам через WhatsApp или по телефону
+          - generic [ref=e23]:
+            - heading "2. Как мы используем информацию" [level=2] [ref=e24]
+            - list [ref=e25]:
+              - listitem [ref=e26]: Обеспечение работоспособности сайта
+              - listitem [ref=e27]: Улучшение пользовательского опыта
+              - listitem [ref=e28]: Обработка ваших запросов при обращении к нам
+              - listitem [ref=e29]: Анализ посещаемости для улучшения сервиса
+          - generic [ref=e30]:
+            - heading "3. Хранение и защита данных" [level=2] [ref=e31]
+            - paragraph [ref=e32]: Мы принимаем разумные меры для защиты вашей информации. Данные хранятся на защищённых серверах. Мы не продаём и не передаём вашу личную информацию третьим лицам, за исключением случаев, предусмотренных законодательством.
+          - generic [ref=e33]:
+            - heading "4. Файлы cookie" [level=2] [ref=e34]
+            - paragraph [ref=e35]: Сайт может использовать файлы cookie для корректной работы и анализа посещаемости. Вы можете отключить cookie в настройках вашего браузера.
+          - generic [ref=e36]:
+            - heading "5. Ссылки на сторонние сайты" [level=2] [ref=e37]
+            - paragraph [ref=e38]: Наш сайт может содержать ссылки на сторонние ресурсы. Мы не несём ответственности за их политику конфиденциальности.
+          - generic [ref=e39]:
+            - heading "6. Изменения" [level=2] [ref=e40]
+            - paragraph [ref=e41]: Мы оставляем за собой право обновлять данную Политику конфиденциальности. Изменения вступают в силу с момента публикации на сайте.
+          - generic [ref=e42]:
+            - heading "7. Контакты" [level=2] [ref=e43]
+            - paragraph [ref=e44]: "Если у вас есть вопросы по данной политике, свяжитесь с нами:"
+            - generic [ref=e45]:
+              - paragraph [ref=e46]: Кан Алексей
+              - paragraph [ref=e47]:
+                - text: "Телефон:"
+                - link "+82-10-3908-6050" [ref=e48] [cursor=pointer]:
+                  - /url: tel:+821039086050
+              - paragraph [ref=e49]:
+                - text: "WhatsApp:"
+                - link "wa.me/821039086050" [ref=e50] [cursor=pointer]:
+                  - /url: https://wa.me/821039086050
+              - paragraph [ref=e51]: "Адрес: Кёнги, Сувон, Южная Корея"
+          - paragraph [ref=e52]: "Дата последнего обновления: 27.06.2026"
+          - link "Условия использования →" [ref=e54] [cursor=pointer]:
+            - /url: /terms
+    - contentinfo [ref=e55]:
+      - generic [ref=e56]:
+        - generic [ref=e57]:
+          - generic [ref=e58]:
+            - link "AlexDrive" [ref=e59] [cursor=pointer]:
+              - /url: /
+              - generic [ref=e60]: AlexDrive
+            - paragraph [ref=e61]:
+              - text: Автомобили в Южной Корее.
+              - text: Широкий выбор автомобилей в Сувоне
+          - generic [ref=e62]:
+            - heading "Навигация" [level=3] [ref=e63]
+            - navigation [ref=e64]:
+              - link "Каталог" [ref=e65] [cursor=pointer]:
+                - /url: /
+              - link "О нас" [ref=e66] [cursor=pointer]:
+                - /url: /about
+              - link "Контакты" [ref=e67] [cursor=pointer]:
+                - /url: /contacts
+              - link "Калькулятор" [ref=e68] [cursor=pointer]:
+                - /url: /calculator
+              - link "Конфиденциальность" [ref=e69] [cursor=pointer]:
+                - /url: /privacy
+              - link "Условия использования" [ref=e70] [cursor=pointer]:
+                - /url: /terms
+          - generic [ref=e71]:
+            - heading "Контакты" [level=3] [ref=e72]
+            - generic [ref=e73]:
+              - paragraph [ref=e74]: Кан Алексей
+              - link "+82-10-3908-6050" [ref=e75] [cursor=pointer]:
+                - /url: tel:+821039086050
+              - link "WhatsApp" [ref=e76] [cursor=pointer]:
+                - /url: https://wa.me/821039086050
+                - img [ref=e77]
+                - text: WhatsApp
+              - paragraph [ref=e79]: Кёнги, Сувон, Южная Корея
+        - generic [ref=e80]: © 2026 AlexDrive. Все права защищены.
+  - alert [ref=e81]

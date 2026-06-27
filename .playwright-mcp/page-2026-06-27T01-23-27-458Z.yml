@@ -1,0 +1,495 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e3]:
+      - link "AlexDrive" [ref=e4] [cursor=pointer]:
+        - /url: /
+        - generic [ref=e5]: AlexDrive
+      - button "Меню" [ref=e6]:
+        - img [ref=e7]
+  - generic [ref=e10]:
+    - main [ref=e11]:
+      - generic [ref=e12]:
+        - generic [ref=e13]:
+          - heading "Каталог автомобилей" [level=1] [ref=e14]
+          - paragraph [ref=e15]: 928 авто
+        - generic [ref=e17]:
+          - generic [ref=e18]:
+            - generic [ref=e19]:
+              - generic [ref=e20]: Марка
+              - button "Kia" [ref=e651]:
+                - generic [ref=e22]: Kia
+                - img [ref=e23]
+            - generic [ref=e26]:
+              - generic [ref=e27]: Модель
+              - button "K5" [ref=e726]:
+                - generic [ref=e29]: K5
+                - img [ref=e30]
+            - generic [ref=e33]:
+              - generic [ref=e34]: Модификация
+              - combobox [ref=e35]:
+                - generic [ref=e36]: Все
+                - img: ▼
+              - textbox [ref=e37]: __all__
+            - generic [ref=e38]:
+              - generic [ref=e39]: Комплектация
+              - combobox [disabled] [ref=e40]:
+                - generic [ref=e41]: Все
+                - img: ▼
+              - textbox [disabled] [ref=e42]: __all__
+            - generic [ref=e43]:
+              - generic [ref=e44]: Доп. комплектация
+              - combobox [disabled] [ref=e45]:
+                - generic [ref=e46]: Все
+                - img: ▼
+              - textbox [disabled] [ref=e47]: __all__
+            - generic [ref=e48]:
+              - generic [ref=e49]: Сортировка
+              - combobox [ref=e50]:
+                - generic [ref=e51]: По дате
+                - img: ▼
+              - textbox [ref=e52]: ModDt
+          - generic [ref=e53]:
+            - button "Все фильтры" [ref=e54]:
+              - img
+              - text: Все фильтры
+            - generic [ref=e55]:
+              - button "Найти" [ref=e56]:
+                - img
+                - text: Найти
+              - button "Сбросить" [ref=e57]:
+                - img
+                - text: Сбросить
+        - generic [ref=e59]:
+          - link "[기아]더 뉴 K5 3세대 2.0 프레스티지 ₩26,500,000 [Kia]The New K5 3-е Поколение 2.0 Prestige 2024-04 58,678 km Автомат" [ref=e1642] [cursor=pointer]:
+            - /url: /car/k5-3-2-0-2024/113803687
+            - img "[기아]더 뉴 K5 3세대 2.0 프레스티지" [ref=e1644]
+            - generic [ref=e1645]:
+              - paragraph [ref=e1646]: ₩26,500,000
+              - heading "[Kia]The New K5 3-е Поколение 2.0 Prestige" [level=3] [ref=e1647]
+              - generic [ref=e1648]:
+                - generic [ref=e1649]:
+                  - img [ref=e1650]
+                  - text: 2024-04
+                - generic [ref=e1652]:
+                  - img [ref=e1653]
+                  - text: 58,678 km
+                - generic [ref=e1656]:
+                  - img [ref=e1657]
+                  - text: Автомат
+          - link "[기아]더 뉴 K5 하이브리드 3세대 노블레스 ₩27,700,000 [Kia]The New K5 Hybrid 3-е Поколение Noblesse 2024-03 34,481 km Автомат" [ref=e1661] [cursor=pointer]:
+            - /url: /car/k5-3-2024/113977696
+            - img "[기아]더 뉴 K5 하이브리드 3세대 노블레스" [ref=e1663]
+            - generic [ref=e1664]:
+              - paragraph [ref=e1665]: ₩27,700,000
+              - heading "[Kia]The New K5 Hybrid 3-е Поколение Noblesse" [level=3] [ref=e1666]
+              - generic [ref=e1667]:
+                - generic [ref=e1668]:
+                  - img [ref=e1669]
+                  - text: 2024-03
+                - generic [ref=e1671]:
+                  - img [ref=e1672]
+                  - text: 34,481 km
+                - generic [ref=e1675]:
+                  - img [ref=e1676]
+                  - text: Автомат
+          - link "[기아]더 뉴 K5 하이브리드 3세대 노블레스 ₩30,800,000 [Kia]The New K5 Hybrid 3-е Поколение Noblesse 2024-03 36,560 km Автомат" [ref=e1680] [cursor=pointer]:
+            - /url: /car/k5-3-2024/113703066
+            - img "[기아]더 뉴 K5 하이브리드 3세대 노블레스" [ref=e1682]
+            - generic [ref=e1683]:
+              - paragraph [ref=e1684]: ₩30,800,000
+              - heading "[Kia]The New K5 Hybrid 3-е Поколение Noblesse" [level=3] [ref=e1685]
+              - generic [ref=e1686]:
+                - generic [ref=e1687]:
+                  - img [ref=e1688]
+                  - text: 2024-03
+                - generic [ref=e1690]:
+                  - img [ref=e1691]
+                  - text: 36,560 km
+                - generic [ref=e1694]:
+                  - img [ref=e1695]
+                  - text: Автомат
+          - link "[기아]더 뉴 K5 3세대 2.0 프레스티지 ₩30,900,000 [Kia]The New K5 3-е Поколение 2.0 Prestige 2024-03 33,189 km Автомат" [ref=e1699] [cursor=pointer]:
+            - /url: /car/k5-3-2-0-2024/113994350
+            - img "[기아]더 뉴 K5 3세대 2.0 프레스티지" [ref=e1701]
+            - generic [ref=e1702]:
+              - paragraph [ref=e1703]: ₩30,900,000
+              - heading "[Kia]The New K5 3-е Поколение 2.0 Prestige" [level=3] [ref=e1704]
+              - generic [ref=e1705]:
+                - generic [ref=e1706]:
+                  - img [ref=e1707]
+                  - text: 2024-03
+                - generic [ref=e1709]:
+                  - img [ref=e1710]
+                  - text: 33,189 km
+                - generic [ref=e1713]:
+                  - img [ref=e1714]
+                  - text: Автомат
+          - link "[기아]더 뉴 K5 3세대 2.0 노블레스 ₩33,800,000 [Kia]The New K5 3-е Поколение 2.0 Noblesse 2024-02 29,823 km Автомат" [ref=e1718] [cursor=pointer]:
+            - /url: /car/k5-3-2-0-2024/113906200
+            - img "[기아]더 뉴 K5 3세대 2.0 노블레스" [ref=e1720]
+            - generic [ref=e1721]:
+              - paragraph [ref=e1722]: ₩33,800,000
+              - heading "[Kia]The New K5 3-е Поколение 2.0 Noblesse" [level=3] [ref=e1723]
+              - generic [ref=e1724]:
+                - generic [ref=e1725]:
+                  - img [ref=e1726]
+                  - text: 2024-02
+                - generic [ref=e1728]:
+                  - img [ref=e1729]
+                  - text: 29,823 km
+                - generic [ref=e1732]:
+                  - img [ref=e1733]
+                  - text: Автомат
+          - link "[기아]더 뉴 K5 3세대 1.6 터보 노블레스 ₩30,200,000 [Kia]The New K5 3-е Поколение 1.6 Turbo Noblesse 2024-02 14,249 km Автомат" [ref=e1737] [cursor=pointer]:
+            - /url: /car/k5-3-1-6-2024/113715583
+            - img "[기아]더 뉴 K5 3세대 1.6 터보 노블레스" [ref=e1739]
+            - generic [ref=e1740]:
+              - paragraph [ref=e1741]: ₩30,200,000
+              - heading "[Kia]The New K5 3-е Поколение 1.6 Turbo Noblesse" [level=3] [ref=e1742]
+              - generic [ref=e1743]:
+                - generic [ref=e1744]:
+                  - img [ref=e1745]
+                  - text: 2024-02
+                - generic [ref=e1747]:
+                  - img [ref=e1748]
+                  - text: 14,249 km
+                - generic [ref=e1751]:
+                  - img [ref=e1752]
+                  - text: Автомат
+          - link "[기아]더 뉴 K5 3세대 2.0 프레스티지 ₩21,990,000 [Kia]The New K5 3-е Поколение 2.0 Prestige 2024-02 62,669 km Автомат" [ref=e1756] [cursor=pointer]:
+            - /url: /car/k5-3-2-0-2024/113812767
+            - img "[기아]더 뉴 K5 3세대 2.0 프레스티지" [ref=e1758]
+            - generic [ref=e1759]:
+              - paragraph [ref=e1760]: ₩21,990,000
+              - heading "[Kia]The New K5 3-е Поколение 2.0 Prestige" [level=3] [ref=e1761]
+              - generic [ref=e1762]:
+                - generic [ref=e1763]:
+                  - img [ref=e1764]
+                  - text: 2024-02
+                - generic [ref=e1766]:
+                  - img [ref=e1767]
+                  - text: 62,669 km
+                - generic [ref=e1770]:
+                  - img [ref=e1771]
+                  - text: Автомат
+          - link "[기아]더 뉴 K5 3세대 2.0 노블레스 ₩35,500,000 [Kia]The New K5 3-е Поколение 2.0 Noblesse 2024-02 68,000 km Автомат" [ref=e1775] [cursor=pointer]:
+            - /url: /car/k5-3-2-0-2024/114042911
+            - img "[기아]더 뉴 K5 3세대 2.0 노블레스" [ref=e1777]
+            - generic [ref=e1778]:
+              - paragraph [ref=e1779]: ₩35,500,000
+              - heading "[Kia]The New K5 3-е Поколение 2.0 Noblesse" [level=3] [ref=e1780]
+              - generic [ref=e1781]:
+                - generic [ref=e1782]:
+                  - img [ref=e1783]
+                  - text: 2024-02
+                - generic [ref=e1785]:
+                  - img [ref=e1786]
+                  - text: 68,000 km
+                - generic [ref=e1789]:
+                  - img [ref=e1790]
+                  - text: Автомат
+          - link "[기아]더 뉴 K5 3세대 2.0 프레스티지 ₩32,400,000 [Kia]The New K5 3-е Поколение 2.0 Prestige 2024-02 22,671 km Автомат" [ref=e1794] [cursor=pointer]:
+            - /url: /car/k5-3-2-0-2024/113936811
+            - img "[기아]더 뉴 K5 3세대 2.0 프레스티지" [ref=e1796]
+            - generic [ref=e1797]:
+              - paragraph [ref=e1798]: ₩32,400,000
+              - heading "[Kia]The New K5 3-е Поколение 2.0 Prestige" [level=3] [ref=e1799]
+              - generic [ref=e1800]:
+                - generic [ref=e1801]:
+                  - img [ref=e1802]
+                  - text: 2024-02
+                - generic [ref=e1804]:
+                  - img [ref=e1805]
+                  - text: 22,671 km
+                - generic [ref=e1808]:
+                  - img [ref=e1809]
+                  - text: Автомат
+          - link "[기아]더 뉴 K5 하이브리드 3세대 노블레스 ₩28,990,000 [Kia]The New K5 Hybrid 3-е Поколение Noblesse 2024-02 45,601 km Автомат" [ref=e1813] [cursor=pointer]:
+            - /url: /car/k5-3-2024/114031235
+            - img "[기아]더 뉴 K5 하이브리드 3세대 노블레스" [ref=e1815]
+            - generic [ref=e1816]:
+              - paragraph [ref=e1817]: ₩28,990,000
+              - heading "[Kia]The New K5 Hybrid 3-е Поколение Noblesse" [level=3] [ref=e1818]
+              - generic [ref=e1819]:
+                - generic [ref=e1820]:
+                  - img [ref=e1821]
+                  - text: 2024-02
+                - generic [ref=e1823]:
+                  - img [ref=e1824]
+                  - text: 45,601 km
+                - generic [ref=e1827]:
+                  - img [ref=e1828]
+                  - text: Автомат
+          - link "[기아]더 뉴 K5 3세대 2.0 LPi (렌트카용) 트렌디 ₩16,900,000 [Kia]The New K5 3-е Поколение 2.0 LPi (Rental) Trendy 2024-01 131,253 km Автомат" [ref=e1832] [cursor=pointer]:
+            - /url: /car/k5-3-2-0-lpi-2024/113495869
+            - img "[기아]더 뉴 K5 3세대 2.0 LPi (렌트카용) 트렌디" [ref=e1834]
+            - generic [ref=e1835]:
+              - paragraph [ref=e1836]: ₩16,900,000
+              - heading "[Kia]The New K5 3-е Поколение 2.0 LPi (Rental) Trendy" [level=3] [ref=e1837]
+              - generic [ref=e1838]:
+                - generic [ref=e1839]:
+                  - img [ref=e1840]
+                  - text: 2024-01
+                - generic [ref=e1842]:
+                  - img [ref=e1843]
+                  - text: 131,253 km
+                - generic [ref=e1846]:
+                  - img [ref=e1847]
+                  - text: Автомат
+          - link "[기아]더 뉴 K5 하이브리드 3세대 시그니처 ₩29,200,000 [Kia]The New K5 Hybrid 3-е Поколение Signature 2024-01 22,231 km Автомат" [ref=e1851] [cursor=pointer]:
+            - /url: /car/k5-3-2024/113987711
+            - img "[기아]더 뉴 K5 하이브리드 3세대 시그니처" [ref=e1853]
+            - generic [ref=e1854]:
+              - paragraph [ref=e1855]: ₩29,200,000
+              - heading "[Kia]The New K5 Hybrid 3-е Поколение Signature" [level=3] [ref=e1856]
+              - generic [ref=e1857]:
+                - generic [ref=e1858]:
+                  - img [ref=e1859]
+                  - text: 2024-01
+                - generic [ref=e1861]:
+                  - img [ref=e1862]
+                  - text: 22,231 km
+                - generic [ref=e1865]:
+                  - img [ref=e1866]
+                  - text: Автомат
+          - link "[기아]더 뉴 K5 하이브리드 3세대 프레스티지 ₩21,900,000 [Kia]The New K5 Hybrid 3-е Поколение Prestige 2024-01 100,611 km Автомат" [ref=e1870] [cursor=pointer]:
+            - /url: /car/k5-3-2024/113980125
+            - img "[기아]더 뉴 K5 하이브리드 3세대 프레스티지" [ref=e1872]
+            - generic [ref=e1873]:
+              - paragraph [ref=e1874]: ₩21,900,000
+              - heading "[Kia]The New K5 Hybrid 3-е Поколение Prestige" [level=3] [ref=e1875]
+              - generic [ref=e1876]:
+                - generic [ref=e1877]:
+                  - img [ref=e1878]
+                  - text: 2024-01
+                - generic [ref=e1880]:
+                  - img [ref=e1881]
+                  - text: 100,611 km
+                - generic [ref=e1884]:
+                  - img [ref=e1885]
+                  - text: Автомат
+          - link "[기아]더 뉴 K5 3세대 1.6 터보 프레스티지 ₩27,500,000 [Kia]The New K5 3-е Поколение 1.6 Turbo Prestige 2024-01 49,528 km Автомат" [ref=e1889] [cursor=pointer]:
+            - /url: /car/k5-3-1-6-2024/113194079
+            - img "[기아]더 뉴 K5 3세대 1.6 터보 프레스티지" [ref=e1891]
+            - generic [ref=e1892]:
+              - paragraph [ref=e1893]: ₩27,500,000
+              - heading "[Kia]The New K5 3-е Поколение 1.6 Turbo Prestige" [level=3] [ref=e1894]
+              - generic [ref=e1895]:
+                - generic [ref=e1896]:
+                  - img [ref=e1897]
+                  - text: 2024-01
+                - generic [ref=e1899]:
+                  - img [ref=e1900]
+                  - text: 49,528 km
+                - generic [ref=e1903]:
+                  - img [ref=e1904]
+                  - text: Автомат
+          - link "[기아]더 뉴 K5 3세대 1.6 터보 노블레스 ₩27,300,000 [Kia]The New K5 3-е Поколение 1.6 Turbo Noblesse 2024-01 32,219 km Автомат" [ref=e1908] [cursor=pointer]:
+            - /url: /car/k5-3-1-6-2024/113735070
+            - img "[기아]더 뉴 K5 3세대 1.6 터보 노블레스" [ref=e1910]
+            - generic [ref=e1911]:
+              - paragraph [ref=e1912]: ₩27,300,000
+              - heading "[Kia]The New K5 3-е Поколение 1.6 Turbo Noblesse" [level=3] [ref=e1913]
+              - generic [ref=e1914]:
+                - generic [ref=e1915]:
+                  - img [ref=e1916]
+                  - text: 2024-01
+                - generic [ref=e1918]:
+                  - img [ref=e1919]
+                  - text: 32,219 km
+                - generic [ref=e1922]:
+                  - img [ref=e1923]
+                  - text: Автомат
+          - link "[기아]더 뉴 K5 하이브리드 3세대 프레스티지 ₩23,390,000 [Kia]The New K5 Hybrid 3-е Поколение Prestige 2024-01 85,400 km Автомат" [ref=e1927] [cursor=pointer]:
+            - /url: /car/k5-3-2024/113607471
+            - img "[기아]더 뉴 K5 하이브리드 3세대 프레스티지" [ref=e1929]
+            - generic [ref=e1930]:
+              - paragraph [ref=e1931]: ₩23,390,000
+              - heading "[Kia]The New K5 Hybrid 3-е Поколение Prestige" [level=3] [ref=e1932]
+              - generic [ref=e1933]:
+                - generic [ref=e1934]:
+                  - img [ref=e1935]
+                  - text: 2024-01
+                - generic [ref=e1937]:
+                  - img [ref=e1938]
+                  - text: 85,400 km
+                - generic [ref=e1941]:
+                  - img [ref=e1942]
+                  - text: Автомат
+          - link "[기아]더 뉴 K5 3세대 1.6 터보 노블레스 ₩27,800,000 [Kia]The New K5 3-е Поколение 1.6 Turbo Noblesse 2024-01 35,543 km Автомат" [ref=e1946] [cursor=pointer]:
+            - /url: /car/k5-3-1-6-2024/113850202
+            - img "[기아]더 뉴 K5 3세대 1.6 터보 노블레스" [ref=e1948]
+            - generic [ref=e1949]:
+              - paragraph [ref=e1950]: ₩27,800,000
+              - heading "[Kia]The New K5 3-е Поколение 1.6 Turbo Noblesse" [level=3] [ref=e1951]
+              - generic [ref=e1952]:
+                - generic [ref=e1953]:
+                  - img [ref=e1954]
+                  - text: 2024-01
+                - generic [ref=e1956]:
+                  - img [ref=e1957]
+                  - text: 35,543 km
+                - generic [ref=e1960]:
+                  - img [ref=e1961]
+                  - text: Автомат
+          - link "[기아]더 뉴 K5 3세대 1.6 터보 노블레스 ₩31,990,000 [Kia]The New K5 3-е Поколение 1.6 Turbo Noblesse 2024-01 10,000 km Автомат" [ref=e1965] [cursor=pointer]:
+            - /url: /car/k5-3-1-6-2024/113616780
+            - img "[기아]더 뉴 K5 3세대 1.6 터보 노블레스" [ref=e1967]
+            - generic [ref=e1968]:
+              - paragraph [ref=e1969]: ₩31,990,000
+              - heading "[Kia]The New K5 3-е Поколение 1.6 Turbo Noblesse" [level=3] [ref=e1970]
+              - generic [ref=e1971]:
+                - generic [ref=e1972]:
+                  - img [ref=e1973]
+                  - text: 2024-01
+                - generic [ref=e1975]:
+                  - img [ref=e1976]
+                  - text: 10,000 km
+                - generic [ref=e1979]:
+                  - img [ref=e1980]
+                  - text: Автомат
+          - link "[기아]더 뉴 K5 하이브리드 3세대 프레스티지 ₩24,700,000 [Kia]The New K5 Hybrid 3-е Поколение Prestige 2024-01 77,963 km Автомат" [ref=e1984] [cursor=pointer]:
+            - /url: /car/k5-3-2024/113883546
+            - img "[기아]더 뉴 K5 하이브리드 3세대 프레스티지" [ref=e1986]
+            - generic [ref=e1987]:
+              - paragraph [ref=e1988]: ₩24,700,000
+              - heading "[Kia]The New K5 Hybrid 3-е Поколение Prestige" [level=3] [ref=e1989]
+              - generic [ref=e1990]:
+                - generic [ref=e1991]:
+                  - img [ref=e1992]
+                  - text: 2024-01
+                - generic [ref=e1994]:
+                  - img [ref=e1995]
+                  - text: 77,963 km
+                - generic [ref=e1998]:
+                  - img [ref=e1999]
+                  - text: Автомат
+          - link "[기아]더 뉴 K5 3세대 1.6 터보 시그니처 ₩32,000,000 [Kia]The New K5 3-е Поколение 1.6 Turbo Signature 2024-01 18,730 km Автомат" [ref=e2003] [cursor=pointer]:
+            - /url: /car/k5-3-1-6-2024/113968823
+            - img "[기아]더 뉴 K5 3세대 1.6 터보 시그니처" [ref=e2005]
+            - generic [ref=e2006]:
+              - paragraph [ref=e2007]: ₩32,000,000
+              - heading "[Kia]The New K5 3-е Поколение 1.6 Turbo Signature" [level=3] [ref=e2008]
+              - generic [ref=e2009]:
+                - generic [ref=e2010]:
+                  - img [ref=e2011]
+                  - text: 2024-01
+                - generic [ref=e2013]:
+                  - img [ref=e2014]
+                  - text: 18,730 km
+                - generic [ref=e2017]:
+                  - img [ref=e2018]
+                  - text: Автомат
+          - link "[기아]더 뉴 K5 3세대 2.0 LPi (렌트카용) 트렌디 ₩16,900,000 [Kia]The New K5 3-е Поколение 2.0 LPi (Rental) Trendy 2024-01 86,329 km Автомат" [ref=e2022] [cursor=pointer]:
+            - /url: /car/k5-3-2-0-lpi-2024/113511063
+            - img "[기아]더 뉴 K5 3세대 2.0 LPi (렌트카용) 트렌디" [ref=e2024]
+            - generic [ref=e2025]:
+              - paragraph [ref=e2026]: ₩16,900,000
+              - heading "[Kia]The New K5 3-е Поколение 2.0 LPi (Rental) Trendy" [level=3] [ref=e2027]
+              - generic [ref=e2028]:
+                - generic [ref=e2029]:
+                  - img [ref=e2030]
+                  - text: 2024-01
+                - generic [ref=e2032]:
+                  - img [ref=e2033]
+                  - text: 86,329 km
+                - generic [ref=e2036]:
+                  - img [ref=e2037]
+                  - text: Автомат
+          - link "[기아]더 뉴 K5 3세대 2.0 LPi (렌트카용) 트렌디 ₩16,900,000 [Kia]The New K5 3-е Поколение 2.0 LPi (Rental) Trendy 2024-01 97,253 km Автомат" [ref=e2041] [cursor=pointer]:
+            - /url: /car/k5-3-2-0-lpi-2024/113512679
+            - img "[기아]더 뉴 K5 3세대 2.0 LPi (렌트카용) 트렌디" [ref=e2043]
+            - generic [ref=e2044]:
+              - paragraph [ref=e2045]: ₩16,900,000
+              - heading "[Kia]The New K5 3-е Поколение 2.0 LPi (Rental) Trendy" [level=3] [ref=e2046]
+              - generic [ref=e2047]:
+                - generic [ref=e2048]:
+                  - img [ref=e2049]
+                  - text: 2024-01
+                - generic [ref=e2051]:
+                  - img [ref=e2052]
+                  - text: 97,253 km
+                - generic [ref=e2055]:
+                  - img [ref=e2056]
+                  - text: Автомат
+          - link "[기아]더 뉴 K5 3세대 1.6 터보 노블레스 ₩32,900,000 [Kia]The New K5 3-е Поколение 1.6 Turbo Noblesse 2023-12 14,899 km Автомат" [ref=e2060] [cursor=pointer]:
+            - /url: /car/k5-3-1-6-2023/113324581
+            - img "[기아]더 뉴 K5 3세대 1.6 터보 노블레스" [ref=e2062]
+            - generic [ref=e2063]:
+              - paragraph [ref=e2064]: ₩32,900,000
+              - heading "[Kia]The New K5 3-е Поколение 1.6 Turbo Noblesse" [level=3] [ref=e2065]
+              - generic [ref=e2066]:
+                - generic [ref=e2067]:
+                  - img [ref=e2068]
+                  - text: 2023-12
+                - generic [ref=e2070]:
+                  - img [ref=e2071]
+                  - text: 14,899 km
+                - generic [ref=e2074]:
+                  - img [ref=e2075]
+                  - text: Автомат
+          - link "[기아]더 뉴 K5 하이브리드 3세대 시그니처 ₩31,500,000 [Kia]The New K5 Hybrid 3-е Поколение Signature 2023-12 6,593 km Автомат" [ref=e2079] [cursor=pointer]:
+            - /url: /car/k5-3-2023/113810623
+            - img "[기아]더 뉴 K5 하이브리드 3세대 시그니처" [ref=e2081]
+            - generic [ref=e2082]:
+              - paragraph [ref=e2083]: ₩31,500,000
+              - heading "[Kia]The New K5 Hybrid 3-е Поколение Signature" [level=3] [ref=e2084]
+              - generic [ref=e2085]:
+                - generic [ref=e2086]:
+                  - img [ref=e2087]
+                  - text: 2023-12
+                - generic [ref=e2089]:
+                  - img [ref=e2090]
+                  - text: 6,593 km
+                - generic [ref=e2093]:
+                  - img [ref=e2094]
+                  - text: Автомат
+        - generic [ref=e516]:
+          - button "Предыдущая" [ref=e517]:
+            - img [ref=e518]
+          - button "1" [ref=e520]
+          - button "2" [ref=e521]
+          - button "3" [ref=e1640]
+          - button "4" [ref=e2098]
+          - generic [ref=e2099]: ...
+          - button "39" [ref=e1183]
+          - button "Следующая" [ref=e524]:
+            - img [ref=e525]
+    - contentinfo [ref=e527]:
+      - generic [ref=e528]:
+        - generic [ref=e529]:
+          - generic [ref=e530]:
+            - link "AlexDrive" [ref=e531] [cursor=pointer]:
+              - /url: /
+              - generic [ref=e532]: AlexDrive
+            - paragraph [ref=e533]:
+              - text: Автомобили в Южной Корее.
+              - text: Широкий выбор автомобилей в Сувоне
+          - generic [ref=e534]:
+            - heading "Навигация" [level=3] [ref=e535]
+            - navigation [ref=e536]:
+              - link "Каталог" [ref=e537] [cursor=pointer]:
+                - /url: /
+              - link "О нас" [ref=e538] [cursor=pointer]:
+                - /url: /about
+              - link "Контакты" [ref=e539] [cursor=pointer]:
+                - /url: /contacts
+              - link "Калькулятор" [ref=e540] [cursor=pointer]:
+                - /url: /calculator
+              - link "Конфиденциальность" [ref=e541] [cursor=pointer]:
+                - /url: /privacy
+              - link "Условия использования" [ref=e542] [cursor=pointer]:
+                - /url: /terms
+          - generic [ref=e543]:
+            - heading "Контакты" [level=3] [ref=e544]
+            - generic [ref=e545]:
+              - paragraph [ref=e546]: Кан Алексей
+              - link "+82-10-3908-6050" [ref=e547] [cursor=pointer]:
+                - /url: tel:+821039086050
+              - link "WhatsApp" [ref=e548] [cursor=pointer]:
+                - /url: https://wa.me/821039086050
+                - img [ref=e549]
+                - text: WhatsApp
+              - paragraph [ref=e551]: Кёнги, Сувон, Южная Корея
+        - generic [ref=e552]: © 2026 AlexDrive. Все права защищены.
+  - alert [ref=e553]

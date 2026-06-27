@@ -1,0 +1,76 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e3]:
+      - link "AlexDrive" [ref=e4] [cursor=pointer]:
+        - /url: /
+        - generic [ref=e5]: AlexDrive
+      - button "Меню" [ref=e6]:
+        - img [ref=e7]
+  - generic [ref=e10]:
+    - main [ref=e11]:
+      - generic [ref=e12]:
+        - heading "Контакты" [level=1] [ref=e13]
+        - generic [ref=e14]:
+          - generic [ref=e16]:
+            - generic [ref=e17]:
+              - paragraph [ref=e18]: Менеджер по продажам
+              - paragraph [ref=e19]: Кан Алексей
+            - generic [ref=e20]:
+              - link "Телефон +82-10-3908-6050" [ref=e21] [cursor=pointer]:
+                - /url: tel:+821039086050
+                - generic [ref=e22]:
+                  - img [ref=e24]
+                  - generic [ref=e26]:
+                    - paragraph [ref=e27]: Телефон
+                    - paragraph [ref=e28]: +82-10-3908-6050
+              - link "WhatsApp Написать сообщение" [ref=e29] [cursor=pointer]:
+                - /url: https://wa.me/821039086050
+                - generic [ref=e30]:
+                  - img [ref=e32]
+                  - generic [ref=e34]:
+                    - paragraph [ref=e35]: WhatsApp
+                    - paragraph [ref=e36]: Написать сообщение
+              - generic [ref=e38]:
+                - img [ref=e40]
+                - generic [ref=e42]:
+                  - paragraph [ref=e43]: Адрес
+                  - paragraph [ref=e44]: Кёнги, Сувон, Южная Корея
+          - paragraph [ref=e45]: Свяжитесь с нами по телефону или через WhatsApp для консультации по любому автомобилю из нашего каталога. Мы говорим по-русски и поможем с выбором автомобиля и оформлением всех необходимых документов.
+    - contentinfo [ref=e46]:
+      - generic [ref=e47]:
+        - generic [ref=e48]:
+          - generic [ref=e49]:
+            - link "AlexDrive" [ref=e50] [cursor=pointer]:
+              - /url: /
+              - generic [ref=e51]: AlexDrive
+            - paragraph [ref=e52]:
+              - text: Автомобили в Южной Корее.
+              - text: Широкий выбор автомобилей в Сувоне
+          - generic [ref=e53]:
+            - heading "Навигация" [level=3] [ref=e54]
+            - navigation [ref=e55]:
+              - link "Каталог" [ref=e56] [cursor=pointer]:
+                - /url: /
+              - link "О нас" [ref=e57] [cursor=pointer]:
+                - /url: /about
+              - link "Контакты" [ref=e58] [cursor=pointer]:
+                - /url: /contacts
+              - link "Калькулятор" [ref=e59] [cursor=pointer]:
+                - /url: /calculator
+              - link "Конфиденциальность" [ref=e60] [cursor=pointer]:
+                - /url: /privacy
+              - link "Условия использования" [ref=e61] [cursor=pointer]:
+                - /url: /terms
+          - generic [ref=e62]:
+            - heading "Контакты" [level=3] [ref=e63]
+            - generic [ref=e64]:
+              - paragraph [ref=e65]: Кан Алексей
+              - link "+82-10-3908-6050" [ref=e66] [cursor=pointer]:
+                - /url: tel:+821039086050
+              - link "WhatsApp" [ref=e67] [cursor=pointer]:
+                - /url: https://wa.me/821039086050
+                - img [ref=e68]
+                - text: WhatsApp
+              - paragraph [ref=e70]: Кёнги, Сувон, Южная Корея
+        - generic [ref=e71]: © 2026 AlexDrive. Все права защищены.
+  - alert [ref=e72]

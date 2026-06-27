@@ -1,0 +1,71 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e3]:
+      - link "AlexDrive" [ref=e4] [cursor=pointer]:
+        - /url: /
+        - generic [ref=e5]: AlexDrive
+      - button "Меню" [ref=e6]:
+        - img [ref=e7]
+  - generic [ref=e10]:
+    - main [ref=e11]:
+      - generic [ref=e584]:
+        - heading "О нас" [level=1] [ref=e585]
+        - generic [ref=e586]:
+          - paragraph [ref=e587]: AlexDrive — это автомобильный дилер, расположенный в городе Сувон, провинция Кёнги, Южная Корея. Мы специализируемся на продаже подержанных автомобилей с автомобильных комплексов Сувона.
+          - paragraph [ref=e588]: Наша команда поможет вам подобрать идеальный автомобиль, учитывая ваши пожелания и бюджет. Мы предлагаем полное сопровождение сделки — от выбора автомобиля до оформления документов.
+          - generic [ref=e589]:
+            - heading "Почему мы?" [level=2] [ref=e590]
+            - list [ref=e591]:
+              - listitem [ref=e592]:
+                - img [ref=e593]
+                - generic [ref=e595]: Прямой доступ к автомобильным комплексам Сувона
+              - listitem [ref=e596]:
+                - img [ref=e597]
+                - generic [ref=e599]: Проверка истории и технического состояния каждого авто
+              - listitem [ref=e600]:
+                - img [ref=e601]
+                - generic [ref=e603]: Помощь с оформлением документов
+              - listitem [ref=e604]:
+                - img [ref=e605]
+                - generic [ref=e607]: Консультации на русском языке
+              - listitem [ref=e608]:
+                - img [ref=e609]
+                - generic [ref=e611]: Прозрачные цены без скрытых комиссий
+    - contentinfo [ref=e527]:
+      - generic [ref=e528]:
+        - generic [ref=e529]:
+          - generic [ref=e530]:
+            - link "AlexDrive" [ref=e531] [cursor=pointer]:
+              - /url: /
+              - generic [ref=e532]: AlexDrive
+            - paragraph [ref=e533]:
+              - text: Автомобили в Южной Корее.
+              - text: Широкий выбор автомобилей в Сувоне
+          - generic [ref=e534]:
+            - heading "Навигация" [level=3] [ref=e535]
+            - navigation [ref=e536]:
+              - link "Каталог" [ref=e537] [cursor=pointer]:
+                - /url: /
+              - link "О нас" [ref=e538] [cursor=pointer]:
+                - /url: /about
+              - link "Контакты" [ref=e539] [cursor=pointer]:
+                - /url: /contacts
+              - link "Калькулятор" [ref=e540] [cursor=pointer]:
+                - /url: /calculator
+              - link "Конфиденциальность" [ref=e541] [cursor=pointer]:
+                - /url: /privacy
+              - link "Условия использования" [ref=e542] [cursor=pointer]:
+                - /url: /terms
+          - generic [ref=e543]:
+            - heading "Контакты" [level=3] [ref=e544]
+            - generic [ref=e545]:
+              - paragraph [ref=e546]: Кан Алексей
+              - link "+82-10-3908-6050" [ref=e547] [cursor=pointer]:
+                - /url: tel:+821039086050
+              - link "WhatsApp" [ref=e548] [cursor=pointer]:
+                - /url: https://wa.me/821039086050
+                - img [ref=e549]
+                - text: WhatsApp
+              - paragraph [ref=e551]: Кёнги, Сувон, Южная Корея
+        - generic [ref=e552]: © 2026 AlexDrive. Все права защищены.
+  - alert [ref=e553]: О нас - AlexDrive

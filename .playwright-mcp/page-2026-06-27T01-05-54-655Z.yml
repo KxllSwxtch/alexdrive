@@ -1,0 +1,495 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e3]:
+      - link "AlexDrive" [ref=e4] [cursor=pointer]:
+        - /url: /
+        - generic [ref=e5]: AlexDrive
+      - button "Меню" [ref=e6]:
+        - img [ref=e7]
+  - generic [ref=e10]:
+    - main [ref=e11]:
+      - generic [ref=e101]:
+        - generic [ref=e102]:
+          - heading "Каталог автомобилей" [level=1] [ref=e103]
+          - paragraph [ref=e104]: 44 132 авто
+        - generic [ref=e106]:
+          - generic [ref=e107]:
+            - generic [ref=e108]:
+              - generic [ref=e109]: Марка
+              - button "Все марки" [ref=e110]:
+                - generic [ref=e111]: Все марки
+                - img [ref=e112]
+            - generic [ref=e115]:
+              - generic [ref=e116]: Модель
+              - button "Все модели" [ref=e117]:
+                - generic [ref=e118]: Все модели
+                - img [ref=e119]
+            - generic [ref=e122]:
+              - generic [ref=e123]: Модификация
+              - combobox [disabled] [ref=e124]:
+                - generic [ref=e125]: Все
+                - img: ▼
+              - textbox [disabled] [ref=e126]: __all__
+            - generic [ref=e127]:
+              - generic [ref=e128]: Комплектация
+              - combobox [disabled] [ref=e129]:
+                - generic [ref=e130]: Все
+                - img: ▼
+              - textbox [disabled] [ref=e131]: __all__
+            - generic [ref=e132]:
+              - generic [ref=e133]: Доп. комплектация
+              - combobox [disabled] [ref=e134]:
+                - generic [ref=e135]: Все
+                - img: ▼
+              - textbox [disabled] [ref=e136]: __all__
+            - generic [ref=e137]:
+              - generic [ref=e138]: Сортировка
+              - combobox [ref=e139]:
+                - generic [ref=e140]: По дате
+                - img: ▼
+              - textbox [ref=e141]: ModDt
+          - generic [ref=e142]:
+            - button "Все фильтры" [ref=e143]:
+              - img
+              - text: Все фильтры
+            - generic [ref=e144]:
+              - button "Найти" [ref=e145]:
+                - img
+                - text: Найти
+              - button "Сбросить" [ref=e146]:
+                - img
+                - text: Сбросить
+        - generic [ref=e148]:
+          - link "[기아]더 뉴 쏘렌토 4세대 하이브리드 1.6T 4WD 시그니처 X-라인... ₩99,990,000 [Kia]The New Sorento 4-е Поколение Hybrid 1.6T 4WD Signature X-Line... 2026-06 43 km Автомат" [ref=e1994] [cursor=pointer]:
+            - /url: /car/4-1-6t-4wd-x-2026/114034890
+            - img "[기아]더 뉴 쏘렌토 4세대 하이브리드 1.6T 4WD 시그니처 X-라인..." [ref=e1996]
+            - generic [ref=e1997]:
+              - paragraph [ref=e1998]: ₩99,990,000
+              - heading "[Kia]The New Sorento 4-е Поколение Hybrid 1.6T 4WD Signature X-Line..." [level=3] [ref=e1999]
+              - generic [ref=e2000]:
+                - generic [ref=e2001]:
+                  - img [ref=e2002]
+                  - text: 2026-06
+                - generic [ref=e2004]:
+                  - img [ref=e2005]
+                  - text: 43 km
+                - generic [ref=e2008]:
+                  - img [ref=e2009]
+                  - text: Автомат
+          - link "[제네시스]GV80 가솔린 2.5T AWD ₩74,800,000 [Genesis]GV80 Бензин 2.5T AWD 2026-06 7 km Автомат" [ref=e2013] [cursor=pointer]:
+            - /url: /car/gv80-2-5t-awd-2026/114019145
+            - img "[제네시스]GV80 가솔린 2.5T AWD" [ref=e2015]
+            - generic [ref=e2016]:
+              - paragraph [ref=e2017]: ₩74,800,000
+              - heading "[Genesis]GV80 Бензин 2.5T AWD" [level=3] [ref=e2018]
+              - generic [ref=e2019]:
+                - generic [ref=e2020]:
+                  - img [ref=e2021]
+                  - text: 2026-06
+                - generic [ref=e2023]:
+                  - img [ref=e2024]
+                  - text: 7 km
+                - generic [ref=e2027]:
+                  - img [ref=e2028]
+                  - text: Автомат
+          - link "[기아]셀토스 하이브리드(SP3) 프레스티지 ₩43,900,000 [Kia]Seltos Hybrid(SP3) Prestige 2026-06 1,205 km Автомат" [ref=e2032] [cursor=pointer]:
+            - /url: /car/sp3-2026/114036295
+            - img "[기아]셀토스 하이브리드(SP3) 프레스티지" [ref=e2034]
+            - generic [ref=e2035]:
+              - paragraph [ref=e2036]: ₩43,900,000
+              - heading "[Kia]Seltos Hybrid(SP3) Prestige" [level=3] [ref=e2037]
+              - generic [ref=e2038]:
+                - generic [ref=e2039]:
+                  - img [ref=e2040]
+                  - text: 2026-06
+                - generic [ref=e2042]:
+                  - img [ref=e2043]
+                  - text: 1,205 km
+                - generic [ref=e2046]:
+                  - img [ref=e2047]
+                  - text: Автомат
+          - link "[테슬라]모델 Y L ₩78,500,000 [Tesla]Model Y L 2026-06 17 km Автомат" [ref=e2051] [cursor=pointer]:
+            - /url: /car/y-l-2026/114035987
+            - img "[테슬라]모델 Y L" [ref=e2053]
+            - generic [ref=e2054]:
+              - paragraph [ref=e2055]: ₩78,500,000
+              - heading "[Tesla]Model Y L" [level=3] [ref=e2056]
+              - generic [ref=e2057]:
+                - generic [ref=e2058]:
+                  - img [ref=e2059]
+                  - text: 2026-06
+                - generic [ref=e2061]:
+                  - img [ref=e2062]
+                  - text: 17 km
+                - generic [ref=e2065]:
+                  - img [ref=e2066]
+                  - text: Автомат
+          - link "[테슬라]모델 Y L ₩76,500,000 [Tesla]Model Y L 2026-06 52 km Автомат" [ref=e2070] [cursor=pointer]:
+            - /url: /car/y-l-2026/114016919
+            - img "[테슬라]모델 Y L" [ref=e2072]
+            - generic [ref=e2073]:
+              - paragraph [ref=e2074]: ₩76,500,000
+              - heading "[Tesla]Model Y L" [level=3] [ref=e2075]
+              - generic [ref=e2076]:
+                - generic [ref=e2077]:
+                  - img [ref=e2078]
+                  - text: 2026-06
+                - generic [ref=e2080]:
+                  - img [ref=e2081]
+                  - text: 52 km
+                - generic [ref=e2084]:
+                  - img [ref=e2085]
+                  - text: Автомат
+          - link "[테슬라]모델 Y L ₩72,900,000 [Tesla]Model Y L 2026-06 361 km Автомат" [ref=e2089] [cursor=pointer]:
+            - /url: /car/y-l-2026/114029501
+            - img "[테슬라]모델 Y L" [ref=e2091]
+            - generic [ref=e2092]:
+              - paragraph [ref=e2093]: ₩72,900,000
+              - heading "[Tesla]Model Y L" [level=3] [ref=e2094]
+              - generic [ref=e2095]:
+                - generic [ref=e2096]:
+                  - img [ref=e2097]
+                  - text: 2026-06
+                - generic [ref=e2099]:
+                  - img [ref=e2100]
+                  - text: 361 km
+                - generic [ref=e2103]:
+                  - img [ref=e2104]
+                  - text: Автомат
+          - link "[아우디]Q7 (4M) 55 TFSI 콰트로 프리미엄 ₩110,000,000 [Audi]Q7 (4M) 55 TFSI Quattro Premium 2026-06 14 km Автомат" [ref=e2108] [cursor=pointer]:
+            - /url: /car/q7-4m-55-tfsi-2026/114043525
+            - img "[아우디]Q7 (4M) 55 TFSI 콰트로 프리미엄" [ref=e2110]
+            - generic [ref=e2111]:
+              - paragraph [ref=e2112]: ₩110,000,000
+              - heading "[Audi]Q7 (4M) 55 TFSI Quattro Premium" [level=3] [ref=e2113]
+              - generic [ref=e2114]:
+                - generic [ref=e2115]:
+                  - img [ref=e2116]
+                  - text: 2026-06
+                - generic [ref=e2118]:
+                  - img [ref=e2119]
+                  - text: 14 km
+                - generic [ref=e2122]:
+                  - img [ref=e2123]
+                  - text: Автомат
+          - link "[테슬라]모델 Y L ₩76,000,000 [Tesla]Model Y L 2026-06 39 km Автомат" [ref=e2127] [cursor=pointer]:
+            - /url: /car/y-l-2026/113996887
+            - img "[테슬라]모델 Y L" [ref=e2129]
+            - generic [ref=e2130]:
+              - paragraph [ref=e2131]: ₩76,000,000
+              - heading "[Tesla]Model Y L" [level=3] [ref=e2132]
+              - generic [ref=e2133]:
+                - generic [ref=e2134]:
+                  - img [ref=e2135]
+                  - text: 2026-06
+                - generic [ref=e2137]:
+                  - img [ref=e2138]
+                  - text: 39 km
+                - generic [ref=e2141]:
+                  - img [ref=e2142]
+                  - text: Автомат
+          - link "[아우디]Q7 (4M) 55 TFSI 콰트로 프리미엄 ₩111,000,000 [Audi]Q7 (4M) 55 TFSI Quattro Premium 2026-06 12 km Автомат" [ref=e2146] [cursor=pointer]:
+            - /url: /car/q7-4m-55-tfsi-2026/113989084
+            - img "[아우디]Q7 (4M) 55 TFSI 콰트로 프리미엄" [ref=e2148]
+            - generic [ref=e2149]:
+              - paragraph [ref=e2150]: ₩111,000,000
+              - heading "[Audi]Q7 (4M) 55 TFSI Quattro Premium" [level=3] [ref=e2151]
+              - generic [ref=e2152]:
+                - generic [ref=e2153]:
+                  - img [ref=e2154]
+                  - text: 2026-06
+                - generic [ref=e2156]:
+                  - img [ref=e2157]
+                  - text: 12 km
+                - generic [ref=e2160]:
+                  - img [ref=e2161]
+                  - text: Автомат
+          - link "[포르쉐]파나메라(972) 2.9 V6 4 ₩195,000,000 [Porsche]Panamera(972) 2.9 V6 4 2026-06 265 km Автомат" [ref=e2165] [cursor=pointer]:
+            - /url: /car/972-2-9-v6-4-2026/114043135
+            - img "[포르쉐]파나메라(972) 2.9 V6 4" [ref=e2167]
+            - generic [ref=e2168]:
+              - paragraph [ref=e2169]: ₩195,000,000
+              - heading "[Porsche]Panamera(972) 2.9 V6 4" [level=3] [ref=e2170]
+              - generic [ref=e2171]:
+                - generic [ref=e2172]:
+                  - img [ref=e2173]
+                  - text: 2026-06
+                - generic [ref=e2175]:
+                  - img [ref=e2176]
+                  - text: 265 km
+                - generic [ref=e2179]:
+                  - img [ref=e2180]
+                  - text: Автомат
+          - link "[제네시스]GV80 가솔린 2.5T AWD ₩81,500,000 [Genesis]GV80 Бензин 2.5T AWD 2026-06 581 km Автомат" [ref=e2184] [cursor=pointer]:
+            - /url: /car/gv80-2-5t-awd-2026/114016086
+            - img "[제네시스]GV80 가솔린 2.5T AWD" [ref=e2186]
+            - generic [ref=e2187]:
+              - paragraph [ref=e2188]: ₩81,500,000
+              - heading "[Genesis]GV80 Бензин 2.5T AWD" [level=3] [ref=e2189]
+              - generic [ref=e2190]:
+                - generic [ref=e2191]:
+                  - img [ref=e2192]
+                  - text: 2026-06
+                - generic [ref=e2194]:
+                  - img [ref=e2195]
+                  - text: 581 km
+                - generic [ref=e2198]:
+                  - img [ref=e2199]
+                  - text: Автомат
+          - link "[소형화물][파워게이트]포터2 (LPG2.5터보) 더블캡/초장축 ₩99,990,000 [Грузовые][PowerGate]Porter2 (Газ2.5Turbo) Double Cab/Длинный 2026-05 635 km Автомат" [ref=e2203] [cursor=pointer]:
+            - /url: /car/2-lpg2-5-2026/114043350
+            - img "[소형화물][파워게이트]포터2 (LPG2.5터보) 더블캡/초장축" [ref=e2205]
+            - generic [ref=e2206]:
+              - paragraph [ref=e2207]: ₩99,990,000
+              - heading "[Грузовые][PowerGate]Porter2 (Газ2.5Turbo) Double Cab/Длинный" [level=3] [ref=e2208]
+              - generic [ref=e2209]:
+                - generic [ref=e2210]:
+                  - img [ref=e2211]
+                  - text: 2026-05
+                - generic [ref=e2213]:
+                  - img [ref=e2214]
+                  - text: 635 km
+                - generic [ref=e2217]:
+                  - img [ref=e2218]
+                  - text: Автомат
+          - link "[아우디]Q5 (80A) 40 TDI 콰트로 S-라인 블랙 에디션 ₩86,000,000 [Audi]Q5 (80A) 40 TDI Quattro S-Line Black Edition 2026-05 22 km Автомат" [ref=e2222] [cursor=pointer]:
+            - /url: /car/q5-80a-40-tdi-s-2026/113969390
+            - img "[아우디]Q5 (80A) 40 TDI 콰트로 S-라인 블랙 에디션" [ref=e2224]
+            - generic [ref=e2225]:
+              - paragraph [ref=e2226]: ₩86,000,000
+              - heading "[Audi]Q5 (80A) 40 TDI Quattro S-Line Black Edition" [level=3] [ref=e2227]
+              - generic [ref=e2228]:
+                - generic [ref=e2229]:
+                  - img [ref=e2230]
+                  - text: 2026-05
+                - generic [ref=e2232]:
+                  - img [ref=e2233]
+                  - text: 22 km
+                - generic [ref=e2236]:
+                  - img [ref=e2237]
+                  - text: Автомат
+          - link "[아우디]Q5 (80A) 45 TFSI 콰트로 S-라인 블랙 에디션 ₩97,000,000 [Audi]Q5 (80A) 45 TFSI Quattro S-Line Black Edition 2026-05 25 km Автомат" [ref=e2241] [cursor=pointer]:
+            - /url: /car/q5-80a-45-tfsi-s-2026/113969325
+            - img "[아우디]Q5 (80A) 45 TFSI 콰트로 S-라인 블랙 에디션" [ref=e2243]
+            - generic [ref=e2244]:
+              - paragraph [ref=e2245]: ₩97,000,000
+              - heading "[Audi]Q5 (80A) 45 TFSI Quattro S-Line Black Edition" [level=3] [ref=e2246]
+              - generic [ref=e2247]:
+                - generic [ref=e2248]:
+                  - img [ref=e2249]
+                  - text: 2026-05
+                - generic [ref=e2251]:
+                  - img [ref=e2252]
+                  - text: 25 km
+                - generic [ref=e2255]:
+                  - img [ref=e2256]
+                  - text: Автомат
+          - link "[중대형버스]카운티 뉴 브리즈 어린이버스 초장축 33인승 ₩98,550,000 [Автобусы]County New 브리즈 Children Bus Длинный 33 мест 2026-05 628 km Автомат" [ref=e2260] [cursor=pointer]:
+            - /url: /car/33-2026/114034933
+            - img "[중대형버스]카운티 뉴 브리즈 어린이버스 초장축 33인승" [ref=e2262]
+            - generic [ref=e2263]:
+              - paragraph [ref=e2264]: ₩98,550,000
+              - heading "[Автобусы]County New 브리즈 Children Bus Длинный 33 мест" [level=3] [ref=e2265]
+              - generic [ref=e2266]:
+                - generic [ref=e2267]:
+                  - img [ref=e2268]
+                  - text: 2026-05
+                - generic [ref=e2270]:
+                  - img [ref=e2271]
+                  - text: 628 km
+                - generic [ref=e2274]:
+                  - img [ref=e2275]
+                  - text: Автомат
+          - link "[중대형버스]카운티 뉴 브리즈 어린이버스 초장축 33인승 ₩98,550,000 [Автобусы]County New 브리즈 Children Bus Длинный 33 мест 2026-05 633 km Автомат" [ref=e2279] [cursor=pointer]:
+            - /url: /car/33-2026/114034939
+            - img "[중대형버스]카운티 뉴 브리즈 어린이버스 초장축 33인승" [ref=e2281]
+            - generic [ref=e2282]:
+              - paragraph [ref=e2283]: ₩98,550,000
+              - heading "[Автобусы]County New 브리즈 Children Bus Длинный 33 мест" [level=3] [ref=e2284]
+              - generic [ref=e2285]:
+                - generic [ref=e2286]:
+                  - img [ref=e2287]
+                  - text: 2026-05
+                - generic [ref=e2289]:
+                  - img [ref=e2290]
+                  - text: 633 km
+                - generic [ref=e2293]:
+                  - img [ref=e2294]
+                  - text: Автомат
+          - link "[현대]더 뉴 코나 가솔린 1.6 터보 2WD 스마트 ₩18,900,000 [Hyundai]The New Kona Бензин 1.6 Turbo 2WD Smart 2026-05 9,916 km Автомат" [ref=e2298] [cursor=pointer]:
+            - /url: /car/1-6-2wd-2026/113938863
+            - img "[현대]더 뉴 코나 가솔린 1.6 터보 2WD 스마트" [ref=e2300]
+            - generic [ref=e2301]:
+              - paragraph [ref=e2302]: ₩18,900,000
+              - heading "[Hyundai]The New Kona Бензин 1.6 Turbo 2WD Smart" [level=3] [ref=e2303]
+              - generic [ref=e2304]:
+                - generic [ref=e2305]:
+                  - img [ref=e2306]
+                  - text: 2026-05
+                - generic [ref=e2308]:
+                  - img [ref=e2309]
+                  - text: 9,916 km
+                - generic [ref=e2312]:
+                  - img [ref=e2313]
+                  - text: Автомат
+          - link "[기아]뉴 K8 하이브리드 베스트 셀렉션 ₩42,800,000 [Kia]New K8 Hybrid Best Selection 2026-05 2,029 km Автомат" [ref=e2317] [cursor=pointer]:
+            - /url: /car/k8-2026/114030435
+            - img "[기아]뉴 K8 하이브리드 베스트 셀렉션" [ref=e2319]
+            - generic [ref=e2320]:
+              - paragraph [ref=e2321]: ₩42,800,000
+              - heading "[Kia]New K8 Hybrid Best Selection" [level=3] [ref=e2322]
+              - generic [ref=e2323]:
+                - generic [ref=e2324]:
+                  - img [ref=e2325]
+                  - text: 2026-05
+                - generic [ref=e2327]:
+                  - img [ref=e2328]
+                  - text: 2,029 km
+                - generic [ref=e2331]:
+                  - img [ref=e2332]
+                  - text: Автомат
+          - link "[테슬라]모델 Y L ₩73,900,000 [Tesla]Model Y L 2026-05 599 km Автомат" [ref=e2336] [cursor=pointer]:
+            - /url: /car/y-l-2026/114006783
+            - img "[테슬라]모델 Y L" [ref=e2338]
+            - generic [ref=e2339]:
+              - paragraph [ref=e2340]: ₩73,900,000
+              - heading "[Tesla]Model Y L" [level=3] [ref=e2341]
+              - generic [ref=e2342]:
+                - generic [ref=e2343]:
+                  - img [ref=e2344]
+                  - text: 2026-05
+                - generic [ref=e2346]:
+                  - img [ref=e2347]
+                  - text: 599 km
+                - generic [ref=e2350]:
+                  - img [ref=e2351]
+                  - text: Автомат
+          - link "[테슬라]모델 Y L ₩74,900,000 [Tesla]Model Y L 2026-05 755 km Автомат" [ref=e2355] [cursor=pointer]:
+            - /url: /car/y-l-2026/113978296
+            - img "[테슬라]모델 Y L" [ref=e2357]
+            - generic [ref=e2358]:
+              - paragraph [ref=e2359]: ₩74,900,000
+              - heading "[Tesla]Model Y L" [level=3] [ref=e2360]
+              - generic [ref=e2361]:
+                - generic [ref=e2362]:
+                  - img [ref=e2363]
+                  - text: 2026-05
+                - generic [ref=e2365]:
+                  - img [ref=e2366]
+                  - text: 755 km
+                - generic [ref=e2369]:
+                  - img [ref=e2370]
+                  - text: Автомат
+          - link "[테슬라]모델 Y L ₩74,000,000 [Tesla]Model Y L 2026-05 674 km Автомат" [ref=e2374] [cursor=pointer]:
+            - /url: /car/y-l-2026/113990156
+            - img "[테슬라]모델 Y L" [ref=e2376]
+            - generic [ref=e2377]:
+              - paragraph [ref=e2378]: ₩74,000,000
+              - heading "[Tesla]Model Y L" [level=3] [ref=e2379]
+              - generic [ref=e2380]:
+                - generic [ref=e2381]:
+                  - img [ref=e2382]
+                  - text: 2026-05
+                - generic [ref=e2384]:
+                  - img [ref=e2385]
+                  - text: 674 km
+                - generic [ref=e2388]:
+                  - img [ref=e2389]
+                  - text: Автомат
+          - link "[현대]더 뉴 스타리아 하이브리드 카고 모던 2인승 ₩41,200,000 [Hyundai]The New Staria Hybrid Cargo Modern 2 мест 2026-05 3,096 km Автомат" [ref=e2393] [cursor=pointer]:
+            - /url: /car/2-2026/113997001
+            - img "[현대]더 뉴 스타리아 하이브리드 카고 모던 2인승" [ref=e2395]
+            - generic [ref=e2396]:
+              - paragraph [ref=e2397]: ₩41,200,000
+              - heading "[Hyundai]The New Staria Hybrid Cargo Modern 2 мест" [level=3] [ref=e2398]
+              - generic [ref=e2399]:
+                - generic [ref=e2400]:
+                  - img [ref=e2401]
+                  - text: 2026-05
+                - generic [ref=e2403]:
+                  - img [ref=e2404]
+                  - text: 3,096 km
+                - generic [ref=e2407]:
+                  - img [ref=e2408]
+                  - text: Автомат
+          - link "[테슬라]모델 Y L ₩75,900,000 [Tesla]Model Y L 2026-05 37 km Автомат" [ref=e2412] [cursor=pointer]:
+            - /url: /car/y-l-2026/113932529
+            - img "[테슬라]모델 Y L" [ref=e2414]
+            - generic [ref=e2415]:
+              - paragraph [ref=e2416]: ₩75,900,000
+              - heading "[Tesla]Model Y L" [level=3] [ref=e2417]
+              - generic [ref=e2418]:
+                - generic [ref=e2419]:
+                  - img [ref=e2420]
+                  - text: 2026-05
+                - generic [ref=e2422]:
+                  - img [ref=e2423]
+                  - text: 37 km
+                - generic [ref=e2426]:
+                  - img [ref=e2427]
+                  - text: Автомат
+          - link "[토요타]프리우스 5세대 2.0 HEV XLE ₩37,500,000 [Toyota]Prius 5-е Поколение 2.0 HEV XLE 2026-05 891 km Автомат" [ref=e2431] [cursor=pointer]:
+            - /url: /car/5-2-0-hev-xle-2026/113955468
+            - img "[토요타]프리우스 5세대 2.0 HEV XLE" [ref=e2433]
+            - generic [ref=e2434]:
+              - paragraph [ref=e2435]: ₩37,500,000
+              - heading "[Toyota]Prius 5-е Поколение 2.0 HEV XLE" [level=3] [ref=e2436]
+              - generic [ref=e2437]:
+                - generic [ref=e2438]:
+                  - img [ref=e2439]
+                  - text: 2026-05
+                - generic [ref=e2441]:
+                  - img [ref=e2442]
+                  - text: 891 km
+                - generic [ref=e2445]:
+                  - img [ref=e2446]
+                  - text: Автомат
+        - generic [ref=e605]:
+          - button "Предыдущая" [disabled] [ref=e606]:
+            - img [ref=e607]
+          - button "1" [ref=e609]
+          - button "2" [ref=e610]
+          - generic [ref=e1993]: ...
+          - button "1839" [ref=e612]
+          - button "Следующая" [ref=e613]:
+            - img [ref=e614]
+    - contentinfo [ref=e65]:
+      - generic [ref=e66]:
+        - generic [ref=e67]:
+          - generic [ref=e68]:
+            - link "AlexDrive" [ref=e69] [cursor=pointer]:
+              - /url: /
+              - generic [ref=e70]: AlexDrive
+            - paragraph [ref=e71]:
+              - text: Автомобили в Южной Корее.
+              - text: Широкий выбор автомобилей в Сувоне
+          - generic [ref=e72]:
+            - heading "Навигация" [level=3] [ref=e73]
+            - navigation [ref=e74]:
+              - link "Каталог" [ref=e75] [cursor=pointer]:
+                - /url: /
+              - link "О нас" [ref=e76] [cursor=pointer]:
+                - /url: /about
+              - link "Контакты" [ref=e77] [cursor=pointer]:
+                - /url: /contacts
+              - link "Калькулятор" [ref=e78] [cursor=pointer]:
+                - /url: /calculator
+              - link "Конфиденциальность" [ref=e79] [cursor=pointer]:
+                - /url: /privacy
+              - link "Условия использования" [ref=e80] [cursor=pointer]:
+                - /url: /terms
+          - generic [ref=e81]:
+            - heading "Контакты" [level=3] [ref=e82]
+            - generic [ref=e83]:
+              - paragraph [ref=e84]: Кан Алексей
+              - link "+82-10-3908-6050" [ref=e85] [cursor=pointer]:
+                - /url: tel:+821039086050
+              - link "WhatsApp" [ref=e86] [cursor=pointer]:
+                - /url: https://wa.me/821039086050
+                - img [ref=e87]
+                - text: WhatsApp
+              - paragraph [ref=e89]: Кёнги, Сувон, Южная Корея
+        - generic [ref=e90]: © 2026 AlexDrive. Все права защищены.
+  - button "Open Next.js Dev Tools" [ref=e96] [cursor=pointer]:
+    - img [ref=e97]
+  - alert [ref=e100]
