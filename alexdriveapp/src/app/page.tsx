@@ -1,7 +1,7 @@
 import { backendFetch, fetchFiltersCached } from "@/lib/api";
 import { CatalogContent } from "@/components/CatalogContent";
 import type { FilterData, CarListing } from "@/lib/types";
-import { PAGE_SIZE, VALID_PARAM_KEYS, parseParamsFromRecord } from "@/lib/catalogParams";
+import { parseParamsFromRecord } from "@/lib/catalogParams";
 
 interface PageProps {
   searchParams: Promise<Record<string, string | string[] | undefined>>;
@@ -15,15 +15,14 @@ export default async function CatalogPage({ searchParams }: PageProps) {
   // mismatch when a filtered URL is loaded directly or restored via back/forward.
   const initialParams = parseParamsFromRecord(rawParams);
 
-  // Build backend query params from URL search params
+  // Build the backend query from the parsed params (defaults + URL overrides) so
+  // the server fetches with the SAME param set the client sends — otherwise the
+  // canonical URL's omitted defaults (PageSort=ModDt, PageAscDesc=DESC) fall back
+  // to a different backend ordering than the one displayed in the UI.
   const backendParams = new URLSearchParams();
-  for (const [key, value] of Object.entries(rawParams)) {
-    if (!VALID_PARAM_KEYS.has(key) || !value || Array.isArray(value)) continue;
-    backendParams.set(key, value);
+  for (const [key, value] of Object.entries(initialParams)) {
+    if (value !== undefined && value !== "") backendParams.set(key, String(value));
   }
-
-  // Set defaults if not present in URL
-  if (!backendParams.has("PageSize")) backendParams.set("PageSize", String(PAGE_SIZE));
 
   // Parallel server-side fetch (internal network, no CORS)
   let filters: FilterData | null = null;

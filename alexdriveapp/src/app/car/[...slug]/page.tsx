@@ -1,9 +1,9 @@
 import { Suspense } from "react";
 import type { Metadata } from "next";
-import Link from "next/link";
 import { permanentRedirect } from "next/navigation";
 import type { CarDetail } from "@/lib/types";
 import { buildCarDetailPath, fromUrlSafeId } from "@/lib/url";
+import { BackToCatalogLink } from "@/components/BackToCatalogLink";
 import { CarDetailContent, fetchCar } from "@/components/CarDetailContent";
 import { CarDetailSkeleton } from "@/components/CarDetailSkeleton";
 import { MobileContactBar } from "@/components/MobileContactBar";
@@ -72,15 +72,12 @@ export default async function CarDetailPage({ params }: PageProps) {
   return (
     <div className="px-4 py-6 pb-20 md:pb-6 sm:px-6 lg:px-8">
       {/* Back link — instant */}
-      <Link
-        href="/"
-        className="mb-6 inline-flex items-center gap-1.5 text-sm text-text-secondary transition-colors hover:text-gold"
-      >
+      <BackToCatalogLink className="mb-6 inline-flex items-center gap-1.5 text-sm text-text-secondary transition-colors hover:text-gold">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
           <path d="M15 18l-6-6 6-6" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
         Назад в каталог
-      </Link>
+      </BackToCatalogLink>
 
       <Suspense fallback={
         <>
@@ -103,12 +100,9 @@ function ErrorState() {
       <p className="text-lg text-text-secondary">
         Не удалось загрузить данные автомобиля
       </p>
-      <Link
-        href="/"
-        className="mt-4 inline-flex items-center gap-2 text-gold hover:text-gold-light"
-      >
+      <BackToCatalogLink className="mt-4 inline-flex items-center gap-2 text-gold hover:text-gold-light">
         &larr; Вернуться в каталог
-      </Link>
+      </BackToCatalogLink>
     </div>
   );
 }

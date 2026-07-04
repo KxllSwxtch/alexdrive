@@ -1,9 +1,9 @@
 import { cache } from "react";
-import Link from "next/link";
 import { backendFetch } from "@/lib/api";
 import type { CarDetail } from "@/lib/types";
 import { parseManWonFromString, manWonToKrw, formatPriceKrw } from "@/lib/format";
 import { translateSmartly } from "@/lib/translations";
+import { BackToCatalogLink } from "@/components/BackToCatalogLink";
 import { ImageGallery } from "@/components/ImageGallery";
 import { ContactCard } from "@/components/ContactCard";
 import { CarOptions } from "@/components/CarOptions";
@@ -31,12 +31,9 @@ export async function CarDetailContent({ id }: { id: string }) {
         <p className="text-lg text-text-secondary">
           Не удалось загрузить данные автомобиля
         </p>
-        <Link
-          href="/"
-          className="mt-4 inline-flex items-center gap-2 text-gold hover:text-gold-light"
-        >
+        <BackToCatalogLink className="mt-4 inline-flex items-center gap-2 text-gold hover:text-gold-light">
           &larr; Вернуться в каталог
-        </Link>
+        </BackToCatalogLink>
       </div>
     );
   }

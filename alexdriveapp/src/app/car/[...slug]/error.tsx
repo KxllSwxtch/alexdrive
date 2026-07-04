@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import Link from "next/link";
+import { BackToCatalogLink } from "@/components/BackToCatalogLink";
 
 export default function CarDetailError({
   error,
@@ -47,12 +47,9 @@ export default function CarDetailError({
           >
             Попробовать снова
           </button>
-          <Link
-            href="/"
-            className="rounded-xl border border-border px-5 py-2.5 text-sm font-medium text-text-secondary transition-colors hover:text-text-primary"
-          >
+          <BackToCatalogLink className="rounded-xl border border-border px-5 py-2.5 text-sm font-medium text-text-secondary transition-colors hover:text-text-primary">
             В каталог
-          </Link>
+          </BackToCatalogLink>
         </div>
       </div>
     </div>

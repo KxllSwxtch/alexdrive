@@ -5,7 +5,15 @@ import { FilterBar } from "@/components/FilterBar";
 import { CarGrid } from "@/components/CarGrid";
 import { Pagination } from "@/components/Pagination";
 import type { FilterData, CarListing, CarListingParams } from "@/lib/types";
-import { PAGE_SIZE, parseParamsFromURL } from "@/lib/catalogParams";
+import {
+  PAGE_SIZE,
+  CATALOG_URL_KEY,
+  LAST_CAR_KEY,
+  parseParamsFromURL,
+  readSession,
+  writeSession,
+  removeSession,
+} from "@/lib/catalogParams";
 
 const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:3001";
 
@@ -201,9 +209,17 @@ export function CatalogContent({ initialFilters, initialCars, initialTotal, init
   useEffect(() => {
     if (isInitialMount.current) {
       isInitialMount.current = false;
-      // Normalize the landing URL in place — no new history entry, no fetch
-      // (initial cars came from the server render).
-      window.history.replaceState(null, "", buildCanonicalUrl(params));
+      // Ground truth is the live URL, not React state: on back-navigation from
+      // a detail page the router restores the "/" RSC payload (so initialParams
+      // are defaults) while the history entry still carries ?filters. Normalize
+      // from the URL — never from state — and adopt its params if they differ
+      // (falls through to the fetch path on the re-run). On a direct load the
+      // canonical URLs match, so SSR data is kept without a client fetch.
+      const urlParams = parseParamsFromURL(new URLSearchParams(window.location.search));
+      window.history.replaceState(null, "", buildCanonicalUrl(urlParams));
+      if (buildCanonicalUrl(urlParams) !== buildCanonicalUrl(params)) {
+        setParams(urlParams);
+      }
       return;
     }
 
@@ -246,6 +262,25 @@ export function CatalogContent({ initialFilters, initialCars, initialTotal, init
       }
     };
   }, [params, fetchCars, clearRetryState, startRetryCountdown]);
+
+  // Persist the canonical catalog URL for the detail page's BackToCatalogLink.
+  useEffect(() => {
+    writeSession(CATALOG_URL_KEY, buildCanonicalUrl(params));
+  }, [params]);
+
+  // Returning from a detail page: scroll the clicked card back into view once
+  // the displayed results match the URL (guard against the stale grid shown
+  // while the back-navigation recovery fetch is still pending).
+  useEffect(() => {
+    if (loading) return;
+    const urlCanonical = buildCanonicalUrl(parseParamsFromURL(new URLSearchParams(window.location.search)));
+    if (urlCanonical !== buildCanonicalUrl(params)) return;
+    const id = readSession(LAST_CAR_KEY);
+    if (!id) return;
+    removeSession(LAST_CAR_KEY);
+    document.querySelector(`[data-car-id="${CSS.escape(id)}"]`)
+      ?.scrollIntoView({ block: "center", behavior: "instant" });
+  }, [cars, loading, params]);
 
   // Browser back/forward: re-sync params from the URL so the displayed results
   // match the address bar. This path only READS history (forward pushes live in

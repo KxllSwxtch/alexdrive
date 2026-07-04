@@ -7,6 +7,7 @@ import { useState, useCallback } from "react";
 import type { CarListing } from "@/lib/types";
 import { formatMileage, parseManWonFromString, formatPriceKrw } from "@/lib/format";
 import { buildCarDetailPath } from "@/lib/url";
+import { LAST_CAR_KEY, writeSession } from "@/lib/catalogParams";
 import { translateSmartly } from "@/lib/translations";
 
 const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:3001";
@@ -35,6 +36,8 @@ export function CarCard({ car, index }: CarCardProps) {
       prefetch={prefetchActive ? null : false}
       onMouseEnter={onHover}
       onTouchStart={onHover}
+      onClick={() => writeSession(LAST_CAR_KEY, car.id)}
+      data-car-id={car.id}
       className="group flex flex-col overflow-hidden rounded-xl border border-border bg-bg-surface transition-all duration-300 hover:border-gold/30 hover:shadow-[0_0_30px_rgba(212,175,55,0.06)]"
     >
       {/* Image */}

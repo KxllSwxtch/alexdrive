@@ -7,6 +7,33 @@ import type { CarListingParams } from "@/lib/types";
 
 export const PAGE_SIZE = 24;
 
+// sessionStorage keys shared by CatalogContent (writer) and the detail page's
+// BackToCatalogLink / CarCard (readers).
+export const CATALOG_URL_KEY = "alexdrive:catalogUrl";
+export const LAST_CAR_KEY = "alexdrive:lastCarId";
+
+// Safe sessionStorage access — embedded webviews (e.g. messenger in-app
+// browsers with cookies blocked) can throw on any storage access.
+export function readSession(key: string): string | null {
+  try {
+    return sessionStorage.getItem(key);
+  } catch {
+    return null;
+  }
+}
+
+export function writeSession(key: string, value: string): void {
+  try {
+    sessionStorage.setItem(key, value);
+  } catch {}
+}
+
+export function removeSession(key: string): void {
+  try {
+    sessionStorage.removeItem(key);
+  } catch {}
+}
+
 export const VALID_PARAM_KEYS = new Set([
   "CarMakerNo", "CarModelNo", "CarModelDetailNo", "CarGradeNo", "CarGradeDetailNo",
   "CarYearFrom", "CarYearTo", "CarMileageFrom", "CarMileageTo", "CarPriceFrom", "CarPriceTo",
