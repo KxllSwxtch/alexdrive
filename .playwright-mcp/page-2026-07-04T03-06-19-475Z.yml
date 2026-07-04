@@ -1,0 +1,161 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e3]:
+      - link "AlexDrive" [ref=e4] [cursor=pointer]:
+        - /url: /
+        - generic [ref=e5]: AlexDrive
+      - button "Меню" [ref=e6]:
+        - img [ref=e7]
+  - generic [ref=e10]:
+    - main [ref=e11]:
+      - generic [ref=e1109]:
+        - link "Назад в каталог" [ref=e1110] [cursor=pointer]:
+          - /url: /
+          - img [ref=e1111]
+          - text: Назад в каталог
+        - generic [ref=e1113]:
+          - generic [ref=e1114]:
+            - generic [ref=e1115]:
+              - generic [ref=e1116]:
+                - img "[BMW]i5 xDrive 40 M 스포츠 - фото 1" [ref=e1117]
+                - button "Предыдущее фото" [ref=e1118]:
+                  - img [ref=e1119]
+                - button "Следующее фото" [ref=e1121]:
+                  - img [ref=e1122]
+                - generic [ref=e1124]: 1 / 20
+              - generic [ref=e1125]:
+                - button "[BMW]i5 xDrive 40 M 스포츠 - миниатюра 1" [ref=e1126]:
+                  - img "[BMW]i5 xDrive 40 M 스포츠 - миниатюра 1" [ref=e1127]
+                - button "[BMW]i5 xDrive 40 M 스포츠 - миниатюра 2" [ref=e1128]:
+                  - img "[BMW]i5 xDrive 40 M 스포츠 - миниатюра 2" [ref=e1129]
+                - button "[BMW]i5 xDrive 40 M 스포츠 - миниатюра 3" [ref=e1130]:
+                  - img "[BMW]i5 xDrive 40 M 스포츠 - миниатюра 3" [ref=e1131]
+                - button "[BMW]i5 xDrive 40 M 스포츠 - миниатюра 4" [ref=e1132]:
+                  - img "[BMW]i5 xDrive 40 M 스포츠 - миниатюра 4" [ref=e1133]
+                - button "[BMW]i5 xDrive 40 M 스포츠 - миниатюра 5" [ref=e1134]:
+                  - img "[BMW]i5 xDrive 40 M 스포츠 - миниатюра 5" [ref=e1135]
+                - button "[BMW]i5 xDrive 40 M 스포츠 - миниатюра 6" [ref=e1136]:
+                  - img "[BMW]i5 xDrive 40 M 스포츠 - миниатюра 6" [ref=e1137]
+                - button "[BMW]i5 xDrive 40 M 스포츠 - миниатюра 7" [ref=e1138]:
+                  - img "[BMW]i5 xDrive 40 M 스포츠 - миниатюра 7" [ref=e1139]
+                - button "[BMW]i5 xDrive 40 M 스포츠 - миниатюра 8" [ref=e1140]:
+                  - img "[BMW]i5 xDrive 40 M 스포츠 - миниатюра 8" [ref=e1141]
+                - button "[BMW]i5 xDrive 40 M 스포츠 - миниатюра 9" [ref=e1142]:
+                  - img "[BMW]i5 xDrive 40 M 스포츠 - миниатюра 9" [ref=e1143]
+                - button "[BMW]i5 xDrive 40 M 스포츠 - миниатюра 10" [ref=e1144]:
+                  - img "[BMW]i5 xDrive 40 M 스포츠 - миниатюра 10" [ref=e1145]
+                - button "[BMW]i5 xDrive 40 M 스포츠 - миниатюра 11" [ref=e1146]:
+                  - img "[BMW]i5 xDrive 40 M 스포츠 - миниатюра 11" [ref=e1147]
+                - button "[BMW]i5 xDrive 40 M 스포츠 - миниатюра 12" [ref=e1148]:
+                  - img "[BMW]i5 xDrive 40 M 스포츠 - миниатюра 12" [ref=e1149]
+                - button "[BMW]i5 xDrive 40 M 스포츠 - миниатюра 13" [ref=e1150]:
+                  - img "[BMW]i5 xDrive 40 M 스포츠 - миниатюра 13" [ref=e1151]
+                - button "[BMW]i5 xDrive 40 M 스포츠 - миниатюра 14" [ref=e1152]:
+                  - img "[BMW]i5 xDrive 40 M 스포츠 - миниатюра 14" [ref=e1153]
+                - button "[BMW]i5 xDrive 40 M 스포츠 - миниатюра 15" [ref=e1154]:
+                  - img "[BMW]i5 xDrive 40 M 스포츠 - миниатюра 15" [ref=e1155]
+                - button "[BMW]i5 xDrive 40 M 스포츠 - миниатюра 16" [ref=e1156]:
+                  - img "[BMW]i5 xDrive 40 M 스포츠 - миниатюра 16" [ref=e1157]
+                - button "[BMW]i5 xDrive 40 M 스포츠 - миниатюра 17" [ref=e1158]:
+                  - img "[BMW]i5 xDrive 40 M 스포츠 - миниатюра 17" [ref=e1159]
+                - button "[BMW]i5 xDrive 40 M 스포츠 - миниатюра 18" [ref=e1160]:
+                  - img "[BMW]i5 xDrive 40 M 스포츠 - миниатюра 18" [ref=e1161]
+                - button "[BMW]i5 xDrive 40 M 스포츠 - миниатюра 19" [ref=e1162]:
+                  - img "[BMW]i5 xDrive 40 M 스포츠 - миниатюра 19" [ref=e1163]
+                - button "[BMW]i5 xDrive 40 M 스포츠 - миниатюра 20" [ref=e1164]:
+                  - img "[BMW]i5 xDrive 40 M 스포츠 - миниатюра 20" [ref=e1165]
+            - generic [ref=e1166]:
+              - generic [ref=e1167]:
+                - heading "[BMW]i5 xDrive 40 M Sports" [level=1] [ref=e1168]
+                - paragraph [ref=e1169]: ₩85,000,000
+              - button "Поделиться" [ref=e1171]:
+                - img [ref=e1172]
+            - generic [ref=e1175]:
+              - heading "Характеристики" [level=2] [ref=e1176]
+              - generic [ref=e1177]:
+                - generic [ref=e1178]:
+                  - paragraph [ref=e1179]: Год выпуска
+                  - paragraph [ref=e1180]: "2026"
+                - generic [ref=e1181]:
+                  - paragraph [ref=e1182]: Год модели
+                  - paragraph [ref=e1183]: "2026"
+                - generic [ref=e1184]:
+                  - paragraph [ref=e1185]: Дата регистрации
+                  - paragraph [ref=e1186]: 2026.04.30
+                - generic [ref=e1187]:
+                  - paragraph [ref=e1188]: Пробег
+                  - paragraph [ref=e1189]: 2,349km
+                - generic [ref=e1190]:
+                  - paragraph [ref=e1191]: Топливо
+                  - paragraph [ref=e1192]: Электрика
+                - generic [ref=e1193]:
+                  - paragraph [ref=e1194]: КПП
+                  - paragraph [ref=e1195]: Автомат
+                - generic [ref=e1196]:
+                  - paragraph [ref=e1197]: Цвет
+                  - paragraph [ref=e1198]: Чёрный
+                - generic [ref=e1199]:
+                  - paragraph [ref=e1200]: Гос. номер
+                  - paragraph [ref=e1201]: 15보4385
+            - link "Посмотреть отчёт техосмотра" [ref=e1202] [cursor=pointer]:
+              - /url: http://autocafe.co.kr/ASSO/CarCheck_Form_my.asp?OnCarNo=2026300227334
+              - img [ref=e1203]
+              - text: Посмотреть отчёт техосмотра
+            - button "Кредитный калькулятор" [ref=e1208]:
+              - generic [ref=e1209]: Кредитный калькулятор
+              - img [ref=e1210]
+            - generic [ref=e1212]:
+              - heading "Опции и комплектация" [level=2] [ref=e1213]
+              - region [ref=e1214]:
+                - heading "Опции" [level=3] [ref=e1216]:
+                  - button "Опции" [ref=e1217] [cursor=pointer]:
+                    - text: Опции
+                    - img [ref=e1218]
+          - generic [ref=e1220]:
+            - link "Позвонить" [ref=e1221] [cursor=pointer]:
+              - /url: tel:+821039086050
+              - img [ref=e1222]
+            - button "Поделиться" [ref=e1225]:
+              - img [ref=e1226]
+            - link "Написать в WhatsApp" [ref=e1229] [cursor=pointer]:
+              - /url: https://wa.me/821039086050
+              - img [ref=e1230]
+              - text: Написать в WhatsApp
+    - contentinfo [ref=e527]:
+      - generic [ref=e528]:
+        - generic [ref=e529]:
+          - generic [ref=e530]:
+            - link "AlexDrive" [ref=e531] [cursor=pointer]:
+              - /url: /
+              - generic [ref=e532]: AlexDrive
+            - paragraph [ref=e533]:
+              - text: Автомобили в Южной Корее.
+              - text: Широкий выбор автомобилей в Сувоне
+          - generic [ref=e534]:
+            - heading "Навигация" [level=3] [ref=e535]
+            - navigation [ref=e536]:
+              - link "Каталог" [ref=e537] [cursor=pointer]:
+                - /url: /
+              - link "О нас" [ref=e538] [cursor=pointer]:
+                - /url: /about
+              - link "Контакты" [ref=e539] [cursor=pointer]:
+                - /url: /contacts
+              - link "Калькулятор" [ref=e540] [cursor=pointer]:
+                - /url: /calculator
+              - link "Конфиденциальность" [ref=e541] [cursor=pointer]:
+                - /url: /privacy
+              - link "Условия использования" [ref=e542] [cursor=pointer]:
+                - /url: /terms
+          - generic [ref=e543]:
+            - heading "Контакты" [level=3] [ref=e544]
+            - generic [ref=e545]:
+              - paragraph [ref=e546]: Кан Алексей
+              - link "+82-10-3908-6050" [ref=e547] [cursor=pointer]:
+                - /url: tel:+821039086050
+              - link "WhatsApp" [ref=e548] [cursor=pointer]:
+                - /url: https://wa.me/821039086050
+                - img [ref=e549]
+                - text: WhatsApp
+              - paragraph [ref=e551]: Кёнги, Сувон, Южная Корея
+        - generic [ref=e552]: © 2026 AlexDrive. Все права защищены.
+  - alert [ref=e553]: "[BMW]i5 xDrive 40 M 스포츠 2026 - AlexDrive"

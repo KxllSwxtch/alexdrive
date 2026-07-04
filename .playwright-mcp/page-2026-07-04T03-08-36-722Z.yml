@@ -1,0 +1,735 @@
+- generic [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e3]:
+      - link "AlexDrive" [ref=e4] [cursor=pointer]:
+        - /url: /
+        - generic [ref=e5]: AlexDrive
+      - button "Меню" [ref=e6]:
+        - img [ref=e7]
+  - generic [ref=e10]:
+    - main [ref=e11]:
+      - generic [ref=e1232]:
+        - generic [ref=e1233]:
+          - heading "Каталог автомобилей" [level=1] [ref=e1234]
+          - paragraph [ref=e1235]: 45 952 авто
+        - generic [ref=e1237]:
+          - generic [ref=e1238]:
+            - generic [ref=e1239]:
+              - generic [ref=e1240]: Марка
+              - button "Все марки" [expanded] [ref=e1241]:
+                - generic [ref=e1242]: Все марки
+                - img [ref=e1243]
+              - dialog [ref=e1751]:
+                - generic [ref=e1752]:
+                  - group [ref=e1755]:
+                    - combobox [expanded] [active] [ref=e1756]
+                    - group [ref=e1757]:
+                      - img [ref=e1758]
+                  - listbox "Suggestions" [ref=e1761]:
+                    - group [ref=e1763]:
+                      - option "Все марки" [selected] [ref=e1764]:
+                        - text: Все марки
+                        - img
+                      - option "Hyundai" [ref=e1765]:
+                        - text: Hyundai
+                        - img
+                      - option "Genesis" [ref=e1766]:
+                        - text: Genesis
+                        - img
+                      - option "Kia" [ref=e1767]:
+                        - text: Kia
+                        - img
+                      - option "Грузовые" [ref=e1768]:
+                        - text: Грузовые
+                        - img
+                      - option "Renault Korea (Samsung)" [ref=e1769]:
+                        - text: Renault Korea (Samsung)
+                        - img
+                      - option "KG Mobility (SsangYong)" [ref=e1770]:
+                        - text: KG Mobility (SsangYong)
+                        - img
+                      - option "Chevrolet" [ref=e1771]:
+                        - text: Chevrolet
+                        - img
+                      - option "Daewoo" [ref=e1772]:
+                        - text: Daewoo
+                        - img
+                      - option "Грузовики" [ref=e1773]:
+                        - text: Грузовики
+                        - img
+                      - option "Автобусы" [ref=e1774]:
+                        - text: Автобусы
+                        - img
+                      - option "Прочие" [ref=e1775]:
+                        - text: Прочие
+                        - img
+                      - option "Mercedes-Benz" [ref=e1776]:
+                        - text: Mercedes-Benz
+                        - img
+                      - option "BMW" [ref=e1777]:
+                        - text: BMW
+                        - img
+                      - option "Audi" [ref=e1778]:
+                        - text: Audi
+                        - img
+                      - option "Volkswagen" [ref=e1779]:
+                        - text: Volkswagen
+                        - img
+                      - option "Mini" [ref=e1780]:
+                        - text: Mini
+                        - img
+                      - option "Volvo" [ref=e1781]:
+                        - text: Volvo
+                        - img
+                      - option "Land Rover" [ref=e1782]:
+                        - text: Land Rover
+                        - img
+                      - option "Nissan" [ref=e1783]:
+                        - text: Nissan
+                        - img
+                      - option "Daihatsu" [ref=e1784]:
+                        - text: Daihatsu
+                        - img
+                      - option "Dachi" [ref=e1785]:
+                        - text: Dachi
+                        - img
+                      - option "Dongfeng Sokon" [ref=e1786]:
+                        - text: Dongfeng Sokon
+                        - img
+                      - option "Lamborghini" [ref=e1787]:
+                        - text: Lamborghini
+                        - img
+                      - option "Lexus" [ref=e1788]:
+                        - text: Lexus
+                        - img
+                      - option "Rover" [ref=e1789]:
+                        - text: Rover
+                        - img
+                      - option "Lotus" [ref=e1790]:
+                        - text: Lotus
+                        - img
+                      - option "Rolls-Royce" [ref=e1791]:
+                        - text: Rolls-Royce
+                        - img
+                      - option "Renault" [ref=e1792]:
+                        - text: Renault
+                        - img
+                      - option "Lincoln" [ref=e1793]:
+                        - text: Lincoln
+                        - img
+                      - option "Maserati" [ref=e1794]:
+                        - text: Maserati
+                        - img
+                      - option "Maybach" [ref=e1795]:
+                        - text: Maybach
+                        - img
+                      - option "Mazda" [ref=e1796]:
+                        - text: Mazda
+                        - img
+                      - option "McLaren" [ref=e1797]:
+                        - text: McLaren
+                        - img
+                      - option "Mitsubishi" [ref=e1798]:
+                        - text: Mitsubishi
+                        - img
+                      - option "Mitsuoka" [ref=e1799]:
+                        - text: Mitsuoka
+                        - img
+                      - option "Bentley" [ref=e1800]:
+                        - text: Bentley
+                        - img
+                      - option "Bugatti" [ref=e1801]:
+                        - text: Bugatti
+                        - img
+                      - option "BAIC Yinxiang" [ref=e1802]:
+                        - text: BAIC Yinxiang
+                        - img
+                      - option "Buick" [ref=e1803]:
+                        - text: Buick
+                        - img
+                      - option "Saab" [ref=e1804]:
+                        - text: Saab
+                        - img
+                      - option "Scion" [ref=e1805]:
+                        - text: Scion
+                        - img
+                      - option "Sunlong Bus" [ref=e1806]:
+                        - text: Sunlong Bus
+                        - img
+                      - option "Smart" [ref=e1807]:
+                        - text: Smart
+                        - img
+                      - option "Subaru" [ref=e1808]:
+                        - text: Subaru
+                        - img
+                      - option "Suzuki" [ref=e1809]:
+                        - text: Suzuki
+                        - img
+                      - option "Chevrolet" [ref=e1810]:
+                        - text: Chevrolet
+                        - img
+                      - option "Citroen" [ref=e1811]:
+                        - text: Citroen
+                        - img
+                      - option "Alfa-Romeo" [ref=e1812]:
+                        - text: Alfa-Romeo
+                        - img
+                      - option "Aston Martin" [ref=e1813]:
+                        - text: Aston Martin
+                        - img
+                      - option "Acura" [ref=e1814]:
+                        - text: Acura
+                        - img
+                      - option "Opel" [ref=e1815]:
+                        - text: Opel
+                        - img
+                      - option "Oldsmobile" [ref=e1816]:
+                        - text: Oldsmobile
+                        - img
+                      - option "Ineos" [ref=e1817]:
+                        - text: Ineos
+                        - img
+                      - option "Iveco" [ref=e1818]:
+                        - text: Iveco
+                        - img
+                      - option "Isuzu" [ref=e1819]:
+                        - text: Isuzu
+                        - img
+                      - option "Infiniti" [ref=e1820]:
+                        - text: Infiniti
+                        - img
+                      - option "Jaguar" [ref=e1821]:
+                        - text: Jaguar
+                        - img
+                      - option "Geely" [ref=e1822]:
+                        - text: Geely
+                        - img
+                      - option "Jeep" [ref=e1823]:
+                        - text: Jeep
+                        - img
+                      - option "ZiDou" [ref=e1824]:
+                        - text: ZiDou
+                        - img
+                      - option "Cadillac" [ref=e1825]:
+                        - text: Cadillac
+                        - img
+                      - option "Chrysler" [ref=e1826]:
+                        - text: Chrysler
+                        - img
+                      - option "Tesla" [ref=e1827]:
+                        - text: Tesla
+                        - img
+                      - option "Toyota" [ref=e1828]:
+                        - text: Toyota
+                        - img
+                      - option "Ferrari" [ref=e1829]:
+                        - text: Ferrari
+                        - img
+                      - option "Ford" [ref=e1830]:
+                        - text: Ford
+                        - img
+                      - option "Porsche" [ref=e1831]:
+                        - text: Porsche
+                        - img
+                      - option "Foton" [ref=e1832]:
+                        - text: Foton
+                        - img
+                      - option "Pontiac" [ref=e1833]:
+                        - text: Pontiac
+                        - img
+                      - option "Polestar" [ref=e1834]:
+                        - text: Polestar
+                        - img
+                      - option "Peugeot" [ref=e1835]:
+                        - text: Peugeot
+                        - img
+                      - option "Fiat" [ref=e1836]:
+                        - text: Fiat
+                        - img
+                      - option "Hummer" [ref=e1837]:
+                        - text: Hummer
+                        - img
+                      - option "Honda" [ref=e1838]:
+                        - text: Honda
+                        - img
+                      - option "BYD" [ref=e1839]:
+                        - text: BYD
+                        - img
+                      - option "GMC" [ref=e1840]:
+                        - text: GMC
+                        - img
+                      - option "LEVC" [ref=e1841]:
+                        - text: LEVC
+                        - img
+            - generic [ref=e1246]:
+              - generic [ref=e1247]: Модель
+              - button "Все модели" [ref=e1248]:
+                - generic [ref=e1249]: Все модели
+                - img [ref=e1250]
+            - generic [ref=e1253]:
+              - generic [ref=e1254]: Модификация
+              - combobox [disabled] [ref=e1255]:
+                - generic [ref=e1256]: Все
+                - img: ▼
+              - textbox [disabled] [ref=e1257]: __all__
+            - generic [ref=e1258]:
+              - generic [ref=e1259]: Комплектация
+              - combobox [disabled] [ref=e1260]:
+                - generic [ref=e1261]: Все
+                - img: ▼
+              - textbox [disabled] [ref=e1262]: __all__
+            - generic [ref=e1263]:
+              - generic [ref=e1264]: Доп. комплектация
+              - combobox [disabled] [ref=e1265]:
+                - generic [ref=e1266]: Все
+                - img: ▼
+              - textbox [disabled] [ref=e1267]: __all__
+            - generic [ref=e1268]:
+              - generic [ref=e1269]: Сортировка
+              - combobox [ref=e1270]:
+                - generic [ref=e1271]: По дате
+                - img: ▼
+              - textbox [ref=e1272]: ModDt
+          - generic [ref=e1273]:
+            - button "Все фильтры" [ref=e1274]:
+              - img
+              - text: Все фильтры
+            - generic [ref=e1275]:
+              - button "Найти" [ref=e1276]:
+                - img
+                - text: Найти
+              - button "Сбросить" [ref=e1277]:
+                - img
+                - text: Сбросить
+        - generic [ref=e1279]:
+          - link "[아우디]RS5 4.2 FSI 콰트로 ₩40,900,000 [Audi]RS5 4.2 FSI Quattro 2012-08 84,878 km Автомат" [ref=e1280] [cursor=pointer]:
+            - /url: /car/rs5-4-2-fsi-2012/108524911
+            - img "[아우디]RS5 4.2 FSI 콰트로" [ref=e1282]
+            - generic [ref=e1283]:
+              - paragraph [ref=e1284]: ₩40,900,000
+              - heading "[Audi]RS5 4.2 FSI Quattro" [level=3] [ref=e1285]
+              - generic [ref=e1286]:
+                - generic [ref=e1287]:
+                  - img [ref=e1288]
+                  - text: 2012-08
+                - generic [ref=e1290]:
+                  - img [ref=e1291]
+                  - text: 84,878 km
+                - generic [ref=e1294]:
+                  - img [ref=e1295]
+                  - text: Автомат
+          - link "[재규어]뉴XF 5.0 SC R ₩22,000,000 [Jaguar]NewXF 5.0 SC R 2014-05 93,720 km Автомат" [ref=e1299] [cursor=pointer]:
+            - /url: /car/xf-5-0-sc-r-2014/109909190
+            - img "[재규어]뉴XF 5.0 SC R" [ref=e1301]
+            - generic [ref=e1302]:
+              - paragraph [ref=e1303]: ₩22,000,000
+              - heading "[Jaguar]NewXF 5.0 SC R" [level=3] [ref=e1304]
+              - generic [ref=e1305]:
+                - generic [ref=e1306]:
+                  - img [ref=e1307]
+                  - text: 2014-05
+                - generic [ref=e1309]:
+                  - img [ref=e1310]
+                  - text: 93,720 km
+                - generic [ref=e1313]:
+                  - img [ref=e1314]
+                  - text: Автомат
+          - link "[재규어]XE 2.0D 프레스티지 ₩8,900,000 [Jaguar]XE 2.0D Prestige 2019-09 59,653 km Автомат" [ref=e1318] [cursor=pointer]:
+            - /url: /car/xe-2-0d-2019/112032095
+            - img "[재규어]XE 2.0D 프레스티지" [ref=e1320]
+            - generic [ref=e1321]:
+              - paragraph [ref=e1322]: ₩8,900,000
+              - heading "[Jaguar]XE 2.0D Prestige" [level=3] [ref=e1323]
+              - generic [ref=e1324]:
+                - generic [ref=e1325]:
+                  - img [ref=e1326]
+                  - text: 2019-09
+                - generic [ref=e1328]:
+                  - img [ref=e1329]
+                  - text: 59,653 km
+                - generic [ref=e1332]:
+                  - img [ref=e1333]
+                  - text: Автомат
+          - link "[벤츠]GLK클래스 X204 GLK220 CDI 프리미엄 ₩99,990,000 [Mercedes-Benz]GLK Класс X204 GLK220 CDI Premium 2013-02 178,099 km Автомат" [ref=e1337] [cursor=pointer]:
+            - /url: /car/glk-x204-glk220-cdi-2013/112197969
+            - img "[벤츠]GLK클래스 X204 GLK220 CDI 프리미엄" [ref=e1339]
+            - generic [ref=e1340]:
+              - paragraph [ref=e1341]: ₩99,990,000
+              - heading "[Mercedes-Benz]GLK Класс X204 GLK220 CDI Premium" [level=3] [ref=e1342]
+              - generic [ref=e1343]:
+                - generic [ref=e1344]:
+                  - img [ref=e1345]
+                  - text: 2013-02
+                - generic [ref=e1347]:
+                  - img [ref=e1348]
+                  - text: 178,099 km
+                - generic [ref=e1351]:
+                  - img [ref=e1352]
+                  - text: Автомат
+          - link "[벤츠]CLE 클래스 CLE 450 4MATIC 카브리올레 ₩85,000,000 [Mercedes-Benz]CLE Класс CLE 450 4MATIC Cabriolet 2024-10 955 km Автомат" [ref=e1356] [cursor=pointer]:
+            - /url: /car/cle-cle-450-4matic-2024/112243417
+            - img "[벤츠]CLE 클래스 CLE 450 4MATIC 카브리올레" [ref=e1358]
+            - generic [ref=e1359]:
+              - paragraph [ref=e1360]: ₩85,000,000
+              - heading "[Mercedes-Benz]CLE Класс CLE 450 4MATIC Cabriolet" [level=3] [ref=e1361]
+              - generic [ref=e1362]:
+                - generic [ref=e1363]:
+                  - img [ref=e1364]
+                  - text: 2024-10
+                - generic [ref=e1366]:
+                  - img [ref=e1367]
+                  - text: 955 km
+                - generic [ref=e1370]:
+                  - img [ref=e1371]
+                  - text: Автомат
+          - link "[포드]F150 3.5L ₩35,900,000 [Ford]F150 3.5L 2020-04 60,500 km Автомат" [ref=e1375] [cursor=pointer]:
+            - /url: /car/f150-3-5l-2020/112249099
+            - img "[포드]F150 3.5L" [ref=e1377]
+            - generic [ref=e1378]:
+              - paragraph [ref=e1379]: ₩35,900,000
+              - heading "[Ford]F150 3.5L" [level=3] [ref=e1380]
+              - generic [ref=e1381]:
+                - generic [ref=e1382]:
+                  - img [ref=e1383]
+                  - text: 2020-04
+                - generic [ref=e1385]:
+                  - img [ref=e1386]
+                  - text: 60,500 km
+                - generic [ref=e1389]:
+                  - img [ref=e1390]
+                  - text: Автомат
+          - link "[BMW]3시리즈 (E90) 328i 컨버터블 ₩7,590,000 [BMW]3-Series (E90) 328i Convertible 2010-04 114,019 km Автомат" [ref=e1394] [cursor=pointer]:
+            - /url: /car/bmw-3-e90-328i-2010/112288545
+            - img "[BMW]3시리즈 (E90) 328i 컨버터블" [ref=e1396]
+            - generic [ref=e1397]:
+              - paragraph [ref=e1398]: ₩7,590,000
+              - heading "[BMW]3-Series (E90) 328i Convertible" [level=3] [ref=e1399]
+              - generic [ref=e1400]:
+                - generic [ref=e1401]:
+                  - img [ref=e1402]
+                  - text: 2010-04
+                - generic [ref=e1404]:
+                  - img [ref=e1405]
+                  - text: 114,019 km
+                - generic [ref=e1408]:
+                  - img [ref=e1409]
+                  - text: Автомат
+          - link "[시보레]실버라도 5.3 ₩39,990,000 [Chevrolet]Silverado 5.3 2020-06 58,315 km Автомат" [ref=e1413] [cursor=pointer]:
+            - /url: /car/5-3-2020/112307891
+            - img "[시보레]실버라도 5.3" [ref=e1415]
+            - generic [ref=e1416]:
+              - paragraph [ref=e1417]: ₩39,990,000
+              - heading "[Chevrolet]Silverado 5.3" [level=3] [ref=e1418]
+              - generic [ref=e1419]:
+                - generic [ref=e1420]:
+                  - img [ref=e1421]
+                  - text: 2020-06
+                - generic [ref=e1423]:
+                  - img [ref=e1424]
+                  - text: 58,315 km
+                - generic [ref=e1427]:
+                  - img [ref=e1428]
+                  - text: Автомат
+          - link "[기아]K5 3세대 2.0 프레스티지 ₩29,900,000 [Kia]K5 3-е Поколение 2.0 Prestige 2023-05 14,106 km Автомат" [ref=e1432] [cursor=pointer]:
+            - /url: /car/k5-3-2-0-2023/112370176
+            - img "[기아]K5 3세대 2.0 프레스티지" [ref=e1434]
+            - generic [ref=e1435]:
+              - paragraph [ref=e1436]: ₩29,900,000
+              - heading "[Kia]K5 3-е Поколение 2.0 Prestige" [level=3] [ref=e1437]
+              - generic [ref=e1438]:
+                - generic [ref=e1439]:
+                  - img [ref=e1440]
+                  - text: 2023-05
+                - generic [ref=e1442]:
+                  - img [ref=e1443]
+                  - text: 14,106 km
+                - generic [ref=e1446]:
+                  - img [ref=e1447]
+                  - text: Автомат
+          - link "[소형화물][하이내장탑]봉고3 (EV) 1.0톤/킹캡/초장축/플러스형 ₩24,800,000 [Грузовые][HighInterior Box]Bongo3 (EV) 1.0 тонна/King Cab/Длинный/PlusType 2020-11 9,850 km Автомат" [ref=e1451] [cursor=pointer]:
+            - /url: /car/3-ev-1-0-2020/112429385
+            - img "[소형화물][하이내장탑]봉고3 (EV) 1.0톤/킹캡/초장축/플러스형" [ref=e1453]
+            - generic [ref=e1454]:
+              - paragraph [ref=e1455]: ₩24,800,000
+              - heading "[Грузовые][HighInterior Box]Bongo3 (EV) 1.0 тонна/King Cab/Длинный/PlusType" [level=3] [ref=e1456]
+              - generic [ref=e1457]:
+                - generic [ref=e1458]:
+                  - img [ref=e1459]
+                  - text: 2020-11
+                - generic [ref=e1461]:
+                  - img [ref=e1462]
+                  - text: 9,850 km
+                - generic [ref=e1465]:
+                  - img [ref=e1466]
+                  - text: Автомат
+          - link "[마세라티]르반떼 3.8 트로페오 ₩87,900,000 [Maserati]Levante 3.8 Trofeo 2022-01 39,883 km Автомат" [ref=e1470] [cursor=pointer]:
+            - /url: /car/3-8-2022/112685835
+            - img "[마세라티]르반떼 3.8 트로페오" [ref=e1472]
+            - generic [ref=e1473]:
+              - paragraph [ref=e1474]: ₩87,900,000
+              - heading "[Maserati]Levante 3.8 Trofeo" [level=3] [ref=e1475]
+              - generic [ref=e1476]:
+                - generic [ref=e1477]:
+                  - img [ref=e1478]
+                  - text: 2022-01
+                - generic [ref=e1480]:
+                  - img [ref=e1481]
+                  - text: 39,883 km
+                - generic [ref=e1484]:
+                  - img [ref=e1485]
+                  - text: Автомат
+          - link "[랜드로버]디스커버리4 3.0 SDV6 SE ₩15,400,000 [Land Rover]Discovery4 3.0 SDV6 SE 2012-06 97,939 km Автомат" [ref=e1489] [cursor=pointer]:
+            - /url: /car/4-3-0-sdv6-se-2012/112731117
+            - img "[랜드로버]디스커버리4 3.0 SDV6 SE" [ref=e1491]
+            - generic [ref=e1492]:
+              - paragraph [ref=e1493]: ₩15,400,000
+              - heading "[Land Rover]Discovery4 3.0 SDV6 SE" [level=3] [ref=e1494]
+              - generic [ref=e1495]:
+                - generic [ref=e1496]:
+                  - img [ref=e1497]
+                  - text: 2012-06
+                - generic [ref=e1499]:
+                  - img [ref=e1500]
+                  - text: 97,939 km
+                - generic [ref=e1503]:
+                  - img [ref=e1504]
+                  - text: Автомат
+          - link "[BMW]X5 (G05) M50i ₩49,990,000 [BMW]X5 (G05) M50i 2022-08 59,355 km Автомат" [ref=e1508] [cursor=pointer]:
+            - /url: /car/bmw-x5-g05-m50i-2022/112825410
+            - img "[BMW]X5 (G05) M50i" [ref=e1510]
+            - generic [ref=e1511]:
+              - paragraph [ref=e1512]: ₩49,990,000
+              - heading "[BMW]X5 (G05) M50i" [level=3] [ref=e1513]
+              - generic [ref=e1514]:
+                - generic [ref=e1515]:
+                  - img [ref=e1516]
+                  - text: 2022-08
+                - generic [ref=e1518]:
+                  - img [ref=e1519]
+                  - text: 59,355 km
+                - generic [ref=e1522]:
+                  - img [ref=e1523]
+                  - text: Автомат
+          - link "[현대]그랜드 스타렉스 12인승 왜건 CVX 디럭스 ₩7,200,000 [Hyundai]Grand Starex 12-местный Wagon CVX Deluxe 2013-07 176,411 km Автомат" [ref=e1527] [cursor=pointer]:
+            - /url: /car/12-cvx-2013/113031204
+            - img "[현대]그랜드 스타렉스 12인승 왜건 CVX 디럭스" [ref=e1529]
+            - generic [ref=e1530]:
+              - paragraph [ref=e1531]: ₩7,200,000
+              - heading "[Hyundai]Grand Starex 12-местный Wagon CVX Deluxe" [level=3] [ref=e1532]
+              - generic [ref=e1533]:
+                - generic [ref=e1534]:
+                  - img [ref=e1535]
+                  - text: 2013-07
+                - generic [ref=e1537]:
+                  - img [ref=e1538]
+                  - text: 176,411 km
+                - generic [ref=e1541]:
+                  - img [ref=e1542]
+                  - text: Автомат
+          - link "[벤츠]S클래스-W222 S 500L 4MATIC ₩21,900,000 [Mercedes-Benz]S Класс-W222 S 500L 4MATIC 2015-05 155,416 km Автомат" [ref=e1546] [cursor=pointer]:
+            - /url: /car/s-w222-s-500l-4matic-2015/113067699
+            - img "[벤츠]S클래스-W222 S 500L 4MATIC" [ref=e1548]
+            - generic [ref=e1549]:
+              - paragraph [ref=e1550]: ₩21,900,000
+              - heading "[Mercedes-Benz]S Класс-W222 S 500L 4MATIC" [level=3] [ref=e1551]
+              - generic [ref=e1552]:
+                - generic [ref=e1553]:
+                  - img [ref=e1554]
+                  - text: 2015-05
+                - generic [ref=e1556]:
+                  - img [ref=e1557]
+                  - text: 155,416 km
+                - generic [ref=e1560]:
+                  - img [ref=e1561]
+                  - text: Автомат
+          - link "[현대]쏘나타 (DN8) 2.0 인스퍼레이션 ₩16,500,000 [Hyundai]Sonata (DN8) 2.0 Inspiration 2020-02 118,811 km Автомат" [ref=e1565] [cursor=pointer]:
+            - /url: /car/dn8-2-0-2020/113074639
+            - img "[현대]쏘나타 (DN8) 2.0 인스퍼레이션" [ref=e1567]
+            - generic [ref=e1568]:
+              - paragraph [ref=e1569]: ₩16,500,000
+              - heading "[Hyundai]Sonata (DN8) 2.0 Inspiration" [level=3] [ref=e1570]
+              - generic [ref=e1571]:
+                - generic [ref=e1572]:
+                  - img [ref=e1573]
+                  - text: 2020-02
+                - generic [ref=e1575]:
+                  - img [ref=e1576]
+                  - text: 118,811 km
+                - generic [ref=e1579]:
+                  - img [ref=e1580]
+                  - text: Автомат
+          - link "[BMW]M3 M3 컨버터블 ₩35,900,000 [BMW]M3 M3 Convertible 2013-05 89,423 km Автомат" [ref=e1584] [cursor=pointer]:
+            - /url: /car/bmw-m3-m3-2013/113079045
+            - img "[BMW]M3 M3 컨버터블" [ref=e1586]
+            - generic [ref=e1587]:
+              - paragraph [ref=e1588]: ₩35,900,000
+              - heading "[BMW]M3 M3 Convertible" [level=3] [ref=e1589]
+              - generic [ref=e1590]:
+                - generic [ref=e1591]:
+                  - img [ref=e1592]
+                  - text: 2013-05
+                - generic [ref=e1594]:
+                  - img [ref=e1595]
+                  - text: 89,423 km
+                - generic [ref=e1598]:
+                  - img [ref=e1599]
+                  - text: Автомат
+          - link "[현대]제네시스DH G330 모던 AWD ₩9,300,000 [Hyundai]GenesisDH G330 Modern AWD 2015-04 128,301 km Автомат" [ref=e1603] [cursor=pointer]:
+            - /url: /car/dh-g330-awd-2015/113090447
+            - img "[현대]제네시스DH G330 모던 AWD" [ref=e1605]
+            - generic [ref=e1606]:
+              - paragraph [ref=e1607]: ₩9,300,000
+              - heading "[Hyundai]GenesisDH G330 Modern AWD" [level=3] [ref=e1608]
+              - generic [ref=e1609]:
+                - generic [ref=e1610]:
+                  - img [ref=e1611]
+                  - text: 2015-04
+                - generic [ref=e1613]:
+                  - img [ref=e1614]
+                  - text: 128,301 km
+                - generic [ref=e1617]:
+                  - img [ref=e1618]
+                  - text: Автомат
+          - link "[쉐보레]캡티바 2.0 2WD 어드벤처 패키지 ₩3,400,000 [Chevrolet]Captiva 2.0 2WD Adventure Package 2014-11 137,112 km Автомат" [ref=e1622] [cursor=pointer]:
+            - /url: /car/2-0-2wd-2014/113091462
+            - img "[쉐보레]캡티바 2.0 2WD 어드벤처 패키지" [ref=e1624]
+            - generic [ref=e1625]:
+              - paragraph [ref=e1626]: ₩3,400,000
+              - heading "[Chevrolet]Captiva 2.0 2WD Adventure Package" [level=3] [ref=e1627]
+              - generic [ref=e1628]:
+                - generic [ref=e1629]:
+                  - img [ref=e1630]
+                  - text: 2014-11
+                - generic [ref=e1632]:
+                  - img [ref=e1633]
+                  - text: 137,112 km
+                - generic [ref=e1636]:
+                  - img [ref=e1637]
+                  - text: Автомат
+          - link "[기아]뉴 쏘렌토 R 2WD 2.0 프레스티지 ₩7,000,000 [Kia]New Sorento R 2WD 2.0 Prestige 2013-12 150,980 km Автомат" [ref=e1641] [cursor=pointer]:
+            - /url: /car/r-2wd-2-0-2013/113110667
+            - img "[기아]뉴 쏘렌토 R 2WD 2.0 프레스티지" [ref=e1643]
+            - generic [ref=e1644]:
+              - paragraph [ref=e1645]: ₩7,000,000
+              - heading "[Kia]New Sorento R 2WD 2.0 Prestige" [level=3] [ref=e1646]
+              - generic [ref=e1647]:
+                - generic [ref=e1648]:
+                  - img [ref=e1649]
+                  - text: 2013-12
+                - generic [ref=e1651]:
+                  - img [ref=e1652]
+                  - text: 150,980 km
+                - generic [ref=e1655]:
+                  - img [ref=e1656]
+                  - text: Автомат
+          - link "[BMW]X1 (F48) xDrive 20i xLine 스페셜에디션 ₩27,800,000 [BMW]X1 (F48) xDrive 20i xLine SpecialEdition 2021-04 41,712 km Автомат" [ref=e1660] [cursor=pointer]:
+            - /url: /car/bmw-x1-f48-xdrive-20i-xline-2021/113127950
+            - img "[BMW]X1 (F48) xDrive 20i xLine 스페셜에디션" [ref=e1662]
+            - generic [ref=e1663]:
+              - paragraph [ref=e1664]: ₩27,800,000
+              - heading "[BMW]X1 (F48) xDrive 20i xLine SpecialEdition" [level=3] [ref=e1665]
+              - generic [ref=e1666]:
+                - generic [ref=e1667]:
+                  - img [ref=e1668]
+                  - text: 2021-04
+                - generic [ref=e1670]:
+                  - img [ref=e1671]
+                  - text: 41,712 km
+                - generic [ref=e1674]:
+                  - img [ref=e1675]
+                  - text: Автомат
+          - link "[KG모빌리티(쌍용) ]토레스 1.5 GDI-T 2WD T7 ₩20,500,000 [KG Mobility (SsangYong) ]Torres 1.5 GDI-T 2WD T7 2023-04 34,179 km Автомат" [ref=e1679] [cursor=pointer]:
+            - /url: /car/kg-1-5-gdi-t-2wd-t7-2023/113140220
+            - img "[KG모빌리티(쌍용) ]토레스 1.5 GDI-T 2WD T7" [ref=e1681]
+            - generic [ref=e1682]:
+              - paragraph [ref=e1683]: ₩20,500,000
+              - heading "[KG Mobility (SsangYong) ]Torres 1.5 GDI-T 2WD T7" [level=3] [ref=e1684]
+              - generic [ref=e1685]:
+                - generic [ref=e1686]:
+                  - img [ref=e1687]
+                  - text: 2023-04
+                - generic [ref=e1689]:
+                  - img [ref=e1690]
+                  - text: 34,179 km
+                - generic [ref=e1693]:
+                  - img [ref=e1694]
+                  - text: Автомат
+          - link "[기아]더 뉴 니로 1.6 HEV 프레스티지 ₩16,500,000 [Kia]The New Niro 1.6 HEV Prestige 2020-09 91,061 km Автомат" [ref=e1698] [cursor=pointer]:
+            - /url: /car/1-6-hev-2020/113278688
+            - img "[기아]더 뉴 니로 1.6 HEV 프레스티지" [ref=e1700]
+            - generic [ref=e1701]:
+              - paragraph [ref=e1702]: ₩16,500,000
+              - heading "[Kia]The New Niro 1.6 HEV Prestige" [level=3] [ref=e1703]
+              - generic [ref=e1704]:
+                - generic [ref=e1705]:
+                  - img [ref=e1706]
+                  - text: 2020-09
+                - generic [ref=e1708]:
+                  - img [ref=e1709]
+                  - text: 91,061 km
+                - generic [ref=e1712]:
+                  - img [ref=e1713]
+                  - text: Автомат
+          - link "[랜드로버]디스커버리4 3.0 SDV6 SE ₩27,300,000 [Land Rover]Discovery4 3.0 SDV6 SE 2015-02 50,940 km Автомат" [ref=e1717] [cursor=pointer]:
+            - /url: /car/4-3-0-sdv6-se-2015/113279439
+            - img "[랜드로버]디스커버리4 3.0 SDV6 SE" [ref=e1719]
+            - generic [ref=e1720]:
+              - paragraph [ref=e1721]: ₩27,300,000
+              - heading "[Land Rover]Discovery4 3.0 SDV6 SE" [level=3] [ref=e1722]
+              - generic [ref=e1723]:
+                - generic [ref=e1724]:
+                  - img [ref=e1725]
+                  - text: 2015-02
+                - generic [ref=e1727]:
+                  - img [ref=e1728]
+                  - text: 50,940 km
+                - generic [ref=e1731]:
+                  - img [ref=e1732]
+                  - text: Автомат
+        - generic [ref=e1736]:
+          - button "Предыдущая" [disabled] [ref=e1737]:
+            - img [ref=e1738]
+          - button "1" [ref=e1740]
+          - button "2" [ref=e1741]
+          - generic [ref=e1742]: ...
+          - button "1915" [ref=e1743]
+          - button "Следующая" [ref=e1744]:
+            - img [ref=e1745]
+    - contentinfo [ref=e527]:
+      - generic [ref=e528]:
+        - generic [ref=e529]:
+          - generic [ref=e530]:
+            - link "AlexDrive" [ref=e531] [cursor=pointer]:
+              - /url: /
+              - generic [ref=e532]: AlexDrive
+            - paragraph [ref=e533]:
+              - text: Автомобили в Южной Корее.
+              - text: Широкий выбор автомобилей в Сувоне
+          - generic [ref=e534]:
+            - heading "Навигация" [level=3] [ref=e535]
+            - navigation [ref=e536]:
+              - link "Каталог" [ref=e537] [cursor=pointer]:
+                - /url: /
+              - link "О нас" [ref=e538] [cursor=pointer]:
+                - /url: /about
+              - link "Контакты" [ref=e539] [cursor=pointer]:
+                - /url: /contacts
+              - link "Калькулятор" [ref=e540] [cursor=pointer]:
+                - /url: /calculator
+              - link "Конфиденциальность" [ref=e541] [cursor=pointer]:
+                - /url: /privacy
+              - link "Условия использования" [ref=e542] [cursor=pointer]:
+                - /url: /terms
+          - generic [ref=e543]:
+            - heading "Контакты" [level=3] [ref=e544]
+            - generic [ref=e545]:
+              - paragraph [ref=e546]: Кан Алексей
+              - link "+82-10-3908-6050" [ref=e547] [cursor=pointer]:
+                - /url: tel:+821039086050
+              - link "WhatsApp" [ref=e548] [cursor=pointer]:
+                - /url: https://wa.me/821039086050
+                - img [ref=e549]
+                - text: WhatsApp
+              - paragraph [ref=e551]: Кёнги, Сувон, Южная Корея
+        - generic [ref=e552]: © 2026 AlexDrive. Все права защищены.
+  - alert [ref=e553]: AlexDrive - Автомобили из Южной Кореи

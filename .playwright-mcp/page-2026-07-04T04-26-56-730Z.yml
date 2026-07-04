@@ -1,0 +1,493 @@
+- generic [active] [ref=f1e1]:
+  - banner [ref=f1e2]:
+    - generic [ref=f1e3]:
+      - link "AlexDrive" [ref=f1e4] [cursor=pointer]:
+        - /url: /
+        - generic [ref=f1e5]: AlexDrive
+      - button "Меню" [ref=f1e6]:
+        - img [ref=f1e7]
+  - generic [ref=f1e10]:
+    - main [ref=f1e11]:
+      - generic [ref=f1e1232]:
+        - generic [ref=f1e1233]:
+          - heading "Каталог автомобилей" [level=1] [ref=f1e1234]
+          - paragraph [ref=f1e1235]: 3 675 авто
+        - generic [ref=f1e1237]:
+          - generic [ref=f1e1238]:
+            - generic [ref=f1e1239]:
+              - generic [ref=f1e1240]: Марка
+              - button "BMW" [ref=f1e1241]:
+                - generic [ref=f1e1242]: BMW
+                - img [ref=f1e1243]
+            - generic [ref=f1e1246]:
+              - generic [ref=f1e1247]: Модель
+              - button "Все модели" [ref=f1e1248]:
+                - generic [ref=f1e1249]: Все модели
+                - img [ref=f1e1250]
+            - generic [ref=f1e1253]:
+              - generic [ref=f1e1254]: Модификация
+              - combobox [disabled] [ref=f1e1255]:
+                - generic [ref=f1e1256]: Все
+                - img: ▼
+              - textbox [disabled] [ref=f1e1257]: __all__
+            - generic [ref=f1e1258]:
+              - generic [ref=f1e1259]: Комплектация
+              - combobox [disabled] [ref=f1e1260]:
+                - generic [ref=f1e1261]: Все
+                - img: ▼
+              - textbox [disabled] [ref=f1e1262]: __all__
+            - generic [ref=f1e1263]:
+              - generic [ref=f1e1264]: Доп. комплектация
+              - combobox [disabled] [ref=f1e1265]:
+                - generic [ref=f1e1266]: Все
+                - img: ▼
+              - textbox [disabled] [ref=f1e1267]: __all__
+            - generic [ref=f1e1268]:
+              - generic [ref=f1e1269]: Сортировка
+              - combobox [ref=f1e1270]:
+                - generic [ref=f1e1271]: По дате
+                - img: ▼
+              - textbox [ref=f1e1272]: ModDt
+          - generic [ref=f1e1273]:
+            - button "Все фильтры" [ref=f1e1274]:
+              - img
+              - text: Все фильтры
+            - generic [ref=f1e1275]:
+              - button "Найти" [ref=f1e1276]:
+                - img
+                - text: Найти
+              - button "Сбросить" [ref=f1e1277]:
+                - img
+                - text: Сбросить
+        - generic [ref=f1e1279]:
+          - link "[BMW]i5 xDrive 40 M 스포츠 ₩85,000,000 [BMW]i5 xDrive 40 M Sports 2026-04 2,349 km Автомат" [ref=f1e1280] [cursor=pointer]:
+            - /url: /car/bmw-i5-xdrive-40-m-2026/114083495
+            - img "[BMW]i5 xDrive 40 M 스포츠" [ref=f1e1282]
+            - generic [ref=f1e1283]:
+              - paragraph [ref=f1e1284]: ₩85,000,000
+              - heading "[BMW]i5 xDrive 40 M Sports" [level=3] [ref=f1e1285]
+              - generic [ref=f1e1286]:
+                - generic [ref=f1e1287]:
+                  - img [ref=f1e1288]
+                  - text: 2026-04
+                - generic [ref=f1e1290]:
+                  - img [ref=f1e1291]
+                  - text: 2,349 km
+                - generic [ref=f1e1294]:
+                  - img [ref=f1e1295]
+                  - text: Автомат
+          - link "[BMW]i5 eDrive 40 M 스포츠 ₩81,000,000 [BMW]i5 eDrive 40 M Sports 2026-04 478 km Автомат" [ref=f1e1299] [cursor=pointer]:
+            - /url: /car/bmw-i5-edrive-40-m-2026/113823410
+            - img "[BMW]i5 eDrive 40 M 스포츠" [ref=f1e1301]
+            - generic [ref=f1e1302]:
+              - paragraph [ref=f1e1303]: ₩81,000,000
+              - heading "[BMW]i5 eDrive 40 M Sports" [level=3] [ref=f1e1304]
+              - generic [ref=f1e1305]:
+                - generic [ref=f1e1306]:
+                  - img [ref=f1e1307]
+                  - text: 2026-04
+                - generic [ref=f1e1309]:
+                  - img [ref=f1e1310]
+                  - text: 478 km
+                - generic [ref=f1e1313]:
+                  - img [ref=f1e1314]
+                  - text: Автомат
+          - link "[BMW]2시리즈 그란쿠페 (F74) 220 그란쿠페 M 스포츠 ₩42,400,000 [BMW]2-Series Gran Coupe (F74) 220 Gran Coupe M Sports 2026-02 3,317 km Автомат" [ref=f1e1318] [cursor=pointer]:
+            - /url: /car/bmw-2-f74-220-m-2026/113937290
+            - img "[BMW]2시리즈 그란쿠페 (F74) 220 그란쿠페 M 스포츠" [ref=f1e1320]
+            - generic [ref=f1e1321]:
+              - paragraph [ref=f1e1322]: ₩42,400,000
+              - heading "[BMW]2-Series Gran Coupe (F74) 220 Gran Coupe M Sports" [level=3] [ref=f1e1323]
+              - generic [ref=f1e1324]:
+                - generic [ref=f1e1325]:
+                  - img [ref=f1e1326]
+                  - text: 2026-02
+                - generic [ref=f1e1328]:
+                  - img [ref=f1e1329]
+                  - text: 3,317 km
+                - generic [ref=f1e1332]:
+                  - img [ref=f1e1333]
+                  - text: Автомат
+          - link "[BMW]2시리즈 액티브 투어러 (U06) 220i M 스포츠 ₩41,500,000 [BMW]2-Series Active Tourer (U06) 220i M Sports 2026-02 5,282 km Автомат" [ref=f1e1337] [cursor=pointer]:
+            - /url: /car/bmw-2-u06-220i-m-2026/114069177
+            - img "[BMW]2시리즈 액티브 투어러 (U06) 220i M 스포츠" [ref=f1e1339]
+            - generic [ref=f1e1340]:
+              - paragraph [ref=f1e1341]: ₩41,500,000
+              - heading "[BMW]2-Series Active Tourer (U06) 220i M Sports" [level=3] [ref=f1e1342]
+              - generic [ref=f1e1343]:
+                - generic [ref=f1e1344]:
+                  - img [ref=f1e1345]
+                  - text: 2026-02
+                - generic [ref=f1e1347]:
+                  - img [ref=f1e1348]
+                  - text: 5,282 km
+                - generic [ref=f1e1351]:
+                  - img [ref=f1e1352]
+                  - text: Автомат
+          - link "[BMW]1시리즈 (F52) 120 M 스포츠 ₩41,500,000 [BMW]1-Series (F52) 120 M Sports 2026-01 2,993 km Автомат" [ref=f1e1356] [cursor=pointer]:
+            - /url: /car/bmw-1-f52-120-m-2026/113943495
+            - img "[BMW]1시리즈 (F52) 120 M 스포츠" [ref=f1e1358]
+            - generic [ref=f1e1359]:
+              - paragraph [ref=f1e1360]: ₩41,500,000
+              - heading "[BMW]1-Series (F52) 120 M Sports" [level=3] [ref=f1e1361]
+              - generic [ref=f1e1362]:
+                - generic [ref=f1e1363]:
+                  - img [ref=f1e1364]
+                  - text: 2026-01
+                - generic [ref=f1e1366]:
+                  - img [ref=f1e1367]
+                  - text: 2,993 km
+                - generic [ref=f1e1370]:
+                  - img [ref=f1e1371]
+                  - text: Автомат
+          - link "[BMW]5시리즈 (G60) 520i M 스포츠 ₩73,900,000 [BMW]5-Series (G60) 520i M Sports 2026-01 4,046 km Автомат" [ref=f1e1375] [cursor=pointer]:
+            - /url: /car/bmw-5-g60-520i-m-2026/114004964
+            - img "[BMW]5시리즈 (G60) 520i M 스포츠" [ref=f1e1377]
+            - generic [ref=f1e1378]:
+              - paragraph [ref=f1e1379]: ₩73,900,000
+              - heading "[BMW]5-Series (G60) 520i M Sports" [level=3] [ref=f1e1380]
+              - generic [ref=f1e1381]:
+                - generic [ref=f1e1382]:
+                  - img [ref=f1e1383]
+                  - text: 2026-01
+                - generic [ref=f1e1385]:
+                  - img [ref=f1e1386]
+                  - text: 4,046 km
+                - generic [ref=f1e1389]:
+                  - img [ref=f1e1390]
+                  - text: Автомат
+          - link "[BMW]2시리즈 액티브 투어러 (U06) 220i M 스포츠 ₩41,800,000 [BMW]2-Series Active Tourer (U06) 220i M Sports 2026-01 1,750 km Автомат" [ref=f1e1394] [cursor=pointer]:
+            - /url: /car/bmw-2-u06-220i-m-2026/113684553
+            - img "[BMW]2시리즈 액티브 투어러 (U06) 220i M 스포츠" [ref=f1e1396]
+            - generic [ref=f1e1397]:
+              - paragraph [ref=f1e1398]: ₩41,800,000
+              - heading "[BMW]2-Series Active Tourer (U06) 220i M Sports" [level=3] [ref=f1e1399]
+              - generic [ref=f1e1400]:
+                - generic [ref=f1e1401]:
+                  - img [ref=f1e1402]
+                  - text: 2026-01
+                - generic [ref=f1e1404]:
+                  - img [ref=f1e1405]
+                  - text: 1,750 km
+                - generic [ref=f1e1408]:
+                  - img [ref=f1e1409]
+                  - text: Автомат
+          - link "[BMW]X5 (G05) xDrive 40i M 스포츠 ₩120,900,000 [BMW]X5 (G05) xDrive 40i M Sports 2025-12 9,162 km Автомат" [ref=f1e1413] [cursor=pointer]:
+            - /url: /car/bmw-x5-g05-xdrive-40i-m-2025/114081847
+            - img "[BMW]X5 (G05) xDrive 40i M 스포츠" [ref=f1e1415]
+            - generic [ref=f1e1416]:
+              - paragraph [ref=f1e1417]: ₩120,900,000
+              - heading "[BMW]X5 (G05) xDrive 40i M Sports" [level=3] [ref=f1e1418]
+              - generic [ref=f1e1419]:
+                - generic [ref=f1e1420]:
+                  - img [ref=f1e1421]
+                  - text: 2025-12
+                - generic [ref=f1e1423]:
+                  - img [ref=f1e1424]
+                  - text: 9,162 km
+                - generic [ref=f1e1427]:
+                  - img [ref=f1e1428]
+                  - text: Автомат
+          - link "[BMW]X5 (G05) xDrive 30d M 스포츠 ₩999,990,000 [BMW]X5 (G05) xDrive 30d M Sports 2025-12 5,543 km Автомат" [ref=f1e1432] [cursor=pointer]:
+            - /url: /car/bmw-x5-g05-xdrive-30d-m-2025/114027153
+            - img "[BMW]X5 (G05) xDrive 30d M 스포츠" [ref=f1e1434]
+            - generic [ref=f1e1435]:
+              - paragraph [ref=f1e1436]: ₩999,990,000
+              - heading "[BMW]X5 (G05) xDrive 30d M Sports" [level=3] [ref=f1e1437]
+              - generic [ref=f1e1438]:
+                - generic [ref=f1e1439]:
+                  - img [ref=f1e1440]
+                  - text: 2025-12
+                - generic [ref=f1e1442]:
+                  - img [ref=f1e1443]
+                  - text: 5,543 km
+                - generic [ref=f1e1446]:
+                  - img [ref=f1e1447]
+                  - text: Автомат
+          - link "[BMW]5시리즈 (G60) 520i 스페셜 에디션 ₩76,000,000 [BMW]5-Series (G60) 520i Special Edition 2025-12 5,704 km Автомат" [ref=f1e1451] [cursor=pointer]:
+            - /url: /car/bmw-5-g60-520i-2025/114073326
+            - img "[BMW]5시리즈 (G60) 520i 스페셜 에디션" [ref=f1e1453]
+            - generic [ref=f1e1454]:
+              - paragraph [ref=f1e1455]: ₩76,000,000
+              - heading "[BMW]5-Series (G60) 520i Special Edition" [level=3] [ref=f1e1456]
+              - generic [ref=f1e1457]:
+                - generic [ref=f1e1458]:
+                  - img [ref=f1e1459]
+                  - text: 2025-12
+                - generic [ref=f1e1461]:
+                  - img [ref=f1e1462]
+                  - text: 5,704 km
+                - generic [ref=f1e1465]:
+                  - img [ref=f1e1466]
+                  - text: Автомат
+          - link "[BMW]5시리즈 (G60) 520i M 스포츠 ₩67,900,000 [BMW]5-Series (G60) 520i M Sports 2025-12 2,073 km Автомат" [ref=f1e1470] [cursor=pointer]:
+            - /url: /car/bmw-5-g60-520i-m-2025/114076684
+            - img "[BMW]5시리즈 (G60) 520i M 스포츠" [ref=f1e1472]
+            - generic [ref=f1e1473]:
+              - paragraph [ref=f1e1474]: ₩67,900,000
+              - heading "[BMW]5-Series (G60) 520i M Sports" [level=3] [ref=f1e1475]
+              - generic [ref=f1e1476]:
+                - generic [ref=f1e1477]:
+                  - img [ref=f1e1478]
+                  - text: 2025-12
+                - generic [ref=f1e1480]:
+                  - img [ref=f1e1481]
+                  - text: 2,073 km
+                - generic [ref=f1e1484]:
+                  - img [ref=f1e1485]
+                  - text: Автомат
+          - link "[BMW]X4 (G02) xDrive 20d M 스포츠 기본형 ₩80,000,000 [BMW]X4 (G02) xDrive 20d M Sports Basic 2025-12 7,718 km Автомат" [ref=f1e1489] [cursor=pointer]:
+            - /url: /car/bmw-x4-g02-xdrive-20d-m-2025/114049600
+            - img "[BMW]X4 (G02) xDrive 20d M 스포츠 기본형" [ref=f1e1491]
+            - generic [ref=f1e1492]:
+              - paragraph [ref=f1e1493]: ₩80,000,000
+              - heading "[BMW]X4 (G02) xDrive 20d M Sports Basic" [level=3] [ref=f1e1494]
+              - generic [ref=f1e1495]:
+                - generic [ref=f1e1496]:
+                  - img [ref=f1e1497]
+                  - text: 2025-12
+                - generic [ref=f1e1499]:
+                  - img [ref=f1e1500]
+                  - text: 7,718 km
+                - generic [ref=f1e1503]:
+                  - img [ref=f1e1504]
+                  - text: Автомат
+          - link "[BMW]5시리즈 (G60) 530i xDrive M 스포츠 ₩117,000,000 [BMW]5-Series (G60) 530i xDrive M Sports 2025-12 7,065 km Автомат" [ref=f1e1508] [cursor=pointer]:
+            - /url: /car/bmw-5-g60-530i-xdrive-m-2025/114056196
+            - img "[BMW]5시리즈 (G60) 530i xDrive M 스포츠" [ref=f1e1510]
+            - generic [ref=f1e1511]:
+              - paragraph [ref=f1e1512]: ₩117,000,000
+              - heading "[BMW]5-Series (G60) 530i xDrive M Sports" [level=3] [ref=f1e1513]
+              - generic [ref=f1e1514]:
+                - generic [ref=f1e1515]:
+                  - img [ref=f1e1516]
+                  - text: 2025-12
+                - generic [ref=f1e1518]:
+                  - img [ref=f1e1519]
+                  - text: 7,065 km
+                - generic [ref=f1e1522]:
+                  - img [ref=f1e1523]
+                  - text: Автомат
+          - link "[BMW]5시리즈 (G60) 520i 스페셜 에디션 ₩999,990,000 [BMW]5-Series (G60) 520i Special Edition 2025-12 5,020 km Автомат" [ref=f1e1527] [cursor=pointer]:
+            - /url: /car/bmw-5-g60-520i-2025/114023749
+            - img "[BMW]5시리즈 (G60) 520i 스페셜 에디션" [ref=f1e1529]
+            - generic [ref=f1e1530]:
+              - paragraph [ref=f1e1531]: ₩999,990,000
+              - heading "[BMW]5-Series (G60) 520i Special Edition" [level=3] [ref=f1e1532]
+              - generic [ref=f1e1533]:
+                - generic [ref=f1e1534]:
+                  - img [ref=f1e1535]
+                  - text: 2025-12
+                - generic [ref=f1e1537]:
+                  - img [ref=f1e1538]
+                  - text: 5,020 km
+                - generic [ref=f1e1541]:
+                  - img [ref=f1e1542]
+                  - text: Автомат
+          - link "[BMW]X5 (G05) xDrive 40i M 스포츠 ₩123,000,000 [BMW]X5 (G05) xDrive 40i M Sports 2025-12 11,816 km Автомат" [ref=f1e1546] [cursor=pointer]:
+            - /url: /car/bmw-x5-g05-xdrive-40i-m-2025/113935764
+            - img "[BMW]X5 (G05) xDrive 40i M 스포츠" [ref=f1e1548]
+            - generic [ref=f1e1549]:
+              - paragraph [ref=f1e1550]: ₩123,000,000
+              - heading "[BMW]X5 (G05) xDrive 40i M Sports" [level=3] [ref=f1e1551]
+              - generic [ref=f1e1552]:
+                - generic [ref=f1e1553]:
+                  - img [ref=f1e1554]
+                  - text: 2025-12
+                - generic [ref=f1e1556]:
+                  - img [ref=f1e1557]
+                  - text: 11,816 km
+                - generic [ref=f1e1560]:
+                  - img [ref=f1e1561]
+                  - text: Автомат
+          - link "[BMW]X5 (G05) xDrive 40d M 스포츠 ₩999,990,000 [BMW]X5 (G05) xDrive 40d M Sports 2025-12 6,265 km Автомат" [ref=f1e1565] [cursor=pointer]:
+            - /url: /car/bmw-x5-g05-xdrive-40d-m-2025/114036428
+            - img "[BMW]X5 (G05) xDrive 40d M 스포츠" [ref=f1e1567]
+            - generic [ref=f1e1568]:
+              - paragraph [ref=f1e1569]: ₩999,990,000
+              - heading "[BMW]X5 (G05) xDrive 40d M Sports" [level=3] [ref=f1e1570]
+              - generic [ref=f1e1571]:
+                - generic [ref=f1e1572]:
+                  - img [ref=f1e1573]
+                  - text: 2025-12
+                - generic [ref=f1e1575]:
+                  - img [ref=f1e1576]
+                  - text: 6,265 km
+                - generic [ref=f1e1579]:
+                  - img [ref=f1e1580]
+                  - text: Автомат
+          - link "[BMW]5시리즈 (G60) 530e M 스포츠 ₩79,900,000 [BMW]5-Series (G60) 530e M Sports 2025-12 10,224 km Автомат" [ref=f1e1584] [cursor=pointer]:
+            - /url: /car/bmw-5-g60-530e-m-2025/114067209
+            - img "[BMW]5시리즈 (G60) 530e M 스포츠" [ref=f1e1586]
+            - generic [ref=f1e1587]:
+              - paragraph [ref=f1e1588]: ₩79,900,000
+              - heading "[BMW]5-Series (G60) 530e M Sports" [level=3] [ref=f1e1589]
+              - generic [ref=f1e1590]:
+                - generic [ref=f1e1591]:
+                  - img [ref=f1e1592]
+                  - text: 2025-12
+                - generic [ref=f1e1594]:
+                  - img [ref=f1e1595]
+                  - text: 10,224 km
+                - generic [ref=f1e1598]:
+                  - img [ref=f1e1599]
+                  - text: Автомат
+          - link "[BMW]M5 7세대 4.4 투어링 ₩197,990,000 [BMW]M5 7-е Поколение 4.4 Touring 2025-12 6,260 km Автомат" [ref=f1e1603] [cursor=pointer]:
+            - /url: /car/bmw-m5-7-4-4-2025/114034244
+            - img "[BMW]M5 7세대 4.4 투어링" [ref=f1e1605]
+            - generic [ref=f1e1606]:
+              - paragraph [ref=f1e1607]: ₩197,990,000
+              - heading "[BMW]M5 7-е Поколение 4.4 Touring" [level=3] [ref=f1e1608]
+              - generic [ref=f1e1609]:
+                - generic [ref=f1e1610]:
+                  - img [ref=f1e1611]
+                  - text: 2025-12
+                - generic [ref=f1e1613]:
+                  - img [ref=f1e1614]
+                  - text: 6,260 km
+                - generic [ref=f1e1617]:
+                  - img [ref=f1e1618]
+                  - text: Автомат
+          - link "[BMW]M2(G87) 쿠페 ₩94,000,000 [BMW]M2(G87) Coupe 2025-12 3,864 km Автомат" [ref=f1e1622] [cursor=pointer]:
+            - /url: /car/bmw-m2-g87-2025/114044614
+            - img "[BMW]M2(G87) 쿠페" [ref=f1e1624]
+            - generic [ref=f1e1625]:
+              - paragraph [ref=f1e1626]: ₩94,000,000
+              - heading "[BMW]M2(G87) Coupe" [level=3] [ref=f1e1627]
+              - generic [ref=f1e1628]:
+                - generic [ref=f1e1629]:
+                  - img [ref=f1e1630]
+                  - text: 2025-12
+                - generic [ref=f1e1632]:
+                  - img [ref=f1e1633]
+                  - text: 3,864 km
+                - generic [ref=f1e1636]:
+                  - img [ref=f1e1637]
+                  - text: Автомат
+          - link "[BMW]5시리즈 (G60) 520i M 스포츠 ₩73,990,000 [BMW]5-Series (G60) 520i M Sports 2025-11 9,163 km Автомат" [ref=f1e1641] [cursor=pointer]:
+            - /url: /car/bmw-5-g60-520i-m-2025/114069514
+            - img "[BMW]5시리즈 (G60) 520i M 스포츠" [ref=f1e1643]
+            - generic [ref=f1e1644]:
+              - paragraph [ref=f1e1645]: ₩73,990,000
+              - heading "[BMW]5-Series (G60) 520i M Sports" [level=3] [ref=f1e1646]
+              - generic [ref=f1e1647]:
+                - generic [ref=f1e1648]:
+                  - img [ref=f1e1649]
+                  - text: 2025-11
+                - generic [ref=f1e1651]:
+                  - img [ref=f1e1652]
+                  - text: 9,163 km
+                - generic [ref=f1e1655]:
+                  - img [ref=f1e1656]
+                  - text: Автомат
+          - link "[BMW]X5 (G05) xDrive 40i M 스포츠 ₩133,500,000 [BMW]X5 (G05) xDrive 40i M Sports 2025-11 7,479 km Автомат" [ref=f1e1660] [cursor=pointer]:
+            - /url: /car/bmw-x5-g05-xdrive-40i-m-2025/113966516
+            - img "[BMW]X5 (G05) xDrive 40i M 스포츠" [ref=f1e1662]
+            - generic [ref=f1e1663]:
+              - paragraph [ref=f1e1664]: ₩133,500,000
+              - heading "[BMW]X5 (G05) xDrive 40i M Sports" [level=3] [ref=f1e1665]
+              - generic [ref=f1e1666]:
+                - generic [ref=f1e1667]:
+                  - img [ref=f1e1668]
+                  - text: 2025-11
+                - generic [ref=f1e1670]:
+                  - img [ref=f1e1671]
+                  - text: 7,479 km
+                - generic [ref=f1e1674]:
+                  - img [ref=f1e1675]
+                  - text: Автомат
+          - link "[BMW]5시리즈 (G60) 530i xDrive M 스포츠 프로 스페셜... ₩108,000,000 [BMW]5-Series (G60) 530i xDrive M Sports Pro Special... 2025-11 7,903 km Автомат" [ref=f1e1679] [cursor=pointer]:
+            - /url: /car/bmw-5-g60-530i-xdrive-m-2025/114064042
+            - img "[BMW]5시리즈 (G60) 530i xDrive M 스포츠 프로 스페셜..." [ref=f1e1681]
+            - generic [ref=f1e1682]:
+              - paragraph [ref=f1e1683]: ₩108,000,000
+              - heading "[BMW]5-Series (G60) 530i xDrive M Sports Pro Special..." [level=3] [ref=f1e1684]
+              - generic [ref=f1e1685]:
+                - generic [ref=f1e1686]:
+                  - img [ref=f1e1687]
+                  - text: 2025-11
+                - generic [ref=f1e1689]:
+                  - img [ref=f1e1690]
+                  - text: 7,903 km
+                - generic [ref=f1e1693]:
+                  - img [ref=f1e1694]
+                  - text: Автомат
+          - link "[BMW]X5 (G05) xDrive 40d M 스포츠 ₩128,900,000 [BMW]X5 (G05) xDrive 40d M Sports 2025-11 14,649 km Автомат" [ref=f1e1698] [cursor=pointer]:
+            - /url: /car/bmw-x5-g05-xdrive-40d-m-2025/114015465
+            - img "[BMW]X5 (G05) xDrive 40d M 스포츠" [ref=f1e1700]
+            - generic [ref=f1e1701]:
+              - paragraph [ref=f1e1702]: ₩128,900,000
+              - heading "[BMW]X5 (G05) xDrive 40d M Sports" [level=3] [ref=f1e1703]
+              - generic [ref=f1e1704]:
+                - generic [ref=f1e1705]:
+                  - img [ref=f1e1706]
+                  - text: 2025-11
+                - generic [ref=f1e1708]:
+                  - img [ref=f1e1709]
+                  - text: 14,649 km
+                - generic [ref=f1e1712]:
+                  - img [ref=f1e1713]
+                  - text: Автомат
+          - link "[BMW]X7 (G07) xDrive 40i M 스포츠 ₩126,900,000 [BMW]X7 (G07) xDrive 40i M Sports 2025-11 11,086 km Автомат" [ref=f1e1717] [cursor=pointer]:
+            - /url: /car/bmw-x7-g07-xdrive-40i-m-2025/113951995
+            - img "[BMW]X7 (G07) xDrive 40i M 스포츠" [ref=f1e1719]
+            - generic [ref=f1e1720]:
+              - paragraph [ref=f1e1721]: ₩126,900,000
+              - heading "[BMW]X7 (G07) xDrive 40i M Sports" [level=3] [ref=f1e1722]
+              - generic [ref=f1e1723]:
+                - generic [ref=f1e1724]:
+                  - img [ref=f1e1725]
+                  - text: 2025-11
+                - generic [ref=f1e1727]:
+                  - img [ref=f1e1728]
+                  - text: 11,086 km
+                - generic [ref=f1e1731]:
+                  - img [ref=f1e1732]
+                  - text: Автомат
+        - generic [ref=f1e1736]:
+          - button "Предыдущая" [disabled] [ref=f1e1737]:
+            - img [ref=f1e1738]
+          - button "1" [ref=f1e1740]
+          - button "2" [ref=f1e1741]
+          - generic [ref=f1e1742]: ...
+          - button "154" [ref=f1e1743]
+          - button "Следующая" [ref=f1e1744]:
+            - img [ref=f1e1745]
+    - contentinfo [ref=f1e527]:
+      - generic [ref=f1e528]:
+        - generic [ref=f1e529]:
+          - generic [ref=f1e530]:
+            - link "AlexDrive" [ref=f1e531] [cursor=pointer]:
+              - /url: /
+              - generic [ref=f1e532]: AlexDrive
+            - paragraph [ref=f1e533]:
+              - text: Автомобили в Южной Корее.
+              - text: Широкий выбор автомобилей в Сувоне
+          - generic [ref=f1e534]:
+            - heading "Навигация" [level=3] [ref=f1e535]
+            - navigation [ref=f1e536]:
+              - link "Каталог" [ref=f1e537] [cursor=pointer]:
+                - /url: /
+              - link "О нас" [ref=f1e538] [cursor=pointer]:
+                - /url: /about
+              - link "Контакты" [ref=f1e539] [cursor=pointer]:
+                - /url: /contacts
+              - link "Калькулятор" [ref=f1e540] [cursor=pointer]:
+                - /url: /calculator
+              - link "Конфиденциальность" [ref=f1e541] [cursor=pointer]:
+                - /url: /privacy
+              - link "Условия использования" [ref=f1e542] [cursor=pointer]:
+                - /url: /terms
+          - generic [ref=f1e543]:
+            - heading "Контакты" [level=3] [ref=f1e544]
+            - generic [ref=f1e545]:
+              - paragraph [ref=f1e546]: Кан Алексей
+              - link "+82-10-3908-6050" [ref=f1e547] [cursor=pointer]:
+                - /url: tel:+821039086050
+              - link "WhatsApp" [ref=f1e548] [cursor=pointer]:
+                - /url: https://wa.me/821039086050
+                - img [ref=f1e549]
+                - text: WhatsApp
+              - paragraph [ref=f1e551]: Кёнги, Сувон, Южная Корея
+        - generic [ref=f1e552]: © 2026 AlexDrive. Все права защищены.
+  - alert [ref=f1e553]: AlexDrive - Автомобили из Южной Кореи
