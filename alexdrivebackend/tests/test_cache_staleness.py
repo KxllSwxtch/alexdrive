@@ -150,3 +150,26 @@ class TestBackgroundTaskReferences:
             "use spawn_background() so the task keeps a strong reference:\n"
             + "\n".join(offenders)
         )
+
+
+class TestHealthNeverParsed:
+    @pytest.mark.asyncio
+    async def test_never_parsed_container_reports_degraded_not_ok(self, monkeypatch):
+        """'Up 7 weeks (healthy)' while never having parsed is what hid the outage."""
+        from app.routes import health as health_mod
+
+        monkeypatch.setattr(sc, "_last_successful_parse", 0.0)
+        monkeypatch.setattr(sc, "_process_start", time.time() - sc.DEGRADED_AFTER_SECONDS - 10)
+        body = await health_mod.health()
+        assert body["status"] == "degraded"
+        assert body["never_parsed"] is True
+        assert body["last_successful_parse_seconds_ago"] is None
+
+    @pytest.mark.asyncio
+    async def test_fresh_container_within_grace_is_ok(self, monkeypatch):
+        from app.routes import health as health_mod
+
+        monkeypatch.setattr(sc, "_last_successful_parse", 0.0)
+        monkeypatch.setattr(sc, "_process_start", time.time())
+        body = await health_mod.health()
+        assert body["status"] == "ok", "a just-started container must not alarm"
