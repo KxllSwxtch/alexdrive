@@ -10,6 +10,11 @@ note() { printf '%s\n' "$*"; }
 bad()  { printf 'FAIL  %s\n' "$*"; FAIL=1; }
 ok()   { printf 'ok    %s\n' "$*"; }
 
+# Warm-up: a freshly restarted backend has never parsed, so checking health first
+# would report never_parsed and fail for the wrong reason. Trigger one real fetch,
+# then judge health on the result.
+curl -s -o /dev/null --compressed --max-time 70 "${SITE}/api/cars?${CANON}" 2>/dev/null || true
+
 note "== 1. backend health =="
 HEALTH="$(curl -fsS --max-time 20 "${SITE}/api/health" 2>/dev/null || true)"
 if [ -z "$HEALTH" ]; then
