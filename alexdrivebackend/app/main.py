@@ -46,7 +46,11 @@ async def lifespan(app: FastAPI):
         "timeout": httpx.Timeout(30.0, connect=10.0),
         "follow_redirects": True,
         "limits": httpx.Limits(
-            max_connections=10,
+            # Headroom above the previous 10. The outbound RATE is bounded by
+            # ThrottleManager (1.5-2.5s between requests), not by pool size, so this
+            # does not increase ban risk -- it only stops brief bursts of warming +
+            # prefetch + the parallel filter fetches from starving user requests.
+            max_connections=20,
             max_keepalive_connections=5,
             keepalive_expiry=30.0,
         ),

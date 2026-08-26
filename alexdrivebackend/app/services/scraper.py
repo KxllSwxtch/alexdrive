@@ -58,6 +58,21 @@ DEGRADED_AFTER_SECONDS = int(os.environ.get("DEGRADED_AFTER_SECONDS", "900"))
 FILTER_FETCH_TIMEOUT = int(os.environ.get("FILTER_FETCH_TIMEOUT", "45"))
 _process_start = time.time()
 
+# asyncio keeps only WEAK references to tasks, so a fire-and-forget task whose result
+# nobody stores can be garbage-collected mid-await. When that happened inside an httpx
+# request the connection was never returned to the pool; with max_connections=10 the
+# pool leaked a slot at a time until every request died with PoolTimeout before it even
+# reached the network. That is what took production down for 6+ days in 2026-08.
+_background_tasks: set[asyncio.Task] = set()
+
+
+def spawn_background(coro, *, name: str | None = None) -> asyncio.Task:
+    """Start a background task and hold a strong reference until it finishes."""
+    task = asyncio.create_task(coro, name=name)
+    _background_tasks.add(task)
+    task.add_done_callback(_background_tasks.discard)
+    return task
+
 
 def is_degraded() -> bool:
     """True when the scraper has not produced a successful parse recently.
@@ -655,7 +670,8 @@ async def get_car_listings(params: dict) -> dict:
         if age < LISTING_TTL:
             if age >= LISTING_REFRESH_AT and cache_key not in _listing_refresh_keys:
                 if not is_rate_limited():
-                    asyncio.create_task(_refresh_listing_cache(cache_key, params))
+                    spawn_background(_refresh_listing_cache(cache_key, params),
+                                     name=f"refresh-listing-{cache_key[:8]}")
             print(f"[scraper] Listing cache hit ({cache_key[:8]})")
             return cached["data"]
         # Genuinely stale. Serve it only while the retry backoff is open, so a dead
@@ -781,7 +797,7 @@ async def get_car_detail(car_id: str, *, _background: bool = False) -> dict:
         age = _entry_age(cached, DETAIL_TTL)
         if age < DETAIL_TTL:
             if age >= DETAIL_REFRESH_AT and car_id not in _detail_refresh_keys:
-                asyncio.create_task(_refresh_detail_cache(car_id))
+                spawn_background(_refresh_detail_cache(car_id), name=f"refresh-detail-{car_id}")
             print(f"[scraper] Detail cache hit ({car_id})")
             return cached["data"]
         if time.time() < cached.get("next_retry_at", 0.0):

@@ -97,3 +97,56 @@ class TestWarmingGuards:
         await sc.warm_detail_cache_for_listings(listings)
 
         assert attempts == ["car-1"], "a failing id must be backed off, not re-queued every request"
+
+
+class TestBackgroundTaskReferences:
+    """Root cause of the 2026-08 outage.
+
+    asyncio holds only weak references to tasks. A fire-and-forget task that nobody
+    stores can be garbage-collected mid-await; when that happened inside an httpx
+    request the connection was never returned to the pool, so max_connections=10
+    leaked a slot at a time until every request raised PoolTimeout before reaching
+    the network.
+    """
+
+    @pytest.mark.asyncio
+    async def test_spawn_background_keeps_a_strong_reference(self):
+        import asyncio
+
+        started = asyncio.Event()
+        release = asyncio.Event()
+
+        async def work():
+            started.set()
+            await release.wait()
+            return "done"
+
+        task = sc.spawn_background(work(), name="unit-test")
+        await started.wait()
+        # While in flight the registry must hold the task, or the GC may collect it.
+        assert task in sc._background_tasks
+        release.set()
+        assert await task == "done"
+        await asyncio.sleep(0)  # let the done-callback run
+        assert task not in sc._background_tasks, "finished tasks must be released"
+
+    @pytest.mark.asyncio
+    async def test_no_unreferenced_task_spawns_remain_in_request_paths(self):
+        """Guard against reintroducing bare create_task/ensure_future on hot paths."""
+        import pathlib
+        import re
+
+        root = pathlib.Path(sc.__file__).resolve().parent.parent
+        # The single sanctioned call: spawn_background's own implementation.
+        SANCTIONED = "task = asyncio.create_task(coro, name=name)"
+        offenders = []
+        for path in [root / "services" / "scraper.py", root / "routes" / "cars.py"]:
+            for i, line in enumerate(path.read_text().splitlines(), 1):
+                if line.strip() == SANCTIONED:
+                    continue
+                if re.search(r"asyncio\.(create_task|ensure_future)\(", line):
+                    offenders.append(f"{path.name}:{i}: {line.strip()}")
+        assert offenders == [], (
+            "use spawn_background() so the task keeps a strong reference:\n"
+            + "\n".join(offenders)
+        )

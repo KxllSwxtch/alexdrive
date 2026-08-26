@@ -3,7 +3,14 @@ import asyncio
 from fastapi import APIRouter, Query
 from fastapi.responses import JSONResponse
 
-from app.services.scraper import _detail_cache, get_car_detail, get_car_listings, get_rate_limit_retry_after, warm_detail_cache_for_listings
+from app.services.scraper import (
+    _detail_cache,
+    get_car_detail,
+    get_car_listings,
+    get_rate_limit_retry_after,
+    spawn_background,
+    warm_detail_cache_for_listings,
+)
 
 router = APIRouter(prefix="/api")
 
@@ -90,7 +97,7 @@ async def get_cars(
         )
 
     if data.get("listings"):
-        asyncio.ensure_future(warm_detail_cache_for_listings(data["listings"]))
+        spawn_background(warm_detail_cache_for_listings(data["listings"]), name="warm-details")
     return JSONResponse(
         content=data,
         headers={"Cache-Control": "public, max-age=300, stale-while-revalidate=300"},
@@ -102,7 +109,7 @@ async def prefetch_detail(id: str | None = Query(None)):
     if not id:
         return JSONResponse(status_code=400, content={"error": "Missing id"})
     if id not in _detail_cache:
-        asyncio.ensure_future(_capped_prefetch(id))
+        spawn_background(_capped_prefetch(id), name=f"prefetch-{id}")
     return JSONResponse(status_code=202, content={"status": "warming"})
 
 

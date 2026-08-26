@@ -10,7 +10,7 @@ set -euo pipefail
 
 HOST="${ALEXDRIVE_HOST:-175.45.194.210}"
 USER="${ALEXDRIVE_USER:-root}"
-APP_DIR="${ALEXDRIVE_APP_DIR:-/root/alexdrive}"
+APP_DIR="${ALEXDRIVE_APP_DIR:-/opt/alexdrive}"
 BRANCH="${ALEXDRIVE_BRANCH:-main}"
 SITE="${ALEXDRIVE_SITE:-https://alexdrive.kr}"
 
