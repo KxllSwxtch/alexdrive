@@ -14,6 +14,24 @@ APP_DIR="${ALEXDRIVE_APP_DIR:-/root/alexdrive}"
 BRANCH="${ALEXDRIVE_BRANCH:-main}"
 SITE="${ALEXDRIVE_SITE:-https://alexdrive.kr}"
 
+# The production host has no Host block in ~/.ssh/config, so ssh falls back to
+# `IdentitiesOnly no` plus its seven default identity paths. Every existing key
+# (~/.ssh/id_rsa, ~/.ssh/id_ed25519) is offered BEFORE the password and each one
+# burns a server-side auth attempt. This host runs a hardened MaxAuthTries, so those
+# stray keys exhaust it and ssh dies with "Too many authentication failures" -- which
+# looks like a bad password but is not. Offer exactly one credential and nothing else.
+SSH_KEY="${ALEXDRIVE_SSH_KEY:-}"
+SSH_OPTS=(-o ConnectTimeout=20 -o IdentitiesOnly=yes -o IdentityAgent=none)
+if [ -n "$SSH_KEY" ]; then
+  [ -f "$SSH_KEY" ] || { echo "ssh key not found: $SSH_KEY" >&2; exit 2; }
+  SSH_OPTS+=(-i "$SSH_KEY" -o PreferredAuthentications=publickey)
+  echo "==> auth: key $SSH_KEY"
+else
+  # Password only -- do not offer any key, so all attempts go to the password.
+  SSH_OPTS+=(-o PubkeyAuthentication=no -o PreferredAuthentications=password)
+  echo "==> auth: password (no keys offered)"
+fi
+
 SERVICE=""
 BUILD=1
 for arg in "$@"; do
@@ -26,7 +44,7 @@ done
 
 echo "==> Deploying ${BRANCH} to ${USER}@${HOST}:${APP_DIR}"
 
-ssh "${USER}@${HOST}" APP_DIR="$APP_DIR" BRANCH="$BRANCH" SERVICE="$SERVICE" BUILD="$BUILD" 'bash -euo pipefail -s' <<'REMOTE'
+ssh "${SSH_OPTS[@]}" "${USER}@${HOST}" APP_DIR="$APP_DIR" BRANCH="$BRANCH" SERVICE="$SERVICE" BUILD="$BUILD" 'bash -euo pipefail -s' <<'REMOTE'
 cd "$APP_DIR"
 
 echo "--> git pull"
@@ -63,5 +81,5 @@ done
 
 echo "==> WARNING: backend did not report status=ok within ~2.5 minutes." >&2
 echo "    A 'degraded' status means the scraper still cannot reach the source." >&2
-echo "    Check:  ssh ${USER}@${HOST} 'cd ${APP_DIR} && docker compose logs --tail 100 backend'" >&2
+echo "    Check:  ssh ${SSH_OPTS[*]} ${USER}@${HOST} 'cd ${APP_DIR} && docker compose logs --tail 100 backend'" >&2
 exit 1
