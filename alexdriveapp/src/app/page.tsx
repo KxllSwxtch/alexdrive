@@ -30,17 +30,27 @@ export default async function CatalogPage({ searchParams }: PageProps) {
   let total = 0;
   let hasNext = false;
 
-  try {
-    const [filtersData, carsData] = await Promise.all([
-      fetchFiltersCached<FilterData>(),
-      backendFetch<{ listings: CarListing[]; total: number; hasNext?: boolean }>("/cars", backendParams, { revalidate: 300 }),
-    ]);
-    filters = filtersData;
-    cars = carsData.listings;
-    total = carsData.total;
-    hasNext = carsData.hasNext ?? false;
-  } catch (e) {
-    console.error("Failed to fetch initial catalog data:", e);
+  // allSettled, not all: these two fetches are independent, and Promise.all is
+  // all-or-nothing. When /cars was slow the already-resolved filter tree was thrown
+  // away too, so one slow backend call blanked the entire filter UI and pushed every
+  // visitor's browser into refetching the ~2.9MB /api/filters payload client-side.
+  const [filtersResult, carsResult] = await Promise.allSettled([
+    fetchFiltersCached<FilterData>(),
+    backendFetch<{ listings: CarListing[]; total: number; hasNext?: boolean }>("/cars", backendParams, { revalidate: 300 }),
+  ]);
+
+  if (filtersResult.status === "fulfilled") {
+    filters = filtersResult.value;
+  } else {
+    console.error("Failed to fetch filters:", filtersResult.reason);
+  }
+
+  if (carsResult.status === "fulfilled") {
+    cars = carsResult.value.listings;
+    total = carsResult.value.total;
+    hasNext = carsResult.value.hasNext ?? false;
+  } else {
+    console.error("Failed to fetch initial cars:", carsResult.reason);
   }
 
   return (

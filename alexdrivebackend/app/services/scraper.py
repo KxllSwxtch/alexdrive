@@ -46,6 +46,60 @@ _detail_refresh_keys: set[str] = set()
 
 _last_successful_parse: float = 0.0
 
+# How long to keep serving a stale entry before re-attempting a failing upstream again.
+# Without this, once `age` is allowed to grow honestly (see _entry_age) every single
+# request would re-pay throttle + fetch + parse against a dead upstream.
+STALE_RETRY_BACKOFF = int(os.environ.get("STALE_RETRY_BACKOFF", "60"))
+
+# Mirrors STALE_THRESHOLD_SECONDS in routes/health.py.
+DEGRADED_AFTER_SECONDS = int(os.environ.get("DEGRADED_AFTER_SECONDS", "900"))
+
+# Hard ceiling on a filter refresh, including time spent waiting for the global lock.
+FILTER_FETCH_TIMEOUT = int(os.environ.get("FILTER_FETCH_TIMEOUT", "45"))
+_process_start = time.time()
+
+
+def is_degraded() -> bool:
+    """True when the scraper has not produced a successful parse recently.
+
+    Falls back to process start so a container that has NEVER managed a successful parse
+    (exactly the state a dead proxy produces after a restart) still reports degraded
+    instead of looking permanently healthy.
+    """
+    reference = _last_successful_parse or _process_start
+    return (time.time() - reference) > DEGRADED_AFTER_SECONDS
+
+
+def _new_cache_entry(data: dict, ttl: float) -> dict:
+    """Cache entry that records when the data was ACTUALLY fetched upstream."""
+    now = time.time()
+    return {"data": data, "expiry": now + ttl, "fetched_at": now, "next_retry_at": 0.0}
+
+
+def _entry_age(entry: dict, ttl: float) -> float:
+    """Seconds since the data was genuinely fetched upstream.
+
+    Derived from `fetched_at`, never from `expiry`. Previously age was computed as
+    `now - (expiry - ttl)`, so any failure path that extended `expiry` also reset the
+    apparent age to zero -- a failing refresh made stale data look brand new, forever.
+    That bug kept 6.4-day-old listings in rotation while the scraper was fully dead.
+    The `.get` fallback keeps entries restored from disk (which predate `fetched_at`)
+    working.
+    """
+    return time.time() - entry.get("fetched_at", entry["expiry"] - ttl)
+
+
+def _mark_stale_served(entry: dict, ttl: float) -> None:
+    """Keep a stale entry servable after a failed refresh, without faking freshness.
+
+    `expiry` is extended so the entry survives eviction and can still be served;
+    `fetched_at` is deliberately untouched so age keeps growing and /api/health stays
+    honest. `next_retry_at` bounds how often we retry a dead upstream.
+    """
+    now = time.time()
+    entry["expiry"] = now + ttl
+    entry["next_retry_at"] = now + STALE_RETRY_BACKOFF
+
 _RATE_LIMIT_MARKER = "limits_box"
 
 # --- Global outbound request throttling ---
@@ -264,7 +318,15 @@ async def _fetch_filter_data_internal() -> dict:
 
     # Fetch public JS files from carmanager in parallel (no auth needed)
     urls = [f"{settings.carmanager_base_url}{path}" for path in CAR_JS_FILES]
-    car_js_contents = await asyncio.gather(*[fetch_page(url) for url in urls])
+    # return_exceptions=True: a bare gather returns on first raise but does NOT cancel its
+    # siblings, leaving orphan requests holding pool connections for their full timeout.
+    car_js_results = await asyncio.gather(
+        *[fetch_page(url) for url in urls], return_exceptions=True
+    )
+    failed = [r for r in car_js_results if isinstance(r, BaseException)]
+    if failed:
+        raise NetworkError(f"Filter JS fetch failed ({len(failed)}/{len(urls)}): {failed[0]}")
+    car_js_contents = car_js_results
 
     combined_js = "\n".join(car_js_contents)
     page_filters = parse_filter_data_from_js(combined_js)
@@ -274,17 +336,28 @@ async def _fetch_filter_data_internal() -> dict:
     fuels = None
     missions = None
     colors = None
-    try:
-        fuel_resp, mission_resp, color_resp = await asyncio.gather(
-            post_form(f"{base}/search/getFuelList", {}),
-            post_form(f"{base}/search/getMissionList", {}),
-            post_form(f"{base}/search/getColorList", {}),
-        )
-        fuels = _parse_ajax_filter(fuel_resp, "FUEL_NO", "FUEL_NAME", "FKeyNo", "FuelName")
-        missions = _parse_ajax_filter(mission_resp, "MISSION_NO", "MISSION_NAME", "MKeyNo", "MissionName")
-        colors = _parse_ajax_filter(color_resp, "COLOR_NO", "COLOR_NAME", "CKeyNo", "ColorName")
-    except Exception as e:
-        print(f"[scraper] AJAX filter fetch failed, using static fallback: {e}")
+    # return_exceptions=True so one failing leg neither orphans its siblings (which would
+    # keep holding pool connections) nor discards the two that succeeded.
+    fuel_resp, mission_resp, color_resp = await asyncio.gather(
+        post_form(f"{base}/search/getFuelList", {}),
+        post_form(f"{base}/search/getMissionList", {}),
+        post_form(f"{base}/search/getColorList", {}),
+        return_exceptions=True,
+    )
+
+    def _safe_parse(resp, label, *args):
+        if isinstance(resp, BaseException):
+            print(f"[scraper] AJAX {label} fetch failed, using static fallback: {resp}")
+            return None
+        try:
+            return _parse_ajax_filter(resp, *args)
+        except Exception as e:
+            print(f"[scraper] AJAX {label} parse failed, using static fallback: {e}")
+            return None
+
+    fuels = _safe_parse(fuel_resp, "fuel", "FUEL_NO", "FUEL_NAME", "FKeyNo", "FuelName")
+    missions = _safe_parse(mission_resp, "mission", "MISSION_NO", "MISSION_NAME", "MKeyNo", "MissionName")
+    colors = _safe_parse(color_resp, "color", "COLOR_NO", "COLOR_NAME", "CKeyNo", "ColorName")
 
     data = {
         **page_filters,
@@ -304,16 +377,19 @@ async def get_filter_data() -> dict:
     if _filter_cache and time.time() < _filter_cache["expiry"]:
         return _filter_cache["data"]
 
-    async with _filter_lock:
-        if _filter_cache and time.time() < _filter_cache["expiry"]:
+    try:
+        async with asyncio.timeout(FILTER_FETCH_TIMEOUT):
+            async with _filter_lock:
+                if _filter_cache and time.time() < _filter_cache["expiry"]:
+                    return _filter_cache["data"]
+                return await _fetch_filter_data_internal()
+    except (NetworkError, TimeoutError) as exc:
+        # TimeoutError also covers asyncio.timeout expiry (asyncio.TimeoutError is an
+        # alias of the builtin since 3.11).
+        if _filter_cache:
+            print(f"[scraper] Serving stale filter cache due to {type(exc).__name__}")
             return _filter_cache["data"]
-        try:
-            return await _fetch_filter_data_internal()
-        except NetworkError:
-            if _filter_cache:
-                print("[scraper] Serving stale filter cache due to network error")
-                return _filter_cache["data"]
-            raise
+        raise
 
 
 # --- URL construction ---
@@ -414,8 +490,9 @@ async def _fetch_and_cache_listings(cache_key: str, params: dict, *, _background
     if is_rate_limited():
         existing = _listing_cache.get(cache_key)
         if existing and existing["data"].get("listings"):
-            existing["expiry"] = time.time() + LISTING_TTL
-            print(f"[scraper] Rate-limited, serving stale cache ({cache_key[:8]})")
+            _mark_stale_served(existing, LISTING_TTL)
+            print(f"[scraper] Rate-limited, serving stale cache "
+                  f"({cache_key[:8]}, {int(_entry_age(existing, LISTING_TTL))}s old)")
             return existing["data"]
         remaining = get_rate_limit_retry_after()
         print(f"[scraper] Rate-limited, no cache, cooldown remaining: {remaining}s")
@@ -443,8 +520,9 @@ async def _fetch_and_cache_listings(cache_key: str, params: dict, *, _background
 
         existing = _listing_cache.get(cache_key)
         if existing and existing["data"].get("listings"):
-            existing["expiry"] = time.time() + LISTING_TTL
-            print(f"[scraper] Serving stale cached listings ({len(existing['data']['listings'])} cars)")
+            _mark_stale_served(existing, LISTING_TTL)
+            print(f"[scraper] Serving stale cached listings ({len(existing['data']['listings'])} cars, "
+                  f"{int(_entry_age(existing, LISTING_TTL))}s old)")
             return existing["data"]
 
         remaining = get_rate_limit_retry_after()
@@ -478,7 +556,7 @@ async def _fetch_and_cache_listings(cache_key: str, params: dict, *, _background
     result = {"listings": listings, "total": total, "status": status}
 
     if status == "ok":
-        _listing_cache[cache_key] = {"data": result, "expiry": time.time() + LISTING_TTL}
+        _listing_cache[cache_key] = _new_cache_entry(result, LISTING_TTL)
         _evict_oldest(_listing_cache, MAX_LISTING_CACHE_ENTRIES)
         _listing_neg_cache.pop(cache_key, None)
         return result
@@ -486,8 +564,9 @@ async def _fetch_and_cache_listings(cache_key: str, params: dict, *, _background
     # Fetch failed — serve stale cache if available, do NOT cache the failure
     existing = _listing_cache.get(cache_key)
     if existing and existing["data"].get("listings"):
-        existing["expiry"] = time.time() + LISTING_TTL
-        print(f"[scraper] Serving stale cache after {status} ({cache_key[:8]})")
+        _mark_stale_served(existing, LISTING_TTL)
+        print(f"[scraper] Serving stale cache after {status} "
+              f"({cache_key[:8]}, {int(_entry_age(existing, LISTING_TTL))}s old)")
         return existing["data"]
 
     # No stale cache for this exact key. If the user is paginating (PageNow > 1) and we
@@ -519,7 +598,7 @@ def _default_page_total() -> int | None:
     }
     key = hashlib.md5(json.dumps(default_params, sort_keys=True).encode()).hexdigest()
     cached = _listing_cache.get(key)
-    if cached and time.time() < cached["expiry"]:
+    if cached and _entry_age(cached, LISTING_TTL) < LISTING_TTL:
         return cached["data"].get("total")
     return None
 
@@ -572,12 +651,17 @@ async def get_car_listings(params: dict) -> dict:
 
     cached = _listing_cache.get(cache_key)
     if cached:
-        age = time.time() - (cached["expiry"] - LISTING_TTL)
+        age = _entry_age(cached, LISTING_TTL)
         if age < LISTING_TTL:
             if age >= LISTING_REFRESH_AT and cache_key not in _listing_refresh_keys:
                 if not is_rate_limited():
                     asyncio.create_task(_refresh_listing_cache(cache_key, params))
             print(f"[scraper] Listing cache hit ({cache_key[:8]})")
+            return cached["data"]
+        # Genuinely stale. Serve it only while the retry backoff is open, so a dead
+        # upstream does not make every request re-pay throttle + fetch + parse.
+        if time.time() < cached.get("next_retry_at", 0.0):
+            print(f"[scraper] Serving stale listings ({cache_key[:8]}, {int(age)}s old, retry backoff)")
             return cached["data"]
 
     neg = _listing_neg_cache.get(cache_key)
@@ -592,7 +676,7 @@ async def get_car_listings(params: dict) -> dict:
     lock = await _get_listing_lock(cache_key)
     async with lock:
         cached = _listing_cache.get(cache_key)
-        if cached and time.time() < cached["expiry"]:
+        if cached and _entry_age(cached, LISTING_TTL) < LISTING_TTL:
             return cached["data"]
 
         try:
@@ -681,7 +765,7 @@ async def _refresh_detail_cache(car_id: str) -> None:
         if options:
             result["options"] = options
 
-        _detail_cache[car_id] = {"data": result, "expiry": time.time() + DETAIL_TTL}
+        _detail_cache[car_id] = _new_cache_entry(result, DETAIL_TTL)
         _evict_oldest(_detail_cache, MAX_DETAIL_CACHE_ENTRIES)
         _clear_rate_limit()
         print(f"[scraper] Detail background refresh OK ({car_id})")
@@ -694,17 +778,20 @@ async def _refresh_detail_cache(car_id: str) -> None:
 async def get_car_detail(car_id: str, *, _background: bool = False) -> dict:
     cached = _detail_cache.get(car_id)
     if cached:
-        age = time.time() - (cached["expiry"] - DETAIL_TTL)
+        age = _entry_age(cached, DETAIL_TTL)
         if age < DETAIL_TTL:
             if age >= DETAIL_REFRESH_AT and car_id not in _detail_refresh_keys:
                 asyncio.create_task(_refresh_detail_cache(car_id))
             print(f"[scraper] Detail cache hit ({car_id})")
             return cached["data"]
+        if time.time() < cached.get("next_retry_at", 0.0):
+            print(f"[scraper] Serving stale detail ({car_id}, {int(age)}s old, retry backoff)")
+            return cached["data"]
 
     lock = await _get_detail_lock(car_id)
     async with lock:
         cached = _detail_cache.get(car_id)
-        if cached and time.time() < cached["expiry"]:
+        if cached and _entry_age(cached, DETAIL_TTL) < DETAIL_TTL:
             return cached["data"]
 
         url = f"{settings.source_base_url}/search/detail/{car_id}"
@@ -725,7 +812,7 @@ async def get_car_detail(car_id: str, *, _background: bool = False) -> dict:
             _record_rate_limit()
             cached = _detail_cache.get(car_id)
             if cached:
-                cached["expiry"] = time.time() + DETAIL_TTL
+                _mark_stale_served(cached, DETAIL_TTL)
                 return cached["data"]
             raise NetworkError("Rate-limited on detail request, no cache available")
 
@@ -741,7 +828,7 @@ async def get_car_detail(car_id: str, *, _background: bool = False) -> dict:
         if options:
             result["options"] = options
 
-        _detail_cache[car_id] = {"data": result, "expiry": time.time() + DETAIL_TTL}
+        _detail_cache[car_id] = _new_cache_entry(result, DETAIL_TTL)
         _evict_oldest(_detail_cache, MAX_DETAIL_CACHE_ENTRIES)
         _clear_rate_limit()
         return result
@@ -797,31 +884,68 @@ async def detail_cache_persist_loop() -> None:
 
 DETAIL_WARMING_MAX = 8
 
+# Ids currently being warmed, and ids whose warm failed (with a retry-not-before stamp).
+_warming_in_flight: set[str] = set()
+_warm_failures: dict[str, float] = {}
+WARM_FAILURE_BACKOFF = int(os.environ.get("WARM_FAILURE_BACKOFF", "600"))
+MAX_WARM_FAILURE_ENTRIES = 500
+_warming_gate = asyncio.Semaphore(1)
+
 
 async def warm_detail_cache_for_listings(listings: list[dict]) -> None:
     if is_rate_limited():
         print("[scraper] Skipping detail cache warming (rate-limited)")
         return
 
+    # Warming is an optimisation, never an obligation -- and while the scraper is failing
+    # it is actively harmful. Nothing lands in _detail_cache, so the SAME ids requeue on
+    # every catalog request and hold connections until the pool (max_connections=10) is
+    # exhausted. That is how a dead proxy became site-wide 30s PoolTimeouts.
+    if is_degraded():
+        print("[scraper] Skipping detail cache warming (scraper degraded)")
+        return
+
+    # One warming pass at a time, process-wide.
+    if _warming_gate.locked():
+        print("[scraper] Skipping detail cache warming (pass already running)")
+        return
+
+    now = time.time()
     ids_to_warm = [
         car["id"] for car in listings
-        if car.get("id") and car["id"] not in _detail_cache
+        if car.get("id")
+        and car["id"] not in _detail_cache
+        and car["id"] not in _warming_in_flight
+        and now >= _warm_failures.get(car["id"], 0.0)
     ][:DETAIL_WARMING_MAX]
 
     if not ids_to_warm:
         return
 
-    print(f"[scraper] Warming {len(ids_to_warm)} detail caches...")
-    for cid in ids_to_warm:
-        if is_rate_limited():
-            print("[scraper] Stopping detail warming (rate-limited)")
-            break
-        # Pause warming when foreground requests are waiting
-        if _throttle._fg_waiting > 0:
-            print("[scraper] Pausing detail warming (foreground request pending)")
-            while _throttle._fg_waiting > 0:
-                await asyncio.sleep(0.2)
+    async with _warming_gate:
+        print(f"[scraper] Warming {len(ids_to_warm)} detail caches...")
+        _warming_in_flight.update(ids_to_warm)
         try:
-            await get_car_detail(cid, _background=True)
-        except Exception:
-            pass
+            for cid in ids_to_warm:
+                if is_rate_limited() or is_degraded():
+                    print("[scraper] Stopping detail warming (rate-limited or degraded)")
+                    break
+                # Pause warming when foreground requests are waiting
+                if _throttle._fg_waiting > 0:
+                    print("[scraper] Pausing detail warming (foreground request pending)")
+                    while _throttle._fg_waiting > 0:
+                        await asyncio.sleep(0.2)
+                try:
+                    await get_car_detail(cid, _background=True)
+                    _warm_failures.pop(cid, None)
+                except Exception as e:
+                    # Back this id off, otherwise a permanently failing car is re-queued
+                    # by every subsequent catalog request forever.
+                    _warm_failures[cid] = time.time() + WARM_FAILURE_BACKOFF
+                    print(f"[scraper] Detail warming failed for {cid}: {e}")
+        finally:
+            _warming_in_flight.difference_update(ids_to_warm)
+            if len(_warm_failures) > MAX_WARM_FAILURE_ENTRIES:
+                overflow = len(_warm_failures) - MAX_WARM_FAILURE_ENTRIES
+                for k, _ in sorted(_warm_failures.items(), key=lambda kv: kv[1])[:overflow]:
+                    _warm_failures.pop(k, None)

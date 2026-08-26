@@ -4,7 +4,20 @@ import random
 import httpx
 
 MAX_NETWORK_RETRIES = 3
-NETWORK_RETRY_ERRORS = (httpx.ConnectError, httpx.ConnectTimeout, httpx.ReadTimeout)
+# Every transport-level failure that must be retried AND must trigger proxy failover.
+# PoolTimeout matters most: with max_connections=10 a stuck pool raises it after exactly
+# `pool` seconds, and it used to escape fetch_page entirely -- no retry, no failover, and
+# past every stale-cache rescue in scraper.py, surfacing to the user as a bare 503.
+NETWORK_RETRY_ERRORS = (
+    httpx.ConnectError,
+    httpx.ConnectTimeout,
+    httpx.ReadTimeout,
+    httpx.WriteTimeout,
+    httpx.PoolTimeout,
+    httpx.ReadError,
+    httpx.WriteError,
+    httpx.RemoteProtocolError,
+)
 
 # Non-standard 6xx responses (and the bestproxy.com "612 auth fail" signature) come from
 # the proxy layer itself, never from the origin. Treat them as proxy failures and try the
@@ -88,6 +101,16 @@ async def fetch_page(url: str) -> str:
         except NETWORK_RETRY_ERRORS as exc:
             last_exc = exc
             print(f"[client] Network error on attempt {attempt}/{MAX_NETWORK_RETRIES}: {exc}")
+            # A hung or unreachable proxy surfaces HERE, as ReadTimeout/ConnectError/
+            # PoolTimeout -- never as ProxyError, because plain-http origins are forward
+            # proxied and so never issue a CONNECT. Retrying the same dead proxy only burns
+            # another full timeout, so fail over to the direct client on the first failure.
+            if _direct_client is not None:
+                _log_proxy_failure_once(f"{type(exc).__name__}: {exc}")
+                direct_text = await _try_direct_get(url, headers)
+                if direct_text is not None:
+                    return direct_text
+                break  # direct failed too -- hammering the proxy further cannot help
             if attempt < MAX_NETWORK_RETRIES:
                 await asyncio.sleep(0.5 * attempt)
 
@@ -124,6 +147,13 @@ async def post_form(url: str, data: dict[str, str]) -> str:
             break
         except NETWORK_RETRY_ERRORS as exc:
             last_exc = exc
+            print(f"[client] Network error on POST attempt {attempt}/{MAX_NETWORK_RETRIES}: {exc}")
+            if _direct_client is not None:
+                _log_proxy_failure_once(f"{type(exc).__name__} (POST): {exc}")
+                direct_text = await _try_direct_post(url, data, headers)
+                if direct_text is not None:
+                    return direct_text
+                break
             if attempt < MAX_NETWORK_RETRIES:
                 await asyncio.sleep(0.5 * attempt)
 

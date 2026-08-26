@@ -113,3 +113,97 @@ class TestProxyFailover:
         finally:
             set_direct_client(None)
             await direct_client.aclose()
+
+
+class TestTransportFailover:
+    """Regression tests for the 2026-08 outage.
+
+    Production runs against a PLAIN-HTTP origin, which httpcore forward-proxies rather
+    than tunnelling via CONNECT -- so `httpx.ProxyError` is structurally unreachable
+    there. A hung or unreachable proxy instead surfaces as ReadTimeout / ConnectError /
+    PoolTimeout. Those used to be retried 3x against the same dead proxy and never fail
+    over (PoolTimeout escaped fetch_page entirely), which took the site down for 6 days
+    while every existing failover test -- all of which use https:// -- kept passing.
+    """
+
+    @pytest.mark.asyncio
+    async def test_hanging_proxy_over_plain_http_falls_back_to_direct(self, mock_http_client):
+        direct_client = httpx.AsyncClient(timeout=httpx.Timeout(5.0))
+        set_direct_client(direct_client)
+        try:
+            route = mock_http_client.get("http://www.chasainmotors.com/hang")
+            route.side_effect = [
+                httpx.ReadTimeout("proxy accepted then hung"),
+                respx.MockResponse(200, text="direct content"),
+            ]
+            text = await fetch_page("http://www.chasainmotors.com/hang")
+            assert text == "direct content"
+            # Proves the DIRECT client served this, not a lucky proxy retry.
+            assert client_mod._proxy_failure_logged is True
+        finally:
+            set_direct_client(None)
+            await direct_client.aclose()
+
+    @pytest.mark.asyncio
+    async def test_pool_timeout_falls_back_to_direct(self, mock_http_client):
+        """PoolTimeout previously escaped fetch_page with no retry and no failover."""
+        direct_client = httpx.AsyncClient(timeout=httpx.Timeout(5.0))
+        set_direct_client(direct_client)
+        try:
+            route = mock_http_client.get("http://www.chasainmotors.com/pool")
+            route.side_effect = [
+                httpx.PoolTimeout("connection pool exhausted"),
+                respx.MockResponse(200, text="direct content"),
+            ]
+            text = await fetch_page("http://www.chasainmotors.com/pool")
+            assert text == "direct content"
+            assert client_mod._proxy_failure_logged is True
+        finally:
+            set_direct_client(None)
+            await direct_client.aclose()
+
+    @pytest.mark.asyncio
+    async def test_pool_timeout_without_direct_client_raises_network_error(self, mock_http_client):
+        """Must surface as NetworkError so scraper.py's stale-cache rescues can catch it."""
+        set_direct_client(None)
+        mock_http_client.get("http://www.chasainmotors.com/pool2").mock(
+            side_effect=httpx.PoolTimeout("exhausted")
+        )
+        with pytest.raises(NetworkError):
+            await fetch_page("http://www.chasainmotors.com/pool2")
+
+    @pytest.mark.asyncio
+    async def test_connect_error_does_not_retry_dead_proxy_when_direct_available(self, mock_http_client):
+        """One proxy attempt, then straight to direct -- not 3x the full timeout."""
+        direct_client = httpx.AsyncClient(timeout=httpx.Timeout(5.0))
+        set_direct_client(direct_client)
+        try:
+            route = mock_http_client.get("http://www.chasainmotors.com/dead")
+            route.side_effect = [
+                httpx.ConnectError("proxy unreachable"),
+                respx.MockResponse(200, text="direct content"),
+            ]
+            text = await fetch_page("http://www.chasainmotors.com/dead")
+            assert text == "direct content"
+            assert client_mod._proxy_failure_logged is True
+            assert route.call_count == 2  # proxy once, direct once -- not 3 proxy retries
+        finally:
+            set_direct_client(None)
+            await direct_client.aclose()
+
+    @pytest.mark.asyncio
+    async def test_post_form_hanging_proxy_falls_back_to_direct(self, mock_http_client):
+        direct_client = httpx.AsyncClient(timeout=httpx.Timeout(5.0))
+        set_direct_client(direct_client)
+        try:
+            route = mock_http_client.post("http://www.chasainmotors.com/search/imageList")
+            route.side_effect = [
+                httpx.ReadTimeout("proxy hung"),
+                respx.MockResponse(200, text='{"info": []}'),
+            ]
+            text = await post_form("http://www.chasainmotors.com/search/imageList", {"carNo": "1"})
+            assert text == '{"info": []}'
+            assert client_mod._proxy_failure_logged is True
+        finally:
+            set_direct_client(None)
+            await direct_client.aclose()
