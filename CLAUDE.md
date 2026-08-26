@@ -63,7 +63,7 @@ Backend tests: `cd alexdrivebackend && pytest -v` (54 tests, pytest + pytest-asy
 
 ## Key Conventions
 
-- **Car IDs are simple numeric seq** (e.g., `113316161`). The detail endpoint uses query params (`GET /api/cars/detail?id=xxx`).
+- **Car IDs are 32-char hex tokens** (e.g., `463C99938774BE2159399E48EBBFAE67`). The source used numeric seq ids (e.g. `113316161`) until 2026-08; the parser accepts both. The detail endpoint uses query params (`GET /api/cars/detail?id=xxx`).
 - **Filter hierarchy from 5 public JS files** on carmanager.co.kr (CarBaseMaker, CarBaseModel, etc.). Parsed once, cached 24h. Colors/fuels/missions fetched dynamically from chasainmotors AJAX APIs with static fallback.
 - **No authentication** — chasainmotors.com is public. No session management, no cookies, no login.
 - **Filter cache has 24h TTL** with thundering-herd protection (asyncio.Lock + double-check).

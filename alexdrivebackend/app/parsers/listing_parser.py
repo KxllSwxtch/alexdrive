@@ -27,7 +27,13 @@ def parse_car_listings(html: str) -> list[dict]:
             continue
 
         href = link.attributes.get("href", "")
-        id_match = re.search(r"/search/detail/(\d+)", href)
+        # The source switched from numeric seq ids to 32-char hex tokens
+        # (e.g. /search/detail/463C99938774BE2159399E48EBBFAE67). The old
+        # digits-only pattern truncated ids that began with a digit ("463C99..."
+        # -> "463") and matched nothing at all for ids beginning with a letter,
+        # silently dropping ~37% of every page and producing colliding ids for
+        # the rest. Accept the whole alphanumeric token; numeric ids still match.
+        id_match = re.search(r"/search/detail/([0-9A-Za-z]+)", href)
         if not id_match:
             continue
         car_id = id_match.group(1)
