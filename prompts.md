@@ -15,6 +15,8 @@ Create a comprehensive plan, ultrathink of each detail for the best solution pos
 
 Are you 100% sure everything is done properly and without any issues?
 
+Once you're done coding git commit and push all changes and run @deploy.sh script to deploy to production and then /loop run E2E tests against the production website to ensure all fixes are in place and working correctly, keep testing and fixing all issues/errors/bugs that will occur during the testing phase to ensure everything is working correctly and as it should.
+
 
 ===
 FOR THIS PROJECT
