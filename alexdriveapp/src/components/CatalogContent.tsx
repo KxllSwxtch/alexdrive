@@ -38,12 +38,14 @@ interface CatalogContentProps {
   initialTotal: number;
   initialHasNext?: boolean;
   initialParams: CarListingParams;
+  /** Backend /api/health reported a non-ok status at render time. */
+  degraded?: boolean;
 }
 
 const MAX_CLIENT_RETRIES = 1;
 const MAX_RETRY_COUNTDOWN_SECS = 30;
 
-export function CatalogContent({ initialFilters, initialCars, initialTotal, initialHasNext, initialParams }: CatalogContentProps) {
+export function CatalogContent({ initialFilters, initialCars, initialTotal, initialHasNext, initialParams, degraded }: CatalogContentProps) {
   const isInitialMount = useRef(true);
 
   const [filters, setFilters] = useState<FilterData | null>(initialFilters);
@@ -309,6 +311,8 @@ export function CatalogContent({ initialFilters, initialCars, initialTotal, init
         </p>
       </div>
 
+      {degraded && <StaleDataNotice />}
+
       {/* Filters */}
       <FilterBar
         filters={filters}
@@ -441,6 +445,31 @@ function RateLimitFullPage({ countdown, exhausted }: { countdown: number; exhaus
             ? `Повторная попытка через ${countdown} сек...`
             : "Повторная попытка..."}
       </p>
+    </div>
+  );
+}
+
+// Shown when the backend reports a degraded scraper. The 2026-08 outage served
+// 6-day-old listings with no indication anything was wrong, so visitors had no way
+// to tell -- and no reason to report it. Deliberately worded as a data-freshness
+// notice rather than an error: this is a dealer site, and "something is broken"
+// costs more trust than it buys.
+function StaleDataNotice() {
+  return (
+    <div
+      role="status"
+      className="mb-6 flex flex-col gap-2 rounded-lg border border-gold/40 bg-gold/5 px-4 py-3 text-sm sm:flex-row sm:items-center sm:justify-between"
+      data-testid="stale-data-notice"
+    >
+      <span className="text-text-primary">
+        Данные обновляются с задержкой — часть объявлений может быть неактуальна.
+      </span>
+      <a
+        href="/contacts"
+        className="shrink-0 font-medium text-gold underline underline-offset-4 hover:opacity-80"
+      >
+        Сообщить о проблеме
+      </a>
     </div>
   );
 }

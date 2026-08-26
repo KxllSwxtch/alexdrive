@@ -56,3 +56,11 @@ test("@smoke no backend 5xx while loading the catalog", async ({ page }) => {
   await page.waitForTimeout(3_000);
   expect(bad, `backend 5xx responses:\n${bad.join("\n")}`).toEqual([]);
 });
+
+test("@smoke no stale-data notice while the backend is healthy", async ({ page }) => {
+  // Guards the inverse failure: a notice stuck on permanently would train users to
+  // ignore it, which is exactly how the 1844 unread syslog alerts became useless.
+  await page.goto("/");
+  await expect(page.locator("a[data-car-id]").first()).toBeVisible({ timeout: 45_000 });
+  await expect(page.getByTestId("stale-data-notice")).toHaveCount(0);
+});

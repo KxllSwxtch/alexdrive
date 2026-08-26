@@ -34,9 +34,11 @@ export default async function CatalogPage({ searchParams }: PageProps) {
   // all-or-nothing. When /cars was slow the already-resolved filter tree was thrown
   // away too, so one slow backend call blanked the entire filter UI and pushed every
   // visitor's browser into refetching the ~2.9MB /api/filters payload client-side.
-  const [filtersResult, carsResult] = await Promise.allSettled([
+  const [filtersResult, carsResult, healthResult] = await Promise.allSettled([
     fetchFiltersCached<FilterData>(),
     backendFetch<{ listings: CarListing[]; total: number; hasNext?: boolean }>("/cars", backendParams, { revalidate: 300 }),
+    // Cheap (in-memory read, ~30ms) and cached, so it adds no meaningful latency.
+    backendFetch<{ status: string }>("/health", undefined, { revalidate: 60 }),
   ]);
 
   if (filtersResult.status === "fulfilled") {
@@ -44,6 +46,12 @@ export default async function CatalogPage({ searchParams }: PageProps) {
   } else {
     console.error("Failed to fetch filters:", filtersResult.reason);
   }
+
+  // Fail-safe: if the health probe itself fails we show NO notice rather than
+  // guessing. A false "everything is fine" is better here than a false alarm on
+  // every page for a probe that is merely unreachable.
+  const degraded =
+    healthResult.status === "fulfilled" && healthResult.value?.status !== "ok";
 
   if (carsResult.status === "fulfilled") {
     cars = carsResult.value.listings;
@@ -60,6 +68,7 @@ export default async function CatalogPage({ searchParams }: PageProps) {
       initialTotal={total}
       initialHasNext={hasNext}
       initialParams={initialParams}
+      degraded={degraded}
     />
   );
 }
