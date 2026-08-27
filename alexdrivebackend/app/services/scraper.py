@@ -10,7 +10,7 @@ from urllib.parse import urlencode
 from app.config import settings
 from app.parsers.detail_parser import parse_car_detail
 from app.parsers.filter_parser import parse_filter_data_from_js
-from app.parsers.listing_parser import parse_car_listings, parse_total_count
+from app.parsers.listing_parser import has_results_container, parse_car_listings, parse_total_count
 from app.services.client import NetworkError, fetch_page, post_form
 
 _filter_cache: dict | None = None
@@ -83,6 +83,24 @@ def is_degraded() -> bool:
     """
     reference = _last_successful_parse or _process_start
     return (time.time() - reference) > DEGRADED_AFTER_SECONDS
+
+
+def classify_listing_status(html: str, listings: list) -> str:
+    """Classify a listing fetch.
+
+    `no_results` exists because a zero-match search returns a perfectly valid ~74KB page.
+    Lumping that in with parse_failure meant routes/cars.py answered 503 and the catalog
+    rendered "Не удалось загрузить эту категорию" -- a real visitor searching by plate
+    number hit exactly that. Only a response with no results container at all is a
+    genuine failure worth alarming and capturing.
+    """
+    if len(listings) > 0:
+        return "ok"
+    if len(html) <= 50:
+        return "empty"
+    if has_results_container(html):
+        return "no_results"
+    return "parse_failure"
 
 
 def _new_cache_entry(data: dict, ttl: float) -> dict:
@@ -549,14 +567,15 @@ async def _fetch_and_cache_listings(cache_key: str, params: dict, *, _background
     parse_ms = int((time.perf_counter() - t_parse) * 1000)
     total_ms = int((time.perf_counter() - t_start) * 1000)
 
-    if len(listings) > 0:
-        status = "ok"
+    status = classify_listing_status(html, listings)
+    if status == "ok":
         _last_successful_parse = time.time()
         _clear_rate_limit()
-    elif len(html) <= 50:
-        status = "empty"
-    else:
-        status = "parse_failure"
+    elif status == "no_results":
+        # The fetch itself succeeded, so the source is clearly reachable -- but do NOT
+        # touch _last_successful_parse: health should track "we can parse real cars",
+        # otherwise a source that silently starts matching nothing would look healthy.
+        _clear_rate_limit()
 
     print(
         f"[scraper.timing] key={cache_key[:8]} throttle_ms={throttle_ms} fetch_ms={fetch_ms} "
@@ -564,13 +583,17 @@ async def _fetch_and_cache_listings(cache_key: str, params: dict, *, _background
         f"listings={len(listings)} total={total}"
     )
 
-    if status != "ok":
+    # no_results is a normal answer -- no warning, and nothing worth capturing.
+    if status not in ("ok", "no_results"):
         print(f"[scraper] WARNING: {status} for {url}, HTML start: {html[:300]!r}")
         _persist_parse_failure_html(url, html)
 
     result = {"listings": listings, "total": total, "status": status}
 
-    if status == "ok":
+    if status in ("ok", "no_results"):
+        # Cache the empty answer too: repeating a no-match search should not re-pay
+        # throttle + fetch. It can never be served as a stale fallback because the
+        # stale paths all require a non-empty "listings".
         _listing_cache[cache_key] = _new_cache_entry(result, LISTING_TTL)
         _evict_oldest(_listing_cache, MAX_LISTING_CACHE_ENTRIES)
         _listing_neg_cache.pop(cache_key, None)

@@ -5,6 +5,25 @@ from selectolax.lexbor import LexborHTMLParser
 from app.config import settings
 
 
+# Markers for the search-results container. Verified against both real pages: these are
+# present whether or not the search matched anything, so "container present + zero rows"
+# means a genuine no-match, while their ABSENCE means we got something that is not a
+# search page at all (proxy error page, redirect, truncated body).
+# `ul#list-pagination` deliberately is NOT used -- it only renders when there ARE results.
+_RESULTS_CONTAINER_MARKERS = ('class="list-table', 'class="list-top"')
+
+
+def has_results_container(html: str) -> bool:
+    """True when the response is a real search-results page, empty or not.
+
+    A substring check rather than a parse: this runs on every fetch and the caller has
+    already paid for one full parse pass.
+    """
+    if not html:
+        return False
+    return any(marker in html for marker in _RESULTS_CONTAINER_MARKERS)
+
+
 def parse_car_listings(html: str) -> list[dict]:
     """Parse car listings from chasainmotors.com search result page.
 

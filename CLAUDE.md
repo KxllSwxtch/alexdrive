@@ -72,7 +72,11 @@ Backend tests: `cd alexdrivebackend && pytest -v` (54 tests, pytest + pytest-asy
 - **Request throttling** — 2-3s minimum between outbound requests to chasainmotors.
 - **Self-healing watchdog** — `scripts/alexdrive-health-check.sh` runs from cron every 5 min on the VPS (installed at `/usr/local/bin/`). Restarts the backend after 3 consecutive `degraded` health checks (15 min). Never restarts while `rate_limited`; capped at 1 restart/hour and 4/day, then logs "Needs a human" and stops. Logs to `/var/log/alexdrive-health.log` + journald (`journalctl -t alexdrive`); state in `/var/lib/alexdrive/health-state`. **Redeploy it after changing the script** — cron runs the copy in `/usr/local/bin/`, not the repo.
 - **Stale-data notice** — when `/api/health` is not `ok`, the catalog renders `StaleDataNotice` linking to `/contacts` so visitors can report it. Fail-safe: a failed health probe renders no notice.
-- **Categories as tabs** — Korean (carnation=1), Foreign (carnation=2), Trucks (carnation=3) shown as tabs above filter bar.
+- **`carnation` is backend-only** — the API accepts Korean (1), Foreign (2), Trucks (3) and maps it to the
+  source's country path, but the current frontend never sends it (no `carnation` anywhere in `alexdriveapp/src`).
+  The category tabs this file used to describe do not exist in the UI. Note the maker list is NOT country-scoped,
+  so if tabs are reintroduced, scope makers by `CountryNo` (1004 = Korean) or a Korean-tab + foreign-maker
+  selection will return zero cars.
 - **Translations** live in `alexdriveapp/src/lib/translations.ts` (~1830 lines). The `translateSmartly()` function converts Korean text to Russian with brand/model name awareness.
 - **Dark theme** with Classic Gold (#D4AF37) accent. Colors defined as CSS custom properties in `globals.css`.
 - **Fonts:** Jost (headings), Inter (body), both with cyrillic subset.
