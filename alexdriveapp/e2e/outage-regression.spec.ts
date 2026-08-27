@@ -64,3 +64,13 @@ test("@smoke no stale-data notice while the backend is healthy", async ({ page }
   await expect(page.locator("a[data-car-id]").first()).toBeVisible({ timeout: 45_000 });
   await expect(page.getByTestId("stale-data-notice")).toHaveCount(0);
 });
+
+test("@smoke a search with no matches shows the empty state, not an error", async ({ page }) => {
+  // chasainmotors answers a zero-match search with a valid 200 page. That used to be
+  // classified parse_failure -> 503 -> "Не удалось загрузить эту категорию", which a real
+  // visitor hit while searching by plate number.
+  await page.goto("/?CarMakerNo=10065&CarYearFrom=2030");
+  await expect(page.getByText("Автомобили не найдены")).toBeVisible({ timeout: 45_000 });
+  await expect(page.getByText("Не удалось загрузить")).toHaveCount(0);
+  await expect(page.locator("a[data-car-id]")).toHaveCount(0);
+});
